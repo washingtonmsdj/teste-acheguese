@@ -1272,6 +1272,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - `SECURITY.md`, Dependabot e CODEOWNERS adicionados ao repositório canônico;
 - GitHub Rulesets consultado no checkpoint: coleção vazia; branch protection clássica não pôde ser lida pela integração por falta de permissão administrativa (403), portanto proteção da `main` **não deve ser presumida**;
 - issue **#6 — Governança — habilitar proteção administrativa da main** criada e atribuída ao owner para rastrear essa ação externa até fechamento;
+- issue **#1 — Home / Discovery shell** fechada como superseded para impedir retomada da Home marketplace-first;
+- issue **#2** foi reescrita como **FASE 4 — Classificados E2E / release gate** e não decide mais a sequência de módulos;
 - enquanto proteção administrativa não for confirmada, toda escrita automatizada em `main` deve continuar com preflight de HEAD, fast-forward e `force=false`;
 - `quality` e `vercel-source-bundle/validate` agora executam em PRs para `main`;
 - o job de publish do transport branch só roda quando `github.ref == refs/heads/main`; em PR ele fica `SKIPPED` e usa somente `contents: read`;

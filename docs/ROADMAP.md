@@ -190,3 +190,10 @@ Não criar um terceiro repositório para reiniciar o produto novamente.
 - [x] PR real provou publish SKIPPED;
 - [ ] proteção administrativa/ruleset da `main` deve ser confirmada/aplicada por conta com permissão administrativa;
 - [ ] Dependabot PRs atuais permanecem congelados até FASE 4 release-validada, salvo blocker de segurança.
+
+## Tracker canônico
+
+- [x] Issue #1 antiga de Discovery/Home marketplace-first fechada como superseded;
+- [x] Issue #2 atualizada para rastrear somente o E2E/release gate de Classificados na FASE 4;
+- [x] Issue #6 criada para proteção administrativa da `main`;
+- [ ] futuras issues devem respeitar `URGENTE.md` como autoridade de sequência e não abrir módulos antecipadamente.

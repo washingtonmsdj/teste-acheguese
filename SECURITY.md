@@ -42,6 +42,7 @@ The project follows these release invariants:
 - personal/admin surfaces are dynamic and `private, no-store`;
 - CSP/HSTS are release requirements;
 - production dependencies are audited in CI;
+- tracked repository files are scanned for high-confidence committed secrets in CI;
 - release smoke and RLS smoke must pass before release.
 
 The canonical release checklist is documented in:
@@ -62,6 +63,14 @@ Never commit:
 - private signing material.
 
 Only public/publishable configuration may be exposed to the browser.
+
+Local/CI verification:
+
+```bash
+npm run security:scan
+```
+
+This scanner covers the current tracked tree. Historical Git secret exposure must still be checked through GitHub's administrative Secret Scanning/history surfaces before public launch.
 
 ## Legacy code
 
