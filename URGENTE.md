@@ -1218,6 +1218,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;
 - CI agora executa `npm audit --omit=dev --audit-level=high`; lock atual retornou **0 vulnerabilidades de produção**;
 - CI também executa `npm run security:scan`, bloqueando `.env` real, arquivos de chave privada e padrões de credencial de alta confiança antes de lint/typecheck/build;
+- secret scan da árvore rastreada atual retornou **PASS**; único `.env*` versionado é `.env.example`; nenhuma chave/arquivo sensível de alta confiança foi encontrado;
+- esse scanner cobre a árvore atual, não prova sozinho todo o histórico Git; Secret Scanning alerts/histórico não são expostos pela integração conectada e devem ser verificados administrativamente antes do lançamento público;
 - Next.js permanece em `16.3.4`, acima dos patches críticos de agosto de 2026;
 - warning de `unrs-resolver` foi rastreado até `eslint-import-resolver-typescript` e é **dev-only**; nenhum postinstall transitivo foi aprovado às cegas;
 - requests de viewport do Map Core agora reutilizam o bbox/zoom normalizado do deep link, reduzindo cardinalidade de cache CDN;
@@ -1269,6 +1271,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - repository governance versionada em `docs/REPOSITORY-GOVERNANCE.md`;
 - `SECURITY.md`, Dependabot e CODEOWNERS adicionados ao repositório canônico;
 - GitHub Rulesets consultado no checkpoint: coleção vazia; branch protection clássica não pôde ser lida pela integração por falta de permissão administrativa (403), portanto proteção da `main` **não deve ser presumida**;
+- issue **#6 — Governança — habilitar proteção administrativa da main** criada e atribuída ao owner para rastrear essa ação externa até fechamento;
 - enquanto proteção administrativa não for confirmada, toda escrita automatizada em `main` deve continuar com preflight de HEAD, fast-forward e `force=false`;
 - `quality` e `vercel-source-bundle/validate` agora executam em PRs para `main`;
 - o job de publish do transport branch só roda quando `github.ref == refs/heads/main`; em PR ele fica `SKIPPED` e usa somente `contents: read`;

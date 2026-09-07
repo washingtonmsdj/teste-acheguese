@@ -33,6 +33,8 @@ At the 2026-09-07 checkpoint:
 
 Therefore **do not claim branch protection is enabled** until it is verified from a GitHub account with repository administration permission.
 
+Tracking issue: **#6 — Governança — habilitar proteção administrativa da main**.
+
 This is an external governance action, not a source-code blocker for the current pre-deploy candidate.
 
 ## 3. Direct-main discipline
@@ -120,3 +122,31 @@ A real Dependabot PR was rebased after this policy was introduced and proved:
 Do not merge a dependency PR merely because Dependabot opened it.
 
 Major toolchain/action upgrades should be scheduled work. Runtime patches may be evaluated separately, but during the current pre-FASE-4 candidate freeze they remain unmerged unless they resolve a release/security blocker.
+
+## 10. Repository secret scan
+
+`quality` executes:
+
+```bash
+npm run security:scan
+```
+
+The scanner checks the **tracked current tree** for:
+
+- real `.env*` files other than `.env.example`;
+- private-key file extensions;
+- Supabase secret keys;
+- GitHub personal access tokens;
+- AWS access key IDs;
+- private-key blocks;
+- assignments to high-risk secret environment names.
+
+At the current pre-deploy checkpoint the scan is PASS.
+
+This scanner is intentionally CI-only and is excluded from the Vercel runtime payload.
+
+### Historical limitation
+
+A clean current tree is not proof that a secret never appeared in Git history.
+
+The connected GitHub integration does not expose Secret Scanning alert/history APIs. Before public launch, verify GitHub Secret Scanning / historical alerts through an administrative GitHub session. If any historical secret is found, rotate/revoke it even if the file was later deleted.
