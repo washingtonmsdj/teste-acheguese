@@ -70,6 +70,11 @@ O bundle é derivado automaticamente da `main` e serve somente como transporte p
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
+Opcionais para trocar o provider/style padrão do mapa:
+
+- `NEXT_PUBLIC_MAP_STYLE_URL`
+- `NEXT_PUBLIC_MAP_CSP_ORIGINS` — origens adicionais de tiles/sprites/glyphs, separadas por vírgula
+
 Preparação confirmada em 2026-09-07:
 
 - a URL pública do projeto Supabase v2 está disponível;

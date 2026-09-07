@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next';
 
-function httpOrigin(value: string | undefined) {
+function httpUrl(value: string | undefined) {
   if (!value?.trim()) return null;
 
   try {
@@ -13,17 +13,45 @@ function httpOrigin(value: string | undefined) {
       return null;
     }
 
-    return url.origin;
+    return url;
   } catch {
     return null;
   }
 }
 
+function httpOrigin(value: string | undefined) {
+  return httpUrl(value)?.origin ?? null;
+}
+
+function originList(value: string | undefined) {
+  if (!value?.trim()) return [];
+
+  return [
+    ...new Set(
+      value
+        .split(',')
+        .map((item) => httpOrigin(item))
+        .filter((item): item is string => Boolean(item)),
+    ),
+  ];
+}
+
+function directive(
+  name: string,
+  values: Array<string | null | undefined>,
+) {
+  return `${name} ${[
+    ...new Set(values.filter((value): value is string => Boolean(value))),
+  ].join(' ')}`;
+}
+
 const isDevelopment =
   process.env.NODE_ENV === 'development';
-const supabaseOrigin = httpOrigin(
+
+const supabaseUrl = httpUrl(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
 );
+const supabaseOrigin = supabaseUrl?.origin ?? null;
 const supabaseSocketOrigin =
   supabaseOrigin?.startsWith('https://')
     ? supabaseOrigin.replace('https://', 'wss://')
@@ -31,12 +59,17 @@ const supabaseSocketOrigin =
       ? supabaseOrigin.replace('http://', 'ws://')
       : null;
 
-function directive(
-  name: string,
-  values: Array<string | null | undefined>,
-) {
-  return `${name} ${values.filter(Boolean).join(' ')}`;
-}
+const mapOrigins = [
+  ...new Set(
+    [
+      'https://tiles.openfreemap.org',
+      httpOrigin(process.env.NEXT_PUBLIC_MAP_STYLE_URL),
+      ...originList(
+        process.env.NEXT_PUBLIC_MAP_CSP_ORIGINS,
+      ),
+    ].filter((item): item is string => Boolean(item)),
+  ),
+];
 
 const contentSecurityPolicy = [
   directive('default-src', ["'self'"]),
@@ -53,7 +86,7 @@ const contentSecurityPolicy = [
     "'self'",
     'blob:',
     'data:',
-    'https://tiles.openfreemap.org',
+    ...mapOrigins,
     supabaseOrigin,
   ]),
   directive('font-src', [
@@ -62,7 +95,7 @@ const contentSecurityPolicy = [
   ]),
   directive('connect-src', [
     "'self'",
-    'https://tiles.openfreemap.org',
+    ...mapOrigins,
     supabaseOrigin,
     supabaseSocketOrigin,
   ]),
@@ -119,12 +152,20 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'hnuhabsuzaagsjrtyzdo.supabase.co',
-      },
-    ],
+    remotePatterns: supabaseUrl
+      ? [
+          {
+            protocol:
+              supabaseUrl.protocol === 'https:'
+                ? 'https'
+                : 'http',
+            hostname: supabaseUrl.hostname,
+            port: supabaseUrl.port,
+            pathname:
+              '/storage/v1/object/sign/**',
+          },
+        ]
+      : [],
   },
   async headers() {
     return [

@@ -41,6 +41,13 @@ Injetar no deployment, sem commit:
 - `NEXT_PUBLIC_SUPABASE_URL=https://hnuhabsuzaagsjrtyzdo.supabase.co`;
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<publishable key ativa do acheguese-v2>`.
 
+Com o OpenFreeMap padrão, nenhuma variável adicional de mapa é necessária. Se um provedor/style customizado for usado:
+
+- `NEXT_PUBLIC_MAP_STYLE_URL=<style http(s)>`;
+- `NEXT_PUBLIC_MAP_CSP_ORIGINS=<origens adicionais separadas por vírgula>` para tiles/sprites/glyphs que estejam fora da origem do style.
+
+A CSP deriva automaticamente a origem do style e mantém allowlist explícita; não usar wildcard.
+
 Nunca incluir:
 
 - service-role;
@@ -110,7 +117,9 @@ Confirmar:
 - `X-Content-Type-Options: nosniff`;
 - `Referrer-Policy: strict-origin-when-cross-origin`;
 - `X-Frame-Options: DENY`;
-- ausência de `X-Powered-By`.
+- ausência de `X-Powered-By`;
+- `Content-Security-Policy` com `default-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'` e origens de mapa/Supabase esperadas;
+- `Strict-Transport-Security: max-age=31536000` no candidato HTTPS.
 
 ## 6. Rollout e SEO fail-closed
 
