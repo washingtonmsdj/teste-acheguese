@@ -244,6 +244,7 @@ with tempfile.TemporaryDirectory() as temp_dir:
         salvador_active_count = 0
         salvador_active_with_coordinates = 0
         outside_mvp = 0
+        salvador_missing_coordinates = []
         records = []
 
         with zipped.open(chosen) as source:
@@ -273,6 +274,30 @@ with tempfile.TemporaryDirectory() as temp_dir:
                 )
 
                 if latitude is None or longitude is None:
+                    salvador_missing_coordinates.append(
+                        {
+                            "cnesCode": cnes,
+                            "name": name,
+                            "sourceNeighborhood": clean_text(
+                                row.get("NO_BAIRRO")
+                            ),
+                            "street": clean_text(
+                                row.get("NO_LOGRADOURO")
+                            ),
+                            "number": clean_text(
+                                row.get("NU_ENDERECO")
+                            ),
+                            "postalCode": clean_text(
+                                row.get("CO_CEP")
+                            ),
+                            "ambulatorySus": clean_text(
+                                row.get("CO_AMBULATORIAL_SUS")
+                            ),
+                            "facilityTypeCode": clean_text(
+                                row.get("TP_UNIDADE")
+                            ),
+                        }
+                    )
                     continue
 
                 if (
@@ -436,6 +461,7 @@ manifest = {
     "salvadorActiveWithCoordinates": (
         salvador_active_with_coordinates
     ),
+    "salvadorActiveMissingCoordinates": salvador_missing_coordinates,
     "insideMvpAllHealthCount": len(records),
     "insideMvpDeferredNonSusCount": len(records) - len(sus_records),
     "outsideMvpWithCoordinates": outside_mvp,
