@@ -1,4 +1,4 @@
-import { parseHttpOrigin } from '@/lib/public-url';
+import { parseHttpOrigin } from '../public-url.ts';
 
 export type SupabasePublicConfig = {
   url: string;
