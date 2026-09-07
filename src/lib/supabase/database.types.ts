@@ -241,6 +241,7 @@ export type Database = {
           owner_id: string
           price_cents: number | null
           published_at: string | null
+          rejection_reason: string | null
           search_vector: unknown
           slug: string
           status: string
@@ -259,6 +260,7 @@ export type Database = {
           owner_id: string
           price_cents?: number | null
           published_at?: string | null
+          rejection_reason?: string | null
           search_vector?: unknown
           slug: string
           status?: string
@@ -277,6 +279,7 @@ export type Database = {
           owner_id?: string
           price_cents?: number | null
           published_at?: string | null
+          rejection_reason?: string | null
           search_vector?: unknown
           slug?: string
           status?: string

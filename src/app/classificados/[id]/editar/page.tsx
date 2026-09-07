@@ -70,7 +70,7 @@ export default async function EditClassifiedPage({
       supabase
         .from('classifieds')
         .select(
-          'id, title, description, category_id, city_id, condition, price_cents, neighborhood, status, classified_media(id, storage_key, position)',
+          'id, title, description, category_id, city_id, condition, price_cents, neighborhood, status, rejection_reason, classified_media(id, storage_key, position)',
         )
         .eq('id', id)
         .eq('owner_id', ownerId)
@@ -138,6 +138,13 @@ export default async function EditClassifiedPage({
               O anúncio voltou para rascunho e pode ser editado.
             </div>
           )}
+          {item.rejection_reason && ['rejected', 'paused'].includes(item.status) && (
+            <div className="moderationOwnerNotice">
+              <strong>O anúncio precisa de ajustes</strong>
+              <p>{item.rejection_reason}</p>
+            </div>
+          )}
+
           {query.erro && (
             <div className="authFeedback authError" role="alert">
               {query.erro === 'foto_obrigatoria'

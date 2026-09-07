@@ -1098,3 +1098,187 @@ footer .brand small { color: #b9ded4; }
     justify-items: end;
   }
 }
+
+
+.reportFeedback {
+  margin: 12px 0 0;
+  padding: 11px 12px;
+  border: 1px solid #cde9df;
+  border-radius: 12px;
+  background: #edf9f4;
+  color: var(--brand-dark);
+  font-size: .76rem;
+  font-weight: 750;
+}
+.reportDisclosure {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.reportDisclosure summary {
+  cursor: pointer;
+  color: #556375;
+  font-size: .76rem;
+  font-weight: 800;
+}
+.reportForm {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+.reportForm label,
+.moderationReasonForm label {
+  display: grid;
+  gap: 7px;
+  color: #334155;
+  font-size: .76rem;
+  font-weight: 800;
+}
+.reportForm select,
+.reportForm textarea,
+.moderationReasonForm textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 11px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+.reportForm textarea,
+.moderationReasonForm textarea {
+  resize: vertical;
+  line-height: 1.45;
+}
+.moderationOwnerNotice {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #f0d5b7;
+  border-radius: 16px;
+  background: #fff8ed;
+  color: #7d4c16;
+}
+.moderationOwnerNotice strong {
+  display: block;
+  margin-bottom: 5px;
+}
+.moderationOwnerNotice p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: .84rem;
+}
+
+.adminHero {
+  padding: 58px 0 48px;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(98,230,182,.18), transparent 28%),
+    linear-gradient(145deg, #f4faf8, #fff);
+  border-bottom: 1px solid var(--line);
+}
+.adminHero h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 8vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+.adminHero p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.adminSectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.adminSectionHeading h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  letter-spacing: -.04em;
+}
+.adminSectionHeading > span {
+  min-width: 38px;
+  min-height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #eaf8f3;
+  color: var(--brand-dark);
+  font-size: .78rem;
+  font-weight: 900;
+}
+.moderationGrid,
+.reportList {
+  display: grid;
+  gap: 14px;
+}
+.moderationCard,
+.reportCard {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: white;
+}
+.moderationCard h3,
+.reportCard h3 {
+  margin: 9px 0 8px;
+  font-size: 1.08rem;
+}
+.moderationDescription,
+.reportCard p {
+  color: #4d5b6c;
+  line-height: 1.55;
+  font-size: .84rem;
+}
+.moderationMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.moderationMeta span {
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: #f3f7f5;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 700;
+}
+.moderationActions,
+.reportActions {
+  display: grid;
+  gap: 10px;
+}
+.moderationActions form > button,
+.reportActions form > button {
+  width: 100%;
+}
+.moderationReasonForm {
+  display: grid;
+  gap: 9px;
+}
+.reportCard small {
+  color: var(--muted);
+  font-size: .68rem;
+}
+.adminEmptyState {
+  padding: 26px;
+  border: 1px dashed #ccdcd6;
+  border-radius: 18px;
+  background: rgba(255,255,255,.72);
+  color: var(--muted);
+  text-align: center;
+  font-size: .86rem;
+}
+
+@media (min-width: 900px) {
+  .moderationCard,
+  .reportCard {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+}

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { toggleFavoriteAction } from '@/app/classificados/favorite-actions';
+import { reportClassifiedAction } from '@/app/classificados/report-actions';
 import { startConversationAction } from '@/app/mensagens/actions';
 import { SupabaseClassifiedsRepository } from '@/features/classifieds/data/supabase-classifieds-repository';
 import {
@@ -17,7 +18,7 @@ import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
 type DetailPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ erro?: string }>;
+  searchParams: Promise<{ erro?: string; denuncia?: string }>;
 };
 
 async function loadPublishedClassified(slug: string) {
@@ -109,6 +110,11 @@ export default async function ClassifiedDetailPage({
     returnPath,
   );
   const conversationAction = startConversationAction.bind(
+    null,
+    item.id,
+    item.slug,
+  );
+  const reportAction = reportClassifiedAction.bind(
     null,
     item.id,
     item.slug,
@@ -212,14 +218,13 @@ export default async function ClassifiedDetailPage({
               </>
             )}
 
-            <form action={favoriteAction}>
-              <button
-                className={isFavorite ? 'ghostButton' : 'ghostButton'}
-                type="submit"
-              >
-                {isFavorite ? 'Remover dos favoritos' : '♡ Salvar nos favoritos'}
-              </button>
-            </form>
+            {!isOwner && (
+              <form action={favoriteAction}>
+                <button className="ghostButton" type="submit">
+                  {isFavorite ? 'Remover dos favoritos' : '♡ Salvar nos favoritos'}
+                </button>
+              </form>
+            )}
           </div>
 
           <div className="detailSafetyCard">
@@ -228,6 +233,63 @@ export default async function ClassifiedDetailPage({
               Não faça pagamentos antecipados sem verificar o item e o anunciante.
               O Achegue-se não mostra endereço exato publicamente.
             </p>
+
+            {!isOwner && (
+              <>
+                {query.denuncia === 'enviada' && (
+                  <div className="reportFeedback">
+                    Denúncia enviada para análise.
+                  </div>
+                )}
+                {query.denuncia === 'ja_enviada' && (
+                  <div className="reportFeedback">
+                    Você já denunciou este anúncio.
+                  </div>
+                )}
+                {query.erro === 'denuncia_invalida' && (
+                  <div className="authFeedback authError">
+                    Revise o motivo e os detalhes da denúncia.
+                  </div>
+                )}
+                {query.erro === 'denuncia_falhou' && (
+                  <div className="authFeedback authError">
+                    Não foi possível registrar a denúncia.
+                  </div>
+                )}
+
+                <details className="reportDisclosure">
+                  <summary>Denunciar este anúncio</summary>
+                  <form className="reportForm" action={reportAction}>
+                    <label>
+                      Motivo
+                      <select name="reason" defaultValue="" required>
+                        <option value="" disabled>Selecione</option>
+                        <option value="fraud">Possível fraude</option>
+                        <option value="prohibited">Item proibido</option>
+                        <option value="duplicate">Anúncio duplicado</option>
+                        <option value="wrong_category">Categoria incorreta</option>
+                        <option value="harassment">Conteúdo ofensivo/assédio</option>
+                        <option value="other">Outro motivo</option>
+                      </select>
+                    </label>
+
+                    <label>
+                      Detalhes
+                      <textarea
+                        name="details"
+                        rows={3}
+                        maxLength={2000}
+                        placeholder="Opcional. Explique o que chamou sua atenção."
+                      />
+                    </label>
+
+                    <button className="ghostButton" type="submit">
+                      Enviar denúncia
+                    </button>
+                  </form>
+                </details>
+              </>
+            )}
           </div>
         </aside>
       </section>
