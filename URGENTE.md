@@ -1177,6 +1177,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 `2e5cc7d72fd86062204e37f11f369a8fd39d457f`
 
+> Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
+
 ### Fase
 
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
@@ -1259,7 +1261,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
 - HEAD técnico `2e5cc7d7`: audit produção, lint, TypeScript, testes e build **PASS**;
 - `vercel-source-bundle` do HEAD técnico `2e5cc7d7`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=2e5cc7d72fd86062204e37f11f369a8fd39d457f`;
+- branch `deploy/vercel-bundle` é atualizada automaticamente a cada commit da `main`; antes do deployment, exigir `SOURCE_SHA == main HEAD` em vez de confiar em SHA documental estático;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 

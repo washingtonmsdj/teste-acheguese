@@ -87,7 +87,8 @@ Repository governance must not be duplicated there as if it were a second active
 
 Before a candidate is treated as release-valid:
 
-- `main` and `deploy/vercel-bundle/SOURCE_SHA` must match;
+- read the live `main` HEAD immediately before deployment;
+- `deploy/vercel-bundle/SOURCE_SHA` must equal that live HEAD;
 - `quality` must PASS;
 - `vercel-source-bundle` must PASS;
 - Supabase security advisor must have no unresolved release blocker;
