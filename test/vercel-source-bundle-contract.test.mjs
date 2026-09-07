@@ -19,12 +19,21 @@ const packageJson = JSON.parse(
   ),
 );
 
-function localLifecycleFiles() {
+function localDeploymentLifecycleFiles() {
   const result = new Set();
+  const lifecycleNames = [
+    'preinstall',
+    'install',
+    'postinstall',
+    'prepare',
+    'prebuild',
+    'build',
+    'postbuild',
+  ];
 
-  for (const command of Object.values(
-    packageJson.scripts ?? {},
-  )) {
+  for (const name of lifecycleNames) {
+    const command = packageJson.scripts?.[name];
+
     if (typeof command !== 'string') continue;
 
     for (const match of command.matchAll(
@@ -37,10 +46,10 @@ function localLifecycleFiles() {
   return [...result];
 }
 
-test('bundle inclui scripts locais exigidos pelo ciclo npm', () => {
+test('bundle inclui scripts locais exigidos pelo lifecycle de deployment', () => {
   const files = new Set(manifest.files);
 
-  for (const file of localLifecycleFiles()) {
+  for (const file of localDeploymentLifecycleFiles()) {
     assert.equal(
       files.has(file),
       true,
@@ -128,6 +137,19 @@ test('empacotador Vercel fica fora do payload de runtime', () => {
     values.includes(
       'scripts/ci/build-vercel-source-bundle.py',
     ),
+    false,
+  );
+});
+
+test('scripts exclusivos de CI não entram no payload Vercel', () => {
+  const files = new Set(manifest.files);
+
+  assert.equal(
+    files.has('scripts/ci/scan-repository-secrets.mjs'),
+    false,
+  );
+  assert.equal(
+    files.has('scripts/ci/build-vercel-source-bundle.py'),
     false,
   );
 });
