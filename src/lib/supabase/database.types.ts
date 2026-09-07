@@ -430,8 +430,22 @@ export type Database = {
             foreignKeyName: "public_places_source_id_fkey"
             columns: ["source_id"]
             isOneToOne: false
+            referencedRelation: "public_place_catalog"
+            referencedColumns: ["source_id"]
+          },
+          {
+            foreignKeyName: "public_places_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
             referencedRelation: "territory_data_sources"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_places_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "territory_fact_catalog"
+            referencedColumns: ["source_id"]
           },
           {
             foreignKeyName: "public_places_territory_id_fkey"
@@ -617,8 +631,22 @@ export type Database = {
             foreignKeyName: "territory_data_snapshots_source_id_fkey"
             columns: ["source_id"]
             isOneToOne: false
+            referencedRelation: "public_place_catalog"
+            referencedColumns: ["source_id"]
+          },
+          {
+            foreignKeyName: "territory_data_snapshots_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
             referencedRelation: "territory_data_sources"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_data_snapshots_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "territory_fact_catalog"
+            referencedColumns: ["source_id"]
           },
         ]
       }
@@ -940,6 +968,60 @@ export type Database = {
       }
     }
     Views: {
+      public_place_catalog: {
+        Row: {
+          address_text: string | null
+          attribution: string | null
+          category_key: string | null
+          category_label: string | null
+          dataset_name: string | null
+          description: string | null
+          external_id: string | null
+          fetched_at: string | null
+          geographic_path: string | null
+          id: string | null
+          latitude: number | null
+          longitude: number | null
+          name: string | null
+          neighborhood_label: string | null
+          phone: string | null
+          postal_code: string | null
+          provider_name: string | null
+          source_id: string | null
+          source_key: string | null
+          source_snapshot_id: string | null
+          source_updated_at: string | null
+          source_url: string | null
+          source_version: string | null
+          territory_id: string | null
+          territory_name: string | null
+          territory_slug: string | null
+          website: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_places_category_key_fkey"
+            columns: ["category_key"]
+            isOneToOne: false
+            referencedRelation: "public_place_categories"
+            referencedColumns: ["key"]
+          },
+          {
+            foreignKeyName: "public_places_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_places_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
+        ]
+      }
       territory_boundary_catalog: {
         Row: {
           area_m2: number | null
@@ -959,6 +1041,63 @@ export type Database = {
           updated_at: string | null
         }
         Relationships: []
+      }
+      territory_fact_catalog: {
+        Row: {
+          attribution: string | null
+          dataset_name: string | null
+          dimensions: Json | null
+          fetched_at: string | null
+          geographic_path: string | null
+          id: string | null
+          metric_key: string | null
+          metric_label: string | null
+          provider_name: string | null
+          reference_period: string | null
+          source_id: string | null
+          source_key: string | null
+          source_record_id: string | null
+          source_snapshot_id: string | null
+          source_url: string | null
+          source_version: string | null
+          territory_id: string | null
+          territory_name: string | null
+          territory_slug: string | null
+          unit: string | null
+          value_boolean: boolean | null
+          value_numeric: number | null
+          value_text: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_facts_metric_key_fkey"
+            columns: ["metric_key"]
+            isOneToOne: false
+            referencedRelation: "territory_metric_definitions"
+            referencedColumns: ["key"]
+          },
+          {
+            foreignKeyName: "territory_facts_source_snapshot_id_fkey"
+            columns: ["source_snapshot_id"]
+            isOneToOne: false
+            referencedRelation: "territory_data_snapshots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_facts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_facts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
+        ]
       }
       territory_rollout_catalog: {
         Row: {
