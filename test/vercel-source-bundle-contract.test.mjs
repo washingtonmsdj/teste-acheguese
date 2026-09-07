@@ -102,7 +102,7 @@ test('PRs executam quality e validação de source closure sem publicar transpor
   );
   assert.equal(
     bundleWorkflow.includes(
-      "if: github.event_name != 'pull_request'",
+      "if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'",
     ),
     true,
   );

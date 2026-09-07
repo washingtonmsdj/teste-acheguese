@@ -28,7 +28,7 @@ jobs:
           --output /tmp/vercel-files.json
 
   publish:
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: validate
     permissions:
       contents: write
