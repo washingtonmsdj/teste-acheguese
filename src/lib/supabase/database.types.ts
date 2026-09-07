@@ -517,6 +517,58 @@ export type Database = {
           },
         ]
       }
+      territory_rollouts: {
+        Row: {
+          activated_at: string | null
+          created_at: string
+          group_id: string | null
+          id: string
+          stage: string
+          territory_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          activated_at?: string | null
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          stage?: string
+          territory_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          activated_at?: string | null
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          stage?: string
+          territory_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_rollouts_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "territory_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_rollouts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_rollouts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
+        ]
+      }
     }
     Views: {
       territory_boundary_catalog: {
@@ -535,6 +587,20 @@ export type Database = {
           source_url: string | null
           territory_id: string | null
           territory_type: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
+      territory_rollout_catalog: {
+        Row: {
+          activated_at: string | null
+          geographic_path: string | null
+          id: string | null
+          name: string | null
+          slug: string | null
+          stage: string | null
+          target_id: string | null
+          target_kind: string | null
           updated_at: string | null
         }
         Relationships: []

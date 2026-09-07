@@ -19,5 +19,16 @@ export type {
   TerritoryBoundary,
 } from '@/core/territory/domain/boundary';
 
+export {
+  isPublicTerritoryStage,
+} from '@/core/territory/domain/rollout';
+
+export type {
+  TerritoryRollout,
+  TerritoryRolloutStage,
+  TerritoryRolloutTargetKind,
+} from '@/core/territory/domain/rollout';
+
 export type { TerritoryRepository } from '@/core/territory/ports/territory-repository';
 export type { TerritoryBoundaryRepository } from '@/core/territory/ports/territory-boundary-repository';
+export type { TerritoryRolloutRepository } from '@/core/territory/ports/territory-rollout-repository';
