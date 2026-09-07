@@ -1,77 +1,21 @@
-import { categories, highlights, stats } from '@/features/discovery/home-data';
-
-function Brand() {
-  return (
-    <a className="brand" href="#" aria-label="Achegue-se, página inicial">
-      <span className="brandMark" aria-hidden="true">♥</span>
-      <span>
-        <strong>Achegue-se</strong>
-        <small>Sua região mais próxima de você</small>
-      </span>
-    </a>
-  );
-}
+import Link from 'next/link';
+import { CategoryGrid } from '@/features/discovery/components/category-grid';
+import { Highlights } from '@/features/discovery/components/highlights';
+import { HomeHero } from '@/features/discovery/components/home-hero';
+import { categories, pillars } from '@/features/discovery/home-data';
+import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { SiteHeader } from '@/shared/layout/site-header';
+import { Brand } from '@/shared/ui/brand';
 
 export default function Home() {
   return (
     <main>
-      <header className="siteHeader">
-        <div className="container headerInner">
-          <Brand />
-          <nav className="desktopNav" aria-label="Navegação principal">
-            <a href="#explorar">Explorar</a>
-            <a href="#categorias">Categorias</a>
-            <a href="#empresas">Para empresas</a>
-            <a href="#como-funciona">Como funciona</a>
-          </nav>
-          <div className="headerActions">
-            <button className="ghostButton">Entrar</button>
-            <button className="primaryButton">Cadastrar empresa</button>
-          </div>
-          <button className="menuButton" aria-label="Abrir menu">☰</button>
-        </div>
-      </header>
+      <SiteHeader />
+      <HomeHero />
 
-      <section className="hero" id="explorar">
-        <div className="container heroGrid">
-          <div className="heroCopy">
-            <p className="eyebrow">Comércio local · pessoas reais · regiões mais fortes</p>
-            <h1>
-              Encontre o melhor da sua região, <em>em um só lugar.</em>
-            </h1>
-            <p className="heroText">
-              Descubra lojas, serviços, profissionais e oportunidades perto de você.
-              Apoie o comércio local e conecte-se com pessoas que fazem sua cidade acontecer.
-            </p>
-
-            <form className="searchBox">
-              <label className="srOnly" htmlFor="search">O que você procura?</label>
-              <input id="search" placeholder="O que você procura hoje?" />
-              <button type="button" className="locationButton">📍 Minha região</button>
-              <button type="submit" className="searchButton">Buscar</button>
-            </form>
-
-            <div className="quickCategories" aria-label="Categorias populares">
-              {categories.slice(0, 6).map((category) => (
-                <a href="#categorias" key={category.label}>
-                  <span>{category.icon}</span>{category.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <aside className="heroVisual" aria-label="Comércio local em destaque">
-            <div className="heroPhoto" role="img" aria-label="Empreendedora em seu comércio local" />
-            <div className="floatingTag tagOne">Padaria da Jú<br /><strong>a 300 m</strong></div>
-            <div className="floatingTag tagTwo">Pet Feliz<br /><strong>a 450 m</strong></div>
-            <blockquote>“Negócios locais constroem grandes histórias.”</blockquote>
-          </aside>
-        </div>
-      </section>
-
-      <section className="statsSection">
+      <section className="statsSection" aria-label="Princípios da plataforma">
         <div className="container statsGrid">
-          {stats.map(([value, label]) => (
+          {pillars.map(([value, label]) => (
             <div className="stat" key={label}>
               <strong>{value}</strong>
               <span>{label}</span>
@@ -79,7 +23,10 @@ export default function Home() {
           ))}
           <div className="mission">
             <span aria-hidden="true">🌱</span>
-            <div><strong>Juntos por cidades mais fortes.</strong><small>Conectando pessoas e negócios.</small></div>
+            <div>
+              <strong>Juntos por cidades mais fortes.</strong>
+              <small>Conectando pessoas e negócios.</small>
+            </div>
           </div>
         </div>
       </section>
@@ -91,16 +38,9 @@ export default function Home() {
             <h2>Explore por categoria</h2>
             <p>Encontre exatamente o que precisa sem perder tempo.</p>
           </div>
-          <a href="#">Ver todas →</a>
+          <Link href="/buscar">Ver todas →</Link>
         </div>
-        <div className="categoryGrid">
-          {categories.map((category) => (
-            <a className="categoryCard" href="#" key={category.label}>
-              <span>{category.icon}</span>
-              <strong>{category.label}</strong>
-            </a>
-          ))}
-        </div>
+        <CategoryGrid />
       </section>
 
       <section className="section sectionSoft">
@@ -108,25 +48,25 @@ export default function Home() {
           <div className="sectionHeading">
             <div>
               <p className="eyebrow">Descoberta local</p>
-              <h2>Destaques da sua região</h2>
-              <p>Uma primeira amostra da experiência de descoberta do Achegue-se.</p>
+              <h2>Comece pela sua região</h2>
+              <p>Uma prévia da experiência; os resultados reais virão da base local.</p>
             </div>
-            <a href="#">Ver todos →</a>
+            <Link href="/buscar">Explorar →</Link>
           </div>
-          <div className="highlightGrid">
-            {highlights.map((item) => (
-              <article className="businessCard" key={item.name}>
-                <img src={item.image} alt="" />
-                <div>
-                  <div className="rating">★ {item.rating}</div>
-                  <h3>{item.name}</h3>
-                  <p>{item.meta}</p>
-                  <a href="#">Ver detalhes →</a>
-                </div>
-              </article>
-            ))}
-          </div>
+          <Highlights />
         </div>
+      </section>
+
+      <section className="section container verticalCta">
+        <div>
+          <p className="eyebrow">Primeiro vertical do MVP</p>
+          <h2>Classificados locais, simples e seguros.</h2>
+          <p>
+            Compra e venda com contexto de região, favoritos, fotos, contato e moderação.
+            Estamos construindo este fluxo completo antes de abrir o próximo vertical.
+          </p>
+        </div>
+        <Link className="primaryButton linkButton" href="/classificados">Explorar Classificados</Link>
       </section>
 
       <section className="section container productGrid" id="como-funciona">
@@ -138,9 +78,9 @@ export default function Home() {
             rápida e confiável.
           </p>
           <div className="featureList">
-            <span>✓ Negócios relevantes</span>
-            <span>✓ Busca por proximidade</span>
-            <span>✓ Favoritos e avaliações</span>
+            <span>✓ Descoberta por região</span>
+            <span>✓ Experiência mobile-first</span>
+            <span>✓ Privacidade e moderação desde a base</span>
           </div>
         </article>
 
@@ -148,10 +88,10 @@ export default function Home() {
           <p className="eyebrow">Para empresas</p>
           <h2>Mais visibilidade para o negócio local.</h2>
           <p>
-            Presença digital, catálogo, contato, avaliações e ferramentas para transformar
-            descoberta local em novos clientes.
+            Perfis comerciais serão a próxima vertical depois que Classificados estiver
+            fechado para MVP.
           </p>
-          <button className="primaryButton">Cadastrar minha empresa</button>
+          <Link className="primaryButton linkButton" href="/empresas">Conhecer a proposta</Link>
         </article>
       </section>
 
@@ -161,22 +101,28 @@ export default function Home() {
             <p className="eyebrow">Mobile-first de verdade</p>
             <h2>O Achegue-se no seu bolso.</h2>
             <p>
-              Esta nova versão nasce primeiro para a rotina no celular e escala naturalmente
-              para tablet e desktop.
+              A experiência nasce para a rotina no celular e escala naturalmente para
+              tablet e desktop, sem duplicar produto.
             </p>
-            <div className="storeButtons">
-              <span> App Store</span>
-              <span>▶ Google Play</span>
+            <div className="storeButtons" aria-label="Aplicativos planejados">
+              <span>Web app responsivo</span>
+              <span>PWA preparada</span>
             </div>
           </div>
+
           <div className="phoneMock" aria-label="Prévia mobile do Achegue-se">
             <div className="phoneTop">Achegue-se <span>📍 Sua região</span></div>
             <div className="phoneSearch">🔎 O que você procura?</div>
             <div className="phoneCategories">
-              {categories.slice(0, 4).map((item) => <span key={item.label}>{item.icon}<small>{item.label}</small></span>)}
+              {categories.slice(0, 4).map((item) => (
+                <span key={item.label}>{item.icon}<small>{item.label}</small></span>
+              ))}
             </div>
             <strong>Destaques perto de você</strong>
-            <div className="phoneCard">🍔 <div><b>Burger do Bairro</b><small>★ 4,9 · 300 m</small></div></div>
+            <div className="phoneCard">
+              📍
+              <div><b>Descoberta local</b><small>Resultados da sua região</small></div>
+            </div>
           </div>
         </div>
       </section>
@@ -185,16 +131,15 @@ export default function Home() {
         <div className="container footerInner">
           <Brand />
           <p>Pessoas. Negócios. Comunidades mais fortes.</p>
-          <div><a href="#">Termos</a><a href="#">Privacidade</a><a href="#">Contato</a></div>
+          <div>
+            <Link href="/termos">Termos</Link>
+            <Link href="/privacidade">Privacidade</Link>
+            <Link href="/contato">Contato</Link>
+          </div>
         </div>
       </footer>
 
-      <nav className="mobileTabbar" aria-label="Navegação mobile">
-        <a href="#"><span>⌂</span>Início</a>
-        <a href="#"><span>⌕</span>Explorar</a>
-        <a href="#"><span>♡</span>Favoritos</a>
-        <a href="#"><span>☰</span>Menu</a>
-      </nav>
+      <MobileTabbar />
     </main>
   );
 }
