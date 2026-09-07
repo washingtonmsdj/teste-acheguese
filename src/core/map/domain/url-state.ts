@@ -1,5 +1,5 @@
 import type { BoundingBox } from '@/core/territory';
-import { isValidMapBounds } from './validation.ts';
+import { isSupportedMapViewport } from './validation.ts';
 
 export type MapUrlState = {
   bounds: BoundingBox;
@@ -83,11 +83,7 @@ export function parseMapUrlState(
     north,
   };
 
-  if (
-    !isValidMapBounds(bounds) ||
-    zoom < 0 ||
-    zoom > 24
-  ) {
+  if (!isSupportedMapViewport(bounds, zoom)) {
     return {
       ...fallback,
       bounds: { ...fallback.bounds },

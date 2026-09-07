@@ -49,6 +49,35 @@ test('normaliza layers, categorias e limites', () => {
   assert.equal(query.boundaryLimit, 1);
 });
 
+test('rejeita bbox amplo demais para a consulta raw de viewport', () => {
+  assert.throws(
+    () =>
+      normalizeMapViewportQuery({
+        bounds: {
+          west: -40,
+          south: -14,
+          east: -37,
+          north: -12,
+        },
+        zoom: 10,
+        layers: ['boundaries'],
+      }),
+    /map_bbox_too_large/,
+  );
+});
+
+test('rejeita zoom abaixo do contrato local do Map Core v1', () => {
+  assert.throws(
+    () =>
+      normalizeMapViewportQuery({
+        bounds: complexoBounds,
+        zoom: 9,
+        layers: ['boundaries'],
+      }),
+    /map_zoom_unsupported/,
+  );
+});
+
 test('rejeita zoom inválido', () => {
   assert.throws(
     () =>

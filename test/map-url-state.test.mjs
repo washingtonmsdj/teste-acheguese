@@ -66,6 +66,35 @@ test('cai para estado seguro quando bbox é inválido', () => {
   assert.deepEqual(state, fallback);
 });
 
+test('cai para o estado seguro em deep link amplo ou com zoom muito baixo', () => {
+  const wide = parseMapUrlState(
+    {
+      west: '-40',
+      south: '-14',
+      east: '-37',
+      north: '-12',
+      zoom: '10',
+      categories: 'health',
+    },
+    fallback,
+  );
+
+  const lowZoom = parseMapUrlState(
+    {
+      west: '-38.48',
+      south: '-13.01',
+      east: '-38.47',
+      north: '-13',
+      zoom: '5',
+      categories: 'health',
+    },
+    fallback,
+  );
+
+  assert.deepEqual(wide, fallback);
+  assert.deepEqual(lowZoom, fallback);
+});
+
 test('serializa estado com precisão limitada e categorias estáveis', () => {
   const params = formatMapUrlState({
     bounds: {
