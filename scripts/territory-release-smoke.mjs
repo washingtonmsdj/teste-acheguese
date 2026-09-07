@@ -78,6 +78,28 @@ function assertSecurityHeaders(response) {
     !response.headers.has('x-powered-by'),
     'X-Powered-By não deve estar presente',
   );
+
+  const csp =
+    response.headers.get('content-security-policy') ?? '';
+  for (const directive of [
+    "default-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    'https://tiles.openfreemap.org',
+  ]) {
+    assert(
+      csp.includes(directive),
+      `CSP sem diretiva/origem esperada: ${directive}`,
+    );
+  }
+
+  assert(
+    response.headers.get('strict-transport-security') ===
+      'max-age=31536000',
+    'HSTS ausente ou inesperado',
+  );
 }
 
 async function run() {

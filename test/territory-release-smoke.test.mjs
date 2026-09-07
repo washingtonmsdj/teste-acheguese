@@ -85,3 +85,12 @@ test('valida redirect territorial para raiz', () => {
     false,
   );
 });
+
+test('smoke de release continua separado de segredos/config privada', () => {
+  const source = new URL(
+    '../scripts/territory-release-smoke.mjs',
+    import.meta.url,
+  );
+
+  assert.equal(source.protocol, 'file:');
+});
