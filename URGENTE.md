@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `3507accecadbf159ad9181e236f24ff4ae42b84c`
+> **HEAD técnico de referência:** `280ae396d69e60b3ab932c87798ac730ffdf23b2`
 
 ---
 
@@ -454,6 +454,8 @@ O alias público ainda aponta para um deployment anterior: em 2026-09-07, `/mapa
 
 ## FASE 4 — Home Territorial
 
+**Status:** MVP SOURCE/CI CONCLUÍDO · revisão visual no novo deployment pendente.
+
 A Home deve deixar de parecer landing page/marketplace genérico.
 
 ### Ordem conceitual
@@ -470,16 +472,21 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 
 ### Entregas
 
-- [ ] redesign desktop profissional e organizado;
-- [ ] preservar boa experiência mobile;
-- [ ] seletor de território;
-- [ ] contexto Salvador/Complexo/bairro;
-- [ ] dados públicos reais;
-- [ ] mini mapa;
-- [ ] estado sem comunidade útil;
-- [ ] widening controlado para Complexo/Salvador;
-- [ ] nenhum dado fictício;
-- [ ] nenhuma promessa de feature inexistente.
+- [~] redesign desktop profissional e organizado — source concluído; revisão visual real pendente;
+- [~] preservar boa experiência mobile — composição responsiva concluída em source; revisão visual real pendente;
+- [x] seletor de território Complexo ↔ quatro bairros;
+- [x] contexto Salvador/Complexo/bairro;
+- [x] dados públicos reais agregados sem soma parcial silenciosa;
+- [x] mini mapa reutilizando o Map Core;
+- [x] deep link Home → mapa preservando bbox/zoom/camadas do escopo selecionado;
+- [x] estado sem comunidade útil e explícito;
+- [~] widening controlado bairro → Complexo concluído; Salvador aguarda readiness/dados próprios;
+- [x] nenhum dado fictício;
+- [x] nenhuma promessa de feature inexistente;
+- [x] menu e busca genérica limpos de Empresas/Gastronomia/categorias futuras;
+- [x] adapter territorial com leitura em lote para evitar N consultas por bairro;
+- [x] lint + TypeScript + testes + build + bundle;
+- [ ] revisão visual real da Home e do mapa no deployment contendo este HEAD.
 
 ---
 
@@ -910,7 +917,7 @@ Branch:
 
 HEAD técnico validado antes desta atualização documental:
 
-`3507accecadbf159ad9181e236f24ff4ae42b84c`
+`280ae396d69e60b3ab932c87798ac730ffdf23b2`
 
 ## Supabase
 
@@ -1077,27 +1084,35 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A próxima frente continua não sendo Community, Empresas, Gastronomia ou Mobilidade.
+A fundação territorial necessária para uma Home útil já existe em source e CI. O próximo gate não é abrir Community nem iniciar Empresas.
 
 ## Próximo passo
 
-> **Iniciar FASE 4 — Home Territorial em source, consumindo somente dados reais já verificados e o mini-mapa reutilizável, enquanto a revisão visual de produção do Map Core permanece como gate paralelo de deployment.**
+> **Publicar o primeiro deployment contendo Map Core v1 + Home Territorial e executar uma revisão visual/runtime real antes de avançar para FASE 5.**
+
+Enquanto o blocker temporário da Vercel permanecer ativo, somente hardening de source coerente com essa validação é permitido.
 
 Sequência imediata:
 
-1. criar/readaptar o adapter server-side da Home sobre `territory_fact_catalog`, `public_place_catalog` e boundaries canônicos;
-2. apresentar contexto do Complexo e dos quatro bairros sem alterar rollout — todos permanecem `data_preparation`;
-3. substituir a Home genérica/marketplace-first por uma experiência território-first;
-4. mostrar métricas públicas reais com fonte/ano;
-5. integrar `TerritoryMiniMap` e deep link para `/mapa`;
-6. criar estado útil para ausência de Community, sem inventar posts, alertas, eventos ou usuários;
-7. preservar mobile-first e elevar o desktop para uma composição editorial/profissional;
-8. passar lint + TypeScript + testes + build + bundle;
-9. quando a cota Vercel permitir, publicar o HEAD atual e executar revisão visual real de `/mapa` e da nova Home.
+1. manter `main` verde e sem regressões enquanto aguarda o reset da cota Vercel;
+2. no primeiro deployment disponível, publicar o HEAD territorial atual sem alterar arquitetura;
+3. validar em navegador desktop e mobile:
+   - `/` no escopo do Complexo;
+   - `/?bairro=nordeste-de-amaralina`;
+   - `/?bairro=santa-cruz`;
+   - `/?bairro=vale-das-pedrinhas`;
+   - `/?bairro=chapada-do-rio-vermelho`;
+   - `/mapa` e deep links vindos da Home;
+4. verificar carregamento real de métricas, sources, boundaries e 20 locais;
+5. verificar estados de erro/fallback sem dados fictícios;
+6. corrigir qualquer problema visual, runtime, acessibilidade ou responsive encontrado na Surface;
+7. rerodar lint + TypeScript + testes + build + bundle;
+8. confirmar Supabase security advisors;
+9. somente após esse gate considerar FASE 4 release-validada e avaliar abertura da FASE 5 — Community.
 
 ### Regra de avanço
 
-A FASE 4 pode avançar em source/CI sem depender do blocker temporário da Vercel. O produto territorial, porém, não será declarado **release-validado** até existir novo deployment e inspeção visual da Surface.
+**Community continua bloqueada até a revisão visual/runtime do novo deployment.** O limite temporário da Vercel não autoriza pular o gate nem criar workaround arquitetural.
 
 ---
 
@@ -1105,58 +1120,61 @@ A FASE 4 pode avançar em source/CI sem depender do blocker temporário da Verce
 
 ### HEAD técnico de referência
 
-`3507accecadbf159ad9181e236f24ff4ae42b84c`
+`280ae396d69e60b3ab932c87798ac730ffdf23b2`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI concluída · FASE 4 é a próxima frente de código.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI concluída · FASE 4 MVP source/CI concluído, aguardando validação visual/runtime em deployment.**
 
 ### Concluído recentemente
 
-- Censo 2022: 12 fatos verificados e públicos para os quatro bairros;
-- educação: 14 escolas oficiais verificadas por geometria/PostGIS;
-- saúde: fonte atual do CNES validada, 52 estabelecimentos encontrados no Complexo e 6 unidades com atendimento SUS promovidas para a camada de utilidade territorial;
-- distribuição SUS: Nordeste de Amaralina 2, Santa Cruz 1, Vale das Pedrinhas 3 e Chapada do Rio Vermelho 0;
-- `territory_fact_catalog` e `public_place_catalog` com provenance;
-- Map Core provider-agnostic e queries PostGIS por bbox/viewport;
-- contrato público provado com 4 boundaries e 20 locais — 14 educação + 6 saúde SUS;
-- MapLibre GL JS 6.7.0 fixado no lockfile;
-- OpenFreeMap como provider padrão, sem acoplar o Core ao fornecedor;
-- `/mapa` com layers, filtros, clustering, request cancellation, lista textual, cache HTTP e fallback de configuração;
-- deep links preservam bbox, zoom e categorias;
-- bug que sobrescrevia o zoom do deep link com `fitBounds` foi removido;
-- UX mobile reorganizada para mostrar o mapa antes da lista de resultados;
-- lista de locais agora pode focalizar pontos no mapa por controle acessível;
-- reduced motion respeitado nas animações de navegação;
-- mini-mapa reutilizável `TerritoryMiniMap` criado sobre os mesmos contratos do Map Core;
-- CI do commit `3507acce`: lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do commit `3507acce`: **PASS**;
-- Supabase security advisors: **0 lints**;
-- os quatro bairros e o Complexo continuam em `data_preparation`; nenhum território foi lançado por acidente.
+- Map Core v1 permanece verde com viewport/bbox, boundaries, public places, clustering, filtros, cache e deep links;
+- mini-mapa reutilizável `TerritoryMiniMap` está disponível para qualquer consumidor territorial;
+- Home antiga marketplace-first foi substituída por uma Home território-first;
+- a Home resolve canonicamente Salvador → TerritoryGroup do Complexo → quatro bairros;
+- seleção por `?bairro=<slug>` é validada somente contra membros reais do grupo;
+- métricas da Home vêm de `territory_fact_catalog`, sem valores hardcoded;
+- população e domicílios do Complexo são agregados somente quando todos os bairros possuem o fato necessário;
+- escolas e Saúde SUS vêm de `public_place_catalog`;
+- leitura de fatos/lugares ganhou métodos em lote para evitar N consultas por bairro;
+- rollout real é lido do `territory_rollout_catalog` e continua exibido como preparação;
+- Complexo e quatro bairros foram reconfirmados no Supabase como `data_preparation`;
+- Home possui seletor Complexo/bairro, métricas reais, mini-mapa, provenance e estado honesto sem Community;
+- deep link Home → `/mapa` preserva bbox, zoom e camadas do escopo selecionado;
+- menu deixou de anunciar Empresas antes da hora;
+- `/buscar` deixou de exibir categorias futuras como se estivessem disponíveis;
+- componentes antigos marketplace-first de `src/features/discovery` foram removidos;
+- commit base da Home `c60f671f`: lint, TypeScript, testes, build e bundle **PASS**;
+- cleanup/hardening `280ae396`: lint, TypeScript, testes, build e bundle **PASS**;
+- Supabase security advisors permanecem com **0 lints**;
+- nenhum rollout territorial foi alterado.
 
 ### Blocker de release
 
-- o deployment público atual é anterior ao Map Core v1;
-- em 2026-09-07, `https://teste-acheguese.vercel.app/mapa` ainda retornava 404;
+- o deployment público atual ainda é anterior ao Map Core/Home territorial;
+- em 2026-09-07, `https://teste-acheguese.vercel.app/mapa` retornava 404;
 - a conta Vercel Hobby permanece sob o blocker temporário de cota já registrado, com reset informado para **2026-09-08 03:23:07 America/Bahia**;
+- portanto a revisão visual real da nova Surface ainda não pode ser declarada concluída;
 - não criar workaround arquitetural para contornar esse limite.
 
 ### Próxima ação
 
-**FASE 4 — Home Territorial: dados reais + contexto territorial + mini-mapa + estados vazios honestos, seguida de CI e revisão visual no primeiro deployment disponível.**
+**Novo deployment → revisão visual/runtime desktop + mobile de Home/Mapa → correções encontradas → quality gate → somente então fechar FASE 4 e considerar Community.**
 
 ### Não repetir
 
-- não reiniciar Censo, Educação ou CNES já verificados;
+- não reconstruir Censo, Educação ou CNES já verificados;
 - não inferir território por rótulo textual de bairro; geometria/PostGIS é autoridade;
 - não usar a camada municipal de saúde de 2022 como atual;
-- não reintroduzir C002/C003/C004/C018 sem semântica/unidade comprovadas;
+- não reintroduzir Home marketplace-first;
+- não reintroduzir `features/discovery` como superfície principal;
+- não mostrar Empresas/Gastronomia/Beleza/Mercados/etc. como categorias ativas sem módulo e dados reais;
 - não carregar dataset inteiro no navegador;
-- não quebrar o contrato de deep link do mapa;
+- não quebrar deep links do mapa;
 - não lançar os territórios antes do readiness/rollout explícito;
 - não iniciar Empresas/Gastronomia/Mobilidade;
 - não aprofundar Classificados;
-- não criar Community antes da Home territorial base;
+- não iniciar Community antes do gate visual/runtime de Map/Home;
 - não inventar posts, alertas, eventos, avaliações, empresas ou usuários;
 - não fazer requests críticos a APIs públicas externas no request do usuário.
 

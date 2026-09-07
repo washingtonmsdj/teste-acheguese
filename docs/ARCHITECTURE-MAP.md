@@ -69,10 +69,11 @@ Esses itens serão movidos para Core/adapters somente quando isso reduzir acopla
 ### Module
 - `src/modules/classifieds/**`
 
-### Experiência temporária
-- `src/features/discovery/**`
+### Surface territorial
+- `src/features/territory-home/**`
+- `src/integrations/map/**`
 
-Discovery permanece temporariamente em `features` até a FASE 4, quando a Home for reconstruída como superfície territorial. Não promover sua estrutura atual a contrato permanente.
+A antiga `src/features/discovery/**` foi removida na FASE 4. A Home agora é uma superfície territorial server-side que compõe Territory Core, Territory Data Platform e Map Core sem criar um segundo sistema de localização ou dados.
 
 ## Dívida conhecida e intencional
 

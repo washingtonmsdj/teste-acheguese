@@ -70,16 +70,23 @@
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual no novo deployment — bloqueada apenas pelo deployment Vercel ainda estar no source antigo.
 
-## FASE 4 — Home Territorial — PRÓXIMA FRENTE
+## FASE 4 — Home Territorial — MVP SOURCE/CI CONCLUÍDO
 
-- [ ] redesign desktop profissional;
-- [ ] contexto território/grupo;
-- [ ] dados públicos reais;
-- [ ] integrar o `TerritoryMiniMap` já disponível;
-- [ ] “agora no bairro”;
-- [ ] estados vazios úteis;
-- [ ] widening bairro → Complexo → Salvador;
-- [ ] zero recurso fictício.
+- [~] redesign desktop profissional — source concluído; browser review pendente;
+- [~] experiência mobile — source concluído; browser review pendente;
+- [x] contexto Salvador/Complexo/bairro;
+- [x] seletor Complexo ↔ quatro bairros;
+- [x] dados públicos reais;
+- [x] `TerritoryMiniMap`;
+- [x] deep link para o mapa preservando contexto;
+- [x] “agora no bairro” sem feed inventado;
+- [x] estados vazios úteis;
+- [~] widening bairro → Complexo concluído; Salvador aguarda readiness/dados;
+- [x] zero recurso fictício;
+- [x] menu/busca sem módulos futuros fingindo disponibilidade;
+- [x] adapter em lote para fatos/lugares;
+- [x] lint + TypeScript + testes + build + bundle;
+- [ ] revisão visual/runtime do novo deployment.
 
 ## FASE 5 — Community
 
