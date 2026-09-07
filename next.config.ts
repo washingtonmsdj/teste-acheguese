@@ -148,6 +148,24 @@ const securityHeaders = [
       ]),
 ];
 
+const privateNoStoreHeaders = [
+  {
+    key: 'Cache-Control',
+    value: 'private, no-store, max-age=0, must-revalidate',
+  },
+];
+
+const privateRoutePatterns = [
+  '/admin/:path*',
+  '/auth/:path*',
+  '/entrar',
+  '/classificados/meus',
+  '/classificados/novo',
+  '/classificados/:id/editar',
+  '/favoritos',
+  '/mensagens/:path*',
+] as const;
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -169,6 +187,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      ...privateRoutePatterns.map((source) => ({
+        source,
+        headers: privateNoStoreHeaders,
+      })),
       {
         source: '/(.*)',
         headers: securityHeaders,

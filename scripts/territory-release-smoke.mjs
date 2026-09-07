@@ -136,6 +136,20 @@ async function run() {
   }
   console.log('PASS robots.txt');
 
+  const loginResponse = await request('/entrar');
+  assert(
+    loginResponse.status === 200,
+    `/entrar: HTTP ${loginResponse.status}`,
+  );
+  const loginCacheControl =
+    loginResponse.headers.get('cache-control') ?? '';
+  assert(
+    loginCacheControl.includes('private') &&
+      loginCacheControl.includes('no-store'),
+    `/entrar sem Cache-Control privado/no-store: ${loginCacheControl}`,
+  );
+  console.log('PASS protected route no-store');
+
   const sitemapResponse = await request('/sitemap.xml');
   const sitemap = await sitemapResponse.text();
   assert(
