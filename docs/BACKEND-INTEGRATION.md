@@ -1,49 +1,36 @@
 # Backend integration checkpoint
 
-## Status
+## Estado atual
 
-The application code now includes the official Supabase SSR client boundary, but it is intentionally **not activated** because the new Supabase project could not yet be created.
+O backend do novo Achegue-se está criado no Supabase isolado `acheguese-v2` e o código já contém a integração SSR.
 
-The organization currently has reached its free active-project limit. The existing legacy project named `acheguese` remains untouched.
+### Implementado
+- clientes Supabase tipados;
+- proxy de sessão;
+- login/cadastro por e-mail e senha;
+- callback de confirmação;
+- logout;
+- validação server-side dos dados do anúncio;
+- criação de rascunho;
+- edição;
+- Storage privado;
+- upload/removal de imagens via cliente com RLS;
+- painel "Meus anúncios";
+- envio e retirada da revisão;
+- migrations e tipos sincronizados com o banco.
 
-## Installed integration boundary
+### Segurança
+- RLS em tabelas expostas;
+- schemas privados sem acesso direto;
+- nenhuma secret key no frontend;
+- funções de workflow usam `SECURITY INVOKER`;
+- transições são guardadas por trigger no banco;
+- `anon` não executa RPCs de workflow;
+- security advisors sem findings.
 
-- `src/lib/supabase/config.ts`
-- `src/lib/supabase/client.ts`
-- `src/lib/supabase/server.ts`
-- `src/lib/supabase/auth.ts`
-
-The clients require:
-
+### Pendente para teste end-to-end
+A integração ainda precisa das variáveis públicas no ambiente de deploy:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-No secret/service-role key belongs in the browser.
-
-## Authentication rule
-
-Server authorization must use validated claims through `supabase.auth.getClaims()`.
-
-A Next.js request proxy for token refresh will only be enabled after the dedicated Supabase project exists, so a missing environment cannot break the public shell.
-
-## Classified validation
-
-`src/features/classifieds/domain/classified-form.ts` validates untrusted form input before persistence:
-
-- title length;
-- description length;
-- canonical category;
-- canonical condition;
-- BRL price converted to integer cents;
-- city identifier;
-- neighborhood length.
-
-The next backend checkpoint is:
-
-1. free/create an isolated Supabase project;
-2. configure publishable project settings;
-3. generate the real migration from the reviewed SQL draft;
-4. run RLS tests and database advisors;
-5. generate database types;
-6. enable SSR refresh proxy;
-7. wire authenticated create/edit flows.
+O projeto Vercel antigo `acheguese` não deve ser reutilizado para esta reconstrução.

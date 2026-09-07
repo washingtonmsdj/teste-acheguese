@@ -7,8 +7,7 @@
 - [x] Tokens visuais e responsividade mobile-first.
 - [x] Documento de arquitetura.
 - [x] Contratos de erro/loading/not-found.
-- [x] Script local de quality gate (`npm run check`).
-- [x] `package-lock.json` gerado em runner Node 24 e versionado.
+- [x] `package-lock.json` reproduzível.
 - [x] Quality gate público: `npm ci` → lint → typecheck → build.
 - [ ] Observabilidade externa.
 
@@ -17,65 +16,58 @@
 - [x] Componentização de header, hero, busca, categorias e destaques.
 - [x] Navegação mobile com estado ativo.
 - [x] Rotas estáveis para busca, Classificados, Empresas, Favoritos, login e menu.
-- [x] `next/image` para imagens de conteúdo.
+- [x] `next/image` para conteúdo visual.
 - [x] Manifest, robots e sitemap condicionado à URL de produção.
 - [x] Remoção de links públicos mortos e métricas fictícias.
 - [ ] Revisão visual fina em navegador real.
-- [ ] Localização real.
-- [ ] Busca com dados persistidos.
+- [ ] Localização real do usuário.
+- [ ] Busca ligada aos dados persistidos.
 - [ ] SEO local e dados estruturados.
 - [ ] Acessibilidade automatizada.
 
 ## Fase 2 — Classificados MVP — PRIMEIRO VERTICAL COMPLETO
 Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
 
-- [x] Estados e tipos de domínio.
+### Fundação concluída
+- [x] Projeto Supabase isolado `acheguese-v2` em `sa-east-1`.
+- [x] Migrations versionadas e histórico alinhado com o banco.
+- [x] RLS e grants mínimos.
+- [x] Security advisors: 0 lints.
+- [x] Índices principais de feed, owner, busca, favoritos e denúncias.
+- [x] Tipos TypeScript gerados do schema real.
+- [x] `@supabase/ssr` + proxy de refresh de sessão.
+- [x] Auth por e-mail/senha e callback implementados.
 - [x] Taxonomia inicial.
-- [x] Contrato de repositório isolado.
-- [x] Landing de Classificados com busca/filtros por URL.
-- [x] Estado vazio de produto sem dados fictícios.
-- [x] Fluxo visual de novo anúncio.
-- [x] Validação server-side de entrada modelada.
-- [x] Contrato SQL draft com RLS, índices e dados privados separados.
-- [x] Boundary oficial de Supabase SSR preparado e inativo sem configuração.
-- [ ] Criar projeto Supabase novo e isolado.
-- [ ] Aplicar migration revisada e executar advisors.
-- [ ] Gerar tipos do banco.
-- [ ] Ativar refresh de sessão SSR.
-- [ ] Autenticação e autorização.
-- [ ] Criar/editar/remover anúncio.
-- [ ] Fotos/object storage.
-- [ ] Lista persistida + busca + paginação cursor-based.
-- [ ] Detalhe do anúncio.
-- [ ] Localização.
+- [x] Salvador/BA como primeiro território real.
+- [x] Bucket privado de imagens.
+- [x] MIME restrito + 8 MB por imagem + até 10 posições.
+- [x] Criação de rascunho.
+- [x] Edição de rascunho/pausado/rejeitado.
+- [x] Upload e remoção de fotos com ownership.
+- [x] Painel "Meus anúncios".
+- [x] Envio para revisão exigindo ao menos uma foto.
+- [x] Conteúdo bloqueado enquanto está em revisão.
+- [x] Retirada da revisão para voltar a rascunho.
+- [x] `anon` sem EXECUTE nas funções de workflow.
+
+### Restante para MVP
+- [ ] Ativar URL + publishable key no ambiente de deploy isolado.
+- [ ] Teste real de cadastro/login/callback em navegador.
+- [ ] Listagem pública persistida + filtros + paginação cursor-based.
+- [ ] Página pública de detalhe do anúncio.
 - [ ] Favoritos.
 - [ ] Contato seguro.
-- [ ] Moderação/denúncia.
-- [ ] Painel "Meus anúncios".
-- [ ] SEO.
+- [ ] Fluxo administrativo de moderação e publicação.
+- [ ] Denúncia pela interface + painel de revisão.
+- [ ] Pausar/vendido/arquivar/excluir com UX completa.
+- [ ] SEO de anúncios e categorias.
 - [ ] Analytics/observabilidade.
-- [ ] Testes E2E.
-- [ ] Critérios de lançamento.
-
-### Blocker atual
-
-A organização Supabase `Tonecos` atingiu o limite de 2 projetos gratuitos ativos.
-Os dois projetos ativos existentes não foram alterados.
-O novo projeto `acheguese-v2` só pode ser criado após liberar uma vaga ou alterar o plano.
+- [ ] Testes de integração/E2E.
+- [ ] Critérios finais de lançamento.
 
 ## Fase 3 — Empresas MVP
-Somente inicia quando Classificados atingir Definition of Done.
-
-- [ ] Perfil comercial.
-- [ ] Categorias.
-- [ ] Busca e proximidade.
-- [ ] Horários e contatos.
-- [ ] Galeria/catálogo.
-- [ ] Avaliações.
-- [ ] Reivindicação/verificação.
-- [ ] Painel do negócio.
+Só inicia quando Classificados atingir Definition of Done.
 
 ## Regra de execução
-
 Uma vertical só é considerada pronta quando cobre:
 produto + mobile + desktop + dados + segurança + moderação + SEO + observabilidade + testes + operação.

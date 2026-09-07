@@ -1,58 +1,62 @@
-# Supabase — plano de integração
+# Supabase — estado da integração
 
-## Estado
+## Projeto canônico
 
-O novo Achegue-se **ainda não está conectado a um projeto Supabase**.
+- Nome: `acheguese-v2`
+- Região: `sa-east-1`
+- Ref: `hnuhabsuzaagsjrtyzdo`
+- Projeto legado `acheguese`: separado e não reutilizado.
 
-Existe um projeto antigo chamado `acheguese` na conta. Ele não será reutilizado ou modificado por esta reconstrução.
+## Integração
 
-## Estratégia
+O código usa:
+- `@supabase/supabase-js`
+- `@supabase/ssr`
+- sessão em cookies;
+- `proxy.ts` para refresh;
+- `getClaims()` para autorização server-side.
 
-Quando chegar a hora de conectar o backend:
+Variáveis exigidas no runtime:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-1. criar um novo projeto Supabase dedicado;
-2. usar região compatível com o público inicial;
-3. instalar versões pinadas de `@supabase/supabase-js` e `@supabase/ssr`;
-4. gerar e commitar lockfile;
-5. configurar:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-6. usar `@supabase/ssr` para sessões em cookies no Next.js;
-7. usar `proxy.ts` para refresh de sessão;
-8. em servidor, proteger acesso com `supabase.auth.getClaims()`, não confiar em `getSession()`;
-9. aplicar schema somente por migration criada pelo Supabase CLI;
-10. executar testes de RLS + security/performance advisors.
+A publishable key é a única chave pública da aplicação. Secret/service-role nunca entra em `NEXT_PUBLIC_*`.
 
-## Chaves
+## Banco
 
-O frontend recebe somente a **publishable key**.
+O histórico aplicado está em `supabase/migrations`.
 
-Nenhuma secret key ou `service_role` deve ser exposta em variável `NEXT_PUBLIC_*`.
-
-## Dados
-
-O primeiro schema é descrito em:
-
-`infra/postgres/classifieds-v1.sql`
-
-Esse arquivo é draft. Não é migration.
+Estado atual:
+- cidades;
+- categorias;
+- classificados;
+- mídia;
+- favoritos;
+- denúncias;
+- localização exata em schema privado;
+- moderação interna em schema privado;
+- workflow de revisão protegido por RLS + trigger de transição.
 
 ## Storage
 
-Fotos de Classificados devem ficar em bucket privado até a estratégia de entrega pública ser fechada.
-
-Formato planejado de chave:
-
-`<owner-id>/<classified-id>/<media-id>.<ext>`
-
-Uploads devem validar MIME, tamanho, quantidade e ownership. Não usar `upsert` no fluxo normal.
+Bucket: `classified-media`
+- privado;
+- máximo 8 MB por objeto;
+- JPG, PNG, WebP e AVIF;
+- caminho `<owner-id>/<classified-id>/<uuid>.<ext>`;
+- sem overwrite/upsert no fluxo normal;
+- leitura pública somente quando o anúncio estiver publicado e a mídia estiver registrada;
+- owner pode gerenciar apenas mídia de anúncio editável.
 
 ## Segurança
 
-- RLS em todas as tabelas expostas.
-- Grants mínimos.
-- Policies separadas para SELECT / INSERT / UPDATE / DELETE.
-- UPDATE sempre com `USING` e `WITH CHECK`.
-- autorização nunca baseada em `user_metadata`.
-- localização exata fica em schema privado.
-- notas internas de moderação ficam em schema privado.
+Última validação:
+- security advisors: 0 lints;
+- funções públicas de review: `SECURITY INVOKER`;
+- `anon_execute=false`;
+- `authenticated_execute=true`;
+- performance advisors exibem apenas índices ainda não usados, esperado em banco sem tráfego.
+
+## Próxima ativação
+
+Criar um projeto Vercel novo para este repositório, configurar as duas variáveis públicas e validar Auth + rascunho + upload no navegador.
