@@ -4,6 +4,7 @@ import {
   TerritoryHomeUnavailable,
 } from '@/features/territory-home/components/territory-home';
 import { loadTerritoryHomeData } from '@/features/territory-home/server/load-territory-home';
+import type { TerritoryHomeData } from '@/features/territory-home/types';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 
 export const dynamic = 'force-dynamic';
@@ -39,14 +40,16 @@ export default async function Home({
     (await searchParams).bairro,
   );
 
+  let data: TerritoryHomeData;
+
   try {
-    const data = await loadTerritoryHomeData(
+    data = await loadTerritoryHomeData(
       supabase,
       requestedNeighborhoodSlug,
     );
-
-    return <TerritoryHome data={data} />;
   } catch {
     return <TerritoryHomeUnavailable />;
   }
+
+  return <TerritoryHome data={data} />;
 }
