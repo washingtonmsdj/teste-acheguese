@@ -168,7 +168,8 @@ Usar pelo menos três identidades reais de teste controladas:
 Arquivos rollback-safe:
 
 - `supabase/smoke/anon-rls.sql`;
-- `supabase/smoke/authenticated-rls.sql`.
+- `supabase/smoke/authenticated-rls.sql`;
+- `supabase/smoke/grants-contract.sql`.
 
 ### 8.1 Anônimo
 
@@ -197,7 +198,18 @@ Ele prova:
 - receipt de moderação é gravado;
 - após `ROLLBACK`, contagens temporárias voltam a zero.
 
-### 8.3 Regra operacional
+### 8.3 Grants/RPCs
+
+`grants-contract.sql` é read-only e falha se:
+
+- `anon` ganhar escrita em tabela pública;
+- `authenticated` ganhar escrita fora do domínio Classificados;
+- `private` ficar utilizável/criável por client roles;
+- a superfície EXECUTE de `anon/authenticated` mudar sem atualização explícita;
+- alguma função `SECURITY DEFINER` ficar executável por client role;
+- funções expostas/privilegiadas perderem o `search_path` fechado.
+
+### 8.4 Regra operacional
 
 Para **E2E real de produto**, criar usuários apenas pelo fluxo normal do Supabase Auth. Inserção direta em `auth.users` é permitida exclusivamente dentro deste smoke transacional, rollback-safe e canônico.
 

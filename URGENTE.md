@@ -1239,6 +1239,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - fontes oficiais Censo/Educação/CNES foram revalidadas no run `34155391384`: hashes normalizados e contagens continuam idênticos às receipts promovidas; decisão explícita **NO DB MUTATION / NO MIGRATION / NO ROLLOUT CHANGE**;
 - receipt de revalidação registrada em `docs/data/receipts/2026-09-07-territory-source-revalidation.md`;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
+- inventário global de grants/RPCs confirmou: `anon` SELECT-only em tabelas públicas, `authenticated` escreve somente no domínio Classificados, schema `private` sem USAGE/CREATE para clients e nenhuma função `SECURITY DEFINER` executável por `anon/authenticated`;
+- `supabase/smoke/grants-contract.sql` versionado para detectar ampliação futura de grants/RPCs/search_path;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
 - favoritos foram alinhados ao mesmo contrato temporal de publicação: `status='published'` + `published_at <= now()`;
