@@ -37,7 +37,7 @@ jobs:
         run: node scripts/territory-data/probe-census-complexo.mjs
 
       - name: Upload census probe artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: territory-census-complexo-probe
           path: territory-data-output
@@ -63,7 +63,7 @@ jobs:
         run: node scripts/territory-data/probe-public-places-sources.mjs
 
       - name: Upload source metadata artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: territory-public-places-source-metadata
           path: territory-public-places-metadata
@@ -89,7 +89,7 @@ jobs:
         run: node scripts/territory-data/probe-education-complexo.mjs
 
       - name: Upload education probe artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: territory-education-complexo-probe
           path: territory-education-output
@@ -111,7 +111,7 @@ jobs:
         run: python3 scripts/territory-data/probe-health-cnes-metadata.py
 
       - name: Upload CNES metadata artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: territory-health-cnes-metadata
           path: territory-health-cnes-metadata
@@ -133,7 +133,7 @@ jobs:
         run: python3 scripts/territory-data/probe-health-cnes-complexo.py
 
       - name: Upload CNES Complexo artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: territory-health-cnes-complexo-probe
           path: territory-health-cnes-output
