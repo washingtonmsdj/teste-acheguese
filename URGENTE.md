@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`fb995f6ebd00019c32203f4b2f29e9b87ac1c1d0`
+`9d1dceb64fdded8ef49e9699ae1d7d7f21d597e3`
 
 ### Fase
 
@@ -1195,10 +1195,16 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - `.env.example` aponta para a URL pública canônica do projeto `acheguese-v2`, mantendo somente a publishable key fora do Git;
 - `manifest.webmanifest` deixou de usar a descrição marketplace-first e agora segue o posicionamento territorial;
 - erro real `/favicon.ico 404` corrigido com `public/favicon.svg`, metadata explícita e redirect compatível;
+- preflight de env pública executa antes de `dev` e `build`, lendo `.env`, `.env.<mode>`, `.env.local` e `.env.<mode>.local` com precedência compatível;
+- se qualquer variável Supabase estiver presente, URL + publishable key passam a ser obrigatórias como par completo;
+- URL Supabase e `NEXT_PUBLIC_SITE_URL` agora aceitam somente origem HTTP/HTTPS canônica, sem path/query/hash/credenciais;
+- provider de mapa customizado também é validado antes de subir dev/build;
+- preflight não imprime valores de credencial e continua permitindo CI sem configuração pública;
+- scripts do preflight foram incluídos na source closure Vercel e o contrato de lifecycle continua protegido por teste;
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
-- HEAD técnico `fb995f6e`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `fb995f6e`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=fb995f6ebd00019c32203f4b2f29e9b87ac1c1d0`;
+- HEAD técnico `9d1dceb6`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `9d1dceb6`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=9d1dceb64fdded8ef49e9699ae1d7d7f21d597e3`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
@@ -1218,6 +1224,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - não reconstruir Censo, Educação ou CNES;
 - não relaxar guards públicos de bbox/categorias;
 - não expor service-role/secret key no Vercel;
+- não contornar o preflight de env para fazer dev/build subir com configuração inválida;
 - não aprovar install script transitivo dev-only sem necessidade comprovada;
 - não remover CSP/HSTS para “fazer o mapa funcionar”; ajustar somente as origens explícitas do provider quando necessário;
 - não remover índices por `unused_index` sem tráfego real;

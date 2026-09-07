@@ -17,6 +17,8 @@ O projeto legado `acheguese` não participa deste release.
 
 ## 2. Gates obrigatórios antes do deployment
 
+Antes dos gates de CI, a própria source executa `scripts/validate-public-env.mjs` em `prebuild`. Quando as envs públicas forem injetadas no candidato, qualquer par Supabase incompleto ou URL pública inválida deve bloquear o build com erro explícito.
+
 O candidato só pode ser publicado quando:
 
 1. `main` está no HEAD esperado;

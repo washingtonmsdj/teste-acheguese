@@ -42,6 +42,7 @@ Para esse HEAD:
 - pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
 - logout customizado protegido contra Origin não confiável;
 - smoke territorial pós-deploy disponível fora do bundle de produção;
+- preflight de env pública roda antes de `dev`/`build`, fail-fast para par Supabase incompleto ou URLs inválidas;
 - production dependency audit: **0 vulnerabilidades**;
 - CSP + HSTS configurados sem nonce;
 - Map CSP/Image allowlists derivadas de configuração pública, sem wildcard;
