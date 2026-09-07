@@ -179,3 +179,14 @@ Adicionar território deve ser operação de **dados + readiness + rollout**, e 
 - [ ] consolidação/rename dos repositórios somente após FASE 4 release-validada.
 
 Não criar um terceiro repositório para reiniciar o produto novamente.
+
+## Repository release governance
+
+- [x] SECURITY policy versionada;
+- [x] CODEOWNERS versionado;
+- [x] Dependabot para npm + GitHub Actions;
+- [x] PR quality/source-closure gates;
+- [x] transport publish restrito à `main`;
+- [x] PR real provou publish SKIPPED;
+- [ ] proteção administrativa/ruleset da `main` deve ser confirmada/aplicada por conta com permissão administrativa;
+- [ ] Dependabot PRs atuais permanecem congelados até FASE 4 release-validada, salvo blocker de segurança.

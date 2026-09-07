@@ -97,3 +97,26 @@ Before a candidate is treated as release-valid:
 - visual/runtime/Auth/Classificados E2E must PASS.
 
 See the canonical runbooks for the complete gate.
+
+## 9. Pull request validation
+
+PRs targeting `main` must execute:
+
+- `quality / validate`;
+- `vercel-source-bundle / validate`.
+
+The source-bundle workflow separates read-only validation from mutation:
+
+- PR: `validate` only, `contents: read`;
+- push/dispatch on `main`: `validate` + `publish`;
+- `publish` is additionally guarded by `github.ref == 'refs/heads/main'`.
+
+A real Dependabot PR was rebased after this policy was introduced and proved:
+
+- quality PASS;
+- bundle validation PASS;
+- publish SKIPPED.
+
+Do not merge a dependency PR merely because Dependabot opened it.
+
+Major toolchain/action upgrades should be scheduled work. Runtime patches may be evaluated separately, but during the current pre-FASE-4 candidate freeze they remain unmerged unless they resolve a release/security blocker.
