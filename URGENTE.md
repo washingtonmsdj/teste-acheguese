@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD no momento desta atualização:** `b766cb30480293597eb175c111326e5b774b4603`
+> **HEAD técnico de referência:** `08ed851f76c8da6d6fef18c9c091cff8c397256c`
 
 ---
 
@@ -307,22 +307,22 @@ Uma capability só deve virar abstração genérica quando houver segundo consum
 
 ## FASE 0 — Saneamento arquitetural
 
-**Status:** EM ANDAMENTO.
+**Status:** CONCLUÍDA.
 
 Objetivo: preparar o projeto para crescer sem acumular dívida estrutural.
 
 ### Entregas
 
-- [ ] mapear arquitetura atual;
-- [ ] classificar código existente em Core / Data / Module / Shared;
-- [ ] definir estrutura de diretórios alvo;
-- [ ] definir contratos de dependência;
-- [ ] criar ADRs essenciais;
-- [ ] congelar novos módulos;
-- [ ] impedir novas duplicações de territorial/map/media/moderation;
-- [ ] revisar documentação existente;
-- [ ] manter `URGENTE.md` atualizado;
-- [ ] adaptar roadmap geral à nova arquitetura.
+- [x] mapear arquitetura atual;
+- [x] classificar código existente em Core / Data / Module / Shared;
+- [x] definir estrutura de diretórios alvo;
+- [x] definir contratos de dependência;
+- [x] criar ADRs essenciais;
+- [x] congelar novos módulos;
+- [x] impedir novas duplicações de territorial/map/media/moderation via guardrails de lint;
+- [x] revisar documentação existente;
+- [x] manter `URGENTE.md` atualizado;
+- [x] adaptar roadmap geral à nova arquitetura.
 
 ### Critério de saída
 
@@ -332,27 +332,29 @@ Existe um mapa claro de arquitetura e nenhum novo módulo está ditando o Core.
 
 ## FASE 1 — Territory Core
 
-**Prioridade máxima depois do saneamento.**
+**Status:** EM EXECUÇÃO — fundação, boundaries e contrato público concluídos.
 
 ### Entregas
 
-- [ ] habilitar/confirmar PostGIS no projeto canônico;
-- [ ] modelar `territories`;
-- [ ] modelar hierarquia country/state/city/neighborhood;
-- [ ] modelar `territory_groups`;
-- [ ] modelar `territory_group_members`;
-- [ ] modelar `territory_boundaries`;
-- [ ] modelar centro e bbox;
-- [ ] canonical slugs/URLs;
-- [ ] status/rollout/readiness;
-- [ ] Salvador como cidade raiz do MVP;
-- [ ] importar os quatro bairros iniciais;
-- [ ] criar TerritoryGroup do Complexo;
-- [ ] validar boundaries;
-- [ ] índices espaciais GiST;
-- [ ] RLS/grants adequados;
-- [ ] tipos TypeScript;
-- [ ] testes de contrato.
+- [x] habilitar/confirmar PostGIS no projeto canônico;
+- [x] modelar `territories`;
+- [x] modelar hierarquia country/state/city/neighborhood;
+- [x] modelar `territory_groups`;
+- [x] modelar `territory_group_members`;
+- [x] modelar `territory_boundaries`;
+- [x] modelar centro e bbox/GeoJSON público;
+- [x] canonical slugs/`geographic_path`;
+- [x] status territorial básico;
+- [ ] formalizar rollout/readiness antes de ativação de novos territórios;
+- [x] Salvador como cidade raiz do MVP;
+- [x] importar os quatro bairros iniciais;
+- [x] criar TerritoryGroup do Complexo;
+- [x] validar boundaries;
+- [x] índices espaciais GiST;
+- [x] RLS/grants adequados;
+- [x] tipos TypeScript e contracts/ports;
+- [x] smoke de contrato público/RLS;
+- [x] catálogo map-ready `security_invoker`.
 
 ### Critério de saída
 
@@ -1065,54 +1067,55 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A próxima frente não é Comunidade nem Empresas.
+A próxima frente continua não sendo Comunidade nem Empresas.
 
 ## Próximo passo
 
-> **Executar FASE 0 — Saneamento arquitetural e preparar FASE 1 — Territory Core.**
+> **Fechar FASE 1 com readiness/rollout mínimo e iniciar FASE 2 — Territory Data Platform.**
 
 Sequência imediata:
 
-1. auditar estrutura atual do novo repositório;
-2. mapear dependências;
-3. definir estrutura Core/Data/Modules;
-4. criar ADR de Territory-first;
-5. revisar schema atual;
-6. desenhar migration do Territory Core;
-7. confirmar PostGIS;
-8. revisar boundaries/dados úteis do repositório antigo;
-9. importar somente o que for validado;
-10. criar os quatro territórios + TerritoryGroup do Complexo;
-11. somente depois iniciar Territory Data Platform.
+1. definir readiness mensurável sem inflar score;
+2. definir política de rollout/ativação territorial;
+3. criar `data_sources`/provenance;
+4. criar `territory_facts`;
+5. criar `public_places`;
+6. importar dados oficiais do Complexo por pipeline versionado;
+7. começar por Censo 2022/demografia;
+8. depois educação e saúde;
+9. validar data quality;
+10. somente então iniciar Map Core v1 sobre dados reais.
 
 ---
 
 # 21. Checkpoint atual
 
-### HEAD
+### HEAD técnico de referência
 
-`b766cb30480293597eb175c111326e5b774b4603`
+`08ed851f76c8da6d6fef18c9c091cff8c397256c`
+
+### Fase
+
+**FASE 0 concluída · FASE 1 em execução.**
 
 ### Concluído recentemente
 
-- Classificados funcionalmente avançado;
-- Supabase isolado;
-- segurança/RLS;
-- moderação;
-- mensagens;
-- lifecycle;
-- quality gate;
-- smoke checks;
-- projeto Vercel isolado;
-- runbook de Classificados;
-- hardening de Auth;
-- remoção do SQL draft obsoleto;
-- Home ajustada para não prometer recursos ainda inexistentes;
-- decisão estratégica formal: **Territory-first**.
+- Classificados movido para `src/modules/classifieds`;
+- guardrails arquiteturais no ESLint;
+- ADR Territory-first e Architecture Map;
+- `core/territory` com contracts e ports;
+- PostGIS 3.3.7 ativo;
+- árvore Brasil → Bahia → Salvador → 4 bairros;
+- TerritoryGroup do Complexo com 4 membros;
+- quatro boundaries GeoSalvador convertidos para MultiPolygon e validados;
+- catálogo público map-ready com `security_invoker`;
+- smoke RLS público;
+- Supabase security advisors: 0 lints;
+- Classificados continua funcional e congelado para novas features.
 
 ### Próxima ação
 
-**Saneamento arquitetural → Territory Core.**
+**Readiness/rollout mínimo → Territory Data Platform.**
 
 ### Não repetir
 
@@ -1120,7 +1123,7 @@ Sequência imediata:
 - não iniciar Gastronomia;
 - não iniciar Mobilidade;
 - não aprofundar Classificados com features novas;
-- não criar Community antes da base territorial;
+- não criar Community antes de Territory/Data/Map/Home base;
 - não copiar o Achegue-se antigo integralmente;
 - não recriar mapa/localização dentro de módulos.
 

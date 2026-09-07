@@ -1,103 +1,137 @@
-# Roadmap de execução
+# Roadmap de execução — Territory-first
 
-## Fase 0 — Fundação
-- [x] Repositório e stack inicial.
-- [x] App Router + TypeScript estrito.
-- [x] Node 24 LTS padronizado.
-- [x] Tokens visuais e responsividade mobile-first.
-- [x] Documento de arquitetura.
-- [x] Contratos de erro/loading/not-found.
-- [x] `package-lock.json` reproduzível.
-- [x] Quality gate público: `npm ci` → lint → typecheck → tests → build.
-- [x] Testes rápidos de domínio no runner nativo do Node.
-- [ ] Observabilidade externa.
+> A autoridade completa é `/URGENTE.md`.
+> Este arquivo é um resumo operacional por fase.
 
-## Fase 1 — Home / Discovery shell
-- [x] Home pública v0.
-- [x] Componentização de header, hero, busca, categorias e destaques.
-- [x] Navegação mobile com estado ativo.
-- [x] Rotas estáveis para busca, Classificados, Empresas, Favoritos, login e menu.
-- [x] `next/image` para conteúdo visual.
-- [x] Manifest, robots e sitemap condicionado à URL de produção.
-- [x] Remoção de links públicos mortos e métricas fictícias.
-- [ ] Revisão visual fina em navegador real.
-- [ ] Localização real do usuário.
-- [ ] Busca global ligada aos dados persistidos.
-- [ ] SEO local e dados estruturados.
-- [x] Base global de acessibilidade: skip-link, foco visível e reduced-motion.
-- [ ] Auditoria automatizada de acessibilidade em navegador.
+## FASE 0 — Saneamento arquitetural — CONCLUÍDA
 
-## Fase 2 — Classificados MVP — PRIMEIRO VERTICAL COMPLETO
-Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
+- [x] arquitetura atual auditada;
+- [x] estrutura `core/data/modules/shared` definida;
+- [x] Classificados movido para `src/modules/classifieds`;
+- [x] ADR Territory-first;
+- [x] Architecture Map;
+- [x] guardrails de dependência no ESLint;
+- [x] README/arquitetura alinhados;
+- [x] novos módulos congelados.
 
-### Fundação e backend
-- [x] Projeto Supabase isolado `acheguese-v2` em `sa-east-1`.
-- [x] Migrations versionadas e histórico alinhado com o banco.
-- [x] RLS e grants mínimos.
-- [x] Security advisors: 0 lints.
-- [x] Performance advisors sem warnings estruturais; apenas índices ainda sem uso.
-- [x] Tipos TypeScript gerados do schema real.
-- [x] `@supabase/ssr` + proxy de refresh de sessão.
-- [x] Auth por e-mail/senha e callback implementados.
-- [x] Salvador/BA como primeiro território real.
-- [x] Bucket privado de imagens.
-- [x] MIME restrito + 8 MB por imagem + até 10 posições.
+## FASE 1 — Territory Core — EM EXECUÇÃO
 
-### Fluxo do anunciante
-- [x] Criação de rascunho.
-- [x] Edição de rascunho/pausado/rejeitado.
-- [x] Upload e remoção de fotos com ownership.
-- [x] Painel "Meus anúncios".
-- [x] Envio para revisão exigindo ao menos uma foto.
-- [x] Conteúdo bloqueado enquanto está em revisão.
-- [x] Retirada da revisão para voltar a rascunho.
-- [x] Motivo de rejeição/ajuste visível ao dono.
-- [x] Pausar anúncio publicado.
-- [x] Marcar anúncio como vendido.
-- [x] Arquivar.
-- [x] Excluir somente quando não houver histórico relevante.
-- [x] Limpeza de Storage no fluxo de exclusão.
+- [x] PostGIS 3.3.7;
+- [x] `territories`;
+- [x] country/state/city/neighborhood;
+- [x] `territory_groups`;
+- [x] `territory_group_members`;
+- [x] `territory_boundaries`;
+- [x] índices GiST;
+- [x] RLS/grants;
+- [x] Brasil → Bahia → Salvador;
+- [x] Nordeste de Amaralina;
+- [x] Santa Cruz;
+- [x] Vale das Pedrinhas;
+- [x] Chapada do Rio Vermelho;
+- [x] TerritoryGroup do Complexo;
+- [x] quatro boundaries oficiais do GeoSalvador;
+- [x] catálogo map-ready em GeoJSON;
+- [x] contracts/ports TypeScript;
+- [x] smoke público/RLS;
+- [ ] readiness formal;
+- [ ] política de rollout/ativação territorial.
 
-### Fluxo público
-- [x] Listagem persistida.
-- [x] Busca textual.
-- [x] Filtro por categoria.
-- [x] Território inicial Salvador.
-- [x] Paginação cursor-based.
-- [x] Página pública de detalhe.
-- [x] Favoritos.
-- [x] Contato seguro por conversa interna.
-- [x] Inbox e thread privada comprador ↔ anunciante.
-- [x] Denúncia de anúncio publicado.
+## FASE 2 — Territory Data Platform — PRÓXIMA
 
-### Moderação
-- [x] Claim administrativo assinado em `app_metadata`.
-- [x] Admin sem autoridade por `user_metadata`.
-- [x] Fila de anúncios pendentes.
-- [x] Aprovar e publicar.
-- [x] Rejeitar com motivo.
-- [x] Retirar publicado para ajustes.
-- [x] Auditoria privada de decisões.
-- [x] Painel de denúncias.
-- [x] Admin impedido de editar conteúdo do anúncio durante moderação.
+- [ ] `data_sources`;
+- [ ] provenance/versionamento;
+- [ ] staging/ingestion;
+- [ ] `territory_facts`;
+- [ ] `public_places`;
+- [ ] categorias de equipamentos públicos;
+- [ ] Censo 2022 por bairro;
+- [ ] população/demografia;
+- [ ] educação;
+- [ ] saúde;
+- [ ] demais serviços públicos prioritários;
+- [ ] relatórios de ingestão;
+- [ ] data quality;
+- [ ] atualização idempotente/periódica.
 
-### Restante para MVP real
-- [x] Criar projeto Vercel isolado `teste-acheguese`.
-- [ ] Fazer novo deployment com `NEXT_PUBLIC_SITE_URL`, URL Supabase e publishable key públicas (bloqueado temporariamente pela cota diária da Vercel).
-- [ ] Configurar URL/callback de Auth para o domínio real.
-- [ ] Criar conta real e atribuir `app_metadata.role=classified_admin` ao administrador.
-- [ ] Teste real de cadastro/login/confirmação/logout em navegador.
-- [ ] Teste real de upload e signed URLs em navegador.
-- [ ] Testes E2E: publicar → revisar → favoritar → conversar → denunciar → moderar → encerrar.
-- [x] Base de SEO técnico: canonical condicional, robots fail-closed, sitemap de publicados e JSON-LD de anúncios.
-- [x] Endpoint `/api/health` com probe real do Supabase.
-- [ ] Analytics/observabilidade externa.
-- [ ] Acessibilidade automatizada.
-- [ ] Critérios finais de lançamento e runbook operacional.
+## FASE 3 — Map Core v1
 
-## Fase 3 — Empresas MVP
-Só inicia quando Classificados atingir Definition of Done.
+- [ ] core map provider-agnostic;
+- [ ] viewport/bbox/layers;
+- [ ] boundaries;
+- [ ] public places;
+- [ ] clustering;
+- [ ] página de mapa;
+- [ ] mini mapa;
+- [ ] cache/CDN;
+- [ ] performance mobile;
+- [ ] acessibilidade.
 
-## Regra de execução
-Uma vertical só é considerada pronta quando cobre:
-produto + mobile + desktop + dados + segurança + moderação + SEO + observabilidade + testes + operação.
+## FASE 4 — Home Territorial
+
+- [ ] redesign desktop profissional;
+- [ ] contexto território/grupo;
+- [ ] dados públicos reais;
+- [ ] mini mapa;
+- [ ] “agora no bairro”;
+- [ ] estados vazios úteis;
+- [ ] widening bairro → Complexo → Salvador;
+- [ ] zero recurso fictício.
+
+## FASE 5 — Community
+
+Somente após Territory + Data + Map + Home base.
+
+- [ ] posts;
+- [ ] comentários;
+- [ ] reações;
+- [ ] tipos de conteúdo comunitário;
+- [ ] mídia;
+- [ ] moderação;
+- [ ] denúncias;
+- [ ] paginação/rate limit;
+- [ ] feed territorial.
+
+## FASE 6 — Alerts + Events + Opportunities
+
+- [ ] alertas próprios;
+- [ ] fontes comunitárias/oficiais;
+- [ ] eventos;
+- [ ] vagas/bicos/cursos;
+- [ ] integração territorial/mapa.
+
+## FASE 7 — Reintegração de Classificados
+
+Classificados está funcional e **congelado para novas features**.
+
+- [ ] migrar para `territory_id`;
+- [ ] remover localização duplicada;
+- [ ] integrar mapa;
+- [ ] integrar Home territorial;
+- [ ] integrar contexto comunitário sem spam;
+- [ ] E2E final.
+
+## FASE 8 — Empresas / Serviços
+
+Não iniciar antes dos gates do `URGENTE.md`.
+
+## FASE 9 — Gastronomia
+
+Especialização de Business/Place; não criar plataforma paralela.
+
+## FASE 10 — Mobilidade
+
+Somente com necessidade validada; routing/ETA/corridas não fazem parte da fundação atual.
+
+## Regra de expansão
+
+```text
+Complexo
+→ Pituba
+→ Itaigara
+→ Salvador
+→ outras cidades
+→ Brasil
+```
+
+Adicionar território deve ser operação de **dados + readiness + rollout**, e não desenvolvimento específico por bairro.
