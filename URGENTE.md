@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `6e0cb2c1968c8c58f98d23742d1b028415fb1857`
+> **HEAD técnico de referência:** `2bea28b4ef08db98c7d5a3978de47b7d83e47662`
 
 ---
 
@@ -372,19 +372,19 @@ Os quatro bairros podem ser identificados, consultados, relacionados, exibidos e
 - [x] `data_sources`;
 - [x] proveniência;
 - [x] versionamento;
-- [~] pipeline de ingestão: conector ArcGIS + parser validados; executor/snapshot ainda pendentes;
-- [~] staging/validation: contracts e guards fail-closed prontos; primeira execução real pendente;
+- [x] pipeline de ingestão reproduzível via probes GitHub Actions + snapshots + ingestion runs;
+- [x] staging/validation fail-closed com promoção provisional → verified somente após prova;
 - [x] estrutura privada de relatórios/ingestion runs;
 - [x] `territory_facts`;
 - [x] `public_places`;
 - [x] categorias de serviços públicos;
 - [x] integração inicial com fontes oficiais;
-- [ ] população/demografia;
-- [ ] educação;
+- [x] população/demografia básica do MVP: população total + domicílios 2022;
+- [x] educação: 14 unidades oficiais verificadas espacialmente;
 - [ ] saúde;
-- [ ] equipamentos públicos;
+- [~] equipamentos públicos: educação concluída; saúde e demais categorias pendentes;
 - [ ] demais dados essenciais do MVP;
-- [ ] data quality;
+- [~] data quality: guards, probes, hashes e cross-validation ativos; ampliar por fonte;
 - [ ] atualização periódica;
 - [x] zero dado inventado.
 
@@ -1074,20 +1074,20 @@ A próxima frente continua não sendo Comunidade nem Empresas.
 
 ## Próximo passo
 
-> **Executar a primeira ingestão reproduzível do Censo 2022 para os quatro bairros sem publicar nada antes da validação.**
+> **Fechar a camada de saúde do MVP com fonte oficial atual e então iniciar FASE 3 — Map Core v1.**
 
 Sequência imediata:
 
-1. concluir o executor server-side do conector ArcGIS;
-2. baixar exatamente os quatro registros esperados;
-3. validar nomes, unicidade, FID e sete campos canônicos;
-4. gerar checksum/snapshot do payload aceito;
-5. registrar ingestion run com contagens;
-6. criar fatos como `provisional`;
-7. validar consistência populacional e territorial;
-8. promover snapshot + fatos para `verified` somente após a prova;
-9. investigar e validar schemas atuais de educação e saúde;
-10. somente depois alimentar `public_places` e avançar para Map Core v1.
+1. localizar fonte oficial atual de unidades de saúde;
+2. rejeitar automaticamente fonte obsoleta/incompleta;
+3. validar schema, atualização, identificador e coordenadas;
+4. resolver território por ponto-em-boundary, nunca por texto livre;
+5. criar probe reproduzível + artifact + checksum;
+6. ingerir como provisional;
+7. cruzar 100% dos pontos com PostGIS;
+8. promover somente após validação;
+9. fechar readiness de dados públicos mínimos;
+10. iniciar Map Core v1 usando `territory_boundary_catalog`, `territory_fact_catalog` e `public_place_catalog`.
 
 ---
 
@@ -1095,42 +1095,50 @@ Sequência imediata:
 
 ### HEAD técnico de referência
 
-`6e0cb2c1968c8c58f98d23742d1b028415fb1857`
+`2bea28b4ef08db98c7d5a3978de47b7d83e47662`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 concluída · FASE 2 em execução.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 em execução avançada.**
 
 ### Concluído recentemente
 
-- Territory rollout separado do ciclo geográfico;
-- quatro bairros + Complexo permanecem em `data_preparation`;
-- Territory Data Platform criada;
-- fontes, snapshots, métricas, fatos, public places e ingestion runs modelados;
-- RLS fail-closed e provenance obrigatório;
-- 11 categorias de equipamentos públicos;
-- primeira fonte oficial: GeoSalvador `censo_2010_e_2022_por_bairro`;
-- Service Item ID e schema/layer verificados;
-- sete métricas de 2022 mapeadas: população total, masculina, feminina, densidade, alfabetizada e dois totais de domicílios;
-- conector ArcGIS e parser específico do Complexo;
-- parser exige exatamente os quatro bairros, sem duplicatas e com campos válidos;
-- security advisors: 0 lints;
-- performance advisors: somente `unused_index` em banco sem tráfego;
-- **0 snapshots, 0 fatos demográficos e 0 lugares publicados até a primeira ingestão reproduzível.**
+- Territory Data Platform com provenance, snapshots, facts, places e ingestion runs;
+- catálogos públicos `security_invoker` para fatos e lugares;
+- adapter Supabase provenance-ready para futuros consumidores Home/Mapa;
+- Censo 2022: 12 fatos verificados e públicos;
+- métricas seguras do primeiro lote: população total, domicílios totais e permanentes;
+- correção semântica removeu quatro métricas cujo valor/unidade não estavam formalmente comprovados;
+- população 2022 verificada:
+  - Chapada do Rio Vermelho: 20.106;
+  - Nordeste de Amaralina: 20.628;
+  - Santa Cruz: 21.494;
+  - Vale das Pedrinhas: 6.129;
+- educação: fonte GeoSalvador de 2025 validada;
+- 433 unidades recebidas na fonte educacional;
+- 14 unidades pertencem espacialmente ao MVP;
+- distribuição: Chapada 3, Nordeste 2, Santa Cruz 8, Vale das Pedrinhas 1;
+- 14/14 pontos confirmados por PostGIS `ST_Covers`;
+- 8/14 rótulos textuais de bairro divergiam da geometria, portanto texto não é autoridade territorial;
+- 14 escolas públicas/verificadas no `public_place_catalog`;
+- Censo e educação com artifacts GitHub + SHA-256 + receipts;
+- security advisors: **0 lints**;
+- todos os quatro bairros e o Complexo continuam em `data_preparation`.
 
 ### Próxima ação
 
-**Primeiro fetch reproduzível → snapshot → fatos provisórios → validação → publicação.**
+**Fonte oficial atual de saúde → ingestão espacial verificada → Map Core v1.**
 
 ### Não repetir
 
-- não preencher população manualmente;
+- não inferir território pelo campo textual `bairro`;
 - não usar valores do repositório antigo como fonte;
-- não criar snapshot “verificado” sem payload reproduzível;
+- não reintroduzir C002/C003/C004/C018 como contagens sem semântica/unidade comprovadas;
+- não usar a camada municipal de saúde de 2022 como se fosse atual;
 - não iniciar Empresas/Gastronomia/Mobilidade;
 - não aprofundar Classificados;
 - não criar Community antes de Territory/Data/Map/Home base;
-- não fazer requests a APIs públicas externas no request do usuário.
+- não fazer requests críticos a APIs públicas externas no request do usuário.
 
 ---
 

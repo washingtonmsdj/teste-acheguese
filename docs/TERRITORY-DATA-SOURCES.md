@@ -1,52 +1,104 @@
 # Fontes territoriais — registro canônico
 
-## GeoSalvador — Censo 2010 e 2022 por bairro
+## 1. GeoSalvador — Censo 2010 e 2022 por bairro
 
-**Status:** fonte cadastrada; snapshot de dados ainda não criado.
+**Status:** VERIFICADO E PÚBLICO para o subconjunto semântico aprovado.
 
 - Provider: Prefeitura Municipal de Salvador / GeoSalvador
 - Dataset: `censo_2010_e_2022_por_bairro`
 - Service Item ID: `4cd441755e6349eab281f7dcd42f8ad8`
 - Layer: `censo_2010_e_2022` (0)
-- Spatial reference: EPSG 31984
 - Object ID: `FID`
 - Bairro: `NOME_BAIRR`
-- Data Last Edit informado pelo ArcGIS: `5/23/2025 5:29:38 PM`
-- Schema Last Edit: `5/27/2025 6:42:02 PM`
+- Data Last Edit: maio/2025
+- snapshot SHA-256 normalizado: `89b4bcc4d385cee338beb65c43b39d88951a1392a6c2886c89c7ea00fd17a420`
+- probe run: `34099716985`
+- probe commit: `efeb881c404ef9b0367a22bc2910ed0beced48fc`
 
-Layer canônica:
-`https://services6.arcgis.com/GP5qdNaePRPh2SdT/ArcGIS/rest/services/censo_2010_e_2022_por_bairro/FeatureServer/0`
+### Métricas 2022 aprovadas
 
-### Mapeamento MVP — Censo 2022
-
-| Métrica canônica | Campo | Alias oficial |
+| Métrica | Campo | Unidade |
 | --- | --- | --- |
-| population_total | C001 | População Total |
-| population_male | C002 | População Masculina |
-| population_female | C003 | População Feminina |
-| population_density | C004 | Densidade Demográfica |
-| population_literate | C018 | População Alfabetizada |
-| households_total | C026 | Domicílios Particulares e Coletivos |
-| households_permanent | C027 | Domicílios Particulares Permanentes |
+| population_total | C001 | people |
+| households_total | C026 | households |
+| households_permanent | C027 | households |
 
-### Política
+### Correção semântica
 
-Não criar `territory_data_snapshots` nem `territory_facts` a partir de valores copiados manualmente.
+`C002`, `C003`, `C004` e `C018` foram retirados do primeiro lote porque os valores observados não sustentam a interpretação inicial de contagens/unidades sem documentação adicional.
 
-O snapshot só nasce depois de:
+Não reintroduzir esses campos sem semântica e unidade comprovadas.
 
-1. query reproduzível do layer oficial;
-2. exatamente quatro bairros esperados;
-3. nenhum bairro duplicado/inesperado;
-4. todos os campos canônicos válidos;
-5. payload preservado/checksum identificável;
-6. ingestion run registrada.
+### Valores públicos verificados
 
-O parser correspondente está em:
-`src/data/sources/geosalvador/census-2010-2022.ts`.
+| Território | População | Domicílios | Permanentes |
+| --- | ---: | ---: | ---: |
+| Chapada do Rio Vermelho | 20.106 | 9.100 | 9.099 |
+| Nordeste de Amaralina | 20.628 | 9.045 | 9.041 |
+| Santa Cruz | 21.494 | 9.917 | 9.916 |
+| Vale das Pedrinhas | 6.129 | 2.580 | 2.580 |
 
-## Educação e saúde
+## 2. GeoSalvador — Unidades Educacionais AGOL
 
-Os serviços `Unidades_educacao`, `Unidades_Educacionais_AGOL`, `Escolas` e `Unidades_Saude` aparecem no diretório atual do GeoSalvador.
+**Status:** VERIFICADO E PÚBLICO para as unidades espacialmente contidas nos quatro boundaries.
 
-Ainda **não estão cadastrados como fontes canônicas** porque seus schemas/versões precisam ser inspecionados e validados antes da ingestão.
+- Provider: Prefeitura Municipal de Salvador / GeoSalvador
+- Dataset: `Unidades_Educacionais_AGOL`
+- Service Item ID: `58b52c0f4bf34ec99ed197201589745c`
+- Layer: `unidades_educacao_a` (0)
+- Data Last Edit: `2025-02-26T17:33:25.901Z`
+- total da fonte no probe: 433
+- dentro do MVP: 14
+- fora do MVP: 419
+- snapshot SHA-256 normalizado: `696604e2528b1608f041651be2fd76dc6de17331f4f37b8f35654a4b5d3c3c02`
+- probe run: `34100743505`
+- probe commit: `aa4ba9883cfd6763c9932fa35f48020f133bd715`
+
+### Regra territorial
+
+O campo textual `bairro` é somente diagnóstico.
+
+A autoridade é:
+
+```text
+coordenada oficial
+→ point-in-versioned-boundary
+→ confirmação independente PostGIS ST_Covers
+→ territory_id
+```
+
+O probe encontrou **8 divergências em 14 registros** entre o rótulo textual e o boundary real. Por isso, nenhum importador futuro pode atribuir território pelo texto livre.
+
+### Distribuição
+
+| Território | Unidades |
+| --- | ---: |
+| Chapada do Rio Vermelho | 3 |
+| Nordeste de Amaralina | 2 |
+| Santa Cruz | 8 |
+| Vale das Pedrinhas | 1 |
+
+## 3. Saúde
+
+A camada municipal `Unidades_Saude` encontrada no GeoSalvador possui dados editados em 2022.
+
+**Status:** NÃO APROVADA como fonte atual do MVP.
+
+Próxima ação: localizar uma fonte oficial mais recente, preferencialmente municipal/estadual ou CNES, validar atualização/schema/coordenadas e aplicar o mesmo pipeline espacial.
+
+## Política permanente
+
+Nenhum dado territorial vira público apenas porque foi baixado.
+
+Fluxo obrigatório:
+
+```text
+fonte oficial
+→ probe reproduzível
+→ artifact + SHA-256
+→ snapshot privado
+→ provisional
+→ validação semântica/espacial
+→ verified
+→ leitura pública
+```

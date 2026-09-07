@@ -41,17 +41,17 @@
 
 - [x] `data_sources`;
 - [x] provenance/versionamento;
-- [~] staging/ingestion — conector/parser prontos; execução real pendente;
+- [x] staging/ingestion — probes reproduzíveis, snapshots e promotion gate;
 - [x] `territory_facts`;
 - [x] `public_places`;
 - [x] categorias de equipamentos públicos;
-- [~] Censo 2022 — fonte/schema/métricas validados; valores ainda não importados;
-- [ ] população/demografia;
-- [ ] educação;
+- [x] Censo 2022 — 12 fatos verificados para os quatro bairros;
+- [x] população/demografia básica do MVP;
+- [x] educação — 14 unidades verificadas espacialmente;
 - [ ] saúde;
 - [ ] demais serviços públicos prioritários;
 - [x] estrutura privada de ingestion runs;
-- [ ] data quality;
+- [~] data quality — guards/hashes/cross-validation ativos;
 - [ ] atualização idempotente/periódica.
 
 ## FASE 3 — Map Core v1
