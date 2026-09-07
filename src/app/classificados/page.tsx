@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { classifiedCategories } from '@/features/classifieds/domain/categories';
+import { ClassifiedCategoryNav } from '@/features/classifieds/components/category-nav';
+import { ClassifiedsEmptyState } from '@/features/classifieds/components/empty-state';
+import {
+  classifiedCategories,
+  isClassifiedCategoryId,
+} from '@/features/classifieds/domain/categories';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
@@ -9,30 +14,66 @@ export const metadata: Metadata = {
   description: 'Classificados locais do Achegue-se: encontre e anuncie perto de você.',
 };
 
-export default function ClassifiedsPage() {
+type ClassifiedsPageProps = {
+  searchParams: Promise<{
+    q?: string;
+    categoria?: string;
+  }>;
+};
+
+export default async function ClassifiedsPage({
+  searchParams,
+}: ClassifiedsPageProps) {
+  const params = await searchParams;
+  const query = params.q?.trim().slice(0, 120) || undefined;
+  const activeCategory =
+    params.categoria && isClassifiedCategoryId(params.categoria)
+      ? params.categoria
+      : undefined;
+  const category = activeCategory
+    ? classifiedCategories.find((item) => item.id === activeCategory)
+    : undefined;
+  const hasFilters = Boolean(query || activeCategory);
+
   return (
     <main>
       <SiteHeader />
+
       <section className="classifiedHero">
         <div className="container classifiedHeroGrid">
           <div>
             <p className="eyebrow">Classificados Achegue-se</p>
             <h1>Compre e venda <em>perto de você.</em></h1>
             <p>
-              Um marketplace local pensado para descoberta por região, publicação rápida,
-              segurança e moderação.
+              Encontre oportunidades da sua região e publique de forma simples,
+              com foco em clareza, segurança e moderação.
             </p>
+
             <form className="classifiedSearch" action="/classificados">
-              <label className="srOnly" htmlFor="classified-search">Buscar classificados</label>
-              <input id="classified-search" name="q" placeholder="O que você está procurando?" />
+              <label className="srOnly" htmlFor="classified-search">
+                Buscar classificados
+              </label>
+              <input
+                id="classified-search"
+                name="q"
+                defaultValue={query}
+                placeholder="O que você está procurando?"
+                autoComplete="off"
+              />
+              {activeCategory && (
+                <input type="hidden" name="categoria" value={activeCategory} />
+              )}
               <button className="searchButton" type="submit">Buscar</button>
             </form>
           </div>
+
           <aside className="classifiedPitch">
-            <span>Venda algo hoje</span>
-            <strong>Publique em poucos passos.</strong>
-            <p>Fotos, categoria, preço e região — sem complicação.</p>
-            <Link className="primaryButton linkButton" href="/classificados/novo">Criar anúncio</Link>
+            <span>Anuncie no seu bairro</span>
+            <strong>Venda algo sem complicação.</strong>
+            <p>Fotos, categoria, preço e região em um fluxo direto e mobile-first.</p>
+            <Link className="primaryButton linkButton" href="/classificados/novo">
+              Criar anúncio
+            </Link>
           </aside>
         </div>
       </section>
@@ -41,33 +82,49 @@ export default function ClassifiedsPage() {
         <div className="sectionHeading">
           <div>
             <p className="eyebrow">Explorar</p>
-            <h2>Categorias de Classificados</h2>
-            <p>Estrutura inicial do primeiro vertical completo do MVP.</p>
+            <h2>Categorias</h2>
+            <p>Escolha uma categoria ou faça uma busca direta.</p>
           </div>
+          {hasFilters && <Link href="/classificados">Limpar filtros →</Link>}
         </div>
-        <div className="classifiedCategoryGrid">
-          {classifiedCategories.map((category) => (
-            <Link href={`/classificados?categoria=${category.id}`} key={category.id}>
-              <span aria-hidden="true">{category.icon}</span>
-              <strong>{category.label}</strong>
-            </Link>
-          ))}
-        </div>
+
+        <ClassifiedCategoryNav
+          activeCategory={activeCategory}
+          query={query}
+        />
       </section>
 
       <section className="section sectionSoft">
-        <div className="container releasePanel">
-          <div>
-            <p className="eyebrow">Construção por vertical</p>
-            <h2>O que entra antes do lançamento</h2>
-            <p>
-              Listagem, detalhe, publicação, fotos, conta, favoritos, contato, localização,
-              denúncia, moderação, SEO, observabilidade e testes E2E.
-            </p>
+        <div className="container">
+          <div className="classifiedResultsHeader">
+            <div>
+              <p className="eyebrow">Anúncios</p>
+              <h2>
+                {category
+                  ? category.label
+                  : query
+                    ? `Resultados para “${query}”`
+                    : 'Perto de você'}
+              </h2>
+            </div>
+            <span>0 resultados</span>
           </div>
-          <Link href="/" className="ghostButton linkButton">Voltar à Home</Link>
+
+          <ClassifiedsEmptyState
+            query={query}
+            hasFilters={hasFilters}
+          />
         </div>
       </section>
+
+      <section className="classifiedTrust">
+        <div className="container trustGrid">
+          <div><span>✓</span><strong>Contexto local</strong><small>Descoberta por cidade e região.</small></div>
+          <div><span>✓</span><strong>Privacidade</strong><small>Endereço exato não é público por padrão.</small></div>
+          <div><span>✓</span><strong>Moderação</strong><small>Denúncias e revisão fazem parte do MVP.</small></div>
+        </div>
+      </section>
+
       <MobileTabbar />
     </main>
   );

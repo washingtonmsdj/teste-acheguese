@@ -49,7 +49,7 @@ export default function Home() {
             <div>
               <p className="eyebrow">Descoberta local</p>
               <h2>Comece pela sua região</h2>
-              <p>Uma prévia da experiência; os resultados reais virão da base local.</p>
+              <p>Explore categorias locais e encontre o que faz sentido para o seu dia a dia.</p>
             </div>
             <Link href="/buscar">Explorar →</Link>
           </div>
@@ -59,14 +59,16 @@ export default function Home() {
 
       <section className="section container verticalCta">
         <div>
-          <p className="eyebrow">Primeiro vertical do MVP</p>
-          <h2>Classificados locais, simples e seguros.</h2>
+          <p className="eyebrow">Classificados locais</p>
+          <h2>Compre e venda mais perto de você.</h2>
           <p>
-            Compra e venda com contexto de região, favoritos, fotos, contato e moderação.
-            Estamos construindo este fluxo completo antes de abrir o próximo vertical.
+            Descubra oportunidades da sua região e anuncie com uma experiência
+            simples, mobile-first e preparada para segurança e moderação.
           </p>
         </div>
-        <Link className="primaryButton linkButton" href="/classificados">Explorar Classificados</Link>
+        <Link className="primaryButton linkButton" href="/classificados">
+          Explorar Classificados
+        </Link>
       </section>
 
       <section className="section container productGrid" id="como-funciona">
@@ -88,10 +90,12 @@ export default function Home() {
           <p className="eyebrow">Para empresas</p>
           <h2>Mais visibilidade para o negócio local.</h2>
           <p>
-            Perfis comerciais serão a próxima vertical depois que Classificados estiver
-            fechado para MVP.
+            Uma presença local clara para ajudar pessoas da sua região a conhecer,
+            encontrar e escolher o seu negócio.
           </p>
-          <Link className="primaryButton linkButton" href="/empresas">Conhecer a proposta</Link>
+          <Link className="primaryButton linkButton" href="/empresas">
+            Conhecer a proposta
+          </Link>
         </article>
       </section>
 
@@ -104,9 +108,9 @@ export default function Home() {
               A experiência nasce para a rotina no celular e escala naturalmente para
               tablet e desktop, sem duplicar produto.
             </p>
-            <div className="storeButtons" aria-label="Aplicativos planejados">
-              <span>Web app responsivo</span>
-              <span>PWA preparada</span>
+            <div className="storeButtons" aria-label="Experiência da plataforma">
+              <span>Web responsiva</span>
+              <span>Preparada para PWA</span>
             </div>
           </div>
 
@@ -132,9 +136,9 @@ export default function Home() {
           <Brand />
           <p>Pessoas. Negócios. Comunidades mais fortes.</p>
           <div>
-            <Link href="/termos">Termos</Link>
-            <Link href="/privacidade">Privacidade</Link>
-            <Link href="/contato">Contato</Link>
+            <Link href="/classificados">Classificados</Link>
+            <Link href="/empresas">Para empresas</Link>
+            <Link href="/entrar">Entrar</Link>
           </div>
         </div>
       </footer>

@@ -1,6 +1,7 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export function HomeSearch() {
@@ -25,9 +26,9 @@ export function HomeSearch() {
         placeholder="O que você procura hoje?"
         autoComplete="off"
       />
-      <button type="button" className="locationButton" aria-label="Usar minha região">
-        📍 Minha região
-      </button>
+      <span className="locationButton" aria-label="Localização da busca">
+        📍 Sua região
+      </span>
       <button type="submit" className="searchButton">Buscar</button>
     </form>
   );
