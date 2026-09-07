@@ -22,7 +22,7 @@ test('produção usa somente a URL canônica para callback', () => {
 
   assert.equal(
     trustedAuthOrigin(siteUrl, 'https://evil.example'),
-    siteUrl,
+    null,
   );
   assert.equal(
     trustedAuthCallbackOrigin(siteUrl, siteUrl),
@@ -84,5 +84,35 @@ test('requisições mutáveis de auth exigem origem canônica', () => {
       '',
     ),
     false,
+  );
+});
+
+test('produção rejeita Origin ausente, com path ou não canônica', () => {
+  const siteUrl = 'https://acheguese.example';
+
+  assert.equal(
+    trustedAuthOrigin(siteUrl, null),
+    null,
+  );
+  assert.equal(
+    trustedAuthOrigin(
+      siteUrl,
+      'https://acheguese.example/path',
+    ),
+    null,
+  );
+  assert.equal(
+    trustedAuthOrigin(
+      siteUrl,
+      'https://acheguese.example/',
+    ),
+    null,
+  );
+  assert.equal(
+    trustedAuthOrigin(
+      siteUrl,
+      'https://acheguese.example',
+    ),
+    siteUrl,
   );
 });

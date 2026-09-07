@@ -1165,6 +1165,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - CSS global da antiga landing/marketplace foi auditado contra todo `src/**`: **35 seletores órfãos removidos, 0 classes globais órfãs restantes**;
 - auditoria de rotas confirmou somente **14 páginas + 4 route handlers** no App Router;
 - `POST /auth/signout` passou a exigir Origin canônica/confiável, fechando logout-CSRF;
+- cadastro/Auth mutável agora também exige `Origin` exatamente igual à `NEXT_PUBLIC_SITE_URL`; produção não aceita Origin ausente, externa ou com path; dev sem Site URL continua restrito a localhost HTTP;
 - `robots.txt` bloqueia explicitamente `/api/` e `/menu` além das superfícies privadas já existentes;
 - smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;

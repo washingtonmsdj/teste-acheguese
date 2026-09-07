@@ -4,27 +4,43 @@ const LOCAL_HOSTS = new Set([
   '[::1]',
 ]);
 
+function exactOrigin(
+  value: string | null,
+) {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+
+    return url.origin === value
+      ? url.origin
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export function trustedAuthOrigin(
   siteUrl: string | null,
   requestOrigin: string | null,
 ) {
+  const origin = exactOrigin(requestOrigin);
+
   if (siteUrl) {
-    return siteUrl;
+    return origin === siteUrl
+      ? siteUrl
+      : null;
   }
 
-  if (!requestOrigin) return null;
+  if (!origin) return null;
 
-  try {
-    const url = new URL(requestOrigin);
+  const url = new URL(origin);
 
-    if (
-      url.protocol === 'http:' &&
-      LOCAL_HOSTS.has(url.hostname)
-    ) {
-      return url.origin;
-    }
-  } catch {
-    return null;
+  if (
+    url.protocol === 'http:' &&
+    LOCAL_HOSTS.has(url.hostname)
+  ) {
+    return origin;
   }
 
   return null;
@@ -34,5 +50,8 @@ export function trustedAuthCallbackOrigin(
   siteUrl: string | null,
   requestOrigin: string,
 ) {
-  return trustedAuthOrigin(siteUrl, requestOrigin) === requestOrigin;
+  return trustedAuthOrigin(
+    siteUrl,
+    requestOrigin,
+  ) === requestOrigin;
 }
