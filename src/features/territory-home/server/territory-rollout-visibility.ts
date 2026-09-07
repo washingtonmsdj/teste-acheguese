@@ -1,30 +1,21 @@
 import { unstable_cache } from 'next/cache';
-import {
-  isPublicTerritoryStage,
-  type TerritoryRolloutStage,
-} from '@/core/territory';
 import { reportServerError } from '@/core/observability/server-log';
+import {
+  HIDDEN_TERRITORY_SURFACE,
+  resolveTerritorySurfaceVisibility,
+  type TerritorySurfaceVisibility,
+} from '@/features/territory-home/domain/surface-visibility';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 import { SupabaseTerritoryRolloutRepository } from '@/lib/supabase/territory-rollout-repository';
 
 const COMPLEXO_SLUG =
   'complexo-do-nordeste-de-amaralina';
 
-export type TerritorySurfaceVisibility = {
-  stage: TerritoryRolloutStage | null;
-  isPublic: boolean;
-};
-
-const HIDDEN_VISIBILITY: TerritorySurfaceVisibility = {
-  stage: null,
-  isPublic: false,
-};
-
 async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibility> {
   const supabase = createSupabasePublicServerClient();
 
   if (!supabase) {
-    return HIDDEN_VISIBILITY;
+    return HIDDEN_TERRITORY_SURFACE;
   }
 
   try {
@@ -41,21 +32,18 @@ async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibil
         'territory.rollout.group_missing',
         new Error('territory_rollout_group_missing'),
       );
-      return HIDDEN_VISIBILITY;
+      return HIDDEN_TERRITORY_SURFACE;
     }
 
-    return {
-      stage: groupRollout.stage,
-      isPublic: isPublicTerritoryStage(
-        groupRollout.stage,
-      ),
-    };
+    return resolveTerritorySurfaceVisibility(
+      groupRollout.stage,
+    );
   } catch (error) {
     reportServerError(
       'territory.rollout.read_failed',
       error,
     );
-    return HIDDEN_VISIBILITY;
+    return HIDDEN_TERRITORY_SURFACE;
   }
 }
 
