@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `08ed851f76c8da6d6fef18c9c091cff8c397256c`
+> **HEAD técnico de referência:** `6e0cb2c1968c8c58f98d23742d1b028415fb1857`
 
 ---
 
@@ -332,7 +332,7 @@ Existe um mapa claro de arquitetura e nenhum novo módulo está ditando o Core.
 
 ## FASE 1 — Territory Core
 
-**Status:** EM EXECUÇÃO — fundação, boundaries e contrato público concluídos.
+**Status:** CONCLUÍDA.
 
 ### Entregas
 
@@ -345,7 +345,8 @@ Existe um mapa claro de arquitetura e nenhum novo módulo está ditando o Core.
 - [x] modelar centro e bbox/GeoJSON público;
 - [x] canonical slugs/`geographic_path`;
 - [x] status territorial básico;
-- [ ] formalizar rollout/readiness antes de ativação de novos territórios;
+- [x] formalizar rollout fail-closed antes de ativação de novos territórios;
+- [x] formalizar contrato de readiness; cálculo passa a consumir evidências da FASE 2;
 - [x] Salvador como cidade raiz do MVP;
 - [x] importar os quatro bairros iniciais;
 - [x] criar TerritoryGroup do Complexo;
@@ -364,18 +365,20 @@ Os quatro bairros podem ser identificados, consultados, relacionados, exibidos e
 
 ## FASE 2 — Territory Data Platform
 
+**Status:** EM EXECUÇÃO.
+
 ### Entregas
 
-- [ ] `data_sources`;
-- [ ] proveniência;
-- [ ] versionamento;
-- [ ] pipeline de ingestão;
-- [ ] staging/validation;
-- [ ] relatórios de importação;
-- [ ] `territory_facts`;
-- [ ] `public_places`;
-- [ ] categorias de serviços públicos;
-- [ ] integração inicial com fontes oficiais;
+- [x] `data_sources`;
+- [x] proveniência;
+- [x] versionamento;
+- [~] pipeline de ingestão: conector ArcGIS + parser validados; executor/snapshot ainda pendentes;
+- [~] staging/validation: contracts e guards fail-closed prontos; primeira execução real pendente;
+- [x] estrutura privada de relatórios/ingestion runs;
+- [x] `territory_facts`;
+- [x] `public_places`;
+- [x] categorias de serviços públicos;
+- [x] integração inicial com fontes oficiais;
 - [ ] população/demografia;
 - [ ] educação;
 - [ ] saúde;
@@ -383,7 +386,7 @@ Os quatro bairros podem ser identificados, consultados, relacionados, exibidos e
 - [ ] demais dados essenciais do MVP;
 - [ ] data quality;
 - [ ] atualização periódica;
-- [ ] zero dado inventado.
+- [x] zero dado inventado.
 
 ### Fontes prioritárias
 
@@ -1071,20 +1074,20 @@ A próxima frente continua não sendo Comunidade nem Empresas.
 
 ## Próximo passo
 
-> **Fechar FASE 1 com readiness/rollout mínimo e iniciar FASE 2 — Territory Data Platform.**
+> **Executar a primeira ingestão reproduzível do Censo 2022 para os quatro bairros sem publicar nada antes da validação.**
 
 Sequência imediata:
 
-1. definir readiness mensurável sem inflar score;
-2. definir política de rollout/ativação territorial;
-3. criar `data_sources`/provenance;
-4. criar `territory_facts`;
-5. criar `public_places`;
-6. importar dados oficiais do Complexo por pipeline versionado;
-7. começar por Censo 2022/demografia;
-8. depois educação e saúde;
-9. validar data quality;
-10. somente então iniciar Map Core v1 sobre dados reais.
+1. concluir o executor server-side do conector ArcGIS;
+2. baixar exatamente os quatro registros esperados;
+3. validar nomes, unicidade, FID e sete campos canônicos;
+4. gerar checksum/snapshot do payload aceito;
+5. registrar ingestion run com contagens;
+6. criar fatos como `provisional`;
+7. validar consistência populacional e territorial;
+8. promover snapshot + fatos para `verified` somente após a prova;
+9. investigar e validar schemas atuais de educação e saúde;
+10. somente depois alimentar `public_places` e avançar para Map Core v1.
 
 ---
 
@@ -1092,40 +1095,42 @@ Sequência imediata:
 
 ### HEAD técnico de referência
 
-`08ed851f76c8da6d6fef18c9c091cff8c397256c`
+`6e0cb2c1968c8c58f98d23742d1b028415fb1857`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 em execução.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 em execução.**
 
 ### Concluído recentemente
 
-- Classificados movido para `src/modules/classifieds`;
-- guardrails arquiteturais no ESLint;
-- ADR Territory-first e Architecture Map;
-- `core/territory` com contracts e ports;
-- PostGIS 3.3.7 ativo;
-- árvore Brasil → Bahia → Salvador → 4 bairros;
-- TerritoryGroup do Complexo com 4 membros;
-- quatro boundaries GeoSalvador convertidos para MultiPolygon e validados;
-- catálogo público map-ready com `security_invoker`;
-- smoke RLS público;
-- Supabase security advisors: 0 lints;
-- Classificados continua funcional e congelado para novas features.
+- Territory rollout separado do ciclo geográfico;
+- quatro bairros + Complexo permanecem em `data_preparation`;
+- Territory Data Platform criada;
+- fontes, snapshots, métricas, fatos, public places e ingestion runs modelados;
+- RLS fail-closed e provenance obrigatório;
+- 11 categorias de equipamentos públicos;
+- primeira fonte oficial: GeoSalvador `censo_2010_e_2022_por_bairro`;
+- Service Item ID e schema/layer verificados;
+- sete métricas de 2022 mapeadas: população total, masculina, feminina, densidade, alfabetizada e dois totais de domicílios;
+- conector ArcGIS e parser específico do Complexo;
+- parser exige exatamente os quatro bairros, sem duplicatas e com campos válidos;
+- security advisors: 0 lints;
+- performance advisors: somente `unused_index` em banco sem tráfego;
+- **0 snapshots, 0 fatos demográficos e 0 lugares publicados até a primeira ingestão reproduzível.**
 
 ### Próxima ação
 
-**Readiness/rollout mínimo → Territory Data Platform.**
+**Primeiro fetch reproduzível → snapshot → fatos provisórios → validação → publicação.**
 
 ### Não repetir
 
-- não iniciar Empresas;
-- não iniciar Gastronomia;
-- não iniciar Mobilidade;
-- não aprofundar Classificados com features novas;
+- não preencher população manualmente;
+- não usar valores do repositório antigo como fonte;
+- não criar snapshot “verificado” sem payload reproduzível;
+- não iniciar Empresas/Gastronomia/Mobilidade;
+- não aprofundar Classificados;
 - não criar Community antes de Territory/Data/Map/Home base;
-- não copiar o Achegue-se antigo integralmente;
-- não recriar mapa/localização dentro de módulos.
+- não fazer requests a APIs públicas externas no request do usuário.
 
 ---
 

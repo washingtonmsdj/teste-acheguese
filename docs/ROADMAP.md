@@ -14,7 +14,7 @@
 - [x] README/arquitetura alinhados;
 - [x] novos módulos congelados.
 
-## FASE 1 — Territory Core — EM EXECUÇÃO
+## FASE 1 — Territory Core — CONCLUÍDA
 
 - [x] PostGIS 3.3.7;
 - [x] `territories`;
@@ -34,23 +34,23 @@
 - [x] catálogo map-ready em GeoJSON;
 - [x] contracts/ports TypeScript;
 - [x] smoke público/RLS;
-- [ ] readiness formal;
-- [ ] política de rollout/ativação territorial.
+- [x] contrato de readiness formalizado;
+- [x] rollout/ativação territorial fail-closed.
 
-## FASE 2 — Territory Data Platform — PRÓXIMA
+## FASE 2 — Territory Data Platform — EM EXECUÇÃO
 
-- [ ] `data_sources`;
-- [ ] provenance/versionamento;
-- [ ] staging/ingestion;
-- [ ] `territory_facts`;
-- [ ] `public_places`;
-- [ ] categorias de equipamentos públicos;
-- [ ] Censo 2022 por bairro;
+- [x] `data_sources`;
+- [x] provenance/versionamento;
+- [~] staging/ingestion — conector/parser prontos; execução real pendente;
+- [x] `territory_facts`;
+- [x] `public_places`;
+- [x] categorias de equipamentos públicos;
+- [~] Censo 2022 — fonte/schema/métricas validados; valores ainda não importados;
 - [ ] população/demografia;
 - [ ] educação;
 - [ ] saúde;
 - [ ] demais serviços públicos prioritários;
-- [ ] relatórios de ingestão;
+- [x] estrutura privada de ingestion runs;
 - [ ] data quality;
 - [ ] atualização idempotente/periódica.
 
