@@ -1,4 +1,8 @@
 import type { Metadata } from 'next';
+import {
+  parseMapUrlState,
+  type MapUrlParams,
+} from '@/core/map';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
@@ -14,14 +18,24 @@ export const metadata: Metadata = {
     'Explore bairros, escolas e unidades SUS verificadas no Complexo do Nordeste de Amaralina.',
 };
 
-const COMPLEXO_BOUNDS = {
-  west: -38.4873837606422,
-  south: -13.0134576151743,
-  east: -38.4668939364098,
-  north: -12.9958446983238,
+const DEFAULT_MAP_STATE = {
+  bounds: {
+    west: -38.4873837606422,
+    south: -13.0134576151743,
+    east: -38.4668939364098,
+    north: -12.9958446983238,
+  },
+  zoom: 14,
+  categories: ['education', 'health'],
 } as const;
 
-export default async function MapaPage() {
+type MapaPageProps = {
+  searchParams: Promise<MapUrlParams>;
+};
+
+export default async function MapaPage({
+  searchParams,
+}: MapaPageProps) {
   const supabase = createSupabasePublicServerClient();
 
   if (!supabase) {
@@ -43,12 +57,25 @@ export default async function MapaPage() {
     );
   }
 
+  const initialState = parseMapUrlState(
+    await searchParams,
+    {
+      bounds: DEFAULT_MAP_STATE.bounds,
+      zoom: DEFAULT_MAP_STATE.zoom,
+      categories: [...DEFAULT_MAP_STATE.categories],
+    },
+  );
+
   const repository = new SupabaseMapDataRepository(supabase);
   const initialData = await repository.loadViewport({
-    bounds: COMPLEXO_BOUNDS,
-    zoom: 14,
-    layers: ['boundaries', 'public_places'],
-    publicPlaceCategories: ['education', 'health'],
+    bounds: initialState.bounds,
+    zoom: initialState.zoom,
+    layers: initialState.categories.length
+      ? ['boundaries', 'public_places']
+      : ['boundaries'],
+    publicPlaceCategories: initialState.categories.length
+      ? initialState.categories
+      : undefined,
     placeLimit: 200,
     boundaryLimit: 100,
   });
@@ -58,7 +85,8 @@ export default async function MapaPage() {
       <SiteHeader />
       <TerritoryMapExplorer
         initialData={initialData}
-        initialZoom={14}
+        initialZoom={initialState.zoom}
+        initialCategories={initialState.categories}
       />
       <MobileTabbar />
     </main>

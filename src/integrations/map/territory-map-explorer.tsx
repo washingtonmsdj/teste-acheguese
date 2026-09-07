@@ -15,7 +15,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import type { MapViewportData } from '@/core/map';
+import {
+  formatMapUrlState,
+  type MapViewportData,
+} from '@/core/map';
 import styles from '@/app/mapa/mapa.module.css';
 
 const DEFAULT_STYLE_URL =
@@ -28,6 +31,7 @@ const PLACES_SOURCE = 'acheguese-public-places';
 type TerritoryMapExplorerProps = {
   initialData: MapViewportData;
   initialZoom: number;
+  initialCategories: string[];
 };
 
 function boundaryCollection(data: MapViewportData) {
@@ -107,19 +111,18 @@ function popupContent(feature: MapGeoJSONFeature) {
 export function TerritoryMapExplorer({
   initialData,
   initialZoom,
+  initialCategories,
 }: TerritoryMapExplorerProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const requestRef = useRef<AbortController | null>(null);
   const categoriesRef = useRef<string[]>([
-    'education',
-    'health',
+    ...initialCategories,
   ]);
 
   const [data, setData] = useState(initialData);
   const [categories, setCategories] = useState([
-    'education',
-    'health',
+    ...initialCategories,
   ]);
   const [loading, setLoading] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
@@ -143,6 +146,27 @@ export function TerritoryMapExplorer({
       const layers = nextCategories.length
         ? 'boundaries,public_places'
         : 'boundaries';
+
+      const urlState = formatMapUrlState({
+        bounds: {
+          west: bounds.getWest(),
+          south: bounds.getSouth(),
+          east: bounds.getEast(),
+          north: bounds.getNorth(),
+        },
+        zoom: map.getZoom(),
+        categories: nextCategories,
+      });
+
+      const currentUrl = new URL(window.location.href);
+      for (const [key, value] of Object.entries(urlState)) {
+        currentUrl.searchParams.set(key, value);
+      }
+      window.history.replaceState(
+        null,
+        '',
+        currentUrl.pathname + currentUrl.search,
+      );
 
       const params = new URLSearchParams({
         west: String(bounds.getWest()),
