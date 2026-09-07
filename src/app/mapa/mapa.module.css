@@ -5,20 +5,38 @@
 
 .shell {
   display: grid;
+  grid-template-areas:
+    "controls"
+    "map"
+    "results";
   min-height: calc(100svh - 68px);
   background: #f5f8f7;
 }
 
-.sidebar {
+.controlsPane,
+.resultsPane {
+  background: #ffffff;
+}
+
+.controlsPane {
+  grid-area: controls;
   display: grid;
   align-content: start;
   gap: 22px;
-  padding: 26px 20px 96px;
-  background: #ffffff;
+  padding: 26px 20px 24px;
   border-bottom: 1px solid var(--line);
 }
 
-.sidebar h1,
+.resultsPane {
+  grid-area: results;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 22px 20px 96px;
+  border-top: 1px solid var(--line);
+}
+
+.controlsPane h1,
 .unavailable h1 {
   margin: 0 0 12px;
   font-size: clamp(2rem, 9vw, 3.6rem);
@@ -59,34 +77,62 @@
 
 .filters {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-.filters > strong,
+.filterHeading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.filterHeading strong,
 .placeListHeader strong {
   font-size: .78rem;
   text-transform: uppercase;
   letter-spacing: .08em;
 }
 
+.filterHeading span,
+.placeListHeader span,
+.placeListHeader small {
+  color: var(--muted);
+  font-size: .68rem;
+}
+
 .filters button {
-  min-height: 44px;
+  min-height: 46px;
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 0 13px;
   border: 1px solid var(--line);
-  border-radius: 13px;
+  border-radius: 14px;
   background: white;
   color: #455368;
   font: inherit;
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 800;
   cursor: pointer;
+  transition:
+    border-color .16s ease,
+    background-color .16s ease,
+    transform .16s ease;
 }
 
-.filters button span {
-  color: #a9b4b0;
+.filters button:hover {
+  border-color: #b8c8c2;
+  transform: translateY(-1px);
+}
+
+.filters button:focus-visible,
+.placeButton:focus-visible {
+  outline: 3px solid rgba(12, 148, 112, .24);
+  outline-offset: 2px;
 }
 
 .filters .filterActive {
@@ -95,40 +141,11 @@
   color: var(--brand-dark);
 }
 
-.filters .filterActive span {
-  color: var(--brand);
-}
-
-.placeList {
-  display: grid;
-  gap: 8px;
-}
-
-.placeListHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
-.placeListHeader span {
-  color: var(--muted);
-  font-size: .68rem;
-}
-
-.placeList article {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.placeList article > span {
+.educationDot,
+.healthDot {
   width: 10px;
   height: 10px;
-  margin-top: 5px;
+  flex: 0 0 auto;
   border-radius: 50%;
 }
 
@@ -140,45 +157,44 @@
   background: #d8563f;
 }
 
-.placeList article strong {
-  display: block;
-  margin-bottom: 3px;
-  font-size: .82rem;
-  line-height: 1.3;
-}
-
-.placeList article small {
-  color: var(--muted);
-  font-size: .68rem;
-}
-
-.placeList article p {
-  margin: 4px 0 0;
-  color: #5a6878;
-  font-size: .7rem;
-  line-height: 1.4;
-}
-
-.empty,
-.provenance {
-  color: var(--muted);
-  font-size: .72rem;
-  line-height: 1.5;
-}
-
-.provenance {
-  padding-top: 4px;
-}
-
 .mapStage {
+  grid-area: map;
   position: relative;
-  min-height: 62svh;
+  min-height: 58svh;
   background: #dfe9e5;
+  isolation: isolate;
 }
 
 .map {
   position: absolute;
   inset: 0;
+}
+
+.mapHud {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  pointer-events: none;
+}
+
+.mapHud span {
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, .82);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .92);
+  color: #26384a;
+  font-size: .7rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(11, 24, 48, .12);
+  backdrop-filter: blur(10px);
+}
+
+.mapHud .mapStatusLoading {
+  color: var(--brand-dark);
 }
 
 .mapError {
@@ -197,6 +213,101 @@
   box-shadow: var(--shadow);
 }
 
+.placeList {
+  display: grid;
+  gap: 6px;
+}
+
+.placeListHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 6px;
+}
+
+.placeListHeader > div {
+  display: grid;
+  gap: 3px;
+}
+
+.placeList article {
+  border-bottom: 1px solid var(--line);
+}
+
+.placeButton {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  padding: 13px 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.placeButton > .educationDot,
+.placeButton > .healthDot {
+  margin-top: 5px;
+}
+
+.placeButton strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: .82rem;
+  line-height: 1.3;
+}
+
+.placeButton small {
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+.placeButton p {
+  margin: 4px 0 0;
+  color: #5a6878;
+  font-size: .7rem;
+  line-height: 1.4;
+}
+
+.placeArrow {
+  color: #819089;
+  font-size: .78rem;
+  transition: transform .16s ease;
+}
+
+.placeButton:hover .placeArrow {
+  transform: translate(2px, -2px);
+}
+
+.empty,
+.provenance {
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.5;
+}
+
+.provenance {
+  margin: 0;
+  padding-top: 4px;
+}
+
+.visuallyHidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 .unavailable {
   min-height: calc(100svh - 68px);
   display: grid;
@@ -207,24 +318,47 @@
 
 @media (min-width: 980px) {
   .shell {
-    grid-template-columns: 360px minmax(0, 1fr);
+    grid-template-columns: 380px minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      "controls map"
+      "results map";
     height: calc(100svh - 76px);
     min-height: 0;
   }
 
-  .sidebar {
+  .controlsPane {
     min-height: 0;
-    overflow-y: auto;
-    padding: 32px 26px 42px;
+    padding: 32px 26px 24px;
     border-right: 1px solid var(--line);
-    border-bottom: 0;
+    border-bottom: 1px solid var(--line);
   }
 
-  .sidebar h1 {
+  .resultsPane {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 20px 26px 42px;
+    border-top: 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .controlsPane h1 {
     font-size: 2.65rem;
   }
 
   .mapStage {
     min-height: 0;
+  }
+
+  .mapHud {
+    top: 18px;
+    left: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filters button,
+  .placeArrow {
+    transition: none;
   }
 }

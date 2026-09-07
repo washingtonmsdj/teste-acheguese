@@ -1,0 +1,36 @@
+.root {
+  position: relative;
+  min-height: 210px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #dfe9e5;
+  box-shadow: 0 12px 34px rgba(11, 24, 48, .08);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.fallback {
+  display: grid;
+  place-content: center;
+  gap: 4px;
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(12, 148, 112, .12), transparent 45%),
+    #f5f8f7;
+}
+
+.fallback span {
+  color: var(--brand-dark);
+  font-weight: 850;
+}
+
+.fallback small {
+  max-width: 28ch;
+  line-height: 1.45;
+}

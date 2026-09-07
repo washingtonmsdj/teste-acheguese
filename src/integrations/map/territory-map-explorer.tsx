@@ -4,7 +4,6 @@ import {
   Map as MapLibreMap,
   NavigationControl,
   Popup,
-  setWorkerUrl,
   type GeoJSONSource,
   type MapGeoJSONFeature,
 } from 'maplibre-gl';
@@ -17,77 +16,26 @@ import {
 } from 'react';
 import {
   formatMapUrlState,
+  type MapPointFeature,
   type MapViewportData,
 } from '@/core/map';
+import {
+  addTerritoryMapLayers,
+  configureMapLibreWorker,
+  MAPLIBRE_STYLE_URL,
+  PLACES_SOURCE,
+  PLACE_POINT_LAYER,
+  syncTerritoryMapData,
+} from '@/integrations/map/maplibre-shared';
 import styles from '@/app/mapa/mapa.module.css';
 
-const DEFAULT_STYLE_URL =
-  process.env.NEXT_PUBLIC_MAP_STYLE_URL?.trim() ||
-  'https://tiles.openfreemap.org/styles/liberty';
-
-const BOUNDARY_SOURCE = 'acheguese-boundaries';
-const PLACES_SOURCE = 'acheguese-public-places';
+const CLUSTER_LAYER = 'acheguese-place-clusters';
 
 type TerritoryMapExplorerProps = {
   initialData: MapViewportData;
   initialZoom: number;
   initialCategories: string[];
 };
-
-function boundaryCollection(data: MapViewportData) {
-  return {
-    type: 'FeatureCollection' as const,
-    features: data.boundaries.map((boundary) => ({
-      type: 'Feature' as const,
-      id: boundary.id,
-      geometry: boundary.geometry,
-      properties: {
-        territoryId: boundary.territoryId,
-        title: boundary.territoryName,
-        slug: boundary.territorySlug,
-      },
-    })),
-  };
-}
-
-function pointCollection(data: MapViewportData) {
-  return {
-    type: 'FeatureCollection' as const,
-    features: data.points.map((point) => ({
-      type: 'Feature' as const,
-      id: point.id,
-      geometry: {
-        type: 'Point' as const,
-        coordinates: [
-          point.coordinates.longitude,
-          point.coordinates.latitude,
-        ],
-      },
-      properties: {
-        id: point.id,
-        kind: point.kind,
-        kindLabel: point.kindLabel,
-        title: point.title,
-        address: point.address ?? '',
-        phone: point.phone ?? '',
-        providerName: point.source.providerName,
-      },
-    })),
-  };
-}
-
-function syncMapData(
-  map: MapLibreMap,
-  data: MapViewportData,
-) {
-  const boundarySource =
-    map.getSource(BOUNDARY_SOURCE) as GeoJSONSource | undefined;
-  const placeSource =
-    map.getSource(PLACES_SOURCE) as GeoJSONSource | undefined;
-
-  boundarySource?.setData(boundaryCollection(data));
-  placeSource?.setData(pointCollection(data));
-}
 
 function popupContent(feature: MapGeoJSONFeature) {
   const container = document.createElement('div');
@@ -106,6 +54,29 @@ function popupContent(feature: MapGeoJSONFeature) {
 
   container.append(title, meta);
   return container;
+}
+
+function pointPopupContent(point: MapPointFeature) {
+  const container = document.createElement('div');
+  const title = document.createElement('strong');
+  const meta = document.createElement('p');
+
+  title.textContent = point.title;
+  meta.textContent = [
+    point.kindLabel,
+    point.address,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  container.append(title, meta);
+  return container;
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
 }
 
 export function TerritoryMapExplorer({
@@ -127,15 +98,21 @@ export function TerritoryMapExplorer({
   const [loading, setLoading] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
 
-  const center = useMemo(() => ({
-    longitude:
-      (initialData.bounds.west + initialData.bounds.east) / 2,
-    latitude:
-      (initialData.bounds.south + initialData.bounds.north) / 2,
-  }), [initialData.bounds]);
+  const center = useMemo(
+    () => ({
+      longitude:
+        (initialData.bounds.west + initialData.bounds.east) / 2,
+      latitude:
+        (initialData.bounds.south + initialData.bounds.north) / 2,
+    }),
+    [initialData.bounds],
+  );
 
   const loadViewport = useCallback(
-    async (map: MapLibreMap, nextCategories: string[]) => {
+    async (
+      map: MapLibreMap,
+      nextCategories: string[],
+    ) => {
       const bounds = map.getBounds();
       const controller = new AbortController();
 
@@ -200,7 +177,7 @@ export function TerritoryMapExplorer({
           (await response.json()) as MapViewportData;
 
         setData(nextData);
-        syncMapData(map, nextData);
+        syncTerritoryMapData(map, nextData);
         setMapError(null);
       } catch (error) {
         if (
@@ -215,8 +192,53 @@ export function TerritoryMapExplorer({
         );
       } finally {
         if (requestRef.current === controller) {
+          requestRef.current = null;
           setLoading(false);
         }
+      }
+    },
+    [],
+  );
+
+  const focusPoint = useCallback(
+    (point: MapPointFeature) => {
+      const map = mapRef.current;
+      if (!map) return;
+
+      const centerPoint: [number, number] = [
+        point.coordinates.longitude,
+        point.coordinates.latitude,
+      ];
+      const zoom = Math.max(map.getZoom(), 16);
+
+      if (prefersReducedMotion()) {
+        map.jumpTo({
+          center: centerPoint,
+          zoom,
+        });
+      } else {
+        map.easeTo({
+          center: centerPoint,
+          zoom,
+          duration: 420,
+        });
+      }
+
+      new Popup({
+        closeButton: true,
+        maxWidth: '320px',
+      })
+        .setLngLat(centerPoint)
+        .setDOMContent(pointPopupContent(point))
+        .addTo(map);
+
+      if (window.matchMedia('(max-width: 979px)').matches) {
+        mapContainerRef.current?.scrollIntoView({
+          behavior: prefersReducedMotion()
+            ? 'auto'
+            : 'smooth',
+          block: 'center',
+        });
       }
     },
     [],
@@ -227,11 +249,11 @@ export function TerritoryMapExplorer({
       return;
     }
 
-    setWorkerUrl('/maplibre/maplibre-gl-worker.mjs');
+    configureMapLibreWorker();
 
     const map = new MapLibreMap({
       container: mapContainerRef.current,
-      style: DEFAULT_STYLE_URL,
+      style: MAPLIBRE_STYLE_URL,
       center: [center.longitude, center.latitude],
       zoom: initialZoom,
       minZoom: 11,
@@ -248,112 +270,13 @@ export function TerritoryMapExplorer({
     );
 
     map.on('load', () => {
-      map.addSource(BOUNDARY_SOURCE, {
-        type: 'geojson',
-        data: boundaryCollection(initialData),
+      addTerritoryMapLayers(map, initialData, {
+        clustered: true,
       });
 
-      map.addLayer({
-        id: 'acheguese-boundary-fill',
-        type: 'fill',
-        source: BOUNDARY_SOURCE,
-        paint: {
-          'fill-color': '#0c9470',
-          'fill-opacity': 0.08,
-        },
-      });
-
-      map.addLayer({
-        id: 'acheguese-boundary-line',
-        type: 'line',
-        source: BOUNDARY_SOURCE,
-        paint: {
-          'line-color': '#05624d',
-          'line-width': 2.2,
-          'line-opacity': 0.9,
-        },
-      });
-
-      map.addSource(PLACES_SOURCE, {
-        type: 'geojson',
-        data: pointCollection(initialData),
-        cluster: true,
-        clusterRadius: 48,
-        clusterMaxZoom: 16,
-      });
-
-      map.addLayer({
-        id: 'acheguese-place-clusters',
-        type: 'circle',
-        source: PLACES_SOURCE,
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': '#0b1830',
-          'circle-radius': [
-            'step',
-            ['get', 'point_count'],
-            18,
-            10,
-            22,
-            40,
-            27,
-          ],
-          'circle-stroke-color': '#ffffff',
-          'circle-stroke-width': 3,
-        },
-      });
-
-      map.addLayer({
-        id: 'acheguese-place-cluster-count',
-        type: 'symbol',
-        source: PLACES_SOURCE,
-        filter: ['has', 'point_count'],
-        layout: {
-          'text-field': ['get', 'point_count_abbreviated'],
-          'text-size': 12,
-        },
-        paint: {
-          'text-color': '#ffffff',
-        },
-      });
-
-      map.addLayer({
-        id: 'acheguese-place-points',
-        type: 'circle',
-        source: PLACES_SOURCE,
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-          'circle-radius': 8,
-          'circle-color': [
-            'match',
-            ['get', 'kind'],
-            'health',
-            '#d8563f',
-            'education',
-            '#0c9470',
-            '#0b1830',
-          ],
-          'circle-stroke-color': '#ffffff',
-          'circle-stroke-width': 3,
-        },
-      });
-
-      map.fitBounds(
-        [
-          [
-            initialData.bounds.west,
-            initialData.bounds.south,
-          ],
-          [
-            initialData.bounds.east,
-            initialData.bounds.north,
-          ],
-        ],
-        {
-          padding: 40,
-          duration: 0,
-        },
-      );
+      // Revalida o viewport real do dispositivo. Isso mantém
+      // o zoom do deep link intacto sem depender de fitBounds.
+      void loadViewport(map, categoriesRef.current);
     });
 
     map.on('moveend', () => {
@@ -362,7 +285,7 @@ export function TerritoryMapExplorer({
 
     map.on(
       'click',
-      'acheguese-place-points',
+      PLACE_POINT_LAYER,
       (event) => {
         const feature = event.features?.[0];
 
@@ -395,7 +318,7 @@ export function TerritoryMapExplorer({
 
     map.on(
       'click',
-      'acheguese-place-clusters',
+      CLUSTER_LAYER,
       async (event) => {
         const feature = event.features?.[0];
 
@@ -421,19 +344,41 @@ export function TerritoryMapExplorer({
           const zoom =
             await source.getClusterExpansionZoom(clusterId);
 
-          map.easeTo({
-            center: feature.geometry.coordinates as [
-              number,
-              number,
-            ],
-            zoom,
-          });
+          const centerPoint = feature.geometry.coordinates as [
+            number,
+            number,
+          ];
+
+          if (prefersReducedMotion()) {
+            map.jumpTo({
+              center: centerPoint,
+              zoom,
+            });
+          } else {
+            map.easeTo({
+              center: centerPoint,
+              zoom,
+              duration: 360,
+            });
+          }
         } catch {
-          // Cluster expansion is an enhancement; viewport
-          // loading remains usable if the provider rejects it.
+          // Cluster expansion is enhancement-only. The
+          // viewport query and textual fallback stay usable.
         }
       },
     );
+
+    for (const layerId of [
+      PLACE_POINT_LAYER,
+      CLUSTER_LAYER,
+    ]) {
+      map.on('mouseenter', layerId, () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', layerId, () => {
+        map.getCanvas().style.cursor = '';
+      });
+    }
 
     map.on('error', () => {
       setMapError(
@@ -469,14 +414,14 @@ export function TerritoryMapExplorer({
 
   return (
     <section className={styles.shell}>
-      <aside className={styles.sidebar}>
+      <aside className={styles.controlsPane}>
         <div>
           <p className="eyebrow">Complexo do Nordeste</p>
           <h1>Mapa do território</h1>
           <p className={styles.intro}>
-            Explore boundaries oficiais, escolas e unidades
-            SUS verificadas. O mapa carrega somente o
-            viewport visível.
+            Explore limites oficiais, escolas e unidades
+            SUS verificadas. O mapa carrega somente a área
+            que está visível.
           </p>
         </div>
 
@@ -495,7 +440,10 @@ export function TerritoryMapExplorer({
           className={styles.filters}
           aria-label="Camadas do mapa"
         >
-          <strong>Camadas</strong>
+          <div className={styles.filterHeading}>
+            <strong>Camadas</strong>
+            <span>Escolha o que ver</span>
+          </div>
           <button
             className={
               categories.includes('education')
@@ -506,7 +454,10 @@ export function TerritoryMapExplorer({
             onClick={() => toggleCategory('education')}
             aria-pressed={categories.includes('education')}
           >
-            <span aria-hidden="true">●</span>
+            <span
+              className={styles.educationDot}
+              aria-hidden="true"
+            />
             Educação
           </button>
           <button
@@ -519,35 +470,98 @@ export function TerritoryMapExplorer({
             onClick={() => toggleCategory('health')}
             aria-pressed={categories.includes('health')}
           >
-            <span aria-hidden="true">●</span>
+            <span
+              className={styles.healthDot}
+              aria-hidden="true"
+            />
             Saúde SUS
           </button>
         </div>
+      </aside>
 
+      <div className={styles.mapStage}>
+        <p
+          id="territory-map-help"
+          className={styles.visuallyHidden}
+        >
+          Use os controles do mapa para aproximar ou afastar.
+          A lista de locais abaixo oferece uma alternativa
+          acessível para focalizar cada ponto.
+        </p>
+
+        <div
+          ref={mapContainerRef}
+          className={styles.map}
+          role="region"
+          aria-label="Mapa interativo do Complexo do Nordeste de Amaralina"
+          aria-describedby="territory-map-help"
+        />
+
+        <div
+          className={styles.mapHud}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span>
+            {data.points.length} locais visíveis
+          </span>
+          {loading && (
+            <span className={styles.mapStatusLoading}>
+              Atualizando…
+            </span>
+          )}
+        </div>
+
+        {mapError && (
+          <div className={styles.mapError} role="status">
+            {mapError}
+          </div>
+        )}
+      </div>
+
+      <aside className={styles.resultsPane}>
         <div className={styles.placeList}>
           <div className={styles.placeListHeader}>
-            <strong>Locais visíveis</strong>
-            {loading && <span>Atualizando…</span>}
+            <div>
+              <strong>Locais visíveis</strong>
+              <span>
+                Selecione um local para focalizar no mapa
+              </span>
+            </div>
+            <small>{data.points.length} resultados</small>
           </div>
 
           {data.points.length ? (
             data.points.slice(0, 20).map((point) => (
               <article key={point.id}>
-                <span
-                  className={
-                    point.kind === 'health'
-                      ? styles.healthDot
-                      : styles.educationDot
-                  }
-                  aria-hidden="true"
-                />
-                <div>
-                  <strong>{point.title}</strong>
-                  <small>
-                    {point.kindLabel} · {point.territoryName}
-                  </small>
-                  {point.address && <p>{point.address}</p>}
-                </div>
+                <button
+                  className={styles.placeButton}
+                  type="button"
+                  onClick={() => focusPoint(point)}
+                  aria-label={`Ver ${point.title} no mapa`}
+                >
+                  <span
+                    className={
+                      point.kind === 'health'
+                        ? styles.healthDot
+                        : styles.educationDot
+                    }
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <strong>{point.title}</strong>
+                    <small>
+                      {point.kindLabel} · {point.territoryName}
+                    </small>
+                    {point.address && <p>{point.address}</p>}
+                  </div>
+                  <span
+                    className={styles.placeArrow}
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </button>
               </article>
             ))
           ) : (
@@ -562,19 +576,6 @@ export function TerritoryMapExplorer({
           da Saúde. Mapa-base: OpenFreeMap/OpenStreetMap.
         </p>
       </aside>
-
-      <div className={styles.mapStage}>
-        <div
-          ref={mapContainerRef}
-          className={styles.map}
-          aria-label="Mapa interativo do Complexo do Nordeste de Amaralina"
-        />
-        {mapError && (
-          <div className={styles.mapError} role="status">
-            {mapError}
-          </div>
-        )}
-      </div>
     </section>
   );
 }
