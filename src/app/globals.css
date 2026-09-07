@@ -1306,3 +1306,42 @@ footer .brand small { color: #b9ded4; }
 .dangerButton:hover {
   background: #fde8e6;
 }
+
+
+.skipLink {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: white;
+  font-size: .82rem;
+  font-weight: 800;
+  transform: translateY(-180%);
+  transition: transform .16s ease;
+}
+.skipLink:focus {
+  transform: translateY(0);
+}
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid rgba(12, 148, 112, .52);
+  outline-offset: 3px;
+}
+#main-content:focus {
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

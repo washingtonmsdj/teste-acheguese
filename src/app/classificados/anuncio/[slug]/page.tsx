@@ -12,6 +12,7 @@ import {
   formatClassifiedPrice,
 } from '@/features/classifieds/presentation';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
+import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
@@ -86,9 +87,26 @@ export async function generateMetadata({
     };
   }
 
+  const siteUrl = getSiteUrl();
+  const canonical = siteUrl
+    ? `${siteUrl}/classificados/anuncio/${loaded.item.slug}`
+    : undefined;
+
   return {
     title: loaded.item.title,
     description: loaded.item.description.slice(0, 155),
+    alternates: canonical
+      ? {
+          canonical,
+        }
+      : undefined,
+    openGraph: {
+      type: 'website',
+      title: loaded.item.title,
+      description: loaded.item.description.slice(0, 155),
+      url: canonical,
+      locale: 'pt_BR',
+    },
   };
 }
 
@@ -119,9 +137,49 @@ export default async function ClassifiedDetailPage({
     item.id,
     item.slug,
   );
+  const siteUrl = getSiteUrl();
+  const productUrl = siteUrl
+    ? `${siteUrl}/classificados/anuncio/${item.slug}`
+    : undefined;
+  const conditionUrls = {
+    new: 'https://schema.org/NewCondition',
+    like_new: 'https://schema.org/UsedCondition',
+    used: 'https://schema.org/UsedCondition',
+    for_parts: 'https://schema.org/DamagedCondition',
+  } as const;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: item.title,
+    description: item.description,
+    url: productUrl,
+    itemCondition: conditionUrls[item.condition],
+    areaServed: {
+      '@type': 'City',
+      name: item.location.cityName,
+      addressRegion: item.location.stateCode,
+    },
+    ...(item.price
+      ? {
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: item.price.currency,
+            price: (item.price.amountInCents / 100).toFixed(2),
+            availability: 'https://schema.org/InStock',
+            url: productUrl,
+          },
+        }
+      : {}),
+  };
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
+        }}
+      />
       <SiteHeader />
 
       <section className="section container publicDetailLayout">
