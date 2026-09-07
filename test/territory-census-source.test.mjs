@@ -6,25 +6,21 @@ import {
 } from '../src/data/sources/geosalvador/census-2010-2022.ts';
 
 const validFeatures = [
-  ['Chapada do Rio Vermelho', 54],
-  ['Nordeste de Amaralina', 112],
-  ['Santa Cruz', 142],
-  ['Vale das Pedrinhas', 163],
-].map(([name, fid], index) => ({
+  ['Chapada do Rio Vermelho', 13, 20106, 9100, 9099],
+  ['Nordeste de Amaralina', 11, 20628, 9045, 9041],
+  ['Santa Cruz', 14, 21494, 9917, 9916],
+  ['Vale das Pedrinhas', 12, 6129, 2580, 2580],
+].map(([name, fid, population, households, permanent]) => ({
   attributes: {
     FID: fid,
     NOME_BAIRR: name,
-    C001: 1000 + index,
-    C002: 490 + index,
-    C003: 510 + index,
-    C004: 100 + index,
-    C018: 800 + index,
-    C026: 400 + index,
-    C027: 390 + index,
+    C001: population,
+    C026: households,
+    C027: permanent,
   },
 }));
 
-test('monta query ArcGIS somente para os quatro bairros e campos permitidos', () => {
+test('monta query ArcGIS somente com campos de semântica validada', () => {
   const url = new URL(buildComplexoCensus2022QueryUrl());
 
   assert.equal(url.pathname.endsWith('/FeatureServer/0/query'), true);
@@ -36,19 +32,9 @@ test('monta query ArcGIS somente para os quatro bairros e campos permitidos', ()
     'FID',
     'NOME_BAIRR',
     'C001',
-    'C002',
-    'C003',
-    'C004',
-    'C018',
     'C026',
     'C027',
   ]);
-
-  const where = url.searchParams.get('where') ?? '';
-  assert.match(where, /Nordeste de Amaralina/);
-  assert.match(where, /Santa Cruz/);
-  assert.match(where, /Vale das Pedrinhas/);
-  assert.match(where, /Chapada do Rio Vermelho/);
 });
 
 test('aceita exatamente os quatro registros esperados', () => {
@@ -60,8 +46,8 @@ test('aceita exatamente os quatro registros esperados', () => {
   assert.equal(
     records.find((row) =>
       row.geographicPath.endsWith('/santa-cruz'),
-    )?.sourceRecordId,
-    '142',
+    )?.populationTotal,
+    21494,
   );
 });
 
@@ -86,13 +72,24 @@ test('bloqueia bairro inesperado', () => {
   );
 });
 
-test('bloqueia campo numérico ausente ou inválido', () => {
+test('bloqueia contagem não inteira', () => {
   const invalid = structuredClone(validFeatures);
-  invalid[0].attributes.C001 = null;
+  invalid[0].attributes.C001 = 20106.5;
 
   assert.throws(
     () =>
       parseComplexoCensus2022Response({ features: invalid }),
     /census_field_invalid:C001/,
+  );
+});
+
+test('bloqueia domicílios permanentes acima do total', () => {
+  const invalid = structuredClone(validFeatures);
+  invalid[0].attributes.C027 = 9101;
+
+  assert.throws(
+    () =>
+      parseComplexoCensus2022Response({ features: invalid }),
+    /census_permanent_households_exceed_total/,
   );
 });

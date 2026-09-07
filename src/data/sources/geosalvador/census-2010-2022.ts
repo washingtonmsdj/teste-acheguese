@@ -32,10 +32,6 @@ export const CENSUS_2022_CORE_FIELDS = [
   'FID',
   'NOME_BAIRR',
   'C001',
-  'C002',
-  'C003',
-  'C004',
-  'C018',
   'C026',
   'C027',
 ] as const;
@@ -44,10 +40,6 @@ type CensusAttributes = Record<string, unknown> & {
   FID?: unknown;
   NOME_BAIRR?: unknown;
   C001?: unknown;
-  C002?: unknown;
-  C003?: unknown;
-  C004?: unknown;
-  C018?: unknown;
   C026?: unknown;
   C027?: unknown;
 };
@@ -57,10 +49,6 @@ export type Census2022CoreRecord = {
   sourceNeighborhoodName: string;
   geographicPath: string;
   populationTotal: number;
-  populationMale: number;
-  populationFemale: number;
-  populationDensity: number;
-  populationLiterate: number;
   householdsTotal: number;
   householdsPermanent: number;
 };
@@ -83,12 +71,36 @@ function readRequiredText(value: unknown, field: string) {
   return value.trim();
 }
 
-function readRequiredNumber(value: unknown, field: string) {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+function readRequiredInteger(value: unknown, field: string) {
+  if (!Number.isInteger(value)) {
     throw new Error(`census_field_invalid:${field}`);
   }
 
-  return value;
+  return value as number;
+}
+
+function validateRecordConsistency(record: Census2022CoreRecord) {
+  if (
+    record.populationTotal <= 0 ||
+    record.householdsTotal <= 0 ||
+    record.householdsPermanent <= 0
+  ) {
+    throw new Error(
+      `census_non_positive_count:${record.sourceNeighborhoodName}`,
+    );
+  }
+
+  if (record.householdsPermanent > record.householdsTotal) {
+    throw new Error(
+      `census_permanent_households_exceed_total:${record.sourceNeighborhoodName}`,
+    );
+  }
+
+  if (record.householdsTotal > record.populationTotal) {
+    throw new Error(
+      `census_households_exceed_population:${record.sourceNeighborhoodName}`,
+    );
+  }
 }
 
 export function buildComplexoCensus2022QueryUrl() {
@@ -139,20 +151,18 @@ export function parseComplexoCensus2022Response(
       );
     }
 
-    const fid = readRequiredNumber(row.FID, 'FID');
-
-    return {
-      sourceRecordId: String(fid),
+    const record: Census2022CoreRecord = {
+      sourceRecordId: String(readRequiredInteger(row.FID, 'FID')),
       sourceNeighborhoodName: neighborhoodName,
       geographicPath: territory.geographicPath,
-      populationTotal: readRequiredNumber(row.C001, 'C001'),
-      populationMale: readRequiredNumber(row.C002, 'C002'),
-      populationFemale: readRequiredNumber(row.C003, 'C003'),
-      populationDensity: readRequiredNumber(row.C004, 'C004'),
-      populationLiterate: readRequiredNumber(row.C018, 'C018'),
-      householdsTotal: readRequiredNumber(row.C026, 'C026'),
-      householdsPermanent: readRequiredNumber(row.C027, 'C027'),
+      populationTotal: readRequiredInteger(row.C001, 'C001'),
+      householdsTotal: readRequiredInteger(row.C026, 'C026'),
+      householdsPermanent: readRequiredInteger(row.C027, 'C027'),
     };
+
+    validateRecordConsistency(record);
+
+    return record;
   });
 
   for (const territory of COMPLEXO_CENSUS_TERRITORIES) {
