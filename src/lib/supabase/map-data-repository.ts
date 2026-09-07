@@ -174,7 +174,7 @@ export class SupabaseMapDataRepository
               p_north: north,
               p_limit: query.placeLimit,
               p_category_keys:
-                query.publicPlaceCategories ?? null,
+                query.publicPlaceCategories,
             },
           )
         : Promise.resolve({ data: [], error: null }),
