@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   description:
     'Encontre negócios, serviços, oportunidades e classificados perto de você.',
   applicationName: 'Achegue-se',
+  robots: siteUrl
+    ? {
+        index: true,
+        follow: true,
+      }
+    : {
+        index: false,
+        follow: false,
+        noarchive: true,
+      },
   alternates: siteUrl
     ? {
         canonical: '/',

@@ -4,6 +4,15 @@ import { getSiteUrl } from '@/lib/site-url';
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl();
 
+  if (!siteUrl) {
+    return {
+      rules: {
+        userAgent: '*',
+        disallow: '/',
+      },
+    };
+  }
+
   return {
     rules: {
       userAgent: '*',
@@ -20,6 +29,6 @@ export default function robots(): MetadataRoute.Robots {
         '/empresas',
       ],
     },
-    sitemap: siteUrl ? `${siteUrl}/sitemap.xml` : undefined,
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 }
