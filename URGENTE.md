@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
+> **HEAD técnico de referência:** `c5ea13f36c4c7df76138e99aad69b7925c8955c9`
 
 ---
 
@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
+`c5ea13f36c4c7df76138e99aad69b7925c8955c9`
 
 ### Fase
 
@@ -1161,10 +1161,11 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - bundle Vercel agora possui manifesto de source closure e teste contra omissão de lifecycle scripts;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
+- `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
 - CSS global da antiga landing/marketplace foi auditado contra todo `src/**`: **35 seletores órfãos removidos, 0 classes globais órfãs restantes**;
-- HEAD técnico `cb5d8e1d`: lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `cb5d8e1d`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`;
+- HEAD técnico `c5ea13f3`: lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `c5ea13f3`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=c5ea13f36c4c7df76138e99aad69b7925c8955c9`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 

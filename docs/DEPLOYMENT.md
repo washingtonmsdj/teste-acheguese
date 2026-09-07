@@ -29,7 +29,7 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
+`c5ea13f36c4c7df76138e99aad69b7925c8955c9`
 
 Para esse HEAD:
 
@@ -38,7 +38,8 @@ Para esse HEAD:
 - Supabase security advisors: **0 lints**;
 - migration history Supabase/Git alinhado até `20260907102801_map_rpc_category_guards_v1`;
 - transport branch sincronizada com o mesmo `SOURCE_SHA`;
-- payload auditado com lifecycle script MapLibre presente e 0 `.env`.
+- payload auditado com lifecycle script MapLibre presente e 0 `.env`;
+- pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes.
 
 ## Transporte de source
 
