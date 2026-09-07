@@ -93,6 +93,8 @@
 - [x] SEO fail-closed por rollout, inclusive em falha de leitura;
 - [x] canonical por superfície;
 - [x] runtime fallback do mapa;
+- [x] configuração Supabase pública validada/fail-closed;
+- [x] favicon + manifest territorial corrigidos;
 - [x] observabilidade server-side redigida;
 - [x] health Territory + Classificados;
 - [x] source closure Vercel testada;

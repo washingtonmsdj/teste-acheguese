@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`f394f404c8bc20c3c59b67b83235285e9039505b`
+`fb995f6ebd00019c32203f4b2f29e9b87ac1c1d0`
 
 ### Fase
 
@@ -1189,9 +1189,16 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - build confirmou `ƒ` para admin, edição/meus/novo, favoritos e mensagens;
 - rotas protegidas recebem `Cache-Control: private, no-store, max-age=0, must-revalidate`;
 - smoke de release passou a exigir `private/no-store` em `/entrar`; o cache público do Map API permanece separado;
-- HEAD técnico `f394f404`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `f394f404`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=f394f404c8bc20c3c59b67b83235285e9039505b`;
+- erro real de navegador `Invalid supabaseUrl` foi reproduzido a partir do log e corrigido na autoridade central de configuração;
+- `NEXT_PUBLIC_SUPABASE_URL` agora é validada como HTTP/HTTPS antes de qualquer `createClient`; valores malformados ficam fail-closed e não derrubam metadata/Home;
+- Home não registra configuração ausente/malformada como exceção de runtime; mantém o estado indisponível controlado;
+- `.env.example` aponta para a URL pública canônica do projeto `acheguese-v2`, mantendo somente a publishable key fora do Git;
+- `manifest.webmanifest` deixou de usar a descrição marketplace-first e agora segue o posicionamento territorial;
+- erro real `/favicon.ico 404` corrigido com `public/favicon.svg`, metadata explícita e redirect compatível;
+- tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
+- HEAD técnico `fb995f6e`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `fb995f6e`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=fb995f6ebd00019c32203f4b2f29e9b87ac1c1d0`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
