@@ -20,19 +20,46 @@ function exactOrigin(
   }
 }
 
+export function vercelDeploymentOrigin(
+  vercelMarker: string | undefined,
+  vercelUrl: string | undefined,
+) {
+  if (vercelMarker !== '1' || !vercelUrl?.trim()) {
+    return null;
+  }
+
+  const hostname = vercelUrl.trim().toLowerCase();
+
+  if (
+    hostname.includes('/') ||
+    hostname.includes(':') ||
+    !hostname.endsWith('.vercel.app')
+  ) {
+    return null;
+  }
+
+  return exactOrigin(`https://${hostname}`);
+}
+
 export function trustedAuthOrigin(
   siteUrl: string | null,
+  deploymentOrigin: string | null,
   requestOrigin: string | null,
 ) {
   const origin = exactOrigin(requestOrigin);
 
-  if (siteUrl) {
-    return origin === siteUrl
-      ? siteUrl
-      : null;
+  if (!origin) return null;
+
+  if (
+    origin === siteUrl ||
+    origin === deploymentOrigin
+  ) {
+    return origin;
   }
 
-  if (!origin) return null;
+  if (siteUrl || deploymentOrigin) {
+    return null;
+  }
 
   const url = new URL(origin);
 
@@ -48,10 +75,12 @@ export function trustedAuthOrigin(
 
 export function trustedAuthCallbackOrigin(
   siteUrl: string | null,
+  deploymentOrigin: string | null,
   requestOrigin: string,
 ) {
   return trustedAuthOrigin(
     siteUrl,
+    deploymentOrigin,
     requestOrigin,
   ) === requestOrigin;
 }

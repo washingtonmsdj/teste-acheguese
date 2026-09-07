@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   trustedAuthCallbackOrigin,
   trustedAuthOrigin,
+  vercelDeploymentOrigin,
 } from '../src/lib/auth/origin-core.ts';
 import { safeInternalPath } from '../src/lib/safe-path.ts';
 
@@ -21,42 +22,42 @@ test('produção usa somente a URL canônica para callback', () => {
   const siteUrl = 'https://acheguese.example';
 
   assert.equal(
-    trustedAuthOrigin(siteUrl, 'https://evil.example'),
+    trustedAuthOrigin(siteUrl, null, 'https://evil.example'),
     null,
   );
   assert.equal(
-    trustedAuthCallbackOrigin(siteUrl, siteUrl),
+    trustedAuthCallbackOrigin(siteUrl, null, siteUrl),
     true,
   );
   assert.equal(
-    trustedAuthCallbackOrigin(siteUrl, 'https://preview.example'),
+    trustedAuthCallbackOrigin(siteUrl, null, 'https://preview.example'),
     false,
   );
 });
 
 test('sem URL canônica só localhost HTTP é aceito para desenvolvimento', () => {
   assert.equal(
-    trustedAuthOrigin(null, 'http://localhost:3000'),
+    trustedAuthOrigin(null, null, 'http://localhost:3000'),
     'http://localhost:3000',
   );
   assert.equal(
-    trustedAuthOrigin(null, 'http://127.0.0.1:3000'),
+    trustedAuthOrigin(null, null, 'http://127.0.0.1:3000'),
     'http://127.0.0.1:3000',
   );
   assert.equal(
-    trustedAuthOrigin(null, 'https://preview.example'),
+    trustedAuthOrigin(null, null, 'https://preview.example'),
     null,
   );
   assert.equal(
-    trustedAuthOrigin(null, 'http://evil.example'),
+    trustedAuthOrigin(null, null, 'http://evil.example'),
     null,
   );
   assert.equal(
-    trustedAuthCallbackOrigin(null, 'http://localhost:3000'),
+    trustedAuthCallbackOrigin(null, null, 'http://localhost:3000'),
     true,
   );
   assert.equal(
-    trustedAuthCallbackOrigin(null, 'https://preview.example'),
+    trustedAuthCallbackOrigin(null, null, 'https://preview.example'),
     false,
   );
 });
@@ -67,6 +68,7 @@ test('requisições mutáveis de auth exigem origem canônica', () => {
   assert.equal(
     trustedAuthCallbackOrigin(
       siteUrl,
+      null,
       'https://acheguese.example',
     ),
     true,
@@ -74,6 +76,7 @@ test('requisições mutáveis de auth exigem origem canônica', () => {
   assert.equal(
     trustedAuthCallbackOrigin(
       siteUrl,
+      null,
       'https://evil.example',
     ),
     false,
@@ -81,6 +84,7 @@ test('requisições mutáveis de auth exigem origem canônica', () => {
   assert.equal(
     trustedAuthCallbackOrigin(
       siteUrl,
+      null,
       '',
     ),
     false,
@@ -91,12 +95,13 @@ test('produção rejeita Origin ausente, com path ou não canônica', () => {
   const siteUrl = 'https://acheguese.example';
 
   assert.equal(
-    trustedAuthOrigin(siteUrl, null),
+    trustedAuthOrigin(siteUrl, null, null),
     null,
   );
   assert.equal(
     trustedAuthOrigin(
       siteUrl,
+      null,
       'https://acheguese.example/path',
     ),
     null,
@@ -104,6 +109,7 @@ test('produção rejeita Origin ausente, com path ou não canônica', () => {
   assert.equal(
     trustedAuthOrigin(
       siteUrl,
+      null,
       'https://acheguese.example/',
     ),
     null,
@@ -111,8 +117,61 @@ test('produção rejeita Origin ausente, com path ou não canônica', () => {
   assert.equal(
     trustedAuthOrigin(
       siteUrl,
+      null,
       'https://acheguese.example',
     ),
     siteUrl,
+  );
+});
+
+test('deployment Vercel atual é uma segunda origem Auth exata', () => {
+  const deploymentOrigin = vercelDeploymentOrigin(
+    '1',
+    'teste-acheguese-abc123.vercel.app',
+  );
+
+  assert.equal(
+    deploymentOrigin,
+    'https://teste-acheguese-abc123.vercel.app',
+  );
+  assert.equal(
+    trustedAuthOrigin(
+      'https://teste-acheguese.vercel.app',
+      deploymentOrigin,
+      deploymentOrigin,
+    ),
+    deploymentOrigin,
+  );
+  assert.equal(
+    trustedAuthOrigin(
+      'https://teste-acheguese.vercel.app',
+      deploymentOrigin,
+      'https://outro-preview.vercel.app',
+    ),
+    null,
+  );
+});
+
+test('VERCEL_URL só é aceita quando vem do ambiente Vercel e é vercel.app', () => {
+  assert.equal(
+    vercelDeploymentOrigin(
+      undefined,
+      'preview.vercel.app',
+    ),
+    null,
+  );
+  assert.equal(
+    vercelDeploymentOrigin(
+      '1',
+      'evil.example',
+    ),
+    null,
+  );
+  assert.equal(
+    vercelDeploymentOrigin(
+      '1',
+      'preview.vercel.app/path',
+    ),
+    null,
   );
 });
