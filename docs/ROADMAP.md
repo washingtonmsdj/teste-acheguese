@@ -8,7 +8,8 @@
 - [x] Documento de arquitetura.
 - [x] Contratos de erro/loading/not-found.
 - [x] Script local de quality gate (`npm run check`).
-- [ ] Lockfile gerado por instalação confiável.
+- [x] `package-lock.json` gerado em runner Node 24 e versionado.
+- [x] Quality gate público: `npm ci` → lint → typecheck → build.
 - [ ] Observabilidade externa.
 
 ## Fase 1 — Home / Discovery shell
@@ -18,6 +19,7 @@
 - [x] Rotas estáveis para busca, Classificados, Empresas, Favoritos, login e menu.
 - [x] `next/image` para imagens de conteúdo.
 - [x] Manifest, robots e sitemap condicionado à URL de produção.
+- [x] Remoção de links públicos mortos e métricas fictícias.
 - [ ] Revisão visual fina em navegador real.
 - [ ] Localização real.
 - [ ] Busca com dados persistidos.
@@ -30,13 +32,21 @@ Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
 - [x] Estados e tipos de domínio.
 - [x] Taxonomia inicial.
 - [x] Contrato de repositório isolado.
-- [x] Landing e fluxo visual de novo anúncio.
-- [ ] Backend/persistência.
-- [ ] Lista + busca + paginação cursor-based.
-- [ ] Detalhe do anúncio.
+- [x] Landing de Classificados com busca/filtros por URL.
+- [x] Estado vazio de produto sem dados fictícios.
+- [x] Fluxo visual de novo anúncio.
+- [x] Validação server-side de entrada modelada.
+- [x] Contrato SQL draft com RLS, índices e dados privados separados.
+- [x] Boundary oficial de Supabase SSR preparado e inativo sem configuração.
+- [ ] Criar projeto Supabase novo e isolado.
+- [ ] Aplicar migration revisada e executar advisors.
+- [ ] Gerar tipos do banco.
+- [ ] Ativar refresh de sessão SSR.
 - [ ] Autenticação e autorização.
 - [ ] Criar/editar/remover anúncio.
 - [ ] Fotos/object storage.
+- [ ] Lista persistida + busca + paginação cursor-based.
+- [ ] Detalhe do anúncio.
 - [ ] Localização.
 - [ ] Favoritos.
 - [ ] Contato seguro.
@@ -46,6 +56,12 @@ Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
 - [ ] Analytics/observabilidade.
 - [ ] Testes E2E.
 - [ ] Critérios de lançamento.
+
+### Blocker atual
+
+A organização Supabase `Tonecos` atingiu o limite de 2 projetos gratuitos ativos.
+Os dois projetos ativos existentes não foram alterados.
+O novo projeto `acheguese-v2` só pode ser criado após liberar uma vaga ou alterar o plano.
 
 ## Fase 3 — Empresas MVP
 Somente inicia quando Classificados atingir Definition of Done.

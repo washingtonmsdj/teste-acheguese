@@ -16,14 +16,15 @@ export default function NewClassifiedPage() {
   return (
     <main>
       <SiteHeader />
+
       <section className="formShell">
         <div className="container formLayout">
           <div className="formIntro">
             <p className="eyebrow">Novo classificado</p>
             <h1>Publique com clareza e sem complicação.</h1>
             <p>
-              Esta é a estrutura visual do fluxo. Persistência, conta, upload e validação
-              de servidor entram nas próximas etapas do vertical.
+              Prepare seu anúncio com título, categoria, preço, condição e região.
+              Para publicar e gerenciar anúncios, será necessário entrar na sua conta.
             </p>
           </div>
 
@@ -31,15 +32,22 @@ export default function NewClassifiedPage() {
             <fieldset disabled>
               <label>
                 Título do anúncio
-                <input placeholder="Ex.: Bicicleta aro 29 em ótimo estado" />
+                <input
+                  name="title"
+                  minLength={5}
+                  maxLength={120}
+                  placeholder="Ex.: Bicicleta aro 29 em ótimo estado"
+                />
               </label>
 
               <label>
                 Categoria
-                <select defaultValue="">
+                <select name="categoryId" defaultValue="">
                   <option value="" disabled>Escolha uma categoria</option>
                   {classifiedCategories.map((category) => (
-                    <option value={category.id} key={category.id}>{category.label}</option>
+                    <option value={category.id} key={category.id}>
+                      {category.label}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -47,41 +55,75 @@ export default function NewClassifiedPage() {
               <div className="formColumns">
                 <label>
                   Preço
-                  <input inputMode="decimal" placeholder="R$ 0,00" />
+                  <input
+                    name="price"
+                    inputMode="decimal"
+                    placeholder="R$ 0,00"
+                  />
                 </label>
+
                 <label>
                   Condição
-                  <select defaultValue="">
+                  <select name="condition" defaultValue="">
                     <option value="" disabled>Selecione</option>
-                    <option>Novo</option>
-                    <option>Seminovo</option>
-                    <option>Usado</option>
+                    <option value="new">Novo</option>
+                    <option value="like_new">Seminovo</option>
+                    <option value="used">Usado</option>
+                    <option value="for_parts">Para peças</option>
                   </select>
                 </label>
               </div>
 
               <label>
                 Descrição
-                <textarea rows={6} placeholder="Conte os detalhes importantes..." />
+                <textarea
+                  name="description"
+                  rows={6}
+                  minLength={20}
+                  maxLength={5000}
+                  placeholder="Conte os detalhes importantes..."
+                />
               </label>
 
-              <label>
-                Cidade
-                <input placeholder="Sua cidade" />
-              </label>
+              <div className="formColumns">
+                <label>
+                  Cidade
+                  <select name="cityId" defaultValue="">
+                    <option value="" disabled>Selecione sua cidade</option>
+                  </select>
+                </label>
+
+                <label>
+                  Bairro
+                  <input
+                    name="neighborhood"
+                    maxLength={120}
+                    placeholder="Opcional"
+                  />
+                </label>
+              </div>
             </fieldset>
 
             <div className="formNotice">
-              <strong>Próxima etapa técnica</strong>
-              <p>Conectar autenticação + banco + storage antes de habilitar o envio.</p>
+              <strong>Publicação protegida por conta</strong>
+              <p>
+                O anúncio só será enviado depois que a autenticação segura estiver
+                disponível neste novo ambiente.
+              </p>
             </div>
 
-            <Link className="ghostButton linkButton" href="/classificados">
-              Voltar aos Classificados
-            </Link>
+            <div className="stateActions">
+              <Link className="primaryButton linkButton" href="/entrar">
+                Entrar para publicar
+              </Link>
+              <Link className="ghostButton linkButton" href="/classificados">
+                Voltar aos Classificados
+              </Link>
+            </div>
           </form>
         </div>
       </section>
+
       <MobileTabbar />
     </main>
   );
