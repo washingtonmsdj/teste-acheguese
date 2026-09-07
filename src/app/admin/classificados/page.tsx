@@ -11,6 +11,8 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Moderação de Classificados',
   robots: {

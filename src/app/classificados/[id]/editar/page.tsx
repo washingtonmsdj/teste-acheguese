@@ -20,6 +20,8 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Editar anúncio',
   robots: {
