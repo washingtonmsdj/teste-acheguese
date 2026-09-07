@@ -303,6 +303,152 @@ export type Database = {
           },
         ]
       }
+      public_place_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          is_active: boolean
+          key: string
+          label: string
+          parent_key: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          is_active?: boolean
+          key: string
+          label: string
+          parent_key?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          is_active?: boolean
+          key?: string
+          label?: string
+          parent_key?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_place_categories_parent_key_fkey"
+            columns: ["parent_key"]
+            isOneToOne: false
+            referencedRelation: "public_place_categories"
+            referencedColumns: ["key"]
+          },
+        ]
+      }
+      public_places: {
+        Row: {
+          address_text: string | null
+          category_key: string
+          created_at: string
+          description: string | null
+          external_id: string | null
+          id: string
+          location: unknown
+          metadata: Json
+          name: string
+          neighborhood_label: string | null
+          phone: string | null
+          postal_code: string | null
+          quality_status: string
+          source_id: string
+          source_snapshot_id: string
+          source_updated_at: string | null
+          status: string
+          territory_id: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address_text?: string | null
+          category_key: string
+          created_at?: string
+          description?: string | null
+          external_id?: string | null
+          id?: string
+          location?: unknown
+          metadata?: Json
+          name: string
+          neighborhood_label?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          quality_status?: string
+          source_id: string
+          source_snapshot_id: string
+          source_updated_at?: string | null
+          status?: string
+          territory_id: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address_text?: string | null
+          category_key?: string
+          created_at?: string
+          description?: string | null
+          external_id?: string | null
+          id?: string
+          location?: unknown
+          metadata?: Json
+          name?: string
+          neighborhood_label?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          quality_status?: string
+          source_id?: string
+          source_snapshot_id?: string
+          source_updated_at?: string | null
+          status?: string
+          territory_id?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_places_category_key_fkey"
+            columns: ["category_key"]
+            isOneToOne: false
+            referencedRelation: "public_place_categories"
+            referencedColumns: ["key"]
+          },
+          {
+            foreignKeyName: "public_places_snapshot_source_fkey"
+            columns: ["source_snapshot_id", "source_id"]
+            isOneToOne: false
+            referencedRelation: "territory_data_snapshots"
+            referencedColumns: ["id", "source_id"]
+          },
+          {
+            foreignKeyName: "public_places_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "territory_data_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_places_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_places_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
+        ]
+      }
       territories: {
         Row: {
           center: unknown
@@ -426,6 +572,190 @@ export type Database = {
           },
         ]
       }
+      territory_data_snapshots: {
+        Row: {
+          checksum_sha256: string | null
+          created_at: string
+          fetched_at: string
+          id: string
+          is_public: boolean
+          metadata: Json
+          source_id: string
+          source_published_at: string | null
+          source_version: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          checksum_sha256?: string | null
+          created_at?: string
+          fetched_at?: string
+          id?: string
+          is_public?: boolean
+          metadata?: Json
+          source_id: string
+          source_published_at?: string | null
+          source_version?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          checksum_sha256?: string | null
+          created_at?: string
+          fetched_at?: string
+          id?: string
+          is_public?: boolean
+          metadata?: Json
+          source_id?: string
+          source_published_at?: string | null
+          source_version?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_data_snapshots_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "territory_data_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      territory_data_sources: {
+        Row: {
+          attribution: string | null
+          created_at: string
+          dataset_name: string
+          id: string
+          ingestion_method: string
+          is_public: boolean
+          key: string
+          license_name: string | null
+          license_url: string | null
+          metadata: Json
+          provider_name: string
+          source_url: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          attribution?: string | null
+          created_at?: string
+          dataset_name: string
+          id?: string
+          ingestion_method: string
+          is_public?: boolean
+          key: string
+          license_name?: string | null
+          license_url?: string | null
+          metadata?: Json
+          provider_name: string
+          source_url: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          attribution?: string | null
+          created_at?: string
+          dataset_name?: string
+          id?: string
+          ingestion_method?: string
+          is_public?: boolean
+          key?: string
+          license_name?: string | null
+          license_url?: string | null
+          metadata?: Json
+          provider_name?: string
+          source_url?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      territory_facts: {
+        Row: {
+          created_at: string
+          dimensions: Json
+          id: string
+          metadata: Json
+          metric_key: string
+          quality_status: string
+          reference_period: string
+          source_record_id: string | null
+          source_snapshot_id: string
+          territory_id: string
+          unit: string | null
+          updated_at: string
+          value_boolean: boolean | null
+          value_numeric: number | null
+          value_text: string | null
+        }
+        Insert: {
+          created_at?: string
+          dimensions?: Json
+          id?: string
+          metadata?: Json
+          metric_key: string
+          quality_status?: string
+          reference_period: string
+          source_record_id?: string | null
+          source_snapshot_id: string
+          territory_id: string
+          unit?: string | null
+          updated_at?: string
+          value_boolean?: boolean | null
+          value_numeric?: number | null
+          value_text?: string | null
+        }
+        Update: {
+          created_at?: string
+          dimensions?: Json
+          id?: string
+          metadata?: Json
+          metric_key?: string
+          quality_status?: string
+          reference_period?: string
+          source_record_id?: string | null
+          source_snapshot_id?: string
+          territory_id?: string
+          unit?: string | null
+          updated_at?: string
+          value_boolean?: boolean | null
+          value_numeric?: number | null
+          value_text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_facts_metric_key_fkey"
+            columns: ["metric_key"]
+            isOneToOne: false
+            referencedRelation: "territory_metric_definitions"
+            referencedColumns: ["key"]
+          },
+          {
+            foreignKeyName: "territory_facts_source_snapshot_id_fkey"
+            columns: ["source_snapshot_id"]
+            isOneToOne: false
+            referencedRelation: "territory_data_snapshots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_facts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_facts_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
+        ]
+      }
       territory_group_members: {
         Row: {
           created_at: string
@@ -516,6 +846,45 @@ export type Database = {
             referencedColumns: ["territory_id"]
           },
         ]
+      }
+      territory_metric_definitions: {
+        Row: {
+          created_at: string
+          default_unit: string | null
+          description: string | null
+          key: string
+          label: string
+          metadata: Json
+          sort_order: number
+          status: string
+          updated_at: string
+          value_type: string
+        }
+        Insert: {
+          created_at?: string
+          default_unit?: string | null
+          description?: string | null
+          key: string
+          label: string
+          metadata?: Json
+          sort_order?: number
+          status?: string
+          updated_at?: string
+          value_type: string
+        }
+        Update: {
+          created_at?: string
+          default_unit?: string | null
+          description?: string | null
+          key?: string
+          label?: string
+          metadata?: Json
+          sort_order?: number
+          status?: string
+          updated_at?: string
+          value_type?: string
+        }
+        Relationships: []
       }
       territory_rollouts: {
         Row: {
