@@ -212,7 +212,7 @@ export function TerritoryMapExplorer({
       zoom: initialZoom,
       minZoom: 11,
       maxZoom: 19,
-      attributionControl: true,
+      attributionControl: { compact: true },
       cooperativeGestures: true,
     });
 
