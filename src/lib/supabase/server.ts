@@ -1,12 +1,13 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import type { Database } from '@/lib/supabase/database.types';
 import { requireSupabasePublicConfig } from '@/lib/supabase/config';
 
 export async function createSupabaseServerClient() {
   const { url, publishableKey } = requireSupabasePublicConfig();
   const cookieStore = await cookies();
 
-  return createServerClient(url, publishableKey, {
+  return createServerClient<Database>(url, publishableKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -18,7 +19,7 @@ export async function createSupabaseServerClient() {
           });
         } catch {
           // Server Components cannot persist refreshed cookies.
-          // A request proxy will own refresh once the new project is connected.
+          // proxy.ts owns cookie refresh on requests.
         }
       },
     },

@@ -1,3 +1,4 @@
+import type { ClassifiedDraftInput } from '@/features/classifieds/domain/classified-form';
 import type {
   Classified,
   ClassifiedSearchInput,
@@ -8,6 +9,9 @@ export interface ClassifiedsRepository {
   search(input: ClassifiedSearchInput): Promise<ClassifiedSearchPage>;
   findPublishedBySlug(slug: string): Promise<Classified | null>;
   findOwnedById(id: string, ownerId: string): Promise<Classified | null>;
-  createDraft(ownerId: string): Promise<Classified>;
+  createDraft(
+    ownerId: string,
+    input: ClassifiedDraftInput,
+  ): Promise<Classified>;
   save(classified: Classified): Promise<Classified>;
 }
