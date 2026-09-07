@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description:
     'Dados públicos, mapa e utilidade local organizados pelo território. Começando pelo Complexo do Nordeste de Amaralina, em Salvador.',
   applicationName: 'Achegue-se',
+  icons: {
+    icon: '/favicon.svg',
+  },
   robots: {
     index: false,
     follow: true,
