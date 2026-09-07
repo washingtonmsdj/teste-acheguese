@@ -12,22 +12,24 @@ export function HomeSearch() {
     event.preventDefault();
     const normalized = query.trim();
     const search = normalized ? `?q=${encodeURIComponent(normalized)}` : '';
-    router.push(`/buscar${search}`);
+    router.push(`/classificados${search}`);
   }
 
   return (
     <form className="searchBox" role="search" onSubmit={submit}>
-      <label className="srOnly" htmlFor="home-search">O que você procura?</label>
+      <label className="srOnly" htmlFor="home-search">
+        Buscar nos Classificados de Salvador
+      </label>
       <input
         id="home-search"
         name="q"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder="O que você procura hoje?"
+        placeholder="Buscar nos Classificados..."
         autoComplete="off"
       />
-      <span className="locationButton" aria-label="Localização da busca">
-        📍 Sua região
+      <span className="locationButton" aria-label="Território da busca">
+        📍 Salvador · BA
       </span>
       <button type="submit" className="searchButton">Buscar</button>
     </form>

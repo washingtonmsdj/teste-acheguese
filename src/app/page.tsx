@@ -34,9 +34,12 @@ export default function Home() {
       <section className="section container" id="categorias">
         <div className="sectionHeading">
           <div>
-            <p className="eyebrow">Perto de você</p>
-            <h2>Explore por categoria</h2>
-            <p>Encontre exatamente o que precisa sem perder tempo.</p>
+            <p className="eyebrow">Ecossistema em construção</p>
+            <h2>Explore o que vem depois</h2>
+            <p>
+              A Home apresenta a visão completa. Classificados é o primeiro módulo
+              ativo; as demais categorias entram por etapas.
+            </p>
           </div>
           <Link href="/buscar">Ver todas →</Link>
         </div>
@@ -76,8 +79,8 @@ export default function Home() {
           <p className="eyebrow">Para você</p>
           <h2>Encontre, descubra, apoie.</h2>
           <p>
-            Busca local, favoritos, mapa, avaliações e novidades em uma experiência simples,
-            rápida e confiável.
+            Hoje, Classificados já reúne busca, favoritos, contato seguro e moderação.
+            O restante da experiência territorial entra por etapas, sem simular recursos.
           </p>
           <div className="featureList">
             <span>✓ Descoberta por região</span>
@@ -115,17 +118,17 @@ export default function Home() {
           </div>
 
           <div className="phoneMock" aria-label="Prévia mobile do Achegue-se">
-            <div className="phoneTop">Achegue-se <span>📍 Sua região</span></div>
-            <div className="phoneSearch">🔎 O que você procura?</div>
+            <div className="phoneTop">Achegue-se <span>📍 Salvador · BA</span></div>
+            <div className="phoneSearch">🔎 Buscar nos Classificados</div>
             <div className="phoneCategories">
               {categories.slice(0, 4).map((item) => (
                 <span key={item.label}>{item.icon}<small>{item.label}</small></span>
               ))}
             </div>
-            <strong>Destaques perto de você</strong>
+            <strong>Primeiro módulo ativo</strong>
             <div className="phoneCard">
               📍
-              <div><b>Descoberta local</b><small>Resultados da sua região</small></div>
+              <div><b>Classificados locais</b><small>Salvador · BA</small></div>
             </div>
           </div>
         </div>

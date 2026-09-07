@@ -39,6 +39,6 @@ export const highlights = [
 export const pillars = [
   ['Local', 'descoberta por proximidade'],
   ['Rápido', 'busca por categoria'],
-  ['Confiável', 'avaliações e moderação'],
+  ['Confiável', 'privacidade e moderação'],
   ['Escalável', 'arquitetura multi-cidade'],
 ] as const;

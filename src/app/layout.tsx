@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Achegue-se',
   },
   description:
-    'Encontre negócios, serviços, oportunidades e classificados perto de você.',
+    'Descubra e resolva o que importa perto de você. Classificados é o primeiro módulo ativo do Achegue-se em Salvador.',
   applicationName: 'Achegue-se',
   robots: siteUrl
     ? {

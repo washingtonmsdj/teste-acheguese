@@ -6,7 +6,7 @@ export function Brand() {
       <span className="brandMark" aria-hidden="true">♥</span>
       <span>
         <strong>Achegue-se</strong>
-        <small>Sua região mais próxima de você</small>
+        <small>Sua cidade mais útil no dia a dia</small>
       </span>
     </Link>
   );
