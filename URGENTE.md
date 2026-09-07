@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`9d1dceb64fdded8ef49e9699ae1d7d7f21d597e3`
+`0a0d2d05f816ddb45142d12a3120a26e6b59bc13`
 
 ### Fase
 
@@ -1201,10 +1201,14 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - provider de mapa customizado também é validado antes de subir dev/build;
 - preflight não imprime valores de credencial e continua permitindo CI sem configuração pública;
 - scripts do preflight foram incluídos na source closure Vercel e o contrato de lifecycle continua protegido por teste;
+- `npm run env:check` foi adicionado como diagnóstico explícito para setup local antes de `npm run dev`;
+- README agora documenta setup local seguro com `.env.local`, sem versionar credenciais;
+- Supabase v2 possui chave moderna `sb_publishable_...` ativa, além da legacy anon; o release deve usar a publishable moderna;
+- `docs/CLASSIFIEDS-MVP.md` foi atualizado para o estado real: Supabase/RLS/Storage já existem e Classificados não autoriza iniciar Empresas;
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
-- HEAD técnico `9d1dceb6`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `9d1dceb6`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=9d1dceb64fdded8ef49e9699ae1d7d7f21d597e3`;
+- HEAD técnico `0a0d2d05`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `0a0d2d05`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=0a0d2d05f816ddb45142d12a3120a26e6b59bc13`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 

@@ -43,6 +43,8 @@ Para esse HEAD:
 - logout customizado protegido contra Origin não confiável;
 - smoke territorial pós-deploy disponível fora do bundle de produção;
 - preflight de env pública roda antes de `dev`/`build`, fail-fast para par Supabase incompleto ou URLs inválidas;
+- setup local pode ser validado explicitamente com `npm run env:check`;
+- usar a publishable key moderna ativa do `acheguese-v2`, não service-role;
 - production dependency audit: **0 vulnerabilidades**;
 - CSP + HSTS configurados sem nonce;
 - Map CSP/Image allowlists derivadas de configuração pública, sem wildcard;
