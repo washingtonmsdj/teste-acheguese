@@ -95,6 +95,10 @@ export async function generateMetadata({
   return {
     title: loaded.item.title,
     description: loaded.item.description.slice(0, 155),
+    robots: {
+      index: Boolean(siteUrl),
+      follow: true,
+    },
     alternates: canonical
       ? {
           canonical,

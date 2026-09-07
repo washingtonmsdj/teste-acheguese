@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from '@/lib/supabase/database.types';
+import { getTerritorySurfaceVisibility } from '@/features/territory-home/server/territory-rollout-visibility';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
+import type { Database } from '@/lib/supabase/database.types';
 import { getSiteUrl } from '@/lib/site-url';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -11,17 +12,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [];
   }
 
+  const visibility =
+    await getTerritorySurfaceVisibility();
+
   const routes: MetadataRoute.Sitemap = [
-    {
-      url: siteUrl,
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
     {
       url: `${siteUrl}/classificados`,
       changeFrequency: 'daily',
-      priority: 0.9,
+      priority: 1,
     },
+    ...(visibility.isPublic
+      ? [
+          {
+            url: siteUrl,
+            changeFrequency: 'weekly' as const,
+            priority: 1,
+          },
+          {
+            url: `${siteUrl}/mapa`,
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+          },
+        ]
+      : []),
   ];
 
   const config = getSupabasePublicConfig();

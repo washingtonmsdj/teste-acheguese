@@ -9,13 +9,26 @@ import {
   isClassifiedCategoryId,
 } from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
+import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
   title: 'Classificados',
-  description: 'Classificados locais do Achegue-se em Salvador: encontre e anuncie perto de você.',
+  description:
+    'Classificados locais do Achegue-se em Salvador: encontre e anuncie perto de você.',
+  alternates: siteUrl
+    ? {
+        canonical: '/classificados',
+      }
+    : undefined,
+  robots: {
+    index: Boolean(siteUrl),
+    follow: true,
+  },
 };
 
 type ClassifiedsPageProps = {

@@ -1,11 +1,16 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 import { SiteHeader } from '@/shared/layout/site-header';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Busca territorial',
   description:
     'A busca geral do Achegue-se será habilitada por etapas, sem exibir categorias ou serviços ainda não lançados.',
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function SearchPage() {

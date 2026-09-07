@@ -3,20 +3,38 @@ import {
   parseMapUrlState,
   type MapUrlParams,
 } from '@/core/map';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { getTerritorySurfaceVisibility } from '@/features/territory-home/server/territory-rollout-visibility';
+import { TerritoryMapExplorer } from '@/integrations/map/territory-map-explorer';
 import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
-import { TerritoryMapExplorer } from '@/integrations/map/territory-map-explorer';
+import { getSiteUrl } from '@/lib/site-url';
+import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { SiteHeader } from '@/shared/layout/site-header';
 import styles from './mapa.module.css';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
-  title: 'Mapa do território',
-  description:
-    'Explore bairros, escolas e unidades SUS verificadas no Complexo do Nordeste de Amaralina.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const visibility =
+    await getTerritorySurfaceVisibility();
+  const canIndex =
+    Boolean(getSiteUrl()) && visibility.isPublic;
+
+  return {
+    title: 'Mapa do território',
+    description:
+      'Explore bairros, escolas e unidades SUS verificadas no Complexo do Nordeste de Amaralina.',
+    alternates: canIndex
+      ? {
+          canonical: '/mapa',
+        }
+      : undefined,
+    robots: {
+      index: canIndex,
+      follow: true,
+    },
+  };
+}
 
 const DEFAULT_MAP_STATE = {
   bounds: {

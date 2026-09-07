@@ -4,16 +4,34 @@ import {
   TerritoryHomeUnavailable,
 } from '@/features/territory-home/components/territory-home';
 import { loadTerritoryHomeData } from '@/features/territory-home/server/load-territory-home';
+import { getTerritorySurfaceVisibility } from '@/features/territory-home/server/territory-rollout-visibility';
 import type { TerritoryHomeData } from '@/features/territory-home/types';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
+import { getSiteUrl } from '@/lib/site-url';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
-  title: 'Território, dados e mapa local',
-  description:
-    'Explore dados públicos verificados, mapa e serviços do Complexo do Nordeste de Amaralina em Salvador.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const visibility =
+    await getTerritorySurfaceVisibility();
+  const canIndex =
+    Boolean(getSiteUrl()) && visibility.isPublic;
+
+  return {
+    title: 'Território, dados e mapa local',
+    description:
+      'Explore dados públicos verificados, mapa e serviços do Complexo do Nordeste de Amaralina em Salvador.',
+    alternates: canIndex
+      ? {
+          canonical: '/',
+        }
+      : undefined,
+    robots: {
+      index: canIndex,
+      follow: true,
+    },
+  };
+}
 
 type HomePageProps = {
   searchParams: Promise<{
