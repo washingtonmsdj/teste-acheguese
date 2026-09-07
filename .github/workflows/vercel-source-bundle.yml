@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Validate Vercel files payload
         run: >-

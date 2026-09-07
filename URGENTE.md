@@ -1277,6 +1277,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - enquanto proteção administrativa não for confirmada, toda escrita automatizada em `main` deve continuar com preflight de HEAD, fast-forward e `force=false`;
 - `quality` e `vercel-source-bundle/validate` agora executam em PRs para `main`;
 - o job de publish do transport branch só roda quando `github.ref == refs/heads/main`; em PR ele fica `SKIPPED` e usa somente `contents: read`;
+- checkouts de jobs read-only usam `persist-credentials: false`; somente o job de publish mantém credencial Git necessária ao push do transport branch;
+- testes de contrato proíbem `pull_request_target`, `workflow_run` e `repository_dispatch` nos workflows canônicos;
 - o empacotador Vercel saiu do YAML inline para `scripts/ci/build-vercel-source-bundle.py`, versionado e determinístico;
 - prova real com Dependabot PR #4 após rebase: `quality=PASS`, `vercel-source-bundle=PASS` e `publish=SKIPPED`;
 - Dependabot abriu #3 (upload-artifact v4→v7 major), #4 (React/React DOM 19.2.7→19.2.8 patch) e #5 (@types/node 24→26 + ESLint 9→10 + TypeScript 5.9→7 majors);
