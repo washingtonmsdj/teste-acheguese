@@ -3,6 +3,7 @@ import {
   isPublicTerritoryStage,
   type TerritoryRolloutStage,
 } from '@/core/territory';
+import { reportServerError } from '@/core/observability/server-log';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 import { SupabaseTerritoryRolloutRepository } from '@/lib/supabase/territory-rollout-repository';
 
@@ -14,37 +15,48 @@ export type TerritorySurfaceVisibility = {
   isPublic: boolean;
 };
 
+const HIDDEN_VISIBILITY: TerritorySurfaceVisibility = {
+  stage: null,
+  isPublic: false,
+};
+
 async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibility> {
   const supabase = createSupabasePublicServerClient();
 
   if (!supabase) {
-    return {
-      stage: null,
-      isPublic: false,
-    };
+    return HIDDEN_VISIBILITY;
   }
 
-  const repository =
-    new SupabaseTerritoryRolloutRepository(supabase);
-  const rollouts =
-    await repository.findBySlug(COMPLEXO_SLUG);
-  const groupRollout = rollouts.find(
-    (rollout) => rollout.targetKind === 'group',
-  );
+  try {
+    const repository =
+      new SupabaseTerritoryRolloutRepository(supabase);
+    const rollouts =
+      await repository.findBySlug(COMPLEXO_SLUG);
+    const groupRollout = rollouts.find(
+      (rollout) => rollout.targetKind === 'group',
+    );
 
-  if (!groupRollout) {
+    if (!groupRollout) {
+      reportServerError(
+        'territory.rollout.group_missing',
+        new Error('territory_rollout_group_missing'),
+      );
+      return HIDDEN_VISIBILITY;
+    }
+
     return {
-      stage: null,
-      isPublic: false,
+      stage: groupRollout.stage,
+      isPublic: isPublicTerritoryStage(
+        groupRollout.stage,
+      ),
     };
+  } catch (error) {
+    reportServerError(
+      'territory.rollout.read_failed',
+      error,
+    );
+    return HIDDEN_VISIBILITY;
   }
-
-  return {
-    stage: groupRollout.stage,
-    isPublic: isPublicTerritoryStage(
-      groupRollout.stage,
-    ),
-  };
 }
 
 export const getTerritorySurfaceVisibility =
