@@ -23,7 +23,7 @@ O HEAD candidato deve ter:
 
 Quality gate atual:
 
-`npm ci → lint → typecheck → tests → build`
+`npm ci → npm audit --omit=dev --audit-level=high → lint → typecheck → tests → build`
 
 ## 3. Variáveis públicas do deployment
 
@@ -69,7 +69,9 @@ Esperado:
 
 - HTTP 200;
 - `status = ok`;
-- `database = ok`.
+- `database = ok`;
+- `territory = ok`;
+- `classifieds = ok`.
 
 Se retornar 503 `not_configured`, o deployment não recebeu as variáveis públicas.
 
@@ -92,7 +94,10 @@ Confirmar pelo menos:
 - `X-Content-Type-Options: nosniff`;
 - `Referrer-Policy: strict-origin-when-cross-origin`;
 - `X-Frame-Options: DENY`;
-- ausência de `X-Powered-By`.
+- `Content-Security-Policy` com as diretivas canônicas;
+- `Strict-Transport-Security: max-age=31536000`;
+- ausência de `X-Powered-By`;
+- `private, no-store` em Auth/admin/superfícies pessoais.
 
 ## 6. Supabase Auth
 
@@ -158,18 +163,41 @@ Usar pelo menos três identidades reais de teste controladas:
 
 ## 8. Smoke tests de banco
 
-Arquivo rollback-safe:
+Arquivos rollback-safe:
 
-`supabase/smoke/anon-rls.sql`
+- `supabase/smoke/anon-rls.sql`;
+- `supabase/smoke/authenticated-rls.sql`.
 
-Ele valida sem criar usuários:
+### 8.1 Anônimo
+
+Valida:
 
 - Salvador público;
 - anônimo não vê não-publicados;
 - anônimo não cria anúncios;
 - anônimo não executa RPCs de revisão.
 
-Fluxos owner/admin não devem ser simulados inserindo diretamente em `auth.users`; validar via E2E Auth real.
+### 8.2 Authenticated/admin
+
+O smoke autenticado cria identidades **somente dentro de uma transação que termina em `ROLLBACK`**. Isso não é bootstrap de usuário nem substitui Supabase Auth real.
+
+Ele prova:
+
+- owner cria draft;
+- owner adiciona metadata de mídia em anúncio mutável;
+- owner não se autopublica;
+- owner consegue enviar para revisão;
+- outro usuário não lê nem altera anúncio em revisão;
+- `user_metadata.role` não concede autoridade administrativa;
+- owner com claim admin não modera o próprio anúncio;
+- admin externo não altera conteúdo do anúncio;
+- admin externo aprova a transição canônica;
+- receipt de moderação é gravado;
+- após `ROLLBACK`, contagens temporárias voltam a zero.
+
+### 8.3 Regra operacional
+
+Para **E2E real de produto**, criar usuários apenas pelo fluxo normal do Supabase Auth. Inserção direta em `auth.users` é permitida exclusivamente dentro deste smoke transacional, rollback-safe e canônico.
 
 ## 9. Critérios de bloqueio
 

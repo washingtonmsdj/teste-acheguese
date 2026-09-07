@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`0a0d2d05f816ddb45142d12a3120a26e6b59bc13`
+`7438ea8bbd11426c9d1e7e98d8e93365b6552cf7`
 
 ### Fase
 
@@ -1181,6 +1181,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - seeds legítimos preservados: Salvador/BA ativo + 8 categorias estruturais de Classificados;
 - smoke RLS anônimo canônico executado no banco real e **PASS**: Salvador público, anon sem INSERT de classificados e sem EXECUTE nas RPCs de submit/withdraw;
 - smoke RLS autenticado/admin rollback-safe executado no banco real e **PASS**: owner cria draft/mídia e envia para revisão, não se autopublica, outro usuário não lê/altera, `user_metadata` não concede admin, owner com claim admin não modera o próprio anúncio, admin externo não altera conteúdo e consegue aprovar com receipt canônico;
+- `supabase/smoke/authenticated-rls.sql` foi versionado como prova repetível; runbook distingue claramente smoke transacional de E2E Auth real;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
