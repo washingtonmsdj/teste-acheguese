@@ -3,38 +3,47 @@
 ## Fase 0 — Fundação
 - [x] Repositório e stack inicial.
 - [x] App Router + TypeScript estrito.
+- [x] Node 24 LTS padronizado.
 - [x] Tokens visuais e responsividade mobile-first.
 - [x] Documento de arquitetura.
-- [ ] Testes base.
-- [ ] CI mínimo.
-- [ ] Observabilidade e error boundary.
+- [x] Contratos de erro/loading/not-found.
+- [x] Script local de quality gate (`npm run check`).
+- [ ] Lockfile gerado por instalação confiável.
+- [ ] Observabilidade externa.
 
 ## Fase 1 — Home / Discovery shell
 - [x] Home pública v0.
-- [x] Busca visual e categorias.
-- [x] Destaques e proposta para empresas.
-- [x] Experiência mobile com tab bar.
+- [x] Componentização de header, hero, busca, categorias e destaques.
+- [x] Navegação mobile com estado ativo.
+- [x] Rotas estáveis para busca, Classificados, Empresas, Favoritos, login e menu.
+- [x] `next/image` para imagens de conteúdo.
+- [x] Manifest, robots e sitemap condicionado à URL de produção.
+- [ ] Revisão visual fina em navegador real.
 - [ ] Localização real.
-- [ ] Busca funcional.
+- [ ] Busca com dados persistidos.
 - [ ] SEO local e dados estruturados.
-- [ ] Estados de loading/empty/error.
+- [ ] Acessibilidade automatizada.
 
 ## Fase 2 — Classificados MVP — PRIMEIRO VERTICAL COMPLETO
 Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
 
-- [ ] Taxonomia e filtros.
-- [ ] Lista + busca + paginação.
+- [x] Estados e tipos de domínio.
+- [x] Taxonomia inicial.
+- [x] Contrato de repositório isolado.
+- [x] Landing e fluxo visual de novo anúncio.
+- [ ] Backend/persistência.
+- [ ] Lista + busca + paginação cursor-based.
 - [ ] Detalhe do anúncio.
-- [ ] Publicação e edição.
-- [ ] Fotos.
-- [ ] Conta/autenticação.
+- [ ] Autenticação e autorização.
+- [ ] Criar/editar/remover anúncio.
+- [ ] Fotos/object storage.
+- [ ] Localização.
 - [ ] Favoritos.
 - [ ] Contato seguro.
-- [ ] Localização.
 - [ ] Moderação/denúncia.
 - [ ] Painel "Meus anúncios".
 - [ ] SEO.
-- [ ] Analytics.
+- [ ] Analytics/observabilidade.
 - [ ] Testes E2E.
 - [ ] Critérios de lançamento.
 
