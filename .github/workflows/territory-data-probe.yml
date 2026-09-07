@@ -117,3 +117,25 @@ jobs:
           path: territory-health-cnes-metadata
           if-no-files-found: error
           retention-days: 90
+
+
+  health-cnes-complexo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Probe current CNES health places in Complexo
+        env:
+          TERRITORY_DATA_OUTPUT: territory-health-cnes-output
+        run: python3 scripts/territory-data/probe-health-cnes-complexo.py
+
+      - name: Upload CNES Complexo artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: territory-health-cnes-complexo-probe
+          path: territory-health-cnes-output
+          if-no-files-found: error
+          retention-days: 90
