@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { classifiedCategories } from '@/features/classifieds/domain/categories';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
@@ -7,17 +8,6 @@ export const metadata: Metadata = {
   title: 'Classificados',
   description: 'Classificados locais do Achegue-se: encontre e anuncie perto de você.',
 };
-
-const classifiedCategories = [
-  ['🚗', 'Veículos'],
-  ['🏠', 'Imóveis'],
-  ['📱', 'Eletrônicos'],
-  ['🛋️', 'Casa e móveis'],
-  ['👕', 'Moda'],
-  ['⚽', 'Esportes'],
-  ['🐾', 'Animais'],
-  ['•••', 'Outros'],
-] as const;
 
 export default function ClassifiedsPage() {
   return (
@@ -56,10 +46,10 @@ export default function ClassifiedsPage() {
           </div>
         </div>
         <div className="classifiedCategoryGrid">
-          {classifiedCategories.map(([icon, label]) => (
-            <Link href={`/classificados?categoria=${encodeURIComponent(label.toLowerCase())}`} key={label}>
-              <span aria-hidden="true">{icon}</span>
-              <strong>{label}</strong>
+          {classifiedCategories.map((category) => (
+            <Link href={`/classificados?categoria=${category.id}`} key={category.id}>
+              <span aria-hidden="true">{category.icon}</span>
+              <strong>{category.label}</strong>
             </Link>
           ))}
         </div>
