@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `c5ea13f36c4c7df76138e99aad69b7925c8955c9`
+> **HEAD técnico de referência:** `7f1f2fb0132d38b022927e9eba78c5999d0cb78c`
 
 ---
 
@@ -1163,9 +1163,14 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
 - CSS global da antiga landing/marketplace foi auditado contra todo `src/**`: **35 seletores órfãos removidos, 0 classes globais órfãs restantes**;
-- HEAD técnico `c5ea13f3`: lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `c5ea13f3`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=c5ea13f36c4c7df76138e99aad69b7925c8955c9`;
+- auditoria de rotas confirmou somente **14 páginas + 4 route handlers** no App Router;
+- `POST /auth/signout` passou a exigir Origin canônica/confiável, fechando logout-CSRF;
+- `robots.txt` bloqueia explicitamente `/api/` e `/menu` além das superfícies privadas já existentes;
+- smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
+- ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;
+- HEAD técnico `7f1f2fb0`: lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `7f1f2fb0`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=7f1f2fb0132d38b022927e9eba78c5999d0cb78c`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
@@ -1178,7 +1183,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### Próxima ação
 
-**Após o reset: confirmar novamente HEAD/SOURCE_SHA/security advisors → criar um único deployment candidato com as 3 envs públicas → health/SEO/Home/Mapa → revisão visual desktop+mobile → runtime logs → corrigir eventuais blockers → fechar FASE 4.**
+**Após o reset: confirmar novamente HEAD/SOURCE_SHA/security advisors → criar um único deployment candidato com as 3 envs públicas → executar `territory-release-smoke` → revisão visual desktop+mobile → runtime logs → corrigir eventuais blockers → fechar FASE 4.**
 
 ### Não repetir
 

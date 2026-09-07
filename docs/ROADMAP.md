@@ -95,6 +95,8 @@
 - [x] observabilidade server-side redigida;
 - [x] health Territory + Classificados;
 - [x] source closure Vercel testada;
+- [x] logout-CSRF bloqueado por Origin canônica;
+- [x] smoke pós-deploy territorial automatizado;
 - [x] remoção de allowlist/estilos marketplace órfãos;
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual/runtime do novo deployment.

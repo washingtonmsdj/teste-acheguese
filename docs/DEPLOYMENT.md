@@ -29,7 +29,7 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`c5ea13f36c4c7df76138e99aad69b7925c8955c9`
+`7f1f2fb0132d38b022927e9eba78c5999d0cb78c`
 
 Para esse HEAD:
 
@@ -39,7 +39,9 @@ Para esse HEAD:
 - migration history Supabase/Git alinhado até `20260907102801_map_rpc_category_guards_v1`;
 - transport branch sincronizada com o mesmo `SOURCE_SHA`;
 - payload auditado com lifecycle script MapLibre presente e 0 `.env`;
-- pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes.
+- pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
+- logout customizado protegido contra Origin não confiável;
+- smoke territorial pós-deploy disponível fora do bundle de produção.
 
 ## Transporte de source
 
@@ -94,13 +96,12 @@ Usar o bundle do HEAD mais recente e injetar somente as três variáveis públic
 
 Após READY:
 
-1. validar `/api/health`;
-2. validar `/robots.txt` e `/sitemap.xml`;
-3. validar Home do Complexo e quatro deep links de bairro;
-4. validar `/mapa`, filtros, clustering e deep links;
-5. confirmar `noindex` de Home/Mapa enquanto rollout = `data_preparation`;
-6. revisar visualmente desktop + mobile;
-7. inspecionar runtime logs/erros;
-8. validar cadastro/login e Site URL/redirect allow-list do Supabase Auth;
-9. executar E2E do vertical Classificados;
-10. somente então tratar o alias como candidato de release da fundação territorial.
+1. executar:
+   `BASE_URL=https://<candidato> EXPECT_TERRITORY_PUBLIC=0 node scripts/territory-release-smoke.mjs`;
+2. exigir smoke PASS completo;
+3. revisar visualmente Home/Mapa em desktop + mobile;
+4. validar filtros, clustering, foco e deep links;
+5. inspecionar runtime logs/erros;
+6. validar cadastro/login e Site URL/redirect allow-list do Supabase Auth;
+7. executar E2E do vertical Classificados;
+8. somente então tratar o alias como candidato de release da fundação territorial.
