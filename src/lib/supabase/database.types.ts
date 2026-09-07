@@ -65,6 +65,41 @@ export type Database = {
         }
         Relationships: []
       }
+      classified_conversations: {
+        Row: {
+          buyer_id: string
+          classified_id: string
+          created_at: string
+          id: string
+          seller_id: string
+          updated_at: string
+        }
+        Insert: {
+          buyer_id: string
+          classified_id: string
+          created_at?: string
+          id?: string
+          seller_id: string
+          updated_at?: string
+        }
+        Update: {
+          buyer_id?: string
+          classified_id?: string
+          created_at?: string
+          id?: string
+          seller_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classified_conversations_classified_id_fkey"
+            columns: ["classified_id"]
+            isOneToOne: false
+            referencedRelation: "classifieds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       classified_favorites: {
         Row: {
           classified_id: string
@@ -122,6 +157,38 @@ export type Database = {
             columns: ["classified_id"]
             isOneToOne: false
             referencedRelation: "classifieds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classified_messages: {
+        Row: {
+          body: string
+          conversation_id: string
+          created_at: string
+          id: number
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          conversation_id: string
+          created_at?: string
+          id?: number
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          conversation_id?: string
+          created_at?: string
+          id?: number
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classified_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "classified_conversations"
             referencedColumns: ["id"]
           },
         ]

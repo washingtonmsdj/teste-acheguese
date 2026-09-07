@@ -5,6 +5,7 @@ const links = [
   ['Início', '/'],
   ['Explorar', '/buscar'],
   ['Classificados', '/classificados'],
+  ['Mensagens', '/mensagens'],
   ['Para empresas', '/empresas'],
   ['Favoritos', '/favoritos'],
   ['Entrar', '/entrar'],
