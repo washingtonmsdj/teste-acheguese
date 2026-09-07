@@ -66,7 +66,30 @@ Após a cota Vercel estar disponível:
 
 Se o build falhar, inspecionar build logs antes de qualquer segundo deploy.
 
-## 5. Health e configuração
+## 5. Smoke automatizado + health
+
+Assim que o deployment estiver `READY`, executar do checkout da mesma `main`:
+
+```bash
+BASE_URL=https://<url-do-candidato> \
+EXPECT_TERRITORY_PUBLIC=0 \
+node scripts/territory-release-smoke.mjs
+```
+
+Enquanto o rollout estiver em `data_preparation`, usar `EXPECT_TERRITORY_PUBLIC=0`. Quando o grupo for promovido no futuro, o mesmo smoke aceita `1`.
+
+O smoke automatiza:
+
+- health + headers;
+- robots/sitemap;
+- Home Complexo + quatro bairros;
+- noindex/index conforme rollout;
+- redirects de bairro inválido;
+- Map API 4/20/14/6;
+- guards de bbox/categorias;
+- proteção de origem do signout.
+
+Falha do smoke é blocker antes da inspeção visual.
 
 ### 5.1 `GET /api/health`
 
