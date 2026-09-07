@@ -65,7 +65,10 @@ export type Census2022CoreRecord = {
   householdsPermanent: number;
 };
 
-const territoryBySourceName = new Map(
+const territoryBySourceName = new Map<
+  string,
+  (typeof COMPLEXO_CENSUS_TERRITORIES)[number]
+>(
   COMPLEXO_CENSUS_TERRITORIES.map((territory) => [
     territory.sourceName,
     territory,
