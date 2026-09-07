@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { getSiteUrl } from '@/lib/site-url';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import './globals.css';
 
 const siteUrl = getSiteUrl();
