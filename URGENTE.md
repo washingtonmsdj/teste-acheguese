@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `2bea28b4ef08db98c7d5a3978de47b7d83e47662`
+> **HEAD técnico de referência:** `3507accecadbf159ad9181e236f24ff4ae42b84c`
 
 ---
 
@@ -365,7 +365,7 @@ Os quatro bairros podem ser identificados, consultados, relacionados, exibidos e
 
 ## FASE 2 — Territory Data Platform
 
-**Status:** EM EXECUÇÃO.
+**Status:** CONCLUÍDA — baseline de dados públicos do MVP.
 
 ### Entregas
 
@@ -381,11 +381,11 @@ Os quatro bairros podem ser identificados, consultados, relacionados, exibidos e
 - [x] integração inicial com fontes oficiais;
 - [x] população/demografia básica do MVP: população total + domicílios 2022;
 - [x] educação: 14 unidades oficiais verificadas espacialmente;
-- [ ] saúde;
-- [~] equipamentos públicos: educação concluída; saúde e demais categorias pendentes;
-- [ ] demais dados essenciais do MVP;
-- [~] data quality: guards, probes, hashes e cross-validation ativos; ampliar por fonte;
-- [ ] atualização periódica;
+- [x] saúde: 6 unidades com atendimento SUS verificadas espacialmente via CNES atual;
+- [x] baseline de equipamentos públicos do MVP: educação + saúde SUS;
+- [x] dados públicos essenciais para iniciar Map/Home territorial;
+- [x] data quality do baseline: guards, probes, SHA-256 e cross-validation espacial;
+- [~] atualização periódica/idempotente: manter como hardening operacional, sem bloquear Map/Home;
 - [x] zero dado inventado.
 
 ### Fontes prioritárias
@@ -407,23 +407,28 @@ APIs externas alimentam o Achegue-se por ingestão/ETL.
 
 ## FASE 3 — Map Core v1
 
+**Status:** SOURCE/CI CONCLUÍDO · validação visual no novo deployment pendente.
+
 ### Entregas
 
-- [ ] arquitetura de Map Core;
-- [ ] revisar e aproveitar conceitos úteis do repositório antigo;
-- [ ] boundaries dos quatro bairros;
-- [ ] mapa do Complexo;
-- [ ] public places;
-- [ ] layers;
-- [ ] viewport query;
-- [ ] bbox query;
-- [ ] clustering;
-- [ ] cache de boundaries;
-- [ ] deep links territoriais;
-- [ ] página `/mapa`;
-- [ ] mini-mapa reutilizável;
-- [ ] performance mobile;
-- [ ] acessibilidade/fallback.
+- [x] arquitetura de Map Core provider-agnostic;
+- [x] conceitos úteis do repositório antigo revisados sem copiar legado;
+- [x] boundaries dos quatro bairros;
+- [x] mapa do Complexo;
+- [x] public places;
+- [x] layers;
+- [x] viewport query;
+- [x] bbox query;
+- [x] clustering;
+- [x] cache HTTP da API por viewport;
+- [x] deep links com bbox + zoom + categorias;
+- [x] página `/mapa`;
+- [x] mini-mapa reutilizável `TerritoryMiniMap`;
+- [x] performance mobile: mapa antes da lista, requests canceláveis e consulta apenas do viewport;
+- [x] acessibilidade/fallback: lista textual, controles focáveis, reduced motion e estados de erro;
+- [ ] revisão visual real no deployment contendo este HEAD.
+
+O alias público ainda aponta para um deployment anterior: em 2026-09-07, `/mapa` retornou 404 no deployment público existente. Isso é um **gate de release/deployment**, não um blocker de arquitetura ou source.
 
 ### Layers iniciais
 
@@ -903,9 +908,9 @@ Branch:
 
 `main`
 
-HEAD desta atualização:
+HEAD técnico validado antes desta atualização documental:
 
-`b766cb30480293597eb175c111326e5b774b4603`
+`3507accecadbf159ad9181e236f24ff4ae42b84c`
 
 ## Supabase
 
@@ -925,7 +930,9 @@ Projeto isolado:
 - project id: `prj_MUONHjTGLsctNJZ7J1BWB8xzMidj`;
 - alias técnico: `teste-acheguese.vercel.app`.
 
-O deploy técnico foi criado, mas a conexão final com o Supabase ainda depende de um novo deployment com variáveis públicas.
+O deployment de produção atualmente publicado é anterior ao Map Core v1. Em 2026-09-07, o alias público ainda retornava 404 em `/mapa`.
+
+Um novo deployment contendo o HEAD atual continua necessário para a revisão visual final e para provar a Surface territorial em produção.
 
 ### Blocker operacional conhecido
 
@@ -1070,24 +1077,27 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A próxima frente continua não sendo Comunidade nem Empresas.
+A próxima frente continua não sendo Community, Empresas, Gastronomia ou Mobilidade.
 
 ## Próximo passo
 
-> **Fechar a camada de saúde do MVP com fonte oficial atual e então iniciar FASE 3 — Map Core v1.**
+> **Iniciar FASE 4 — Home Territorial em source, consumindo somente dados reais já verificados e o mini-mapa reutilizável, enquanto a revisão visual de produção do Map Core permanece como gate paralelo de deployment.**
 
 Sequência imediata:
 
-1. localizar fonte oficial atual de unidades de saúde;
-2. rejeitar automaticamente fonte obsoleta/incompleta;
-3. validar schema, atualização, identificador e coordenadas;
-4. resolver território por ponto-em-boundary, nunca por texto livre;
-5. criar probe reproduzível + artifact + checksum;
-6. ingerir como provisional;
-7. cruzar 100% dos pontos com PostGIS;
-8. promover somente após validação;
-9. fechar readiness de dados públicos mínimos;
-10. iniciar Map Core v1 usando `territory_boundary_catalog`, `territory_fact_catalog` e `public_place_catalog`.
+1. criar/readaptar o adapter server-side da Home sobre `territory_fact_catalog`, `public_place_catalog` e boundaries canônicos;
+2. apresentar contexto do Complexo e dos quatro bairros sem alterar rollout — todos permanecem `data_preparation`;
+3. substituir a Home genérica/marketplace-first por uma experiência território-first;
+4. mostrar métricas públicas reais com fonte/ano;
+5. integrar `TerritoryMiniMap` e deep link para `/mapa`;
+6. criar estado útil para ausência de Community, sem inventar posts, alertas, eventos ou usuários;
+7. preservar mobile-first e elevar o desktop para uma composição editorial/profissional;
+8. passar lint + TypeScript + testes + build + bundle;
+9. quando a cota Vercel permitir, publicar o HEAD atual e executar revisão visual real de `/mapa` e da nova Home.
+
+### Regra de avanço
+
+A FASE 4 pode avançar em source/CI sem depender do blocker temporário da Vercel. O produto territorial, porém, não será declarado **release-validado** até existir novo deployment e inspeção visual da Surface.
 
 ---
 
@@ -1095,49 +1105,59 @@ Sequência imediata:
 
 ### HEAD técnico de referência
 
-`2bea28b4ef08db98c7d5a3978de47b7d83e47662`
+`3507accecadbf159ad9181e236f24ff4ae42b84c`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 concluída · FASE 2 em execução avançada.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI concluída · FASE 4 é a próxima frente de código.**
 
 ### Concluído recentemente
 
-- Territory Data Platform com provenance, snapshots, facts, places e ingestion runs;
-- catálogos públicos `security_invoker` para fatos e lugares;
-- adapter Supabase provenance-ready para futuros consumidores Home/Mapa;
-- Censo 2022: 12 fatos verificados e públicos;
-- métricas seguras do primeiro lote: população total, domicílios totais e permanentes;
-- correção semântica removeu quatro métricas cujo valor/unidade não estavam formalmente comprovados;
-- população 2022 verificada:
-  - Chapada do Rio Vermelho: 20.106;
-  - Nordeste de Amaralina: 20.628;
-  - Santa Cruz: 21.494;
-  - Vale das Pedrinhas: 6.129;
-- educação: fonte GeoSalvador de 2025 validada;
-- 433 unidades recebidas na fonte educacional;
-- 14 unidades pertencem espacialmente ao MVP;
-- distribuição: Chapada 3, Nordeste 2, Santa Cruz 8, Vale das Pedrinhas 1;
-- 14/14 pontos confirmados por PostGIS `ST_Covers`;
-- 8/14 rótulos textuais de bairro divergiam da geometria, portanto texto não é autoridade territorial;
-- 14 escolas públicas/verificadas no `public_place_catalog`;
-- Censo e educação com artifacts GitHub + SHA-256 + receipts;
-- security advisors: **0 lints**;
-- todos os quatro bairros e o Complexo continuam em `data_preparation`.
+- Censo 2022: 12 fatos verificados e públicos para os quatro bairros;
+- educação: 14 escolas oficiais verificadas por geometria/PostGIS;
+- saúde: fonte atual do CNES validada, 52 estabelecimentos encontrados no Complexo e 6 unidades com atendimento SUS promovidas para a camada de utilidade territorial;
+- distribuição SUS: Nordeste de Amaralina 2, Santa Cruz 1, Vale das Pedrinhas 3 e Chapada do Rio Vermelho 0;
+- `territory_fact_catalog` e `public_place_catalog` com provenance;
+- Map Core provider-agnostic e queries PostGIS por bbox/viewport;
+- contrato público provado com 4 boundaries e 20 locais — 14 educação + 6 saúde SUS;
+- MapLibre GL JS 6.7.0 fixado no lockfile;
+- OpenFreeMap como provider padrão, sem acoplar o Core ao fornecedor;
+- `/mapa` com layers, filtros, clustering, request cancellation, lista textual, cache HTTP e fallback de configuração;
+- deep links preservam bbox, zoom e categorias;
+- bug que sobrescrevia o zoom do deep link com `fitBounds` foi removido;
+- UX mobile reorganizada para mostrar o mapa antes da lista de resultados;
+- lista de locais agora pode focalizar pontos no mapa por controle acessível;
+- reduced motion respeitado nas animações de navegação;
+- mini-mapa reutilizável `TerritoryMiniMap` criado sobre os mesmos contratos do Map Core;
+- CI do commit `3507acce`: lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do commit `3507acce`: **PASS**;
+- Supabase security advisors: **0 lints**;
+- os quatro bairros e o Complexo continuam em `data_preparation`; nenhum território foi lançado por acidente.
+
+### Blocker de release
+
+- o deployment público atual é anterior ao Map Core v1;
+- em 2026-09-07, `https://teste-acheguese.vercel.app/mapa` ainda retornava 404;
+- a conta Vercel Hobby permanece sob o blocker temporário de cota já registrado, com reset informado para **2026-09-08 03:23:07 America/Bahia**;
+- não criar workaround arquitetural para contornar esse limite.
 
 ### Próxima ação
 
-**Fonte oficial atual de saúde → ingestão espacial verificada → Map Core v1.**
+**FASE 4 — Home Territorial: dados reais + contexto territorial + mini-mapa + estados vazios honestos, seguida de CI e revisão visual no primeiro deployment disponível.**
 
 ### Não repetir
 
-- não inferir território pelo campo textual `bairro`;
-- não usar valores do repositório antigo como fonte;
-- não reintroduzir C002/C003/C004/C018 como contagens sem semântica/unidade comprovadas;
-- não usar a camada municipal de saúde de 2022 como se fosse atual;
+- não reiniciar Censo, Educação ou CNES já verificados;
+- não inferir território por rótulo textual de bairro; geometria/PostGIS é autoridade;
+- não usar a camada municipal de saúde de 2022 como atual;
+- não reintroduzir C002/C003/C004/C018 sem semântica/unidade comprovadas;
+- não carregar dataset inteiro no navegador;
+- não quebrar o contrato de deep link do mapa;
+- não lançar os territórios antes do readiness/rollout explícito;
 - não iniciar Empresas/Gastronomia/Mobilidade;
 - não aprofundar Classificados;
-- não criar Community antes de Territory/Data/Map/Home base;
+- não criar Community antes da Home territorial base;
+- não inventar posts, alertas, eventos, avaliações, empresas ou usuários;
 - não fazer requests críticos a APIs públicas externas no request do usuário.
 
 ---

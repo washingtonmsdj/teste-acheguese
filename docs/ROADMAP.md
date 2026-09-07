@@ -37,7 +37,7 @@
 - [x] contrato de readiness formalizado;
 - [x] rollout/ativação territorial fail-closed.
 
-## FASE 2 — Territory Data Platform — EM EXECUÇÃO
+## FASE 2 — Territory Data Platform — BASELINE MVP CONCLUÍDA
 
 - [x] `data_sources`;
 - [x] provenance/versionamento;
@@ -48,31 +48,34 @@
 - [x] Censo 2022 — 12 fatos verificados para os quatro bairros;
 - [x] população/demografia básica do MVP;
 - [x] educação — 14 unidades verificadas espacialmente;
-- [ ] saúde;
-- [ ] demais serviços públicos prioritários;
+- [x] saúde — 6 unidades SUS verificadas espacialmente via CNES atual;
+- [x] baseline de serviços públicos prioritários — educação + saúde SUS;
 - [x] estrutura privada de ingestion runs;
-- [~] data quality — guards/hashes/cross-validation ativos;
-- [ ] atualização idempotente/periódica.
+- [x] data quality do baseline — guards/hashes/cross-validation ativos;
+- [~] atualização idempotente/periódica — hardening operacional contínuo.
 
-## FASE 3 — Map Core v1
+## FASE 3 — Map Core v1 — SOURCE/CI CONCLUÍDA
 
-- [ ] core map provider-agnostic;
-- [ ] viewport/bbox/layers;
-- [ ] boundaries;
-- [ ] public places;
-- [ ] clustering;
-- [ ] página de mapa;
-- [ ] mini mapa;
-- [ ] cache/CDN;
-- [ ] performance mobile;
-- [ ] acessibilidade.
+- [x] core map provider-agnostic;
+- [x] viewport/bbox/layers;
+- [x] boundaries;
+- [x] public places;
+- [x] clustering;
+- [x] página de mapa;
+- [x] deep links de bbox/zoom/categorias;
+- [x] mini mapa reutilizável;
+- [x] cache HTTP da API;
+- [x] performance mobile;
+- [x] acessibilidade/fallback textual;
+- [x] lint + TypeScript + testes + build + bundle;
+- [ ] revisão visual no novo deployment — bloqueada apenas pelo deployment Vercel ainda estar no source antigo.
 
-## FASE 4 — Home Territorial
+## FASE 4 — Home Territorial — PRÓXIMA FRENTE
 
 - [ ] redesign desktop profissional;
 - [ ] contexto território/grupo;
 - [ ] dados públicos reais;
-- [ ] mini mapa;
+- [ ] integrar o `TerritoryMiniMap` já disponível;
 - [ ] “agora no bairro”;
 - [ ] estados vazios úteis;
 - [ ] widening bairro → Complexo → Salvador;
