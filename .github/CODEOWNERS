@@ -1,0 +1,11 @@
+# Canonical repository ownership.
+* @washingtonmsdj
+
+# Release/security-sensitive surfaces.
+.github/ @washingtonmsdj
+supabase/ @washingtonmsdj
+infra/ @washingtonmsdj
+scripts/ @washingtonmsdj
+URGENTE.md @washingtonmsdj
+docs/RUNBOOK-*.md @washingtonmsdj
+docs/DEPLOYMENT.md @washingtonmsdj

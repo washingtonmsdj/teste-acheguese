@@ -1263,6 +1263,11 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
+- repository governance versionada em `docs/REPOSITORY-GOVERNANCE.md`;
+- `SECURITY.md`, Dependabot e CODEOWNERS adicionados ao repositório canônico;
+- GitHub Rulesets consultado no checkpoint: coleção vazia; branch protection clássica não pôde ser lida pela integração por falta de permissão administrativa (403), portanto proteção da `main` **não deve ser presumida**;
+- enquanto proteção administrativa não for confirmada, toda escrita automatizada em `main` deve continuar com preflight de HEAD, fast-forward e `force=false`;
+
 ### Blocker de release
 
 - o único deployment Vercel continua sendo o técnico antigo `dpl_4hgED9grfQNbT6DLCrZEUaCqqnWv`;
