@@ -26,6 +26,14 @@ function authError(code: string, next: string): never {
   redirect(`/entrar?${params.toString()}`);
 }
 
+async function requireTrustedAuthOrigin(
+  next: string,
+) {
+  const origin = await requireTrustedAuthOrigin(next);
+
+  return origin;
+}
+
 export async function signInAction(formData: FormData) {
   const next = safeInternalPath(formData.get('next'), '/classificados/meus');
   const { email, password } = readCredentials(formData);
@@ -37,6 +45,8 @@ export async function signInAction(formData: FormData) {
   if (!email || password.length < 8) {
     authError('dados_invalidos', next);
   }
+
+  await requireTrustedAuthOrigin(next);
 
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.auth.signInWithPassword({

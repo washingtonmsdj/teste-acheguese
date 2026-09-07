@@ -107,13 +107,15 @@ Criar a primeira conta real pelo fluxo normal de cadastro da aplicação.
 
 Depois:
 
-1. configurar a Site URL do Supabase para o domínio candidato;
-2. permitir o callback `/auth/callback`;
-3. confirmar o e-mail;
-4. renovar a sessão;
-5. somente então atribuir o papel administrativo assinado:
+1. manter a Site URL do Supabase na URL oficial `https://teste-acheguese.vercel.app`;
+2. adicionar **a URL exata do candidato** + `/auth/callback` na allow-list de Redirect URLs;
+3. não usar wildcard `*.vercel.app`;
+4. confirmar o e-mail e provar que o callback retorna ao candidato;
+5. renovar a sessão;
+6. somente então atribuir o papel administrativo assinado:
    `app_metadata.role = classified_admin`;
-6. renovar novamente a sessão para o novo claim entrar no JWT.
+7. renovar novamente a sessão para o novo claim entrar no JWT;
+8. ao encerrar o candidato, remover a redirect URL temporária se ela não for mais necessária.
 
 Nunca usar `user_metadata` para autoridade.
 

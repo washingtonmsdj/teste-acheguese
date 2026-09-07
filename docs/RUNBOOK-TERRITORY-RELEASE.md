@@ -80,6 +80,15 @@ Após a cota Vercel estar disponível:
 7. aguardar `READY`;
 8. registrar deployment ID e URL.
 
+Depois que a URL única do candidato existir, preparar Auth **antes do E2E**:
+
+- manter a Site URL do Supabase na URL oficial `https://teste-acheguese.vercel.app`;
+- adicionar **exatamente** `https://<url-do-candidato>/auth/callback` em Redirect URLs;
+- não usar wildcard `*.vercel.app`;
+- o runtime aceita somente a Site URL canônica ou a própria `VERCEL_URL` do deployment atual;
+- se houver template de e-mail customizado, confirmar que ele respeita o `RedirectTo` informado pelo signup;
+- após promoção/encerramento do candidato, remover a redirect URL temporária se ela não for mais necessária.
+
 Se o build falhar, inspecionar build logs antes de qualquer segundo deploy.
 
 ## 5. Smoke automatizado + health
@@ -103,7 +112,8 @@ O smoke automatiza:
 - redirects de bairro inválido;
 - Map API 4/20/14/6;
 - guards de bbox/categorias;
-- proteção de origem do signout.
+- proteção de origem do signout;
+- reconhecimento da URL exata do deployment atual como origem Auth confiável.
 
 Falha do smoke é blocker antes da inspeção visual.
 

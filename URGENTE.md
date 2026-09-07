@@ -1165,7 +1165,9 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - CSS global da antiga landing/marketplace foi auditado contra todo `src/**`: **35 seletores órfãos removidos, 0 classes globais órfãs restantes**;
 - auditoria de rotas confirmou somente **14 páginas + 4 route handlers** no App Router;
 - `POST /auth/signout` passou a exigir Origin canônica/confiável, fechando logout-CSRF;
-- cadastro/Auth mutável exige origem explícita confiável; produção aceita somente a `NEXT_PUBLIC_SITE_URL` canônica ou a `VERCEL_URL` exata do deployment atual fornecida pelo runtime Vercel; nenhum wildcard `*.vercel.app` é aceito; dev sem essas autoridades continua restrito a localhost HTTP;
+- cadastro/login/logout e callback Auth exigem origem explícita confiável; produção aceita somente a `NEXT_PUBLIC_SITE_URL` canônica ou a `VERCEL_URL` exata do deployment atual fornecida pelo runtime Vercel; nenhum wildcard `*.vercel.app` é aceito; dev sem essas autoridades continua restrito a localhost HTTP;
+- smoke pós-deploy agora prova também que `Origin: BASE_URL` do candidato é reconhecida como origem Auth confiável, enquanto ausência de Origin continua 403;
+- runbooks exigem Site URL oficial fixa + redirect callback exata do candidato no Supabase Auth, removida depois quando não for mais necessária;
 - `robots.txt` bloqueia explicitamente `/api/` e `/menu` além das superfícies privadas já existentes;
 - smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;

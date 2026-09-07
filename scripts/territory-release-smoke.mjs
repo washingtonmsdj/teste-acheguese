@@ -278,7 +278,31 @@ async function run() {
     signoutResponse.status === 403,
     'signout sem Origin deveria retornar 403',
   );
-  console.log('PASS auth signout origin guard');
+
+  const trustedSignoutResponse = await request('/auth/signout', {
+    method: 'POST',
+    redirect: 'manual',
+    headers: {
+      Origin: BASE_URL,
+    },
+  });
+  assert(
+    [302, 303, 307, 308].includes(
+      trustedSignoutResponse.status,
+    ),
+    `signout com Origin do candidato deveria redirecionar, recebeu ${trustedSignoutResponse.status}`,
+  );
+  const trustedSignoutLocation =
+    trustedSignoutResponse.headers.get('location');
+  assert(
+    trustedSignoutLocation &&
+      new URL(
+        trustedSignoutLocation,
+        BASE_URL,
+      ).pathname === '/',
+    'signout com Origin confiável deveria redirecionar para /',
+  );
+  console.log('PASS auth signout origin guard + current deployment origin');
 
   console.log(
     `SMOKE PASS ${BASE_URL} public=${EXPECT_PUBLIC ? 'yes' : 'no'}`,
