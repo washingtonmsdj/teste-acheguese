@@ -1,40 +1,23 @@
 import { getSiteUrl } from '@/lib/site-url';
-
-const LOCAL_HOSTS = new Set([
-  'localhost',
-  '127.0.0.1',
-  '[::1]',
-]);
+import {
+  trustedAuthCallbackOrigin,
+  trustedAuthOrigin,
+} from '@/lib/auth/origin-core';
 
 export function getTrustedAuthOrigin(
   requestOrigin: string | null,
 ) {
-  const siteUrl = getSiteUrl();
-
-  if (siteUrl) {
-    return siteUrl;
-  }
-
-  if (!requestOrigin) return null;
-
-  try {
-    const url = new URL(requestOrigin);
-
-    if (
-      url.protocol === 'http:' &&
-      LOCAL_HOSTS.has(url.hostname)
-    ) {
-      return url.origin;
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
+  return trustedAuthOrigin(
+    getSiteUrl(),
+    requestOrigin,
+  );
 }
 
 export function isTrustedAuthCallbackOrigin(
   requestOrigin: string,
 ) {
-  return getTrustedAuthOrigin(requestOrigin) === requestOrigin;
+  return trustedAuthCallbackOrigin(
+    getSiteUrl(),
+    requestOrigin,
+  );
 }

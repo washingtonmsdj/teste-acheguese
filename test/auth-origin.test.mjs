@@ -1,30 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  getTrustedAuthOrigin,
-  isTrustedAuthCallbackOrigin,
-} from '../src/lib/auth/origin.ts';
+  trustedAuthCallbackOrigin,
+  trustedAuthOrigin,
+} from '../src/lib/auth/origin-core.ts';
 import { safeInternalPath } from '../src/lib/safe-path.ts';
-
-function withSiteUrl(value, fn) {
-  const previous = process.env.NEXT_PUBLIC_SITE_URL;
-
-  if (value === undefined) {
-    delete process.env.NEXT_PUBLIC_SITE_URL;
-  } else {
-    process.env.NEXT_PUBLIC_SITE_URL = value;
-  }
-
-  try {
-    fn();
-  } finally {
-    if (previous === undefined) {
-      delete process.env.NEXT_PUBLIC_SITE_URL;
-    } else {
-      process.env.NEXT_PUBLIC_SITE_URL = previous;
-    }
-  }
-}
 
 test('aceita somente caminhos internos seguros', () => {
   assert.equal(
@@ -38,47 +18,45 @@ test('aceita somente caminhos internos seguros', () => {
 });
 
 test('produção usa somente a URL canônica para callback', () => {
-  withSiteUrl('https://acheguese.example', () => {
-    assert.equal(
-      getTrustedAuthOrigin('https://evil.example'),
-      'https://acheguese.example',
-    );
-    assert.equal(
-      isTrustedAuthCallbackOrigin('https://acheguese.example'),
-      true,
-    );
-    assert.equal(
-      isTrustedAuthCallbackOrigin('https://preview.example'),
-      false,
-    );
-  });
+  const siteUrl = 'https://acheguese.example';
+
+  assert.equal(
+    trustedAuthOrigin(siteUrl, 'https://evil.example'),
+    siteUrl,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(siteUrl, siteUrl),
+    true,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(siteUrl, 'https://preview.example'),
+    false,
+  );
 });
 
 test('sem URL canônica só localhost HTTP é aceito para desenvolvimento', () => {
-  withSiteUrl(undefined, () => {
-    assert.equal(
-      getTrustedAuthOrigin('http://localhost:3000'),
-      'http://localhost:3000',
-    );
-    assert.equal(
-      getTrustedAuthOrigin('http://127.0.0.1:3000'),
-      'http://127.0.0.1:3000',
-    );
-    assert.equal(
-      getTrustedAuthOrigin('https://preview.example'),
-      null,
-    );
-    assert.equal(
-      getTrustedAuthOrigin('http://evil.example'),
-      null,
-    );
-    assert.equal(
-      isTrustedAuthCallbackOrigin('http://localhost:3000'),
-      true,
-    );
-    assert.equal(
-      isTrustedAuthCallbackOrigin('https://preview.example'),
-      false,
-    );
-  });
+  assert.equal(
+    trustedAuthOrigin(null, 'http://localhost:3000'),
+    'http://localhost:3000',
+  );
+  assert.equal(
+    trustedAuthOrigin(null, 'http://127.0.0.1:3000'),
+    'http://127.0.0.1:3000',
+  );
+  assert.equal(
+    trustedAuthOrigin(null, 'https://preview.example'),
+    null,
+  );
+  assert.equal(
+    trustedAuthOrigin(null, 'http://evil.example'),
+    null,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(null, 'http://localhost:3000'),
+    true,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(null, 'https://preview.example'),
+    false,
+  );
 });
