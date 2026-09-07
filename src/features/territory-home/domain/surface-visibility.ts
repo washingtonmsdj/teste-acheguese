@@ -1,7 +1,7 @@
 import {
   isPublicTerritoryStage,
   type TerritoryRolloutStage,
-} from '@/core/territory';
+} from '../../../core/territory/domain/rollout.ts';
 
 export type TerritorySurfaceVisibility = {
   stage: TerritoryRolloutStage | null;
