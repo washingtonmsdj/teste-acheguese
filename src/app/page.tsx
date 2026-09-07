@@ -4,10 +4,10 @@ import {
   TerritoryHome,
   TerritoryHomeUnavailable,
 } from '@/features/territory-home/components/territory-home';
-import { loadTerritoryHomeData } from '@/features/territory-home/server/load-territory-home';
+import { parseTerritoryScopeQuery } from '@/features/territory-home/domain/scope-query';
+import { loadCachedTerritoryHomeData } from '@/features/territory-home/server/load-cached-territory-home';
 import { getTerritorySurfaceVisibility } from '@/features/territory-home/server/territory-rollout-visibility';
 import type { TerritoryHomeData } from '@/features/territory-home/types';
-import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 import { getSiteUrl } from '@/lib/site-url';
 
 export const dynamic = 'force-dynamic';
@@ -40,41 +40,42 @@ type HomePageProps = {
   }>;
 };
 
-function firstString(
-  value: string | string[] | undefined,
-) {
-  return Array.isArray(value) ? value[0] : value;
-}
-
 export default async function Home({
   searchParams,
 }: HomePageProps) {
-  const supabase = createSupabasePublicServerClient();
-
-  if (!supabase) {
-    return <TerritoryHomeUnavailable />;
-  }
-
-  const requestedNeighborhoodSlug = firstString(
+  const scopeQuery = parseTerritoryScopeQuery(
     (await searchParams).bairro,
   );
 
-  let data: TerritoryHomeData;
-
-  try {
-    data = await loadTerritoryHomeData(
-      supabase,
-      requestedNeighborhoodSlug,
-    );
-  } catch {
-    return <TerritoryHomeUnavailable />;
+  if (scopeQuery.kind === 'invalid') {
+    redirect('/');
   }
 
-  if (
-    requestedNeighborhoodSlug &&
-    data.scope.kind !== 'territory'
-  ) {
+  const requestedNeighborhoodSlug =
+    scopeQuery.kind === 'neighborhood'
+      ? scopeQuery.slug
+      : undefined;
+
+  let data: TerritoryHomeData | null = null;
+  let invalidNeighborhood = false;
+
+  try {
+    data = await loadCachedTerritoryHomeData(
+      requestedNeighborhoodSlug,
+    );
+  } catch (error) {
+    invalidNeighborhood =
+      error instanceof Error &&
+      error.message ===
+        'territory_home_neighborhood_invalid';
+  }
+
+  if (invalidNeighborhood) {
     redirect('/');
+  }
+
+  if (!data) {
+    return <TerritoryHomeUnavailable />;
   }
 
   return <TerritoryHome data={data} />;

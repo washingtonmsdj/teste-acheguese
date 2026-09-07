@@ -158,6 +158,15 @@ export async function loadTerritoryHomeData(
         ) ?? null
       : null;
 
+  if (
+    requestedNeighborhoodSlug &&
+    !selectedMember
+  ) {
+    throw new Error(
+      'territory_home_neighborhood_invalid',
+    );
+  }
+
   const allMemberIds = members.map((member) => member.id);
   const scopeIds = selectedMember
     ? [selectedMember.id]
