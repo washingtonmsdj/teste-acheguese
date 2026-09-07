@@ -1115,6 +1115,71 @@ export type Database = {
       }
     }
     Functions: {
+      get_public_places_in_bbox: {
+        Args: {
+          p_category_keys?: string[]
+          p_east: number
+          p_limit?: number
+          p_north: number
+          p_south: number
+          p_west: number
+        }
+        Returns: {
+          address_text: string
+          attribution: string
+          category_key: string
+          category_label: string
+          dataset_name: string
+          description: string
+          external_id: string
+          fetched_at: string
+          geographic_path: string
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          neighborhood_label: string
+          phone: string
+          postal_code: string
+          provider_name: string
+          source_id: string
+          source_key: string
+          source_snapshot_id: string
+          source_updated_at: string
+          source_url: string
+          source_version: string
+          territory_id: string
+          territory_name: string
+          territory_slug: string
+          website: string
+        }[]
+      }
+      get_territory_boundaries_in_bbox: {
+        Args: {
+          p_east: number
+          p_limit?: number
+          p_north: number
+          p_south: number
+          p_west: number
+        }
+        Returns: {
+          area_m2: number
+          bbox_geojson: Json
+          center_latitude: number
+          center_longitude: number
+          geographic_path: string
+          geojson: Json
+          imported_at: string
+          name: string
+          slug: string
+          source_name: string
+          source_object_id: string
+          source_url: string
+          territory_id: string
+          territory_type: string
+          updated_at: string
+        }[]
+      }
       submit_classified_for_review: {
         Args: { p_classified_id: string }
         Returns: undefined
