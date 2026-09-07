@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 export default function ErrorPage({
@@ -23,7 +24,7 @@ export default function ErrorPage({
           <button className="primaryButton" type="button" onClick={reset}>
             Tentar novamente
           </button>
-          <a className="ghostButton linkButton" href="/">Ir para a Home</a>
+          <Link className="ghostButton linkButton" href="/">Ir para a Home</Link>
         </div>
       </div>
     </main>
