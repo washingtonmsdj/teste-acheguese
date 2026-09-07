@@ -49,6 +49,34 @@ test('normaliza layers, categorias e limites', () => {
   assert.equal(query.boundaryLimit, 1);
 });
 
+test('rejeita mais de dez categorias mesmo fora da rota HTTP', () => {
+  assert.throws(
+    () =>
+      normalizeMapViewportQuery({
+        bounds: complexoBounds,
+        zoom: 14,
+        layers: ['public_places'],
+        publicPlaceCategories: [
+          'a','b','c','d','e','f','g','h','i','j','k',
+        ],
+      }),
+    /map_categories_invalid/,
+  );
+});
+
+test('rejeita chave de categoria fora do contrato canônico', () => {
+  assert.throws(
+    () =>
+      normalizeMapViewportQuery({
+        bounds: complexoBounds,
+        zoom: 14,
+        layers: ['public_places'],
+        publicPlaceCategories: ['education', 'Bad Category'],
+      }),
+    /map_categories_invalid/,
+  );
+});
+
 test('rejeita bbox amplo demais para a consulta raw de viewport', () => {
   assert.throws(
     () =>

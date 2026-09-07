@@ -7,6 +7,10 @@ import type {
 
 export const MAP_VIEWPORT_MIN_ZOOM = 10;
 export const MAP_VIEWPORT_MAX_SPAN_DEGREES = 2;
+export const MAP_MAX_CATEGORY_KEYS = 10;
+
+const MAP_CATEGORY_KEY_PATTERN =
+  /^[a-z0-9_]{1,64}$/;
 
 export function isValidMapBounds(
   bounds: BoundingBox,
@@ -41,6 +45,24 @@ export function isSupportedMapViewport(
   );
 }
 
+function normalizeCategoryKeys(
+  categories: string[] | undefined,
+): string[] | undefined {
+  if (!categories?.length) return undefined;
+
+  if (
+    categories.length > MAP_MAX_CATEGORY_KEYS ||
+    categories.some(
+      (category) =>
+        !MAP_CATEGORY_KEY_PATTERN.test(category),
+    )
+  ) {
+    throw new Error('map_categories_invalid');
+  }
+
+  return [...new Set(categories)];
+}
+
 export function normalizeMapViewportQuery(
   query: MapViewportQuery,
 ): MapViewportQuery {
@@ -72,10 +94,9 @@ export function normalizeMapViewportQuery(
   return {
     ...query,
     layers: [...new Set(query.layers)],
-    publicPlaceCategories:
-      query.publicPlaceCategories?.length
-        ? [...new Set(query.publicPlaceCategories)]
-        : undefined,
+    publicPlaceCategories: normalizeCategoryKeys(
+      query.publicPlaceCategories,
+    ),
     placeLimit: Math.min(
       Math.max(query.placeLimit ?? 200, 1),
       500,

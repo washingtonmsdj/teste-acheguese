@@ -22,7 +22,9 @@ const loadCachedSnapshot = unstable_cache(
   },
   ['territory-home-snapshot'],
   {
-    revalidate: 300,
+    // Mantém o estado visual da Home coerente com o
+    // cache de rollout/SEO, também de 60 segundos.
+    revalidate: 60,
     tags: ['territory-home-data'],
   },
 );

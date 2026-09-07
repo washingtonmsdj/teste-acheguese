@@ -113,6 +113,7 @@ export async function GET(request: NextRequest) {
     const isInputError =
       message.startsWith('map_bbox_') ||
       message.startsWith('map_zoom_') ||
+      message.startsWith('map_categories_') ||
       message.startsWith('map_query_invalid');
 
     return NextResponse.json(
