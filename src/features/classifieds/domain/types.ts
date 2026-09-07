@@ -18,6 +18,7 @@ export type ClassifiedLocation = {
   cityId: string;
   cityName: string;
   stateCode: string;
+  neighborhood?: string | null;
   latitude?: number;
   longitude?: number;
 };

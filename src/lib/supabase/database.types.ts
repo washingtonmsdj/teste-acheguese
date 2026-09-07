@@ -238,7 +238,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      submit_classified_for_review: {
+        Args: { p_classified_id: string }
+        Returns: undefined
+      }
+      withdraw_classified_from_review: {
+        Args: { p_classified_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

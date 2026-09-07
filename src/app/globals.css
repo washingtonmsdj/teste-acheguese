@@ -609,3 +609,144 @@ footer .brand small { color: #b9ded4; }
     align-items: center;
   }
 }
+
+
+.editClassifiedLayout {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+.editSidebar {
+  display: grid;
+  gap: 16px;
+}
+.mediaEditor,
+.mediaReadOnly,
+.reviewActionCard {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: white;
+}
+.mediaEditorHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.mediaEditorHeader h2,
+.mediaReadOnly h2 {
+  margin: 0 0 5px;
+  font-size: 1.05rem;
+}
+.mediaEditorHeader p,
+.reviewActionCard p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+.mediaEditorHeader > span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #edf8f4;
+  color: var(--brand-dark);
+  font-size: .68rem;
+  font-weight: 900;
+}
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.mediaCard {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #f3f6f5;
+}
+.mediaCard img { object-fit: cover; }
+.mediaPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: .72rem;
+}
+.mediaRemove {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  z-index: 2;
+  min-height: 32px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 9px;
+  background: rgba(10, 24, 35, .86);
+  color: white;
+  font-size: .68rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.mediaUploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px dashed #9ecfbe;
+  border-radius: 13px;
+  background: #f3faf7;
+  color: var(--brand-dark);
+  font-size: .8rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+.mediaUploadButton input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+.mediaFeedback {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: .74rem;
+}
+.reviewActionCard {
+  display: grid;
+  gap: 10px;
+}
+.reviewActionCard strong { font-size: .95rem; }
+.reviewActionCard .primaryButton,
+.reviewActionCard .ghostButton {
+  width: 100%;
+  margin-top: 4px;
+}
+.ownerClassifiedActions {
+  display: grid;
+  gap: 9px;
+  justify-items: start;
+}
+
+@media (min-width: 720px) {
+  .mediaGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ownerClassifiedActions { justify-items: end; }
+}
+
+@media (min-width: 980px) {
+  .editClassifiedLayout {
+    grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr);
+    gap: 28px;
+  }
+  .editSidebar {
+    position: sticky;
+    top: 100px;
+  }
+}

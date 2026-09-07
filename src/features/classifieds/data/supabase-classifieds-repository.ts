@@ -36,6 +36,7 @@ function mapClassified(row: ClassifiedWithRelations): Classified {
       cityId: String(row.city_id),
       cityName: row.cities?.name ?? '',
       stateCode: row.cities?.state_code ?? '',
+      neighborhood: row.neighborhood,
     },
     media: row.classified_media.map((media) => ({
       id: media.id,
@@ -214,7 +215,7 @@ export class SupabaseClassifiedsRepository
         description: classified.description,
         condition: classified.condition,
         price_cents: classified.price?.amountInCents ?? null,
-        neighborhood: null,
+        neighborhood: classified.location.neighborhood ?? null,
         status: classified.status,
       })
       .eq('id', classified.id)

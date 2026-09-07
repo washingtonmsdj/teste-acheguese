@@ -15,7 +15,20 @@ export const metadata: Metadata = {
 };
 
 type MyClassifiedsPageProps = {
-  searchParams: Promise<{ criado?: string }>;
+  searchParams: Promise<{
+    criado?: string;
+    enviado?: string;
+  }>;
+};
+
+const statusLabels: Record<string, string> = {
+  draft: 'Rascunho',
+  pending_review: 'Em revisão',
+  published: 'Publicado',
+  paused: 'Pausado',
+  sold: 'Vendido',
+  rejected: 'Precisa de ajustes',
+  archived: 'Arquivado',
 };
 
 function money(value: number | null) {
@@ -45,7 +58,7 @@ export default async function MyClassifiedsPage({
 
   const { data: items, error } = await supabase
     .from('classifieds')
-    .select('id, slug, title, price_cents, status, updated_at')
+    .select('id, title, price_cents, status, updated_at')
     .eq('owner_id', ownerId)
     .order('updated_at', { ascending: false });
 
@@ -69,7 +82,13 @@ export default async function MyClassifiedsPage({
       <section className="section container">
         {params.criado === '1' && (
           <div className="successNotice">
-            Rascunho criado. O próximo passo será adicionar fotos e revisar antes de enviar.
+            Rascunho criado. Agora adicione fotos e revise antes de enviar.
+          </div>
+        )}
+
+        {params.enviado === '1' && (
+          <div className="successNotice">
+            Anúncio enviado para revisão. Você pode acompanhar o estado por aqui.
           </div>
         )}
 
@@ -78,13 +97,24 @@ export default async function MyClassifiedsPage({
             {items.map((item) => (
               <article key={item.id}>
                 <div>
-                  <span className="statusPill">{item.status}</span>
+                  <span className="statusPill">
+                    {statusLabels[item.status] ?? item.status}
+                  </span>
                   <h2>{item.title}</h2>
                   <p>{money(item.price_cents)}</p>
                 </div>
-                <span className="mutedMeta">
-                  Atualizado em {new Date(item.updated_at).toLocaleDateString('pt-BR')}
-                </span>
+
+                <div className="ownerClassifiedActions">
+                  <span className="mutedMeta">
+                    Atualizado em {new Date(item.updated_at).toLocaleDateString('pt-BR')}
+                  </span>
+                  <Link
+                    className="ghostButton linkButton"
+                    href={`/classificados/${item.id}/editar`}
+                  >
+                    Abrir
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
