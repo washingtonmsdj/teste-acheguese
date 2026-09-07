@@ -852,6 +852,12 @@ Esta estrutura deve ser adotada progressivamente.
 
 # 12. O que reaproveitar do Achegue-se antigo
 
+### Decisão canônica
+
+**Continuar a v2 como base principal. Não voltar o desenvolvimento do produto para o repositório original e não criar um terceiro repositório.**
+
+O original passa a ser **donor/reference**. O mapa detalhado de reaproveitamento fica em `docs/LEGACY-DONOR-MAP.md`.
+
 O repositório antigo pode ser usado como referência técnica, principalmente para:
 
 - Territory Domain;
@@ -866,7 +872,9 @@ O repositório antigo pode ser usado como referência técnica, principalmente p
 
 ### Regra
 
-**Reaproveitar conceitos e dados validados, não copiar o legado inteiro.**
+**Reaproveitar conceitos, contratos, testes e dados validados; não copiar o legado inteiro.**
+
+O original já contém capacidades maduras de Community, Messaging, Notifications, Moderation/Trust, Search, Media, Business, Gastronomia, Mobilidade e Billing. Elas devem ser estudadas somente quando a fase correspondente da v2 chegar, preservando Territory/Auth/Map e demais autoridades já canônicas da v2.
 
 Antes de importar qualquer código/dado:
 

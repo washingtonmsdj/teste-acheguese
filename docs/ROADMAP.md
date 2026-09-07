@@ -169,3 +169,13 @@ Complexo
 ```
 
 Adicionar território deve ser operação de **dados + readiness + rollout**, e não desenvolvimento específico por bairro.
+
+## Estratégia de legado
+
+- [x] v2 definida como base canônica do produto;
+- [x] repositório original classificado como donor/reference, não SSOT;
+- [x] mapa de reaproveitamento seletivo em `docs/LEGACY-DONOR-MAP.md`;
+- [ ] qualquer migração de domínio aguarda a fase correspondente e passa por auditoria de contratos/RLS/migrations/testes;
+- [ ] consolidação/rename dos repositórios somente após FASE 4 release-validada.
+
+Não criar um terceiro repositório para reiniciar o produto novamente.
