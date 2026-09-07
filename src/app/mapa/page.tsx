@@ -4,6 +4,7 @@ import {
   type MapUrlParams,
   type MapViewportData,
 } from '@/core/map';
+import { reportServerError } from '@/core/observability/server-log';
 import { getTerritorySurfaceVisibility } from '@/features/territory-home/server/territory-rollout-visibility';
 import { TerritoryMapExplorer } from '@/integrations/map/territory-map-explorer';
 import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
@@ -108,8 +109,16 @@ export default async function MapaPage({
       placeLimit: 200,
       boundaryLimit: 100,
     });
-  } catch {
-    initialData = null;
+  } catch (error) {
+    reportServerError(
+      'territory.map.initial_load_failed',
+      error,
+      {
+        zoom: initialState.zoom,
+        categoryCount:
+          initialState.categories.length,
+      },
+    );
   }
 
   if (!initialData) {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { reportServerError } from '@/core/observability/server-log';
 import type { Database } from '@/lib/supabase/database.types';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 
@@ -65,6 +66,22 @@ export async function GET() {
     !classifiedsResult.error &&
     Boolean(classifiedsResult.data);
   const healthy = territoryOk && classifiedsOk;
+
+  if (!territoryOk) {
+    reportServerError(
+      'health.territory_canary_failed',
+      territoryResult.error ??
+        new Error('territory_canary_missing'),
+    );
+  }
+
+  if (!classifiedsOk) {
+    reportServerError(
+      'health.classifieds_canary_failed',
+      classifiedsResult.error ??
+        new Error('classifieds_canary_missing'),
+    );
+  }
 
   return NextResponse.json(
     {

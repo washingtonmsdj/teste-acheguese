@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { MapLayerId } from '@/core/map';
+import { reportServerError } from '@/core/observability/server-log';
 import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 
@@ -115,6 +116,13 @@ export async function GET(request: NextRequest) {
       message.startsWith('map_zoom_') ||
       message.startsWith('map_categories_') ||
       message.startsWith('map_query_invalid');
+
+    if (!isInputError) {
+      reportServerError(
+        'territory.map.viewport_api_failed',
+        error,
+      );
+    }
 
     return NextResponse.json(
       { error: isInputError ? message : 'map_query_failed' },

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { reportServerError } from '@/core/observability/server-log';
 import {
   TerritoryHome,
   TerritoryHomeUnavailable,
@@ -68,6 +69,19 @@ export default async function Home({
       error instanceof Error &&
       error.message ===
         'territory_home_neighborhood_invalid';
+
+    if (!invalidNeighborhood) {
+      reportServerError(
+        'territory.home.load_failed',
+        error,
+        {
+          scope:
+            scopeQuery.kind === 'neighborhood'
+              ? 'neighborhood'
+              : 'group',
+        },
+      );
+    }
   }
 
   if (invalidNeighborhood) {
