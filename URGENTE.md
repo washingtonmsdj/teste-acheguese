@@ -1166,6 +1166,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - auditoria de rotas confirmou somente **14 páginas + 4 route handlers** no App Router;
 - `POST /auth/signout` passou a exigir Origin canônica/confiável, fechando logout-CSRF;
 - cadastro/login/logout e callback Auth exigem origem explícita confiável; produção aceita somente a `NEXT_PUBLIC_SITE_URL` canônica ou a `VERCEL_URL` exata do deployment atual fornecida pelo runtime Vercel; nenhum wildcard `*.vercel.app` é aceito; dev sem essas autoridades continua restrito a localhost HTTP;
+- `safeInternalPath` foi endurecido contra separators/backslash/controles percent-encoded e dupla codificação no pathname, preservando encoding legítimo em query;
 - smoke pós-deploy agora prova também que `Origin: BASE_URL` do candidato é reconhecida como origem Auth confiável, enquanto ausência de Origin continua 403;
 - runbooks exigem Site URL oficial fixa + redirect callback exata do candidato no Supabase Auth, removida depois quando não for mais necessária;
 - adapter SSR/proxy foi revisado contra o padrão oficial atual do `@supabase/ssr 0.12.6`: clients por request, `getClaims()`, refresh de cookies e propagação dos cache headers privados; nenhuma instância server-side global foi encontrada;

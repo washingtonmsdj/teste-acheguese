@@ -15,6 +15,18 @@ test('aceita somente caminhos internos seguros', () => {
   assert.equal(safeInternalPath('//evil.example'), '/');
   assert.equal(safeInternalPath('/\\evil.example'), '/');
   assert.equal(safeInternalPath('https://evil.example'), '/');
+  assert.equal(safeInternalPath('/%2F%2Fevil.example'), '/');
+  assert.equal(safeInternalPath('/%5Cevil.example'), '/');
+  assert.equal(safeInternalPath('/%252F%252Fevil.example'), '/');
+  assert.equal(
+    safeInternalPath('/%0d%0aLocation:https://evil.example'),
+    '/',
+  );
+  assert.equal(safeInternalPath('/%'), '/');
+  assert.equal(
+    safeInternalPath('/classificados/meus?next=%2Ffoo'),
+    '/classificados/meus?next=%2Ffoo',
+  );
   assert.equal(safeInternalPath(null, '/fallback'), '/fallback');
 });
 
