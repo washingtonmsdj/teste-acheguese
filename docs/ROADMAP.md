@@ -24,7 +24,8 @@
 - [ ] Localização real do usuário.
 - [ ] Busca global ligada aos dados persistidos.
 - [ ] SEO local e dados estruturados.
-- [ ] Acessibilidade automatizada.
+- [x] Base global de acessibilidade: skip-link, foco visível e reduced-motion.
+- [ ] Auditoria automatizada de acessibilidade em navegador.
 
 ## Fase 2 — Classificados MVP — PRIMEIRO VERTICAL COMPLETO
 Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
@@ -81,15 +82,16 @@ Objetivo: entregar Classificados do anúncio ao contato, pronto para uso real.
 - [x] Admin impedido de editar conteúdo do anúncio durante moderação.
 
 ### Restante para MVP real
-- [ ] Criar/ativar deploy Vercel isolado para este repositório.
-- [ ] Configurar `NEXT_PUBLIC_SUPABASE_URL` e publishable key no deploy.
+- [x] Criar projeto Vercel isolado `teste-acheguese`.
+- [ ] Fazer novo deployment com `NEXT_PUBLIC_SITE_URL`, URL Supabase e publishable key públicas (bloqueado temporariamente pela cota diária da Vercel).
 - [ ] Configurar URL/callback de Auth para o domínio real.
 - [ ] Criar conta real e atribuir `app_metadata.role=classified_admin` ao administrador.
 - [ ] Teste real de cadastro/login/confirmação/logout em navegador.
 - [ ] Teste real de upload e signed URLs em navegador.
 - [ ] Testes E2E: publicar → revisar → favoritar → conversar → denunciar → moderar → encerrar.
-- [ ] SEO de anúncios/categorias + dados estruturados.
-- [ ] Analytics/observabilidade.
+- [x] Base de SEO técnico: canonical condicional, robots fail-closed, sitemap de publicados e JSON-LD de anúncios.
+- [x] Endpoint `/api/health` com probe real do Supabase.
+- [ ] Analytics/observabilidade externa.
 - [ ] Acessibilidade automatizada.
 - [ ] Critérios finais de lançamento e runbook operacional.
 
