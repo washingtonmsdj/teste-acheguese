@@ -28,10 +28,11 @@ The connected GitHub integration can read repository Rulesets but cannot adminis
 
 At the 2026-09-07 checkpoint:
 
+- the branches API reports `main.protected = false`;
 - repository Rulesets endpoint returned an empty collection;
-- classic branch-protection state could not be read because the integration received HTTP 403 for the administrative endpoint.
+- the classic branch-protection endpoint still returns HTTP 403 to the connected integration because it lacks repository Administration permission.
 
-Therefore **do not claim branch protection is enabled** until it is verified from a GitHub account with repository administration permission.
+Therefore the active evidence is that `main` is **not protected** at this checkpoint. Issue #6 remains open until an administrator applies and verifies the intended protection.
 
 Tracking issue: **#6 — Governança — habilitar proteção administrativa da main**.
 

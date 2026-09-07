@@ -171,9 +171,10 @@ Issue administrativa:
 
 Limite conhecido:
 
+- branches API retornou `main.protected = false`;
 - Rulesets retornou coleção vazia;
 - branch protection clássica não pôde ser lida pela integração (403);
-- não presumir proteção da `main` até verificação Admin;
+- estado efetivo do checkpoint: `main` sem proteção administrativa ativa; issue #6 permanece aberta até aplicação/verificação por conta Admin;
 - Secret Scanning histórico também deve ser verificado administrativamente antes do lançamento público.
 
 ## 9. Vercel
