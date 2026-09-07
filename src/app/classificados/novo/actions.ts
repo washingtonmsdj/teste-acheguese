@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { SupabaseClassifiedsRepository } from '@/features/classifieds/data/supabase-classifieds-repository';
-import { validateClassifiedFormData } from '@/features/classifieds/domain/classified-form';
+import { SupabaseClassifiedsRepository } from '@/modules/classifieds/data/supabase-classifieds-repository';
+import { validateClassifiedFormData } from '@/modules/classifieds/domain/classified-form';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export async function createClassifiedDraftAction(formData: FormData) {

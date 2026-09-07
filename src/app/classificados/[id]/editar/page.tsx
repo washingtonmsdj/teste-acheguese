@@ -13,8 +13,8 @@ import {
   markClassifiedSoldAction,
   pauseClassifiedAction,
 } from '@/app/classificados/[id]/lifecycle-actions';
-import { ClassifiedMediaUploader } from '@/features/classifieds/components/media-uploader';
-import { classifiedCategories } from '@/features/classifieds/domain/categories';
+import { ClassifiedMediaUploader } from '@/modules/classifieds/components/media-uploader';
+import { classifiedCategories } from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';

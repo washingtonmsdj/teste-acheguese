@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ClassifiedListItem } from '@/features/classifieds/domain/types';
+import type { ClassifiedListItem } from '@/modules/classifieds/domain/types';
 
 type ClassifiedCardProps = {
   item: ClassifiedListItem;

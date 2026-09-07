@@ -1,9 +1,9 @@
 import {
   isClassifiedCategoryId,
   type ClassifiedCategoryId,
-} from '@/features/classifieds/domain/categories';
-import type { ClassifiedCondition } from '@/features/classifieds/domain/types';
-import { parseClassifiedPriceInCents } from '@/features/classifieds/domain/classified-validation-core';
+} from '@/modules/classifieds/domain/categories';
+import type { ClassifiedCondition } from '@/modules/classifieds/domain/types';
+import { parseClassifiedPriceInCents } from '@/modules/classifieds/domain/classified-validation-core';
 
 export type ClassifiedDraftInput = {
   title: string;

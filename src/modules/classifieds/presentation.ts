@@ -1,4 +1,4 @@
-import type { ClassifiedCondition } from '@/features/classifieds/domain/types';
+import type { ClassifiedCondition } from '@/modules/classifieds/domain/types';
 
 export const classifiedConditionLabels: Record<ClassifiedCondition, string> = {
   new: 'Novo',

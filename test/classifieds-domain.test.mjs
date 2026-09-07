@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { isClassifiedCategoryId } from '../src/features/classifieds/domain/categories.ts';
-import { parseClassifiedPriceInCents } from '../src/features/classifieds/domain/classified-validation-core.ts';
+import { isClassifiedCategoryId } from '../src/modules/classifieds/domain/categories.ts';
+import { parseClassifiedPriceInCents } from '../src/modules/classifieds/domain/classified-validation-core.ts';
 import { getSiteUrl } from '../src/lib/site-url.ts';
 
 test('converte preço BRL para centavos sem ponto flutuante', () => {

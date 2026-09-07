@@ -2,7 +2,7 @@ import Link from 'next/link';
 import {
   classifiedCategories,
   type ClassifiedCategoryId,
-} from '@/features/classifieds/domain/categories';
+} from '@/modules/classifieds/domain/categories';
 
 type CategoryNavProps = {
   activeCategory?: ClassifiedCategoryId;

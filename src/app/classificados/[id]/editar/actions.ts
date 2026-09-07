@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { validateClassifiedFormData } from '@/features/classifieds/domain/classified-form';
+import { validateClassifiedFormData } from '@/modules/classifieds/domain/classified-form';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 async function authenticatedOwner() {

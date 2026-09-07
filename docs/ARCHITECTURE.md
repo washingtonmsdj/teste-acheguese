@@ -1,41 +1,71 @@
 # Arquitetura — Achegue-se
 
-## Objetivo
+## Autoridade
 
-Construir uma plataforma local escalável sem sacrificar velocidade de produto.
+A direção completa está em `/URGENTE.md`.
 
-A primeira versão será um **monólito modular** em Next.js. Cada domínio terá fronteiras próprias e contratos claros. Separação em serviços acontecerá somente quando carga, equipe ou requisitos operacionais justificarem.
+Decisões arquiteturais permanentes ficam em `docs/adr/`.
+
+## Estilo
+
+O Achegue-se começa e permanece, enquanto fizer sentido, como **monólito modular** em Next.js.
+
+Separação em serviços acontece somente quando carga, equipe, isolamento operacional ou métricas justificarem.
 
 ## Camadas
 
 - `src/app`: composição de rotas, layouts e entrypoints.
-- `src/features`: domínios do produto.
-- `src/shared`: UI, utilitários e contratos realmente compartilhados.
-- `src/server`: acesso a dados, autenticação, filas e integrações quando entrarem.
-- `docs`: decisões arquiteturais e plano de entrega.
+- `src/core`: capacidades de plataforma e domínio reutilizáveis.
+- `src/data`: ingestão, provenance e qualidade de dados territoriais.
+- `src/modules`: verticais de produto.
+- `src/shared`: UI/utilitários realmente neutros.
+- `src/lib`: adapters/utilidades de infraestrutura ainda em transição.
 
-## Domínios previstos
+## Regra de dependência
 
-- discovery — busca, localização, categorias e feed local.
-- classifieds — anúncios, categorias, publicação, moderação e contato.
-- businesses — perfis comerciais, catálogo, horários, avaliações.
-- identity — contas, papéis, sessões e permissões.
-- geo — cidades, regiões, coordenadas e proximidade.
-- media — uploads e processamento.
-- moderation — denúncias, revisão e políticas.
-- notifications — preferências e entrega.
-- billing — planos e cobrança quando necessário.
+```text
+app → modules/core/shared
+modules → core/shared
+data → core/shared
+core → shared
+shared → nenhuma camada de domínio
+```
+
+Proibido:
+
+```text
+core → modules
+core → app
+shared → core/modules/app/data
+modules → app
+data → app/modules
+```
+
+O CI deve rejeitar essas dependências.
+
+## Domínio central
+
+Territory é a fundação do produto.
+
+Cidade e bairro são tipos territoriais, não domínios separados.
+
+`TerritoryGroup` agrega territórios reais sem alterar a hierarquia oficial.
+
+Community, Classificados, Empresas, Eventos e demais verticais referenciam Territory.
 
 ## Escala
 
-1. CDN/cache para páginas públicas.
-2. PostgreSQL com índices geográficos quando o backend entrar.
-3. Paginação cursor-based em feeds.
-4. Uploads em object storage, nunca no banco.
-5. Jobs assíncronos para mídia, notificações e moderação.
-6. Observabilidade desde o MVP.
-7. Separar serviços apenas após métricas mostrarem necessidade.
+1. PostgreSQL + PostGIS para dados territoriais/geoespaciais.
+2. CDN/cache para conteúdo público e boundaries.
+3. Paginação cursor-based.
+4. Map queries por bbox/zoom/layers.
+5. Object storage para mídia.
+6. ETL/jobs fora do request web.
+7. Observabilidade desde o MVP.
+8. Serviços separados somente após evidência operacional.
 
-## Mobile-first
+## Referências
 
-O menor viewport é o contrato principal. Desktop é uma expansão da mesma experiência, não uma segunda aplicação.
+- `/URGENTE.md`
+- `docs/ARCHITECTURE-MAP.md`
+- `docs/adr/0001-territory-first-platform.md`

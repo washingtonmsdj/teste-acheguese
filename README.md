@@ -1,22 +1,50 @@
 # Achegue-se
 
-Nova implementação do Achegue-se, criada do zero com arquitetura mobile-first e desenvolvimento por verticais completos.
+Plataforma territorial e comunitária para conectar moradores ao que acontece, às pessoas, aos lugares, serviços, oportunidades e informações ao redor deles.
 
-## Estratégia
+## MVP
 
-1. Fundação e design system.
-2. Home pública / descoberta.
-3. Classificados — primeiro vertical fechado até MVP.
-4. Empresas.
-5. Demais verticais, sempre reutilizando a mesma plataforma.
+Lançamento inicial no Complexo do Nordeste de Amaralina, Salvador/BA:
+
+- Nordeste de Amaralina;
+- Santa Cruz;
+- Vale das Pedrinhas;
+- Chapada do Rio Vermelho.
+
+## Direção oficial
+
+```text
+Platform Foundation
+→ Territory
+→ Territory Data
+→ Map
+→ Home territorial
+→ Community
+→ Alerts / Events / Opportunities
+→ integração de Classificados
+→ Empresas / Serviços
+→ Gastronomia
+→ Mobilidade quando justificada
+```
+
+Classificados foi o primeiro vertical técnico construído, mas não é o eixo arquitetural do produto.
+
+## Antes de contribuir
+
+Leia obrigatoriamente:
+
+1. `URGENTE.md`;
+2. `docs/ARCHITECTURE.md`;
+3. ADRs relevantes em `docs/adr/`.
 
 ## Princípios
 
-- Mobile-first e responsivo de verdade.
-- Modular monolith no início; serviços separados somente quando escala justificar.
-- Contratos claros entre domínio, UI, dados e integrações.
-- Performance, acessibilidade, SEO e observabilidade desde a fundação.
-- Banco preparado para multi-cidade e milhares de clientes.
-- Nenhum dado fake acoplado ao produto final: fixtures apenas em desenvolvimento/testes.
-
-> Estado atual: fundação inicial em construção.
+- Territory-first.
+- Modular monolith.
+- Mobile-first sem sacrificar desktop profissional.
+- Dados públicos com provenance.
+- Zero dados fictícios apresentados como reais.
+- PostGIS/mapa preparados para escala.
+- RLS e fail-closed.
+- Sem microservices prematuros.
+- Sem mini-sistemas por módulo.

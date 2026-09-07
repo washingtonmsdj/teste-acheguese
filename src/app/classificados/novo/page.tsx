@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClassifiedDraftAction } from '@/app/classificados/novo/actions';
-import { classifiedCategories } from '@/features/classifieds/domain/categories';
+import { classifiedCategories } from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';

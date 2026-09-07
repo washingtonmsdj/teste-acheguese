@@ -5,12 +5,12 @@ import { notFound } from 'next/navigation';
 import { toggleFavoriteAction } from '@/app/classificados/favorite-actions';
 import { reportClassifiedAction } from '@/app/classificados/report-actions';
 import { startConversationAction } from '@/app/mensagens/actions';
-import { SupabaseClassifiedsRepository } from '@/features/classifieds/data/supabase-classifieds-repository';
+import { SupabaseClassifiedsRepository } from '@/modules/classifieds/data/supabase-classifieds-repository';
 import {
   classifiedConditionLabels,
   formatClassifiedLocation,
   formatClassifiedPrice,
-} from '@/features/classifieds/presentation';
+} from '@/modules/classifieds/presentation';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';

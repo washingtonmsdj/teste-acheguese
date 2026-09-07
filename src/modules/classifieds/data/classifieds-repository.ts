@@ -1,9 +1,9 @@
-import type { ClassifiedDraftInput } from '@/features/classifieds/domain/classified-form';
+import type { ClassifiedDraftInput } from '@/modules/classifieds/domain/classified-form';
 import type {
   Classified,
   ClassifiedSearchInput,
   ClassifiedSearchPage,
-} from '@/features/classifieds/domain/types';
+} from '@/modules/classifieds/domain/types';
 
 export interface ClassifiedsRepository {
   search(input: ClassifiedSearchInput): Promise<ClassifiedSearchPage>;

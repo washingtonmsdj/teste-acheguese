@@ -1,13 +1,13 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { ClassifiedDraftInput } from '@/features/classifieds/domain/classified-form';
+import type { ClassifiedDraftInput } from '@/modules/classifieds/domain/classified-form';
 import type {
   Classified,
   ClassifiedCondition,
   ClassifiedListItem,
   ClassifiedSearchInput,
   ClassifiedSearchPage,
-} from '@/features/classifieds/domain/types';
-import type { ClassifiedsRepository } from '@/features/classifieds/data/classifieds-repository';
+} from '@/modules/classifieds/domain/types';
+import type { ClassifiedsRepository } from '@/modules/classifieds/data/classifieds-repository';
 import type { Database } from '@/lib/supabase/database.types';
 
 type ClassifiedRow = Database['public']['Tables']['classifieds']['Row'];

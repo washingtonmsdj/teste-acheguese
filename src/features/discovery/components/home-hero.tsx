@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { classifiedCategories } from '@/features/classifieds/domain/categories';
+import { classifiedCategories } from '@/modules/classifieds/domain/categories';
 import { HomeSearch } from './home-search';
 
 export function HomeHero() {

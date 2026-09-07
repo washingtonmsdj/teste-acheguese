@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ClassifiedCategoryNav } from '@/features/classifieds/components/category-nav';
-import { ClassifiedCard } from '@/features/classifieds/components/classified-card';
-import { ClassifiedsEmptyState } from '@/features/classifieds/components/empty-state';
-import { SupabaseClassifiedsRepository } from '@/features/classifieds/data/supabase-classifieds-repository';
+import { ClassifiedCategoryNav } from '@/modules/classifieds/components/category-nav';
+import { ClassifiedCard } from '@/modules/classifieds/components/classified-card';
+import { ClassifiedsEmptyState } from '@/modules/classifieds/components/empty-state';
+import { SupabaseClassifiedsRepository } from '@/modules/classifieds/data/supabase-classifieds-repository';
 import {
   classifiedCategories,
   isClassifiedCategoryId,
-} from '@/features/classifieds/domain/categories';
+} from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
