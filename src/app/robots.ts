@@ -19,10 +19,12 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: [
         '/admin/',
+        '/api/',
         '/auth/',
         '/entrar',
         '/favoritos',
         '/mensagens',
+        '/menu',
         '/buscar',
         '/classificados/meus',
         '/classificados/novo',

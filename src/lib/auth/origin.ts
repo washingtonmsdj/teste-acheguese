@@ -21,3 +21,15 @@ export function isTrustedAuthCallbackOrigin(
     requestOrigin,
   );
 }
+
+export function isTrustedAuthRequestOrigin(
+  requestOrigin: string | null,
+) {
+  return Boolean(
+    requestOrigin &&
+      trustedAuthCallbackOrigin(
+        getSiteUrl(),
+        requestOrigin,
+      ),
+  );
+}

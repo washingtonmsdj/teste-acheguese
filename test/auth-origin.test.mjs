@@ -60,3 +60,29 @@ test('sem URL canônica só localhost HTTP é aceito para desenvolvimento', () =
     false,
   );
 });
+
+test('requisições mutáveis de auth exigem origem canônica', () => {
+  const siteUrl = 'https://acheguese.example';
+
+  assert.equal(
+    trustedAuthCallbackOrigin(
+      siteUrl,
+      'https://acheguese.example',
+    ),
+    true,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(
+      siteUrl,
+      'https://evil.example',
+    ),
+    false,
+  );
+  assert.equal(
+    trustedAuthCallbackOrigin(
+      siteUrl,
+      '',
+    ),
+    false,
+  );
+});
