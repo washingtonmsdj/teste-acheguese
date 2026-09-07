@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import {
   TerritoryHome,
   TerritoryHomeUnavailable,
@@ -67,6 +68,13 @@ export default async function Home({
     );
   } catch {
     return <TerritoryHomeUnavailable />;
+  }
+
+  if (
+    requestedNeighborhoodSlug &&
+    data.scope.kind !== 'territory'
+  ) {
+    redirect('/');
   }
 
   return <TerritoryHome data={data} />;
