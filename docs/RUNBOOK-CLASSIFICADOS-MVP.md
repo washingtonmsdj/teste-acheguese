@@ -195,9 +195,11 @@ Se o deployment novo apresentar regressão:
 4. registrar HEAD, deployment ID, migration version e sintoma;
 5. corrigir na `main` e gerar novo bundle.
 
-## 11. Definition of Done para iniciar Empresas
+## 11. Definition of Done do E2E de Classificados
 
-Classificados só libera o próximo vertical quando:
+Este runbook valida o vertical já existente. Ele **não autoriza iniciar Empresas nem altera a ordem de execução do produto**. A autoridade de sequência permanece em `/URGENTE.md`.
+
+Classificados é considerado tecnicamente validado quando:
 
 - deployment backend-connected está saudável;
 - Auth real passou;
@@ -205,4 +207,6 @@ Classificados só libera o próximo vertical quando:
 - moderação real passou;
 - acessibilidade automatizada não tem blocker crítico;
 - observabilidade mínima está ativa;
-- runbook foi executado uma vez com sucesso.
+- este runbook foi executado uma vez com sucesso.
+
+Depois disso, seguir a fase indicada pelo `URGENTE.md`; atualmente Empresas continua bloqueado até as fundações e fases anteriores exigidas estarem concluídas.
