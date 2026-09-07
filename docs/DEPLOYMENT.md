@@ -1,5 +1,7 @@
 # Deployment
 
+Checkpoint consolidado atual: `docs/PREDEPLOY-RECEIPT-2026-09-07.md`.
+
 ## Vercel canônico
 
 Projeto isolado criado para a reconstrução:

@@ -1288,6 +1288,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - Dependabot abriu #3 (upload-artifact v4→v7 major), #4 (React/React DOM 19.2.7→19.2.8 patch) e #5 (@types/node 24→26 + ESLint 9→10 + TypeScript 5.9→7 majors);
 - nenhum desses PRs será mesclado no candidato pré-FASE 4; #3/#5 são manutenção pós-deploy e #4, embora verde, fica congelado até o primeiro deployment territorial real;
 
+- receipt consolidado de pré-deploy registrado em `docs/PREDEPLOY-RECEIPT-2026-09-07.md`; usar esse arquivo como checkpoint curto junto do `URGENTE.md` em novas conversas;
+
 ### Blocker de release
 
 - o único deployment Vercel continua sendo o técnico antigo `dpl_4hgED9grfQNbT6DLCrZEUaCqqnWv`;
