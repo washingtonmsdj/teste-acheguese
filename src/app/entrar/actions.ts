@@ -25,7 +25,7 @@ function readCredentials(formData: FormData) {
   return { email, password };
 }
 
-function authError(code: string, next: string) {
+function authError(code: string, next: string): never {
   const params = new URLSearchParams({ erro: code, next });
   redirect(`/entrar?${params.toString()}`);
 }
