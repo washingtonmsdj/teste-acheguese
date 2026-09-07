@@ -29,7 +29,7 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`f394f404c8bc20c3c59b67b83235285e9039505b`
+`7dfcd7e55d2c32a102fb7f686bc55720367b3bbf`
 
 Para esse HEAD:
 
@@ -40,7 +40,7 @@ Para esse HEAD:
 - transport branch sincronizada com o mesmo `SOURCE_SHA`;
 - payload auditado com lifecycle script MapLibre presente e 0 `.env`;
 - pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
-- logout customizado protegido contra Origin não confiável;
+- login/cadastro/logout/callback protegidos por origem explícita; produção aceita somente a Site URL canônica ou a URL exata do deployment Vercel atual, sem wildcard;
 - smoke territorial pós-deploy disponível fora do bundle de produção;
 - preflight de env pública roda antes de `dev`/`build`, fail-fast para par Supabase incompleto ou URLs inválidas;
 - setup local pode ser validado explicitamente com `npm run env:check`;
@@ -54,7 +54,8 @@ Para esse HEAD:
 - authenticated/admin RLS smoke real = PASS, rollback-safe e versionado em `supabase/smoke/authenticated-rls.sql`;
 - policies/grants de Classificados auditados;
 - superfícies pessoais/admin explicitamente dinâmicas e `private, no-store`;
-- build route table confirma todas as superfícies protegidas como `ƒ`.
+- build route table confirma todas as superfícies protegidas como `ƒ`;
+- adapter SSR revisado contra `@supabase/ssr 0.12.6`, com client por request, `getClaims()` e headers privados de refresh preservados.
 
 ## Transporte de source
 
@@ -120,6 +121,6 @@ Após READY:
 3. revisar visualmente Home/Mapa em desktop + mobile;
 4. validar filtros, clustering, foco e deep links;
 5. inspecionar runtime logs/erros;
-6. validar cadastro/login e Site URL/redirect allow-list do Supabase Auth;
+6. manter Site URL oficial e adicionar somente a redirect exata `https://<candidato>/auth/callback` no Supabase Auth; validar cadastro/login no candidato;
 7. executar E2E do vertical Classificados;
 8. somente então tratar o alias como candidato de release da fundação territorial.

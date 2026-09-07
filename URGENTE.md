@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`3c0e52f53d5721fb3131ab9c8f75afba6121313c`
+`7dfcd7e55d2c32a102fb7f686bc55720367b3bbf`
 
 ### Fase
 
@@ -1168,6 +1168,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - cadastro/login/logout e callback Auth exigem origem explícita confiável; produção aceita somente a `NEXT_PUBLIC_SITE_URL` canônica ou a `VERCEL_URL` exata do deployment atual fornecida pelo runtime Vercel; nenhum wildcard `*.vercel.app` é aceito; dev sem essas autoridades continua restrito a localhost HTTP;
 - smoke pós-deploy agora prova também que `Origin: BASE_URL` do candidato é reconhecida como origem Auth confiável, enquanto ausência de Origin continua 403;
 - runbooks exigem Site URL oficial fixa + redirect callback exata do candidato no Supabase Auth, removida depois quando não for mais necessária;
+- adapter SSR/proxy foi revisado contra o padrão oficial atual do `@supabase/ssr 0.12.6`: clients por request, `getClaims()`, refresh de cookies e propagação dos cache headers privados; nenhuma instância server-side global foi encontrada;
 - `robots.txt` bloqueia explicitamente `/api/` e `/menu` além das superfícies privadas já existentes;
 - smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;
@@ -1214,9 +1215,9 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - Supabase v2 possui chave moderna `sb_publishable_...` ativa, além da legacy anon; o release deve usar a publishable moderna;
 - `docs/CLASSIFIEDS-MVP.md` foi atualizado para o estado real: Supabase/RLS/Storage já existem e Classificados não autoriza iniciar Empresas;
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
-- HEAD técnico `3c0e52f5`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `3c0e52f5`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=3c0e52f53d5721fb3131ab9c8f75afba6121313c`;
+- HEAD técnico `7dfcd7e5`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `7dfcd7e5`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=7dfcd7e55d2c32a102fb7f686bc55720367b3bbf`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
