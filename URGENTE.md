@@ -856,7 +856,39 @@ Esta estrutura deve ser adotada progressivamente.
 
 **Continuar a v2 como base principal. Não voltar o desenvolvimento do produto para o repositório original e não criar um terceiro repositório.**
 
+Repositórios:
+
+- **canônico / linha ativa:** `washingtonmsdj/teste-acheguese`;
+- **legado donor/reference:** `washingtonmsdj/acheguese`.
+
 O original passa a ser **donor/reference**. O mapa detalhado de reaproveitamento fica em `docs/LEGACY-DONOR-MAP.md`.
+
+### Instrução obrigatória para futuras IAs/agentes
+
+Ao iniciar uma nova conversa ou sessão:
+
+1. tratar `washingtonmsdj/teste-acheguese` como a única base de implementação ativa;
+2. trabalhar na `main` da v2, salvo instrução explícita posterior em contrário;
+3. **não** retomar novas features no repositório original;
+4. **não** fazer dual-write ou manter duas implementações vivas do mesmo domínio;
+5. **não** criar um terceiro repositório para “recomeçar melhor”;
+6. consultar o original somente quando a fase atual pedir uma capacidade já existente;
+7. ao reaproveitar algo do original, migrar seletivamente contrato/regra/teste/dado validado, adaptando ao Core v2;
+8. registrar provenance/origem quando código, migration, teste ou dado materialmente vier do original;
+9. preservar as autoridades já canônicas da v2 — especialmente Territory, Map, Auth, rollout, provenance e Classificados;
+10. qualquer consolidação/rename de repositórios só pode ser considerada **depois da FASE 4 release-validada em deployment real**.
+
+### Regra de STOP para esta decisão
+
+Interromper a execução se uma proposta implicar:
+
+- voltar a desenvolver o produto principal no original;
+- copiar módulos inteiros sem auditoria;
+- importar migrations antigas em massa;
+- reintroduzir geografia, Auth, mapa, moderação ou SSOT paralelo;
+- renomear/consolidar repositórios antes do gate de release da FASE 4.
+
+Nesses casos, preservar a v2 e seguir a estratégia donor/reference.
 
 O repositório antigo pode ser usado como referência técnica, principalmente para:
 
