@@ -3,17 +3,35 @@ name: vercel-source-bundle
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 concurrency:
-  group: vercel-source-bundle
+  group: vercel-source-bundle-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  bundle:
+  validate:
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Validate Vercel files payload
+        run: >-
+          python scripts/ci/build-vercel-source-bundle.py
+          --output /tmp/vercel-files.json
+
+  publish:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -22,63 +40,9 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Build Vercel files payload
-        env:
-          SOURCE_SHA: ${{ github.sha }}
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          root = Path(".")
-          manifest = json.loads(
-              (root / "infra/vercel-source-manifest.json").read_text(
-                  encoding="utf-8"
-              )
-          )
-
-          paths = []
-          for value in manifest["files"]:
-              path = root / value
-              if not path.is_file():
-                  raise SystemExit(
-                      f"vercel_source_required_file_missing:{value}"
-                  )
-              paths.append(path)
-
-          for value in manifest["directories"]:
-              directory = root / value
-              if not directory.exists():
-                  continue
-              paths.extend(
-                  sorted(
-                      path
-                      for path in directory.rglob("*")
-                      if path.is_file()
-                  )
-              )
-
-          unique_paths = sorted(
-              {path.as_posix(): path for path in paths}.values(),
-              key=lambda path: path.as_posix(),
-          )
-
-          files = [
-              {
-                  "file": path.as_posix(),
-                  "data": path.read_text(encoding="utf-8"),
-              }
-              for path in unique_paths
-          ]
-
-          Path("/tmp/vercel-files.json").write_text(
-              json.dumps(
-                  files,
-                  ensure_ascii=False,
-                  separators=(",", ":"),
-              ),
-              encoding="utf-8",
-          )
-          PY
+        run: >-
+          python scripts/ci/build-vercel-source-bundle.py
+          --output /tmp/vercel-files.json
 
       - name: Publish transport branch
         env:

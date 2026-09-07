@@ -75,3 +75,59 @@ test('manifesto de deploy não inclui arquivos de ambiente', () => {
     false,
   );
 });
+
+test('PRs executam quality e validação de source closure sem publicar transport branch', () => {
+  const qualityWorkflow = readFileSync(
+    new URL(
+      '../.github/workflows/quality.yml',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+  const bundleWorkflow = readFileSync(
+    new URL(
+      '../.github/workflows/vercel-source-bundle.yml',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+
+  assert.equal(
+    qualityWorkflow.includes('pull_request:'),
+    true,
+  );
+  assert.equal(
+    bundleWorkflow.includes('pull_request:'),
+    true,
+  );
+  assert.equal(
+    bundleWorkflow.includes(
+      "if: github.event_name != 'pull_request'",
+    ),
+    true,
+  );
+  assert.equal(
+    bundleWorkflow.includes('contents: write'),
+    true,
+  );
+  assert.equal(
+    bundleWorkflow.includes(
+      'python scripts/ci/build-vercel-source-bundle.py',
+    ),
+    true,
+  );
+});
+
+test('empacotador Vercel fica fora do payload de runtime', () => {
+  const values = [
+    ...manifest.files,
+    ...manifest.directories,
+  ];
+
+  assert.equal(
+    values.includes(
+      'scripts/ci/build-vercel-source-bundle.py',
+    ),
+    false,
+  );
+});
