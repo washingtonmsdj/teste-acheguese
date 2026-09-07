@@ -1,0 +1,74 @@
+name: vercel-source-bundle
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vercel-source-bundle
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Build Vercel files payload
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+          explicit = [
+              ".nvmrc",
+              "next-env.d.ts",
+              "next.config.ts",
+              "package.json",
+              "package-lock.json",
+              "proxy.ts",
+              "tsconfig.json",
+          ]
+
+          paths = [Path(p) for p in explicit]
+          paths += sorted(
+              p for p in (root / "src").rglob("*")
+              if p.is_file()
+          )
+
+          files = []
+          for path in paths:
+              files.append({
+                  "file": path.as_posix(),
+                  "data": path.read_text(encoding="utf-8"),
+              })
+
+          Path("/tmp/vercel-files.json").write_text(
+              json.dumps(files, ensure_ascii=False, separators=(",", ":")),
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Publish transport branch
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          git config user.name "acheguese-deploy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git switch --orphan deploy-vercel-bundle
+          git rm -rf .
+          cp /tmp/vercel-files.json vercel-files.json
+          printf '%s\n' "$SOURCE_SHA" > SOURCE_SHA
+          git add vercel-files.json SOURCE_SHA
+          git commit -m "chore: refresh Vercel transport bundle"
+          git push --force origin HEAD:refs/heads/deploy/vercel-bundle
