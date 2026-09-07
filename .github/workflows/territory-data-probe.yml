@@ -1,0 +1,45 @@
+name: territory-data-probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/territory-data-probe.yml"
+      - "scripts/territory-data/**"
+      - "src/data/sources/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: territory-data-probe-main
+  cancel-in-progress: true
+
+jobs:
+  census-complexo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Node 24 LTS
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Probe official census source
+        env:
+          TERRITORY_DATA_OUTPUT: territory-data-output
+        run: node scripts/territory-data/probe-census-complexo.mjs
+
+      - name: Upload probe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: territory-census-complexo-probe
+          path: territory-data-output
+          if-no-files-found: error
+          retention-days: 14
