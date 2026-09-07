@@ -2,14 +2,10 @@
 
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { getTrustedAuthOrigin } from '@/lib/auth/origin';
+import { safeInternalPath } from '@/lib/safe-path';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-
-function safePath(value: FormDataEntryValue | null, fallback = '/') {
-  if (typeof value !== 'string') return fallback;
-  if (!value.startsWith('/') || value.startsWith('//')) return fallback;
-  return value;
-}
 
 function readCredentials(formData: FormData) {
   const email =
@@ -31,7 +27,7 @@ function authError(code: string, next: string): never {
 }
 
 export async function signInAction(formData: FormData) {
-  const next = safePath(formData.get('next'), '/classificados/meus');
+  const next = safeInternalPath(formData.get('next'), '/classificados/meus');
   const { email, password } = readCredentials(formData);
 
   if (!getSupabasePublicConfig()) {
@@ -56,7 +52,7 @@ export async function signInAction(formData: FormData) {
 }
 
 export async function signUpAction(formData: FormData) {
-  const next = safePath(formData.get('next'), '/classificados/novo');
+  const next = safeInternalPath(formData.get('next'), '/classificados/novo');
   const { email, password } = readCredentials(formData);
 
   if (!getSupabasePublicConfig()) {
@@ -68,7 +64,9 @@ export async function signUpAction(formData: FormData) {
   }
 
   const headerStore = await headers();
-  const origin = headerStore.get('origin');
+  const origin = getTrustedAuthOrigin(
+    headerStore.get('origin'),
+  );
 
   if (!origin) {
     authError('origem_invalida', next);
