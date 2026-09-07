@@ -34,8 +34,8 @@ export const highlights = [
 ];
 
 export const stats = [
-  ['+25 mil', 'negócios cadastrados'],
-  ['+500 mil', 'pessoas na plataforma'],
-  ['4,8', 'avaliação média'],
-  ['+120', 'cidades atendidas'],
+  ['Local', 'descoberta por proximidade'],
+  ['Rápido', 'busca por categoria'],
+  ['Confiável', 'avaliações e moderação'],
+  ['Escalável', 'arquitetura multi-cidade'],
 ];
