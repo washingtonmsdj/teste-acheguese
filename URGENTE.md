@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`c1e02d2721d1a60cd37d4fe7faa16790843ea435`
+`3c0e52f53d5721fb3131ab9c8f75afba6121313c`
 
 ### Fase
 
@@ -1184,6 +1184,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - `supabase/smoke/authenticated-rls.sql` foi versionado como prova repetível; runbook distingue claramente smoke transacional de E2E Auth real;
 - os dois smokes canônicos foram executados **diretamente do conteúdo versionado no Git** e ambos retornaram PASS; authenticated smoke terminou com `auth_users_after=0`, `classifieds_after=0`, `media_after=0`, `moderation_after=0`;
 - os smokes SQL permanecem fora do bundle Vercel; são ferramentas de prova, não runtime de produção;
+- performance advisor Supabase revisado no pré-deploy: somente findings `unused_index` em nível INFO, sem sinais de performance críticos; nenhum índice removido sem tráfego real;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
@@ -1210,9 +1211,9 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - Supabase v2 possui chave moderna `sb_publishable_...` ativa, além da legacy anon; o release deve usar a publishable moderna;
 - `docs/CLASSIFIEDS-MVP.md` foi atualizado para o estado real: Supabase/RLS/Storage já existem e Classificados não autoriza iniciar Empresas;
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
-- HEAD técnico `c1e02d27`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `c1e02d27`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=c1e02d2721d1a60cd37d4fe7faa16790843ea435`;
+- HEAD técnico `3c0e52f5`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `3c0e52f5`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=3c0e52f53d5721fb3131ab9c8f75afba6121313c`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 

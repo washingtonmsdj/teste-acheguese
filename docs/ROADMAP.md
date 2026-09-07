@@ -105,6 +105,7 @@
 - [x] favoritos alinhados a publicação efetiva (`published_at <= now()`);
 - [x] superfícies pessoais/admin `force-dynamic` + `private, no-store`;
 - [x] banco v2 sem conteúdo fictício transacional;
+- [x] performance advisor pré-deploy revisado; apenas `unused_index` INFO, sem remoção prematura;
 - [x] logout-CSRF bloqueado por Origin canônica;
 - [x] smoke pós-deploy territorial automatizado;
 - [x] remoção de allowlist/estilos marketplace órfãos;
