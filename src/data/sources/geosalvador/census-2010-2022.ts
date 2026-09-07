@@ -1,7 +1,7 @@
 import {
   buildArcGisQueryUrl,
   readArcGisAttributes,
-} from '@/data/sources/arcgis-feature-service';
+} from '../arcgis-feature-service.ts';
 
 export const GEOSALVADOR_CENSUS_SOURCE_KEY =
   'geosalvador-censo-2010-2022-bairros';
