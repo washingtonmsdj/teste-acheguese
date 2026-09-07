@@ -99,6 +99,9 @@
 - [x] production dependency audit no CI;
 - [x] CSP/HSTS provider-agnostic;
 - [x] Storage de Classificados validado fail-closed;
+- [x] RLS anônimo real + policies/grants auditados;
+- [x] favoritos alinhados a publicação efetiva (`published_at <= now()`);
+- [x] superfícies pessoais/admin `force-dynamic` + `private, no-store`;
 - [x] banco v2 sem conteúdo fictício transacional;
 - [x] logout-CSRF bloqueado por Origin canônica;
 - [x] smoke pós-deploy territorial automatizado;

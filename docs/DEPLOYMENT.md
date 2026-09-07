@@ -29,14 +29,14 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`df0b934ada5c49c78673c9ba6ea65126291524f2`
+`f394f404c8bc20c3c59b67b83235285e9039505b`
 
 Para esse HEAD:
 
 - quality: **PASS**;
 - bundle de transporte: **PASS**;
 - Supabase security advisors: **0 lints**;
-- migration history Supabase/Git alinhado até `20260907102801_map_rpc_category_guards_v1`;
+- migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;
 - transport branch sincronizada com o mesmo `SOURCE_SHA`;
 - payload auditado com lifecycle script MapLibre presente e 0 `.env`;
 - pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
@@ -46,7 +46,11 @@ Para esse HEAD:
 - CSP + HSTS configurados sem nonce;
 - Map CSP/Image allowlists derivadas de configuração pública, sem wildcard;
 - bucket `classified-media` privado e alinhado ao contrato de upload;
-- banco v2 sem usuários/anúncios/conversas fictícios.
+- banco v2 sem usuários/anúncios/conversas fictícios;
+- anon RLS smoke real = PASS;
+- policies/grants de Classificados auditados;
+- superfícies pessoais/admin explicitamente dinâmicas e `private, no-store`;
+- build route table confirma todas as superfícies protegidas como `ƒ`.
 
 ## Transporte de source
 

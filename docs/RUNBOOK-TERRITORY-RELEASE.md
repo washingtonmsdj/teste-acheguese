@@ -32,7 +32,11 @@ O candidato só pode ser publicado quando:
 11. health contract está preparado para provar Territory + Classificados;
 12. `npm audit --omit=dev --audit-level=high` = PASS;
 13. bucket `classified-media` = privado, 8 MB, MIME allowlist correta;
-14. banco v2 não contém conteúdo transacional fictício antes do primeiro release.
+14. banco v2 não contém conteúdo transacional fictício antes do primeiro release;
+15. `supabase/smoke/anon-rls.sql` = PASS no projeto real;
+16. migration history termina em `20260907130331_classified_favorites_publication_guard_v1`;
+17. páginas pessoais/admin aparecem como `ƒ` no build;
+18. `/entrar` e demais superfícies protegidas retornam `Cache-Control` com `private` + `no-store`.
 
 O performance advisor pode reportar `unused_index` em nível INFO enquanto não existe tráfego real. Não remover índices com base apenas nessa ausência de amostra.
 
@@ -122,7 +126,9 @@ Confirmar:
 - `X-Frame-Options: DENY`;
 - ausência de `X-Powered-By`;
 - `Content-Security-Policy` com `default-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'` e origens de mapa/Supabase esperadas;
-- `Strict-Transport-Security: max-age=31536000` no candidato HTTPS.
+- `Strict-Transport-Security: max-age=31536000` no candidato HTTPS;
+- `Cache-Control` com `private, no-store` em Auth/admin/páginas pessoais;
+- `/api/map/viewport` continua usando cache público próprio e não herda a política privada.
 
 ## 6. Rollout e SEO fail-closed
 

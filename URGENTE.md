@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`df0b934ada5c49c78673c9ba6ea65126291524f2`
+`f394f404c8bc20c3c59b67b83235285e9039505b`
 
 ### Fase
 
@@ -1154,7 +1154,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - canonical global foi removido e Classificados mantém canonical próprio;
 - raw viewport exige zoom >= 10, bbox <= 2° e até 10 category keys canônicas;
 - os mesmos guards de bbox/categorias existem nas RPCs públicas PostGIS, impedindo bypass direto ao Supabase;
-- migrations remotas/Git alinhadas até `20260907102801_map_rpc_category_guards_v1`;
+- migrations remotas/Git alinhadas até `20260907130331_classified_favorites_publication_guard_v1`;
 - smoke válido preservado: **4 boundaries + 20 locais**, inclusive com role `anon`;
 - health endpoint passou a exigir canário do Territory Core + Salvador/Classificados;
 - observabilidade server-side estruturada foi adicionada sem stack/contexto arbitrário e com redaction de keys/JWT;
@@ -1179,9 +1179,19 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - policies do Storage validadas: upload/delete somente pelo owner autenticado; leitura pública apenas para anúncio publicado ou pelo próprio owner;
 - banco v2 validado sem conteúdo fictício transacional: **0 users Auth, 0 classificados, 0 mídias, 0 favoritos, 0 conversas, 0 mensagens e 0 denúncias**;
 - seeds legítimos preservados: Salvador/BA ativo + 8 categorias estruturais de Classificados;
-- HEAD técnico `df0b934a`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `df0b934a`: **PASS**;
-- branch `deploy/vercel-bundle` deve permanecer sincronizada com o HEAD técnico antes do deployment;
+- smoke RLS anônimo canônico executado no banco real e **PASS**: Salvador público, anon sem INSERT de classificados e sem EXECUTE nas RPCs de submit/withdraw;
+- auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
+- unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
+- unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
+- favoritos foram alinhados ao mesmo contrato temporal de publicação: `status='published'` + `published_at <= now()`;
+- migration `20260907130331_classified_favorites_publication_guard_v1` aplicada e versionada;
+- 7 superfícies pessoais/admin são explicitamente `force-dynamic`, independentemente de env/build inference;
+- build confirmou `ƒ` para admin, edição/meus/novo, favoritos e mensagens;
+- rotas protegidas recebem `Cache-Control: private, no-store, max-age=0, must-revalidate`;
+- smoke de release passou a exigir `private/no-store` em `/entrar`; o cache público do Map API permanece separado;
+- HEAD técnico `f394f404`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `f394f404`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=f394f404c8bc20c3c59b67b83235285e9039505b`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
@@ -1208,6 +1218,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - não indexar Home/Mapa antes do rollout público;
 - não reintroduzir `/empresas`, Unsplash, Home marketplace-first ou `features/discovery`;
 - não reintroduzir CSS órfão da antiga landing;
+- não remover `force-dynamic`/`private, no-store` das superfícies pessoais/admin;
 - não carregar dataset inteiro no navegador;
 - não quebrar deep links do mapa;
 - não lançar território por publicação de dados;
