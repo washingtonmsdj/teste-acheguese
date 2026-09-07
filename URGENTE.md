@@ -1217,6 +1217,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;
 - CI agora executa `npm audit --omit=dev --audit-level=high`; lock atual retornou **0 vulnerabilidades de produção**;
+- CI também executa `npm run security:scan`, bloqueando `.env` real, arquivos de chave privada e padrões de credencial de alta confiança antes de lint/typecheck/build;
 - Next.js permanece em `16.3.4`, acima dos patches críticos de agosto de 2026;
 - warning de `unrs-resolver` foi rastreado até `eslint-import-resolver-typescript` e é **dev-only**; nenhum postinstall transitivo foi aprovado às cegas;
 - requests de viewport do Map Core agora reutilizam o bbox/zoom normalizado do deep link, reduzindo cardinalidade de cache CDN;

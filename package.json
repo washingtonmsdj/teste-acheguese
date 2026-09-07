@@ -15,7 +15,8 @@
     "test": "node --test",
     "predev": "node ./scripts/validate-public-env.mjs development && node ./scripts/copy-maplibre-worker.mjs",
     "prebuild": "node ./scripts/validate-public-env.mjs production && node ./scripts/copy-maplibre-worker.mjs",
-    "env:check": "node ./scripts/validate-public-env.mjs development"
+    "env:check": "node ./scripts/validate-public-env.mjs development",
+    "security:scan": "node ./scripts/ci/scan-repository-secrets.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.6",

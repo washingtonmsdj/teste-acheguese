@@ -35,6 +35,9 @@ jobs:
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
 
+      - name: Scan repository for committed secrets
+        run: npm run security:scan
+
       - name: Lint
         run: npm run lint
 
