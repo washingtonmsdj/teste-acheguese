@@ -48,3 +48,24 @@ Leia obrigatoriamente:
 - RLS e fail-closed.
 - Sem microservices prematuros.
 - Sem mini-sistemas por módulo.
+
+## Ambiente local
+
+Use Node 24 e mantenha configuração local fora do Git:
+
+```bash
+cp .env.example .env.local
+```
+
+Preencha em `.env.local` a `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` ativa do projeto `acheguese-v2`. A URL canônica já está indicada no exemplo.
+
+Antes de iniciar:
+
+```bash
+npm run env:check
+npm run dev
+```
+
+O preflight falha antes do Next quando encontra par Supabase incompleto, URL pública inválida ou origem de mapa malformada. CI sem env pública continua suportado.
+
+Nunca versionar service-role, `sb_secret_...`, senha ou token administrativo.

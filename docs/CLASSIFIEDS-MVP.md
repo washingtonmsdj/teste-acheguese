@@ -1,12 +1,19 @@
-# Classificados — arquitetura do primeiro MVP
+# Classificados — vertical técnico existente
 
-## Objetivo
+> **Autoridade de sequência:** `/URGENTE.md`  
+> Este documento descreve o vertical já implementado. Ele **não autoriza iniciar Empresas** nem altera a ordem territory-first.
 
-Fechar um vertical de ponta a ponta antes de iniciar Empresas.
+## Papel no produto
 
-Fluxo mínimo:
+Classificados foi o primeiro vertical técnico construído, mas não é o eixo arquitetural do Achegue-se.
 
-```
+Ele deve consumir as capacidades compartilhadas da plataforma — Auth, localização, mídia, moderação e, progressivamente, Territory — sem criar uma segunda arquitetura.
+
+Novas features permanecem congeladas, salvo correção crítica, segurança ou trabalho necessário para integração ao Core autorizado pelo `URGENTE.md`.
+
+## Fluxo atual
+
+```text
 descobrir
 → filtrar
 → abrir anúncio
@@ -21,9 +28,9 @@ descobrir
 
 ## Entidade principal
 
-`Classified` nasce independente da camada de banco.
+`Classified` mantém regras de domínio independentes da camada de banco.
 
-Estados permitidos:
+Estados canônicos:
 
 - `draft`
 - `pending_review`
@@ -33,50 +40,77 @@ Estados permitidos:
 - `rejected`
 - `archived`
 
-Preço é salvo em **centavos**, nunca em ponto flutuante.
+Preço é persistido em **centavos**, nunca em ponto flutuante.
 
-Localização pública deve priorizar cidade/região. Coordenada exata não deve ser exibida por padrão em anúncios pessoais.
+Localização pública prioriza cidade/região; coordenada pessoal exata não deve ser exposta por padrão.
 
-Imagens ficam em object storage. O banco guarda somente chaves e metadados.
+## Persistência real
 
-## Fronteiras
-
-- `domain`: regras e tipos puros.
-- `data`: contratos de repositório.
-- `app`: composição de páginas e ações.
-- autenticação, geografia, mídia e moderação são capacidades compartilhadas, não regras internas de Classificados.
-
-## Banco futuro
-
-Quando a camada persistente entrar, o desenho esperado é PostgreSQL com:
+O projeto `acheguese-v2` já possui PostgreSQL/Supabase com RLS. As entidades principais são:
 
 - `classifieds`
 - `classified_media`
 - `classified_favorites`
 - `classified_reports`
 - `classified_categories`
+- `classified_conversations`
+- `classified_messages`
 - `cities`
 
-Índices iniciais:
+O banco v2 está sem conteúdo transacional fictício no checkpoint pré-release; Salvador/BA e as categorias são seeds estruturais.
 
-- `(status, city_id, published_at desc)`
-- `(category_id, status, published_at desc)`
-- `(owner_id, updated_at desc)`
-- busca textual indexada
-- índice geográfico apenas quando o produto realmente usar raio/proximidade
+## Mídia
 
-Paginação pública deve ser cursor-based.
+O bucket canônico é `classified-media`:
 
-## Segurança
+- privado;
+- limite de 8 MB;
+- JPEG, PNG, WebP e AVIF;
+- upload/delete restritos ao owner autenticado;
+- leitura pública somente quando o anúncio está efetivamente publicado, ou pelo próprio owner conforme policy.
 
-- toda escrita validada no servidor;
-- usuário só altera seus próprios anúncios;
-- moderação possui papel separado;
-- storage não aceita caminho arbitrário fornecido pelo cliente;
-- uploads validam tipo, tamanho e quantidade;
-- contato não expõe dados pessoais além do que o anunciante autorizar;
-- RLS será aplicada quando o Supabase entrar.
+O banco guarda chaves/metadados; a aplicação trabalha com URLs assinadas quando necessário.
 
-## Escala
+## Segurança e lifecycle
 
-Não criar microserviço agora. O domínio fica isolado dentro do monólito modular e poderá ser extraído depois sem mudar os contratos de produto.
+- escrita passa por servidor + RLS;
+- owner só opera sobre o próprio anúncio;
+- owner não consegue se autopublicar;
+- moderação usa autoridade `classified_admin` em `app_metadata`;
+- `user_metadata` nunca concede papel administrativo;
+- admin não usa a autoridade de moderação para moderar o próprio anúncio;
+- anúncio publicado fica protegido contra mutações incompatíveis;
+- submit/withdraw seguem RPCs canônicas;
+- `anon` não possui escrita nem EXECUTE nas RPCs de workflow;
+- denúncias têm `UNIQUE (classified_id, reporter_id)`;
+- conversas têm `UNIQUE (classified_id, buyer_id)` e impedem buyer = seller;
+- favoritos só podem apontar para anúncio efetivamente público: `status='published'` e `published_at <= now()`.
+
+O smoke `supabase/smoke/anon-rls.sql` é rollback-safe e faz parte da prova pré-release.
+
+## Fronteiras
+
+- `domain`: regras e tipos puros;
+- `data`: contratos/repositórios;
+- `app`: composição de páginas e server actions;
+- Auth, Territory, mídia, moderação e observabilidade são capacidades compartilhadas.
+
+Não criar microserviço ou mini-plataforma paralela para este vertical.
+
+## Integração territorial
+
+A cidade `Salvador/BA` continua sendo seed estrutural do vertical existente. A evolução deve aproximar Classificados do Territory Core sem duplicar geografia nem autoridade.
+
+Qualquer migração territorial de Classificados deve preservar:
+
+- RLS;
+- URLs/canonicals já válidos;
+- lifecycle/moderação;
+- privacidade de localização pessoal;
+- compatibilidade com dados reais existentes quando houver.
+
+## Gate de release
+
+O E2E específico está em `docs/RUNBOOK-CLASSIFICADOS-MVP.md`.
+
+Mesmo com Classificados tecnicamente validado, a próxima fase do produto é determinada exclusivamente por `URGENTE.md`.
