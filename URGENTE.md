@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `280ae396d69e60b3ab932c87798ac730ffdf23b2`
+> **HEAD técnico de referência:** `541315e9d31cea173c08f754a19e9b7986cc92a5`
 
 ---
 
@@ -421,6 +421,8 @@ APIs externas alimentam o Achegue-se por ingestão/ETL.
 - [x] bbox query;
 - [x] clustering;
 - [x] cache HTTP da API por viewport;
+- [x] guard de abuso em duas camadas: zoom local + bbox máximo no Core/API e bbox máximo dentro das RPCs públicas;
+- [x] migration `20260907102052_map_bbox_abuse_guards_v1` alinhada entre Supabase e Git;
 - [x] deep links com bbox + zoom + categorias;
 - [x] página `/mapa`;
 - [x] mini-mapa reutilizável `TerritoryMiniMap`;
@@ -485,6 +487,12 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 - [x] nenhuma promessa de feature inexistente;
 - [x] menu e busca genérica limpos de Empresas/Gastronomia/categorias futuras;
 - [x] adapter territorial com leitura em lote para evitar N consultas por bairro;
+- [x] snapshot público da Home com Data Cache por escopo, TTL de 5 minutos, sem tocar Auth/Classificados;
+- [x] parâmetros de bairro malformados rejeitados antes do cache e bairro fora do grupo rejeitado antes das consultas pesadas;
+- [x] runtime fail-closed: falha inicial do mapa vira estado seguro, não 500 nem dado fictício;
+- [x] SEO fail-closed por rollout: Home/Mapa só indexam em `public_preview` ou `launched`;
+- [x] canonical global removido; Classificados possui canonical próprio;
+- [x] rota placeholder `/empresas` removida;
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual real da Home e do mapa no deployment contendo este HEAD.
 
@@ -1084,35 +1092,37 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial necessária para uma Home útil já existe em source e CI. O próximo gate não é abrir Community nem iniciar Empresas.
+A fundação territorial, o Map Core e o MVP da Home estão fechados em source/CI com hardening de segurança, cache e rollout SEO. A próxima fase de produto continua bloqueada.
 
 ## Próximo passo
 
-> **Publicar o primeiro deployment contendo Map Core v1 + Home Territorial e executar uma revisão visual/runtime real antes de avançar para FASE 5.**
+> **Após o reset da cota Vercel, publicar exatamente o bundle do HEAD territorial mais recente com as três variáveis públicas e executar a revisão visual/runtime real de Home + Mapa antes de abrir Community.**
 
-Enquanto o blocker temporário da Vercel permanecer ativo, somente hardening de source coerente com essa validação é permitido.
+### Inputs já preparados
 
-Sequência imediata:
+- `NEXT_PUBLIC_SITE_URL`: alias canônico do projeto Vercel;
+- `NEXT_PUBLIC_SUPABASE_URL`: URL do projeto `acheguese-v2` confirmada;
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: existe uma publishable key ativa confirmada no Supabase;
+- nenhum secret/service-role deve entrar no bundle;
+- o conector Vercel disponível não persiste env vars no projeto, portanto os valores públicos devem ser enviados no payload do deployment conforme o mecanismo já documentado.
 
-1. manter `main` verde e sem regressões enquanto aguarda o reset da cota Vercel;
-2. no primeiro deployment disponível, publicar o HEAD territorial atual sem alterar arquitetura;
-3. validar em navegador desktop e mobile:
-   - `/` no escopo do Complexo;
-   - `/?bairro=nordeste-de-amaralina`;
-   - `/?bairro=santa-cruz`;
-   - `/?bairro=vale-das-pedrinhas`;
-   - `/?bairro=chapada-do-rio-vermelho`;
-   - `/mapa` e deep links vindos da Home;
-4. verificar carregamento real de métricas, sources, boundaries e 20 locais;
-5. verificar estados de erro/fallback sem dados fictícios;
-6. corrigir qualquer problema visual, runtime, acessibilidade ou responsive encontrado na Surface;
-7. rerodar lint + TypeScript + testes + build + bundle;
-8. confirmar Supabase security advisors;
-9. somente após esse gate considerar FASE 4 release-validada e avaliar abertura da FASE 5 — Community.
+### Sequência imediata após o reset
+
+1. conferir que `main` e `deploy/vercel-bundle` apontam para o mesmo `SOURCE_SHA`;
+2. criar um único deployment candidato com as três variáveis públicas;
+3. aguardar estado `READY`;
+4. validar `/api/health`, `/robots.txt` e `/sitemap.xml`;
+5. validar Home no Complexo e nos quatro `?bairro=<slug>`;
+6. validar `/mapa`, filtros, clustering, deep links e fallback;
+7. conferir que Home/Mapa permanecem `noindex` enquanto rollout = `data_preparation`;
+8. executar revisão visual real desktop + mobile;
+9. inspecionar runtime logs/erros do deployment;
+10. corrigir qualquer regressão encontrada e repetir quality gate;
+11. somente então fechar FASE 4 e avaliar FASE 5 — Community.
 
 ### Regra de avanço
 
-**Community continua bloqueada até a revisão visual/runtime do novo deployment.** O limite temporário da Vercel não autoriza pular o gate nem criar workaround arquitetural.
+**Não iniciar Community, Empresas, Gastronomia ou Mobilidade antes desse gate de deployment.** Não alterar arquitetura para contornar a cota Vercel.
 
 ---
 
@@ -1120,63 +1130,65 @@ Sequência imediata:
 
 ### HEAD técnico de referência
 
-`280ae396d69e60b3ab932c87798ac730ffdf23b2`
+`541315e9d31cea173c08f754a19e9b7986cc92a5`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI concluída · FASE 4 MVP source/CI concluído, aguardando validação visual/runtime em deployment.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
 
-- Map Core v1 permanece verde com viewport/bbox, boundaries, public places, clustering, filtros, cache e deep links;
-- mini-mapa reutilizável `TerritoryMiniMap` está disponível para qualquer consumidor territorial;
-- Home antiga marketplace-first foi substituída por uma Home território-first;
-- a Home resolve canonicamente Salvador → TerritoryGroup do Complexo → quatro bairros;
-- seleção por `?bairro=<slug>` é validada somente contra membros reais do grupo;
-- métricas da Home vêm de `territory_fact_catalog`, sem valores hardcoded;
-- população e domicílios do Complexo são agregados somente quando todos os bairros possuem o fato necessário;
-- escolas e Saúde SUS vêm de `public_place_catalog`;
-- leitura de fatos/lugares ganhou métodos em lote para evitar N consultas por bairro;
-- rollout real é lido do `territory_rollout_catalog` e continua exibido como preparação;
-- Complexo e quatro bairros foram reconfirmados no Supabase como `data_preparation`;
-- Home possui seletor Complexo/bairro, métricas reais, mini-mapa, provenance e estado honesto sem Community;
-- deep link Home → `/mapa` preserva bbox, zoom e camadas do escopo selecionado;
-- menu deixou de anunciar Empresas antes da hora;
-- `/buscar` deixou de exibir categorias futuras como se estivessem disponíveis;
-- componentes antigos marketplace-first de `src/features/discovery` foram removidos;
-- commit base da Home `c60f671f`: lint, TypeScript, testes, build e bundle **PASS**;
-- cleanup/hardening `280ae396`: lint, TypeScript, testes, build e bundle **PASS**;
-- Supabase security advisors permanecem com **0 lints**;
+- Home território-first continua alimentada somente por fatos/lugares oficiais;
+- snapshot territorial público agora usa Data Cache de 5 minutos por escopo, sem cache de dados autenticados;
+- `?bairro=` malformado é rejeitado antes do cache;
+- bairro canônico fora do TerritoryGroup é rejeitado antes das consultas pesadas;
+- falha de carregamento inicial do Map Core não vira 500 nem dado de demonstração;
+- canonical global `/` foi removido para não contaminar rotas filhas;
+- Home e Mapa usam indexação fail-closed vinculada ao rollout real;
+- enquanto o Complexo está `data_preparation`, Home/Mapa permanecem `noindex`;
+- Classificados recebeu canonical/indexação próprios;
+- rota placeholder `/empresas` foi removida;
+- `/buscar` permanece noindex e não finge categorias futuras;
+- raw viewport do Map Core passou a exigir zoom local e bbox de no máximo 2° no Core/API;
+- as RPCs públicas PostGIS também rejeitam bbox maior que 2°, impedindo bypass direto ao Supabase;
+- migration remota `20260907102052_map_bbox_abuse_guards_v1` está registrada também no Git;
+- smoke após DDL: **4 boundaries + 20 locais** preservados;
+- smoke com role `anon`: **4 boundaries + 20 locais** preservados;
+- chamadas gigantes às duas RPCs foram rejeitadas com `map_bbox_too_large`;
+- CI do HEAD técnico `541315e9`: lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `541315e9`: **PASS**;
+- Supabase security advisors: **0 lints**;
+- performance advisors exibem apenas INFO de índices ainda não utilizados; não remover índices sem tráfego/amostra real;
 - nenhum rollout territorial foi alterado.
 
 ### Blocker de release
 
-- o deployment público atual ainda é anterior ao Map Core/Home territorial;
-- em 2026-09-07, `https://teste-acheguese.vercel.app/mapa` retornava 404;
-- a conta Vercel Hobby permanece sob o blocker temporário de cota já registrado, com reset informado para **2026-09-08 03:23:07 America/Bahia**;
-- portanto a revisão visual real da nova Surface ainda não pode ser declarada concluída;
-- não criar workaround arquitetural para contornar esse limite.
+- o único deployment Vercel continua sendo o técnico antigo `dpl_4hgED9grfQNbT6DLCrZEUaCqqnWv`;
+- esse deployment não contém Map Core/Home territorial nem as variáveis públicas do `acheguese-v2`;
+- `/mapa` no alias atual continua representando source antigo;
+- a cota Hobby segue com reset informado para **2026-09-08 03:23:07 America/Bahia**;
+- na verificação desta rodada ainda era **2026-09-07 07:12 America/Bahia**, portanto o reset ainda não ocorreu;
+- não criar deployment extra antes do reset nem workaround de arquitetura.
 
 ### Próxima ação
 
-**Novo deployment → revisão visual/runtime desktop + mobile de Home/Mapa → correções encontradas → quality gate → somente então fechar FASE 4 e considerar Community.**
+**Reset da Vercel → um deployment candidato do bundle atual + 3 envs públicas → revisão visual/runtime completa → correções → quality gate → fechar FASE 4.**
 
 ### Não repetir
 
-- não reconstruir Censo, Educação ou CNES já verificados;
-- não inferir território por rótulo textual de bairro; geometria/PostGIS é autoridade;
-- não usar a camada municipal de saúde de 2022 como atual;
-- não reintroduzir Home marketplace-first;
-- não reintroduzir `features/discovery` como superfície principal;
-- não mostrar Empresas/Gastronomia/Beleza/Mercados/etc. como categorias ativas sem módulo e dados reais;
+- não reconstruir Censo, Educação ou CNES;
+- não relaxar o guard de bbox para permitir consultas mundiais de raw public places;
+- não expor service-role/secret key no Vercel;
+- não remover índices apenas porque o advisor informa `unused_index` num banco sem tráfego;
+- não reintroduzir canonical global `/`;
+- não indexar Home/Mapa antes do rollout público;
+- não reintroduzir `/empresas` placeholder;
+- não reintroduzir Home marketplace-first ou `features/discovery`;
 - não carregar dataset inteiro no navegador;
 - não quebrar deep links do mapa;
-- não lançar os territórios antes do readiness/rollout explícito;
-- não iniciar Empresas/Gastronomia/Mobilidade;
-- não aprofundar Classificados;
-- não iniciar Community antes do gate visual/runtime de Map/Home;
-- não inventar posts, alertas, eventos, avaliações, empresas ou usuários;
-- não fazer requests críticos a APIs públicas externas no request do usuário.
+- não lançar território por publicação de dados;
+- não iniciar Community/Empresas/Gastronomia/Mobilidade antes do gate visual/runtime;
+- não inventar conteúdo para preencher estados vazios.
 
 ---
 

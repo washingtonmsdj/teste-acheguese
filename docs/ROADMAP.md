@@ -65,6 +65,9 @@
 - [x] deep links de bbox/zoom/categorias;
 - [x] mini mapa reutilizável;
 - [x] cache HTTP da API;
+- [x] guard de bbox/zoom no Core/API;
+- [x] guard de bbox nas RPCs públicas PostGIS;
+- [x] smoke público/anon após hardening;
 - [x] performance mobile;
 - [x] acessibilidade/fallback textual;
 - [x] lint + TypeScript + testes + build + bundle;
@@ -85,6 +88,10 @@
 - [x] zero recurso fictício;
 - [x] menu/busca sem módulos futuros fingindo disponibilidade;
 - [x] adapter em lote para fatos/lugares;
+- [x] Data Cache público por escopo territorial;
+- [x] SEO fail-closed por rollout;
+- [x] canonical por superfície;
+- [x] runtime fallback do mapa;
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual/runtime do novo deployment.
 

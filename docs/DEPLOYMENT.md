@@ -23,7 +23,20 @@ Primeiro deployment criado:
 
 Esse deployment é apenas um preview técnico e **não é o lançamento do MVP**.
 
-As rotas públicas respondem, mas o deployment ainda não recebeu as variáveis públicas do `acheguese-v2`. Rotas pessoais permanecem fail-closed.
+As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu as variáveis públicas do `acheguese-v2` e **não contém** Map Core v1 nem a Home territorial atual. Rotas pessoais permanecem fail-closed.
+
+### Source candidato atual
+
+O último HEAD técnico validado antes desta atualização documental é:
+
+`541315e9d31cea173c08f754a19e9b7986cc92a5`
+
+Para esse HEAD:
+
+- quality: **PASS**;
+- bundle de transporte: **PASS**;
+- Supabase security advisors: **0 lints**;
+- migration history Supabase/Git alinhado até `20260907102052_map_bbox_abuse_guards_v1`.
 
 ## Transporte de source
 
@@ -50,7 +63,13 @@ O bundle é derivado automaticamente da `main` e serve somente como transporte p
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-Não usar service-role, secret key ou qualquer credencial privada nesse bundle.
+Preparação confirmada em 2026-09-07:
+
+- a URL pública do projeto Supabase v2 está disponível;
+- existe uma `sb_publishable_...` ativa;
+- o alias Vercel canônico continua `https://teste-acheguese.vercel.app`.
+
+**Não gravar a publishable key em Git nem em documentação.** Ela é pública por natureza, mas deve continuar sendo injetada como configuração de deployment. Nunca usar service-role, secret key ou credencial privada nesse bundle.
 
 ## Bloqueio externo atual
 
@@ -72,7 +91,11 @@ Após READY:
 
 1. validar `/api/health`;
 2. validar `/robots.txt` e `/sitemap.xml`;
-3. validar cadastro/login;
-4. configurar Site URL/redirect allow-list do Supabase Auth;
-5. executar E2E do vertical Classificados;
-6. só então tratar o alias como candidato a MVP.
+3. validar Home do Complexo e quatro deep links de bairro;
+4. validar `/mapa`, filtros, clustering e deep links;
+5. confirmar `noindex` de Home/Mapa enquanto rollout = `data_preparation`;
+6. revisar visualmente desktop + mobile;
+7. inspecionar runtime logs/erros;
+8. validar cadastro/login e Site URL/redirect allow-list do Supabase Auth;
+9. executar E2E do vertical Classificados;
+10. somente então tratar o alias como candidato de release da fundação territorial.
