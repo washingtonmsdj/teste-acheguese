@@ -106,6 +106,7 @@
 - [x] superfícies pessoais/admin `force-dynamic` + `private, no-store`;
 - [x] banco v2 sem conteúdo fictício transacional;
 - [x] performance advisor pré-deploy revisado; apenas `unused_index` INFO, sem remoção prematura;
+- [x] fontes oficiais revalidadas por hash/contagem; sem delta canônico e sem mutação de banco;
 - [x] logout-CSRF bloqueado por Origin canônica;
 - [x] smoke pós-deploy territorial automatizado;
 - [x] remoção de allowlist/estilos marketplace órfãos;

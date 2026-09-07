@@ -1236,6 +1236,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - os dois smokes canônicos foram executados **diretamente do conteúdo versionado no Git** e ambos retornaram PASS; authenticated smoke terminou com `auth_users_after=0`, `classifieds_after=0`, `media_after=0`, `moderation_after=0`;
 - os smokes SQL permanecem fora do bundle Vercel; são ferramentas de prova, não runtime de produção;
 - performance advisor Supabase revisado no pré-deploy: somente findings `unused_index` em nível INFO, sem sinais de performance críticos; nenhum índice removido sem tráfego real;
+- fontes oficiais Censo/Educação/CNES foram revalidadas no run `34155391384`: hashes normalizados e contagens continuam idênticos às receipts promovidas; decisão explícita **NO DB MUTATION / NO MIGRATION / NO ROLLOUT CHANGE**;
+- receipt de revalidação registrada em `docs/data/receipts/2026-09-07-territory-source-revalidation.md`;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
