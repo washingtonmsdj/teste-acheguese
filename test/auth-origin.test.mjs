@@ -72,5 +72,13 @@ test('sem URL canônica só localhost HTTP é aceito para desenvolvimento', () =
       getTrustedAuthOrigin('http://evil.example'),
       null,
     );
+    assert.equal(
+      isTrustedAuthCallbackOrigin('http://localhost:3000'),
+      true,
+    );
+    assert.equal(
+      isTrustedAuthCallbackOrigin('https://preview.example'),
+      false,
+    );
   });
 });

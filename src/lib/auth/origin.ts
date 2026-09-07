@@ -36,11 +36,5 @@ export function getTrustedAuthOrigin(
 export function isTrustedAuthCallbackOrigin(
   requestOrigin: string,
 ) {
-  const siteUrl = getSiteUrl();
-
-  if (!siteUrl) {
-    return true;
-  }
-
-  return requestOrigin === siteUrl;
+  return getTrustedAuthOrigin(requestOrigin) === requestOrigin;
 }
