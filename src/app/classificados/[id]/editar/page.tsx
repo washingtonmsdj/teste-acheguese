@@ -7,6 +7,12 @@ import {
   updateClassifiedAction,
   withdrawFromReviewAction,
 } from '@/app/classificados/[id]/editar/actions';
+import {
+  archiveClassifiedAction,
+  deleteArchivedClassifiedAction,
+  markClassifiedSoldAction,
+  pauseClassifiedAction,
+} from '@/app/classificados/[id]/lifecycle-actions';
 import { ClassifiedMediaUploader } from '@/features/classifieds/components/media-uploader';
 import { classifiedCategories } from '@/features/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
@@ -28,6 +34,7 @@ type EditPageProps = {
     erro?: string;
     salvo?: string;
     retirado?: string;
+    estado?: string;
   }>;
 };
 
@@ -108,6 +115,10 @@ export default async function EditClassifiedPage({
   const updateAction = updateClassifiedAction.bind(null, item.id);
   const submitAction = submitForReviewAction.bind(null, item.id);
   const withdrawAction = withdrawFromReviewAction.bind(null, item.id);
+  const pauseAction = pauseClassifiedAction.bind(null, item.id);
+  const soldAction = markClassifiedSoldAction.bind(null, item.id);
+  const archiveAction = archiveClassifiedAction.bind(null, item.id);
+  const deleteAction = deleteArchivedClassifiedAction.bind(null, item.id);
 
   return (
     <main>
@@ -138,6 +149,12 @@ export default async function EditClassifiedPage({
               O anúncio voltou para rascunho e pode ser editado.
             </div>
           )}
+          {query.estado === 'atualizado' && (
+            <div className="successNotice">
+              Estado do anúncio atualizado.
+            </div>
+          )}
+
           {item.rejection_reason && ['rejected', 'paused'].includes(item.status) && (
             <div className="moderationOwnerNotice">
               <strong>O anúncio precisa de ajustes</strong>
@@ -151,7 +168,13 @@ export default async function EditClassifiedPage({
                 ? 'Adicione pelo menos uma foto antes de enviar para revisão.'
                 : query.erro === 'dados_invalidos'
                   ? 'Revise os campos obrigatórios.'
-                  : 'Não foi possível concluir a ação. Tente novamente.'}
+                  : query.erro === 'historico'
+                    ? 'Este anúncio possui conversas, denúncias ou histórico de moderação e deve permanecer arquivado.'
+                    : query.erro === 'estado'
+                      ? 'Não foi possível alterar o estado do anúncio.'
+                      : query.erro === 'excluir'
+                        ? 'Não foi possível excluir o anúncio.'
+                        : 'Não foi possível concluir a ação. Tente novamente.'}
             </div>
           )}
 
@@ -295,6 +318,56 @@ export default async function EditClassifiedPage({
               <p>Retire da revisão para voltar o anúncio ao estado de rascunho.</p>
               <button className="ghostButton" type="submit">
                 Retirar da revisão
+              </button>
+            </form>
+          )}
+
+          {item.status === 'published' && (
+            <div className="reviewActionCard">
+              <strong>Gerenciar publicação</strong>
+              <p>
+                Pausar ou marcar como vendido remove o anúncio da área pública.
+                Um anúncio pausado precisa passar por nova revisão para voltar ao ar.
+              </p>
+              <form action={pauseAction}>
+                <button className="ghostButton" type="submit">
+                  Pausar anúncio
+                </button>
+              </form>
+              <form action={soldAction}>
+                <button className="ghostButton" type="submit">
+                  Marcar como vendido
+                </button>
+              </form>
+              <form action={archiveAction}>
+                <button className="ghostButton" type="submit">
+                  Arquivar anúncio
+                </button>
+              </form>
+            </div>
+          )}
+
+          {['draft', 'paused', 'rejected', 'sold'].includes(item.status) && (
+            <form className="reviewActionCard" action={archiveAction}>
+              <strong>Arquivar anúncio</strong>
+              <p>
+                O anúncio sai do fluxo ativo e pode ser mantido apenas como histórico.
+              </p>
+              <button className="ghostButton" type="submit">
+                Arquivar
+              </button>
+            </form>
+          )}
+
+          {item.status === 'archived' && (
+            <form className="reviewActionCard dangerActionCard" action={deleteAction}>
+              <strong>Excluir definitivamente</strong>
+              <p>
+                Só é possível excluir anúncios sem conversas, denúncias ou histórico de moderação.
+                Esta ação não pode ser desfeita.
+              </p>
+              <button className="dangerButton" type="submit">
+                Excluir anúncio
               </button>
             </form>
           )}

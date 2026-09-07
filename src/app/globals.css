@@ -1282,3 +1282,27 @@ footer .brand small { color: #b9ded4; }
     align-items: start;
   }
 }
+
+
+.dangerActionCard {
+  border-color: #f0d5d2;
+  background: #fffafa;
+}
+.dangerActionCard strong {
+  color: #8f2e2a;
+}
+.dangerButton {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #e2aaa6;
+  border-radius: 14px;
+  padding: 0 16px;
+  background: #fff1f0;
+  color: #9f2d26;
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+}
+.dangerButton:hover {
+  background: #fde8e6;
+}

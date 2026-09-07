@@ -18,6 +18,8 @@ type MyClassifiedsPageProps = {
   searchParams: Promise<{
     criado?: string;
     enviado?: string;
+    excluido?: string;
+    midia?: string;
   }>;
 };
 
@@ -89,6 +91,14 @@ export default async function MyClassifiedsPage({
         {params.enviado === '1' && (
           <div className="successNotice">
             Anúncio enviado para revisão. Você pode acompanhar o estado por aqui.
+          </div>
+        )}
+
+        {params.excluido === '1' && (
+          <div className="successNotice">
+            {params.midia === 'pendente'
+              ? 'Anúncio excluído. Parte da limpeza de mídia precisa de nova tentativa operacional.'
+              : 'Anúncio excluído definitivamente.'}
           </div>
         )}
 
