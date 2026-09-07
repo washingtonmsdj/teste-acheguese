@@ -29,7 +29,10 @@ O candidato só pode ser publicado quando:
 8. bundle contém `scripts/copy-maplibre-worker.mjs`;
 9. bundle não contém `.env`, secret key ou service-role;
 10. auditoria de CSS global não encontra seletores órfãos conhecidos da antiga landing/marketplace;
-11. health contract está preparado para provar Territory + Classificados.
+11. health contract está preparado para provar Territory + Classificados;
+12. `npm audit --omit=dev --audit-level=high` = PASS;
+13. bucket `classified-media` = privado, 8 MB, MIME allowlist correta;
+14. banco v2 não contém conteúdo transacional fictício antes do primeiro release.
 
 O performance advisor pode reportar `unused_index` em nível INFO enquanto não existe tráfego real. Não remover índices com base apenas nessa ausência de amostra.
 

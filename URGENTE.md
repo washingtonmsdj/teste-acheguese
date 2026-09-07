@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`c5ea13f36c4c7df76138e99aad69b7925c8955c9`
+`df0b934ada5c49c78673c9ba6ea65126291524f2`
 
 ### Fase
 
@@ -1168,9 +1168,20 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - `robots.txt` bloqueia explicitamente `/api/` e `/menu` além das superfícies privadas já existentes;
 - smoke pós-deploy automatizado foi adicionado em `scripts/territory-release-smoke.mjs` e cobre health, headers, robots/sitemap, Home Complexo + 4 bairros, noindex/index, redirects inválidos, Map API 4/20/14/6, abuse guards e signout Origin;
 - ferramenta de smoke fica fora do payload Vercel; o worker MapLibre obrigatório continua dentro;
-- HEAD técnico `7f1f2fb0`: lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `7f1f2fb0`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=7f1f2fb0132d38b022927e9eba78c5999d0cb78c`;
+- CI agora executa `npm audit --omit=dev --audit-level=high`; lock atual retornou **0 vulnerabilidades de produção**;
+- Next.js permanece em `16.3.4`, acima dos patches críticos de agosto de 2026;
+- warning de `unrs-resolver` foi rastreado até `eslint-import-resolver-typescript` e é **dev-only**; nenhum postinstall transitivo foi aprovado às cegas;
+- requests de viewport do Map Core agora reutilizam o bbox/zoom normalizado do deep link, reduzindo cardinalidade de cache CDN;
+- CSP sem nonce + HSTS adicionados no `next.config`, preservando cache/static behavior;
+- CSP continua provider-agnostic: origem do style customizado entra automaticamente e origens extras podem ser declaradas explicitamente em `NEXT_PUBLIC_MAP_CSP_ORIGINS`;
+- allowlist de `next/image` agora deriva do `NEXT_PUBLIC_SUPABASE_URL` e aceita somente signed Storage paths;
+- bucket `classified-media` validado: privado, 8 MB, JPEG/PNG/WebP/AVIF;
+- policies do Storage validadas: upload/delete somente pelo owner autenticado; leitura pública apenas para anúncio publicado ou pelo próprio owner;
+- banco v2 validado sem conteúdo fictício transacional: **0 users Auth, 0 classificados, 0 mídias, 0 favoritos, 0 conversas, 0 mensagens e 0 denúncias**;
+- seeds legítimos preservados: Salvador/BA ativo + 8 categorias estruturais de Classificados;
+- HEAD técnico `df0b934a`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `df0b934a`: **PASS**;
+- branch `deploy/vercel-bundle` deve permanecer sincronizada com o HEAD técnico antes do deployment;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 
@@ -1190,6 +1201,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - não reconstruir Censo, Educação ou CNES;
 - não relaxar guards públicos de bbox/categorias;
 - não expor service-role/secret key no Vercel;
+- não aprovar install script transitivo dev-only sem necessidade comprovada;
+- não remover CSP/HSTS para “fazer o mapa funcionar”; ajustar somente as origens explícitas do provider quando necessário;
 - não remover índices por `unused_index` sem tráfego real;
 - não reintroduzir canonical global;
 - não indexar Home/Mapa antes do rollout público;

@@ -29,7 +29,7 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`7f1f2fb0132d38b022927e9eba78c5999d0cb78c`
+`df0b934ada5c49c78673c9ba6ea65126291524f2`
 
 Para esse HEAD:
 
@@ -41,7 +41,12 @@ Para esse HEAD:
 - payload auditado com lifecycle script MapLibre presente e 0 `.env`;
 - pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
 - logout customizado protegido contra Origin não confiável;
-- smoke territorial pós-deploy disponível fora do bundle de produção.
+- smoke territorial pós-deploy disponível fora do bundle de produção;
+- production dependency audit: **0 vulnerabilidades**;
+- CSP + HSTS configurados sem nonce;
+- Map CSP/Image allowlists derivadas de configuração pública, sem wildcard;
+- bucket `classified-media` privado e alinhado ao contrato de upload;
+- banco v2 sem usuários/anúncios/conversas fictícios.
 
 ## Transporte de source
 

@@ -65,6 +65,7 @@
 - [x] deep links de bbox/zoom/categorias;
 - [x] mini mapa reutilizável;
 - [x] cache HTTP da API;
+- [x] cache keys de viewport normalizadas com o deep link;
 - [x] guard de bbox/zoom no Core/API;
 - [x] guard de bbox/categorias nas RPCs públicas PostGIS;
 - [x] smoke público/anon após hardening;
@@ -95,6 +96,10 @@
 - [x] observabilidade server-side redigida;
 - [x] health Territory + Classificados;
 - [x] source closure Vercel testada;
+- [x] production dependency audit no CI;
+- [x] CSP/HSTS provider-agnostic;
+- [x] Storage de Classificados validado fail-closed;
+- [x] banco v2 sem conteúdo fictício transacional;
 - [x] logout-CSRF bloqueado por Origin canônica;
 - [x] smoke pós-deploy territorial automatizado;
 - [x] remoção de allowlist/estilos marketplace órfãos;
