@@ -29,7 +29,7 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`7dfcd7e55d2c32a102fb7f686bc55720367b3bbf`
+`2e5cc7d72fd86062204e37f11f369a8fd39d457f`
 
 Para esse HEAD:
 
@@ -41,6 +41,7 @@ Para esse HEAD:
 - payload auditado com lifecycle script MapLibre presente e 0 `.env`;
 - pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
 - login/cadastro/logout/callback protegidos por origem explícita; produção aceita somente a Site URL canônica ou a URL exata do deployment Vercel atual, sem wildcard;
+- redirect interno fail-closed contra separators/backslash/controles percent-encoded e dupla codificação no pathname;
 - smoke territorial pós-deploy disponível fora do bundle de produção;
 - preflight de env pública roda antes de `dev`/`build`, fail-fast para par Supabase incompleto ou URLs inválidas;
 - setup local pode ser validado explicitamente com `npm run env:check`;
