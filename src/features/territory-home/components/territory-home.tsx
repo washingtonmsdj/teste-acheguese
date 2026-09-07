@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatMapUrlState } from '@/core/map';
 import type {
   TerritoryRolloutStage,
 } from '@/core/territory';
@@ -35,6 +36,16 @@ function rolloutLabel(stage: TerritoryRolloutStage) {
     case 'paused':
       return 'Território pausado';
   }
+}
+
+function mapHref(data: TerritoryHomeData) {
+  const state = formatMapUrlState({
+    bounds: data.mapData.bounds,
+    zoom: data.scope.kind === 'territory' ? 15 : 14,
+    categories: ['education', 'health'],
+  });
+
+  return `/mapa?${new URLSearchParams(state).toString()}`;
 }
 
 function scopeHeadline(data: TerritoryHomeData) {
@@ -109,6 +120,7 @@ export function TerritoryHome({
   const referencePeriod =
     data.scope.population.referencePeriod ??
     data.scope.households.referencePeriod;
+  const selectedMapHref = mapHref(data);
 
   return (
     <main className={styles.page}>
@@ -139,7 +151,7 @@ export function TerritoryHome({
             <div className={styles.heroActions}>
               <Link
                 className="primaryButton linkButton"
-                href="/mapa"
+                href={selectedMapHref}
               >
                 Explorar mapa
               </Link>
@@ -160,7 +172,7 @@ export function TerritoryHome({
                 <span>Mapa territorial</span>
                 <strong>{data.scope.name}</strong>
               </div>
-              <Link href="/mapa">Abrir ↗</Link>
+              <Link href={selectedMapHref}>Abrir ↗</Link>
             </div>
 
             <TerritoryMiniMap
@@ -329,7 +341,7 @@ export function TerritoryHome({
               significar que o rollout do território já foi
               lançado.
             </p>
-            <Link href="/mapa">
+            <Link href={selectedMapHref}>
               Ver o que já está mapeado →
             </Link>
           </aside>
@@ -401,7 +413,7 @@ export function TerritoryHome({
             território.
           </p>
           <nav aria-label="Links do rodapé">
-            <Link href="/mapa">Mapa</Link>
+            <Link href={selectedMapHref}>Mapa</Link>
             <Link href="/classificados">Classificados</Link>
             <Link href="/entrar">Entrar</Link>
           </nav>
