@@ -303,6 +303,192 @@ export type Database = {
           },
         ]
       }
+      territories: {
+        Row: {
+          center: unknown
+          country_code: string | null
+          created_at: string
+          geographic_path: string
+          ibge_code: string | null
+          id: string
+          metadata: Json
+          name: string
+          parent_id: string | null
+          slug: string
+          state_code: string | null
+          status: string
+          timezone: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          center?: unknown
+          country_code?: string | null
+          created_at?: string
+          geographic_path: string
+          ibge_code?: string | null
+          id?: string
+          metadata?: Json
+          name: string
+          parent_id?: string | null
+          slug: string
+          state_code?: string | null
+          status?: string
+          timezone?: string | null
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          center?: unknown
+          country_code?: string | null
+          created_at?: string
+          geographic_path?: string
+          ibge_code?: string | null
+          id?: string
+          metadata?: Json
+          name?: string
+          parent_id?: string | null
+          slug?: string
+          state_code?: string | null
+          status?: string
+          timezone?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      territory_boundaries: {
+        Row: {
+          created_at: string
+          geometry: unknown
+          imported_at: string
+          metadata: Json
+          source_name: string
+          source_object_id: string | null
+          source_updated_at: string | null
+          source_url: string | null
+          territory_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          geometry: unknown
+          imported_at?: string
+          metadata?: Json
+          source_name: string
+          source_object_id?: string | null
+          source_updated_at?: string | null
+          source_url?: string | null
+          territory_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          geometry?: unknown
+          imported_at?: string
+          metadata?: Json
+          source_name?: string
+          source_object_id?: string | null
+          source_updated_at?: string | null
+          source_url?: string | null
+          territory_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_boundaries_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: true
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      territory_group_members: {
+        Row: {
+          created_at: string
+          group_id: string
+          territory_id: string
+        }
+        Insert: {
+          created_at?: string
+          group_id: string
+          territory_id: string
+        }
+        Update: {
+          created_at?: string
+          group_id?: string
+          territory_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "territory_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_group_members_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      territory_groups: {
+        Row: {
+          anchor_city_id: string
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json
+          name: string
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          anchor_city_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json
+          name: string
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          anchor_city_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json
+          name?: string
+          slug?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "territory_groups_anchor_city_id_fkey"
+            columns: ["anchor_city_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
