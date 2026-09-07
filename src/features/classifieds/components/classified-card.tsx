@@ -1,0 +1,72 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import type { ClassifiedListItem } from '@/features/classifieds/domain/types';
+
+type ClassifiedCardProps = {
+  item: ClassifiedListItem;
+  imageUrl: string | null;
+};
+
+const conditionLabels: Record<string, string> = {
+  new: 'Novo',
+  like_new: 'Seminovo',
+  used: 'Usado',
+  for_parts: 'Para peças',
+};
+
+function formatPrice(amountInCents: number | null) {
+  if (amountInCents === null) return 'Preço a combinar';
+
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(amountInCents / 100);
+}
+
+export function ClassifiedCard({
+  item,
+  imageUrl,
+}: ClassifiedCardProps) {
+  const location = [
+    item.location.neighborhood,
+    item.location.cityName,
+  ].filter(Boolean).join(' · ');
+
+  return (
+    <article className="publicClassifiedCard">
+      <Link
+        className="publicClassifiedImage"
+        href={`/classificados/anuncio/${item.slug}`}
+        aria-label={`Ver anúncio: ${item.title}`}
+      >
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={item.cover?.alt || item.title}
+            fill
+            sizes="(min-width: 980px) 25vw, (min-width: 620px) 50vw, 100vw"
+          />
+        ) : (
+          <span className="publicClassifiedPlaceholder" aria-hidden="true">▧</span>
+        )}
+      </Link>
+
+      <div className="publicClassifiedBody">
+        <div className="publicClassifiedMeta">
+          <span>{conditionLabels[item.condition] ?? item.condition}</span>
+          <span>{location || 'Salvador'}</span>
+        </div>
+
+        <h3>
+          <Link href={`/classificados/anuncio/${item.slug}`}>
+            {item.title}
+          </Link>
+        </h3>
+
+        <strong className="publicClassifiedPrice">
+          {formatPrice(item.price?.amountInCents ?? null)}
+        </strong>
+      </div>
+    </article>
+  );
+}

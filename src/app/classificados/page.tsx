@@ -1,23 +1,28 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ClassifiedCategoryNav } from '@/features/classifieds/components/category-nav';
+import { ClassifiedCard } from '@/features/classifieds/components/classified-card';
 import { ClassifiedsEmptyState } from '@/features/classifieds/components/empty-state';
+import { SupabaseClassifiedsRepository } from '@/features/classifieds/data/supabase-classifieds-repository';
 import {
   classifiedCategories,
   isClassifiedCategoryId,
 } from '@/features/classifieds/domain/categories';
+import { getSupabasePublicConfig } from '@/lib/supabase/config';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/shared/layout/site-header';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 
 export const metadata: Metadata = {
   title: 'Classificados',
-  description: 'Classificados locais do Achegue-se: encontre e anuncie perto de você.',
+  description: 'Classificados locais do Achegue-se em Salvador: encontre e anuncie perto de você.',
 };
 
 type ClassifiedsPageProps = {
   searchParams: Promise<{
     q?: string;
     categoria?: string;
+    cursor?: string;
   }>;
 };
 
@@ -30,10 +35,62 @@ export default async function ClassifiedsPage({
     params.categoria && isClassifiedCategoryId(params.categoria)
       ? params.categoria
       : undefined;
+  const cursor = params.cursor?.trim() || undefined;
   const category = activeCategory
     ? classifiedCategories.find((item) => item.id === activeCategory)
     : undefined;
   const hasFilters = Boolean(query || activeCategory);
+
+  let items: Awaited<ReturnType<SupabaseClassifiedsRepository['search']>>['items'] = [];
+  let nextCursor: string | null = null;
+  let imageUrls: Record<string, string | null> = {};
+
+  if (getSupabasePublicConfig()) {
+    const supabase = await createSupabaseServerClient();
+
+    const { data: city, error: cityError } = await supabase
+      .from('cities')
+      .select('id')
+      .eq('slug', 'salvador')
+      .eq('state_code', 'BA')
+      .eq('is_active', true)
+      .maybeSingle();
+
+    if (cityError) throw cityError;
+
+    const repository = new SupabaseClassifiedsRepository(supabase);
+    const result = await repository.search({
+      query,
+      categoryId: activeCategory,
+      cityId: city ? String(city.id) : undefined,
+      cursor,
+      limit: 24,
+    });
+
+    items = result.items;
+    nextCursor = result.nextCursor;
+
+    const signedPairs = await Promise.all(
+      items.map(async (item) => {
+        if (!item.cover) {
+          return [item.id, null] as const;
+        }
+
+        const { data } = await supabase.storage
+          .from('classified-media')
+          .createSignedUrl(item.cover.storageKey, 3600);
+
+        return [item.id, data?.signedUrl ?? null] as const;
+      }),
+    );
+
+    imageUrls = Object.fromEntries(signedPairs);
+  }
+
+  const nextParams = new URLSearchParams();
+  if (query) nextParams.set('q', query);
+  if (activeCategory) nextParams.set('categoria', activeCategory);
+  if (nextCursor) nextParams.set('cursor', nextCursor);
 
   return (
     <main>
@@ -42,10 +99,10 @@ export default async function ClassifiedsPage({
       <section className="classifiedHero">
         <div className="container classifiedHeroGrid">
           <div>
-            <p className="eyebrow">Classificados Achegue-se</p>
-            <h1>Compre e venda <em>perto de você.</em></h1>
+            <p className="eyebrow">Classificados · Salvador</p>
+            <h1>Compre e venda <em>na sua cidade.</em></h1>
             <p>
-              Encontre oportunidades da sua região e publique de forma simples,
+              Encontre oportunidades em Salvador e publique de forma simples,
               com foco em clareza, segurança e moderação.
             </p>
 
@@ -68,9 +125,9 @@ export default async function ClassifiedsPage({
           </div>
 
           <aside className="classifiedPitch">
-            <span>Anuncie no seu bairro</span>
-            <strong>Venda algo sem complicação.</strong>
-            <p>Fotos, categoria, preço e região em um fluxo direto e mobile-first.</p>
+            <span>Venda em Salvador</span>
+            <strong>Publique sem complicação.</strong>
+            <p>Fotos, categoria, preço e bairro em um fluxo direto e mobile-first.</p>
             <Link className="primaryButton linkButton" href="/classificados/novo">
               Criar anúncio
             </Link>
@@ -98,30 +155,59 @@ export default async function ClassifiedsPage({
         <div className="container">
           <div className="classifiedResultsHeader">
             <div>
-              <p className="eyebrow">Anúncios</p>
+              <p className="eyebrow">Salvador · BA</p>
               <h2>
                 {category
                   ? category.label
                   : query
                     ? `Resultados para “${query}”`
-                    : 'Perto de você'}
+                    : 'Anúncios publicados'}
               </h2>
             </div>
-            <span>0 resultados</span>
+            <span>
+              {items.length === 1
+                ? '1 resultado'
+                : `${items.length} resultados nesta página`}
+            </span>
           </div>
 
-          <ClassifiedsEmptyState
-            query={query}
-            hasFilters={hasFilters}
-          />
+          {items.length > 0 ? (
+            <>
+              <div className="publicClassifiedGrid">
+                {items.map((item) => (
+                  <ClassifiedCard
+                    item={item}
+                    imageUrl={imageUrls[item.id] ?? null}
+                    key={item.id}
+                  />
+                ))}
+              </div>
+
+              {nextCursor && (
+                <div className="paginationBar">
+                  <Link
+                    className="ghostButton linkButton"
+                    href={`/classificados?${nextParams.toString()}`}
+                  >
+                    Ver mais anúncios
+                  </Link>
+                </div>
+              )}
+            </>
+          ) : (
+            <ClassifiedsEmptyState
+              query={query}
+              hasFilters={hasFilters}
+            />
+          )}
         </div>
       </section>
 
       <section className="classifiedTrust">
         <div className="container trustGrid">
-          <div><span>✓</span><strong>Contexto local</strong><small>Descoberta por cidade e região.</small></div>
+          <div><span>✓</span><strong>Território claro</strong><small>O MVP começa por Salvador, sem fingir localização automática.</small></div>
           <div><span>✓</span><strong>Privacidade</strong><small>Endereço exato não é público por padrão.</small></div>
-          <div><span>✓</span><strong>Moderação</strong><small>Denúncias e revisão fazem parte do MVP.</small></div>
+          <div><span>✓</span><strong>Moderação</strong><small>Só anúncios aprovados aparecem na área pública.</small></div>
         </div>
       </section>
 

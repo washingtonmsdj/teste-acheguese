@@ -145,6 +145,20 @@ export class SupabaseClassifiedsRepository
     };
   }
 
+  async findPublishedByIds(ids: string[]): Promise<ClassifiedListItem[]> {
+    if (!ids.length) return [];
+
+    const { data, error } = await this.supabase
+      .from('classifieds')
+      .select('*, cities(*), classified_media(*)')
+      .eq('status', 'published')
+      .in('id', ids);
+
+    if (error) throw error;
+
+    return ((data ?? []) as unknown as ClassifiedWithRelations[]).map(mapListItem);
+  }
+
   async findPublishedBySlug(slug: string): Promise<Classified | null> {
     const { data, error } = await this.supabase
       .from('classifieds')
