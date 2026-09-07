@@ -1180,6 +1180,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - banco v2 validado sem conteúdo fictício transacional: **0 users Auth, 0 classificados, 0 mídias, 0 favoritos, 0 conversas, 0 mensagens e 0 denúncias**;
 - seeds legítimos preservados: Salvador/BA ativo + 8 categorias estruturais de Classificados;
 - smoke RLS anônimo canônico executado no banco real e **PASS**: Salvador público, anon sem INSERT de classificados e sem EXECUTE nas RPCs de submit/withdraw;
+- smoke RLS autenticado/admin rollback-safe executado no banco real e **PASS**: owner cria draft/mídia e envia para revisão, não se autopublica, outro usuário não lê/altera, `user_metadata` não concede admin, owner com claim admin não modera o próprio anúncio, admin externo não altera conteúdo e consegue aprovar com receipt canônico;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
