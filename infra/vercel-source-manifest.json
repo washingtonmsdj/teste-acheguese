@@ -1,0 +1,16 @@
+{
+  "files": [
+    ".nvmrc",
+    "next-env.d.ts",
+    "next.config.ts",
+    "package.json",
+    "package-lock.json",
+    "proxy.ts",
+    "tsconfig.json",
+    "scripts/copy-maplibre-worker.mjs"
+  ],
+  "directories": [
+    "src",
+    "public"
+  ]
+}

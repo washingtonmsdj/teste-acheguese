@@ -30,31 +30,52 @@ jobs:
           from pathlib import Path
 
           root = Path(".")
-          explicit = [
-              ".nvmrc",
-              "next-env.d.ts",
-              "next.config.ts",
-              "package.json",
-              "package-lock.json",
-              "proxy.ts",
-              "tsconfig.json",
-          ]
-
-          paths = [Path(p) for p in explicit]
-          paths += sorted(
-              p for p in (root / "src").rglob("*")
-              if p.is_file()
+          manifest = json.loads(
+              (root / "infra/vercel-source-manifest.json").read_text(
+                  encoding="utf-8"
+              )
           )
 
-          files = []
-          for path in paths:
-              files.append({
+          paths = []
+          for value in manifest["files"]:
+              path = root / value
+              if not path.is_file():
+                  raise SystemExit(
+                      f"vercel_source_required_file_missing:{value}"
+                  )
+              paths.append(path)
+
+          for value in manifest["directories"]:
+              directory = root / value
+              if not directory.exists():
+                  continue
+              paths.extend(
+                  sorted(
+                      path
+                      for path in directory.rglob("*")
+                      if path.is_file()
+                  )
+              )
+
+          unique_paths = sorted(
+              {path.as_posix(): path for path in paths}.values(),
+              key=lambda path: path.as_posix(),
+          )
+
+          files = [
+              {
                   "file": path.as_posix(),
                   "data": path.read_text(encoding="utf-8"),
-              })
+              }
+              for path in unique_paths
+          ]
 
           Path("/tmp/vercel-files.json").write_text(
-              json.dumps(files, ensure_ascii=False, separators=(",", ":")),
+              json.dumps(
+                  files,
+                  ensure_ascii=False,
+                  separators=(",", ":"),
+              ),
               encoding="utf-8",
           )
           PY
