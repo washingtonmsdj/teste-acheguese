@@ -3,11 +3,13 @@
     ".nvmrc",
     "next-env.d.ts",
     "next.config.ts",
-    "package.json",
     "package-lock.json",
+    "package.json",
     "proxy.ts",
-    "tsconfig.json",
-    "scripts/copy-maplibre-worker.mjs"
+    "scripts/copy-maplibre-worker.mjs",
+    "scripts/public-env-contract.mjs",
+    "scripts/validate-public-env.mjs",
+    "tsconfig.json"
   ],
   "directories": [
     "src",

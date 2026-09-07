@@ -1,3 +1,5 @@
+import { parseHttpOrigin } from '@/lib/public-url';
+
 export type SupabasePublicConfig = {
   url: string;
   publishableKey: string;
@@ -7,34 +9,17 @@ export function parseSupabasePublicConfig(
   urlValue: string | undefined,
   publishableKeyValue: string | undefined,
 ): SupabasePublicConfig | null {
-  const rawUrl = urlValue?.trim();
+  const url = parseHttpOrigin(urlValue);
   const publishableKey = publishableKeyValue?.trim();
 
-  if (!rawUrl || !publishableKey) {
+  if (!url || !publishableKey) {
     return null;
   }
 
-  try {
-    const url = new URL(rawUrl);
-
-    if (
-      (url.protocol !== 'https:' &&
-        url.protocol !== 'http:') ||
-      url.username ||
-      url.password ||
-      url.search ||
-      url.hash
-    ) {
-      return null;
-    }
-
-    return {
-      url: url.toString().replace(/\/$/, ''),
-      publishableKey,
-    };
-  } catch {
-    return null;
-  }
+  return {
+    url,
+    publishableKey,
+  };
 }
 
 export function getSupabasePublicConfig(): SupabasePublicConfig | null {

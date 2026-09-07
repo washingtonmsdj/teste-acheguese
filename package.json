@@ -13,8 +13,8 @@
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
     "test": "node --test",
-    "predev": "node ./scripts/copy-maplibre-worker.mjs",
-    "prebuild": "node ./scripts/copy-maplibre-worker.mjs"
+    "predev": "node ./scripts/validate-public-env.mjs development && node ./scripts/copy-maplibre-worker.mjs",
+    "prebuild": "node ./scripts/validate-public-env.mjs production && node ./scripts/copy-maplibre-worker.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.6",

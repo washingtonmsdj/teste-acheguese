@@ -52,3 +52,13 @@ test('configuração incompleta fica fail-closed', () => {
     null,
   );
 });
+
+test('rejeita URL Supabase com caminho fora da origem', () => {
+  assert.equal(
+    parseSupabasePublicConfig(
+      'https://project.supabase.co/rest/v1',
+      'sb_publishable_test',
+    ),
+    null,
+  );
+});
