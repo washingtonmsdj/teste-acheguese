@@ -146,11 +146,11 @@ export function TerritoryMapExplorer({
       );
 
       const params = new URLSearchParams({
-        west: String(bounds.getWest()),
-        south: String(bounds.getSouth()),
-        east: String(bounds.getEast()),
-        north: String(bounds.getNorth()),
-        zoom: String(map.getZoom()),
+        west: urlState.west,
+        south: urlState.south,
+        east: urlState.east,
+        north: urlState.north,
+        zoom: urlState.zoom,
         layers,
       });
 
