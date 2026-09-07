@@ -29,14 +29,16 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`541315e9d31cea173c08f754a19e9b7986cc92a5`
+`cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
 
 Para esse HEAD:
 
 - quality: **PASS**;
 - bundle de transporte: **PASS**;
 - Supabase security advisors: **0 lints**;
-- migration history Supabase/Git alinhado até `20260907102052_map_bbox_abuse_guards_v1`.
+- migration history Supabase/Git alinhado até `20260907102801_map_rpc_category_guards_v1`;
+- transport branch sincronizada com o mesmo `SOURCE_SHA`;
+- payload auditado com lifecycle script MapLibre presente e 0 `.env`.
 
 ## Transporte de source
 
@@ -54,6 +56,8 @@ Essa branch contém apenas:
 
 - `SOURCE_SHA`
 - `vercel-files.json`
+
+A source closure é definida por `infra/vercel-source-manifest.json`. O contrato é testado para garantir que scripts locais exigidos por lifecycle npm estejam presentes e que arquivos de ambiente não entrem no payload.
 
 O bundle é derivado automaticamente da `main` e serve somente como transporte para a API de deployment.
 

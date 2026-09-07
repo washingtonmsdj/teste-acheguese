@@ -27,7 +27,9 @@ O candidato só pode ser publicado quando:
 6. migration history remoto e `supabase/migrations/**` estão alinhados;
 7. smoke público do Map Core retorna os quatro boundaries e os 20 locais do baseline atual;
 8. bundle contém `scripts/copy-maplibre-worker.mjs`;
-9. bundle não contém `.env`, secret key ou service-role.
+9. bundle não contém `.env`, secret key ou service-role;
+10. auditoria de CSS global não encontra seletores órfãos conhecidos da antiga landing/marketplace;
+11. health contract está preparado para provar Territory + Classificados.
 
 O performance advisor pode reportar `unused_index` em nível INFO enquanto não existe tráfego real. Não remover índices com base apenas nessa ausência de amostra.
 
@@ -204,7 +206,9 @@ Após os smokes:
    - `territory.map.initial_load_failed`;
    - `territory.map.viewport_api_failed`;
    - `health.territory_canary_failed`;
-   - `health.classifieds_canary_failed`.
+   - `health.classifieds_canary_failed`;
+   - `territory.rollout.read_failed`;
+   - `territory.rollout.group_missing`.
 
 Os eventos são redigidos e não devem carregar stack, JWT, Supabase key ou contexto arbitrário.
 

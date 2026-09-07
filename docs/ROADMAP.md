@@ -66,7 +66,7 @@
 - [x] mini mapa reutilizável;
 - [x] cache HTTP da API;
 - [x] guard de bbox/zoom no Core/API;
-- [x] guard de bbox nas RPCs públicas PostGIS;
+- [x] guard de bbox/categorias nas RPCs públicas PostGIS;
 - [x] smoke público/anon após hardening;
 - [x] performance mobile;
 - [x] acessibilidade/fallback textual;
@@ -89,9 +89,13 @@
 - [x] menu/busca sem módulos futuros fingindo disponibilidade;
 - [x] adapter em lote para fatos/lugares;
 - [x] Data Cache público por escopo territorial;
-- [x] SEO fail-closed por rollout;
+- [x] SEO fail-closed por rollout, inclusive em falha de leitura;
 - [x] canonical por superfície;
 - [x] runtime fallback do mapa;
+- [x] observabilidade server-side redigida;
+- [x] health Territory + Classificados;
+- [x] source closure Vercel testada;
+- [x] remoção de allowlist/estilos marketplace órfãos;
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual/runtime do novo deployment.
 

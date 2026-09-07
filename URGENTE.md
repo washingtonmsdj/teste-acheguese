@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `541315e9d31cea173c08f754a19e9b7986cc92a5`
+> **HEAD técnico de referência:** `cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
 
 ---
 
@@ -422,7 +422,7 @@ APIs externas alimentam o Achegue-se por ingestão/ETL.
 - [x] clustering;
 - [x] cache HTTP da API por viewport;
 - [x] guard de abuso em duas camadas: zoom local + bbox máximo no Core/API e bbox máximo dentro das RPCs públicas;
-- [x] migration `20260907102052_map_bbox_abuse_guards_v1` alinhada entre Supabase e Git;
+- [x] migrations `20260907102052_map_bbox_abuse_guards_v1` e `20260907102801_map_rpc_category_guards_v1` alinhadas entre Supabase e Git;
 - [x] deep links com bbox + zoom + categorias;
 - [x] página `/mapa`;
 - [x] mini-mapa reutilizável `TerritoryMiniMap`;
@@ -487,12 +487,17 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 - [x] nenhuma promessa de feature inexistente;
 - [x] menu e busca genérica limpos de Empresas/Gastronomia/categorias futuras;
 - [x] adapter territorial com leitura em lote para evitar N consultas por bairro;
-- [x] snapshot público da Home com Data Cache por escopo, TTL de 5 minutos, sem tocar Auth/Classificados;
+- [x] snapshot público da Home com Data Cache por escopo, TTL de 60 segundos alinhado ao rollout/SEO, sem tocar Auth/Classificados;
 - [x] parâmetros de bairro malformados rejeitados antes do cache e bairro fora do grupo rejeitado antes das consultas pesadas;
 - [x] runtime fail-closed: falha inicial do mapa vira estado seguro, não 500 nem dado fictício;
-- [x] SEO fail-closed por rollout: Home/Mapa só indexam em `public_preview` ou `launched`;
+- [x] SEO fail-closed por rollout: Home/Mapa só indexam em `public_preview` ou `launched`, e falha de leitura do rollout degrada para não público sem derrubar metadata/sitemap;
 - [x] canonical global removido; Classificados possui canonical próprio;
 - [x] rota placeholder `/empresas` removida;
+- [x] observabilidade server-side estruturada/redigida em Home, Mapa/API e Health;
+- [x] health canônico exige Territory Core + canário de Classificados;
+- [x] source closure Vercel manifestada e testada, incluindo o script de worker MapLibre e excluindo `.env`;
+- [x] allowlist obsoleta de imagens Unsplash removida;
+- [x] 35 classes globais marketplace órfãs removidas; comparação automática atual = 0 classes globais órfãs;
 - [x] lint + TypeScript + testes + build + bundle;
 - [ ] revisão visual real da Home e do mapa no deployment contendo este HEAD.
 
@@ -1130,60 +1135,60 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`541315e9d31cea173c08f754a19e9b7986cc92a5`
+`cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`
 
 ### Fase
 
-**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime hardening concluídos · validação visual/runtime em deployment pendente.**
+**FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
 
 - Home território-first continua alimentada somente por fatos/lugares oficiais;
-- snapshot territorial público agora usa Data Cache de 5 minutos por escopo, sem cache de dados autenticados;
-- `?bairro=` malformado é rejeitado antes do cache;
+- Data Cache da Home está em **60 segundos**, alinhado à visibilidade de rollout/SEO;
+- parâmetros `?bairro=` malformados são rejeitados antes do cache;
 - bairro canônico fora do TerritoryGroup é rejeitado antes das consultas pesadas;
-- falha de carregamento inicial do Map Core não vira 500 nem dado de demonstração;
-- canonical global `/` foi removido para não contaminar rotas filhas;
-- Home e Mapa usam indexação fail-closed vinculada ao rollout real;
-- enquanto o Complexo está `data_preparation`, Home/Mapa permanecem `noindex`;
-- Classificados recebeu canonical/indexação próprios;
-- rota placeholder `/empresas` foi removida;
-- `/buscar` permanece noindex e não finge categorias futuras;
-- raw viewport do Map Core passou a exigir zoom local e bbox de no máximo 2° no Core/API;
-- as RPCs públicas PostGIS também rejeitam bbox maior que 2°, impedindo bypass direto ao Supabase;
-- migration remota `20260907102052_map_bbox_abuse_guards_v1` está registrada também no Git;
-- smoke após DDL: **4 boundaries + 20 locais** preservados;
-- smoke com role `anon`: **4 boundaries + 20 locais** preservados;
-- chamadas gigantes às duas RPCs foram rejeitadas com `map_bbox_too_large`;
-- CI do HEAD técnico `541315e9`: lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `541315e9`: **PASS**;
+- falha de carregamento inicial do mapa retorna estado seguro, nunca dados de demonstração;
+- leitura de rollout usada por metadata/sitemap agora é **fail-closed também em erro de Supabase**;
+- resolver real de visibilidade possui testes para `data_preparation`, `internal_preview`, `paused`, `public_preview` e `launched`;
+- Home/Mapa permanecem `noindex` enquanto rollout não for público;
+- canonical global foi removido e Classificados mantém canonical próprio;
+- raw viewport exige zoom >= 10, bbox <= 2° e até 10 category keys canônicas;
+- os mesmos guards de bbox/categorias existem nas RPCs públicas PostGIS, impedindo bypass direto ao Supabase;
+- migrations remotas/Git alinhadas até `20260907102801_map_rpc_category_guards_v1`;
+- smoke válido preservado: **4 boundaries + 20 locais**, inclusive com role `anon`;
+- health endpoint passou a exigir canário do Territory Core + Salvador/Classificados;
+- observabilidade server-side estruturada foi adicionada sem stack/contexto arbitrário e com redaction de keys/JWT;
+- bundle Vercel agora possui manifesto de source closure e teste contra omissão de lifecycle scripts;
+- payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
+- allowlist obsoleta `images.unsplash.com` foi removida;
+- CSS global da antiga landing/marketplace foi auditado contra todo `src/**`: **35 seletores órfãos removidos, 0 classes globais órfãs restantes**;
+- HEAD técnico `cb5d8e1d`: lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `cb5d8e1d`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=cb5d8e1d1b2d9bce977da3d25a899ae5be7bdefe`;
 - Supabase security advisors: **0 lints**;
-- performance advisors exibem apenas INFO de índices ainda não utilizados; não remover índices sem tráfego/amostra real;
 - nenhum rollout territorial foi alterado.
 
 ### Blocker de release
 
 - o único deployment Vercel continua sendo o técnico antigo `dpl_4hgED9grfQNbT6DLCrZEUaCqqnWv`;
-- esse deployment não contém Map Core/Home territorial nem as variáveis públicas do `acheguese-v2`;
-- `/mapa` no alias atual continua representando source antigo;
+- ele ainda usa source `68deb8a4...`, sem Map Core/Home territorial e sem as três envs públicas do `acheguese-v2`;
 - a cota Hobby segue com reset informado para **2026-09-08 03:23:07 America/Bahia**;
-- na verificação desta rodada ainda era **2026-09-07 07:12 America/Bahia**, portanto o reset ainda não ocorreu;
-- não criar deployment extra antes do reset nem workaround de arquitetura.
+- até esse reset, não criar tentativas extras nem workaround arquitetural.
 
 ### Próxima ação
 
-**Reset da Vercel → um deployment candidato do bundle atual + 3 envs públicas → revisão visual/runtime completa → correções → quality gate → fechar FASE 4.**
+**Após o reset: confirmar novamente HEAD/SOURCE_SHA/security advisors → criar um único deployment candidato com as 3 envs públicas → health/SEO/Home/Mapa → revisão visual desktop+mobile → runtime logs → corrigir eventuais blockers → fechar FASE 4.**
 
 ### Não repetir
 
 - não reconstruir Censo, Educação ou CNES;
-- não relaxar o guard de bbox para permitir consultas mundiais de raw public places;
+- não relaxar guards públicos de bbox/categorias;
 - não expor service-role/secret key no Vercel;
-- não remover índices apenas porque o advisor informa `unused_index` num banco sem tráfego;
-- não reintroduzir canonical global `/`;
+- não remover índices por `unused_index` sem tráfego real;
+- não reintroduzir canonical global;
 - não indexar Home/Mapa antes do rollout público;
-- não reintroduzir `/empresas` placeholder;
-- não reintroduzir Home marketplace-first ou `features/discovery`;
+- não reintroduzir `/empresas`, Unsplash, Home marketplace-first ou `features/discovery`;
+- não reintroduzir CSS órfão da antiga landing;
 - não carregar dataset inteiro no navegador;
 - não quebrar deep links do mapa;
 - não lançar território por publicação de dados;
