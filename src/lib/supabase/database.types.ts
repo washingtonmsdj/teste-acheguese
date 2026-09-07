@@ -363,6 +363,13 @@ export type Database = {
             referencedRelation: "territories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "territories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
         ]
       }
       territory_boundaries: {
@@ -410,6 +417,13 @@ export type Database = {
             referencedRelation: "territories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "territory_boundaries_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: true
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
         ]
       }
       territory_group_members: {
@@ -442,6 +456,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "territories"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "territory_group_members_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
           },
         ]
       }
@@ -487,11 +508,37 @@ export type Database = {
             referencedRelation: "territories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "territory_groups_anchor_city_id_fkey"
+            columns: ["anchor_city_id"]
+            isOneToOne: false
+            referencedRelation: "territory_boundary_catalog"
+            referencedColumns: ["territory_id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      territory_boundary_catalog: {
+        Row: {
+          area_m2: number | null
+          bbox_geojson: Json | null
+          center_latitude: number | null
+          center_longitude: number | null
+          geographic_path: string | null
+          geojson: Json | null
+          imported_at: string | null
+          name: string | null
+          slug: string | null
+          source_name: string | null
+          source_object_id: string | null
+          source_url: string | null
+          territory_id: string | null
+          territory_type: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       submit_classified_for_review: {
