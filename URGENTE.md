@@ -1135,7 +1135,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`7438ea8bbd11426c9d1e7e98d8e93365b6552cf7`
+`c1e02d2721d1a60cd37d4fe7faa16790843ea435`
 
 ### Fase
 
@@ -1182,6 +1182,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - smoke RLS anônimo canônico executado no banco real e **PASS**: Salvador público, anon sem INSERT de classificados e sem EXECUTE nas RPCs de submit/withdraw;
 - smoke RLS autenticado/admin rollback-safe executado no banco real e **PASS**: owner cria draft/mídia e envia para revisão, não se autopublica, outro usuário não lê/altera, `user_metadata` não concede admin, owner com claim admin não modera o próprio anúncio, admin externo não altera conteúdo e consegue aprovar com receipt canônico;
 - `supabase/smoke/authenticated-rls.sql` foi versionado como prova repetível; runbook distingue claramente smoke transacional de E2E Auth real;
+- os dois smokes canônicos foram executados **diretamente do conteúdo versionado no Git** e ambos retornaram PASS; authenticated smoke terminou com `auth_users_after=0`, `classifieds_after=0`, `media_after=0`, `moderation_after=0`;
+- os smokes SQL permanecem fora do bundle Vercel; são ferramentas de prova, não runtime de produção;
 - auditoria de policies/grants confirmou escrita anônima = zero e transições owner/admin protegidas por trigger;
 - unicidade de denúncias confirmada por constraint `UNIQUE (classified_id, reporter_id)`;
 - unicidade de conversa confirmada por constraint `UNIQUE (classified_id, buyer_id)` + `buyer_id <> seller_id`;
@@ -1208,9 +1210,9 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - Supabase v2 possui chave moderna `sb_publishable_...` ativa, além da legacy anon; o release deve usar a publishable moderna;
 - `docs/CLASSIFIEDS-MVP.md` foi atualizado para o estado real: Supabase/RLS/Storage já existem e Classificados não autoriza iniciar Empresas;
 - tentativa inicial de favicon binário revelou que o bundle inline é textual; o binário foi removido e o source closure permaneceu no protocolo canônico em vez de criar segundo mecanismo de upload;
-- HEAD técnico `0a0d2d05`: audit produção, lint, TypeScript, testes e build **PASS**;
-- `vercel-source-bundle` do HEAD técnico `0a0d2d05`: **PASS**;
-- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=0a0d2d05f816ddb45142d12a3120a26e6b59bc13`;
+- HEAD técnico `c1e02d27`: audit produção, lint, TypeScript, testes e build **PASS**;
+- `vercel-source-bundle` do HEAD técnico `c1e02d27`: **PASS**;
+- branch `deploy/vercel-bundle` sincronizada com `SOURCE_SHA=c1e02d2721d1a60cd37d4fe7faa16790843ea435`;
 - Supabase security advisors: **0 lints**;
 - nenhum rollout territorial foi alterado.
 

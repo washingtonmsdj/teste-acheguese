@@ -51,6 +51,7 @@ Para esse HEAD:
 - bucket `classified-media` privado e alinhado ao contrato de upload;
 - banco v2 sem usuários/anúncios/conversas fictícios;
 - anon RLS smoke real = PASS;
+- authenticated/admin RLS smoke real = PASS, rollback-safe e versionado em `supabase/smoke/authenticated-rls.sql`;
 - policies/grants de Classificados auditados;
 - superfícies pessoais/admin explicitamente dinâmicas e `private, no-store`;
 - build route table confirma todas as superfícies protegidas como `ƒ`.
