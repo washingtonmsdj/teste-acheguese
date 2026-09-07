@@ -170,7 +170,7 @@ export default function Home() {
             </div>
           </div>
           <div className="phoneMock" aria-label="Prévia mobile do Achegue-se">
-            <div className="phoneTop">Achegue-se <span>📍 Salvador - BA</span></div>
+            <div className="phoneTop">Achegue-se <span>📍 Sua região</span></div>
             <div className="phoneSearch">🔎 O que você procura?</div>
             <div className="phoneCategories">
               {categories.slice(0, 4).map((item) => <span key={item.label}>{item.icon}<small>{item.label}</small></span>)}
