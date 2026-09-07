@@ -11,9 +11,18 @@ export interface TerritoryDataRepository {
     territoryId: string,
     metricKeys?: string[],
   ): Promise<TerritoryFact[]>;
+  listFactsForTerritories(
+    territoryIds: string[],
+    metricKeys?: string[],
+  ): Promise<TerritoryFact[]>;
   listPublicPlaceCategories(): Promise<PublicPlaceCategory[]>;
   listPublicPlaces(
     territoryId: string,
+    categoryKeys?: string[],
+    limit?: number,
+  ): Promise<PublicPlace[]>;
+  listPublicPlacesForTerritories(
+    territoryIds: string[],
     categoryKeys?: string[],
     limit?: number,
   ): Promise<PublicPlace[]>;

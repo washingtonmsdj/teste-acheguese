@@ -1,0 +1,636 @@
+.page {
+  min-height: 100svh;
+  background: #ffffff;
+}
+
+.hero {
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 82% 16%, rgba(98, 230, 182, .24), transparent 28%),
+    radial-gradient(circle at 12% 84%, rgba(12, 148, 112, .10), transparent 26%),
+    linear-gradient(145deg, #f7fcfa 0%, #edf8f4 52%, #f9fcfb 100%);
+}
+
+.heroGrid {
+  display: grid;
+  gap: 32px;
+  padding-top: 48px;
+  padding-bottom: 42px;
+}
+
+.heroCopy {
+  min-width: 0;
+}
+
+.contextLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 10px;
+  margin-bottom: 18px;
+  color: #536274;
+  font-size: .76rem;
+}
+
+.contextLine strong {
+  color: var(--ink);
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 5px rgba(12, 148, 112, .10);
+}
+
+.stageBadge {
+  width: fit-content;
+  margin-bottom: 24px;
+  padding: 7px 10px;
+  border: 1px solid #c8e8dc;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+  color: var(--brand-dark);
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+.hero h1 {
+  max-width: 790px;
+  margin: 0 0 20px;
+  font-size: clamp(2.65rem, 11vw, 5.7rem);
+  line-height: .92;
+  letter-spacing: -.064em;
+}
+
+.hero h1 em {
+  color: var(--brand);
+  font-style: normal;
+}
+
+.heroText {
+  max-width: 680px;
+  margin: 0;
+  color: #46566b;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.scopeSelector {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 30px -16px 0 0;
+  padding: 2px 16px 6px 0;
+  scrollbar-width: none;
+}
+
+.scopeSelector::-webkit-scrollbar {
+  display: none;
+}
+
+.scopeSelector a {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 1px solid rgba(182, 207, 198, .72);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+  color: #4f5f6f;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.scopeSelector .scopeActive {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.mapCard {
+  align-self: end;
+  padding: 14px;
+  border: 1px solid rgba(197, 219, 211, .88);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 28px 70px rgba(11, 72, 57, .13);
+  backdrop-filter: blur(14px);
+}
+
+.mapCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 7px 6px 13px;
+}
+
+.mapCardHeader div {
+  display: grid;
+  gap: 2px;
+}
+
+.mapCardHeader span {
+  color: var(--muted);
+  font-size: .66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.mapCardHeader strong {
+  font-size: .9rem;
+}
+
+.mapCardHeader a {
+  color: var(--brand-dark);
+  font-size: .73rem;
+  font-weight: 850;
+}
+
+.miniMap {
+  min-height: 300px;
+  border-radius: 19px;
+  box-shadow: none;
+}
+
+.mapLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 14px;
+  padding: 13px 6px 3px;
+  color: #516171;
+  font-size: .68rem;
+  font-weight: 750;
+}
+
+.mapLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mapLegend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.educationMarker {
+  background: var(--brand);
+}
+
+.healthMarker {
+  background: #d8563f;
+}
+
+.mapLegend small {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.metricsSection {
+  padding: 54px 0;
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.metricsIntro,
+.sourcesHeader {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.metricsIntro h2,
+.sectionHeading h2,
+.nowPrimary h2,
+.classifiedSection h2,
+.sourcesHeader h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 7vw, 3.05rem);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.metricsIntro > p,
+.sourcesHeader > p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.metricGrid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fbfdfc;
+}
+
+.metricGrid article > span {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 800;
+}
+
+.metricGrid strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--brand-dark);
+  font-size: clamp(1.65rem, 8vw, 2.7rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.metricGrid small {
+  color: #738075;
+  font-size: .64rem;
+}
+
+.neighborhoodSection {
+  padding-top: 60px;
+  padding-bottom: 62px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.sectionHeading > a {
+  display: none;
+  color: var(--brand);
+  font-size: .8rem;
+  font-weight: 850;
+}
+
+.neighborhoodGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.neighborhoodCard {
+  display: grid;
+  gap: 22px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(11, 24, 48, .04);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.neighborhoodCard:hover {
+  transform: translateY(-2px);
+  border-color: #b8d9cd;
+  box-shadow: 0 16px 36px rgba(11, 72, 57, .08);
+}
+
+.neighborhoodSelected {
+  border-color: #98d7c1;
+  background: linear-gradient(145deg, #ffffff, #effaf6);
+}
+
+.neighborhoodCard > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.neighborhoodCard > div:first-child span {
+  color: var(--brand);
+  font-size: .64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.neighborhoodCard > div:first-child strong {
+  font-size: 1.05rem;
+}
+
+.neighborhoodCard dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0;
+}
+
+.neighborhoodCard dl div {
+  min-width: 0;
+}
+
+.neighborhoodCard dt {
+  color: var(--muted);
+  font-size: .62rem;
+}
+
+.neighborhoodCard dd {
+  margin: 4px 0 0;
+  font-size: .86rem;
+  font-weight: 900;
+}
+
+.cardAction {
+  color: var(--brand-dark);
+  font-size: .72rem;
+  font-weight: 850;
+}
+
+.nowSection {
+  padding: 60px 0;
+  background:
+    linear-gradient(145deg, #071f1b 0%, #0a4437 100%);
+  color: #ffffff;
+}
+
+.nowGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.nowPrimary,
+.statusPanel {
+  padding: 26px;
+  border-radius: 24px;
+}
+
+.nowPrimary {
+  border: 1px solid rgba(255, 255, 255, .12);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(98, 230, 182, .18), transparent 30%),
+    rgba(255, 255, 255, .04);
+}
+
+.nowPrimary .eyebrow {
+  color: #77e2bd;
+}
+
+.nowPrimary h2 {
+  max-width: 640px;
+}
+
+.nowPrimary > p:not(.eyebrow) {
+  max-width: 700px;
+  margin: 16px 0 0;
+  color: #c4dbd4;
+  line-height: 1.65;
+}
+
+.nowChecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.nowChecks span {
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 999px;
+  color: #d9ebe6;
+  font-size: .7rem;
+  font-weight: 750;
+}
+
+.statusPanel {
+  align-self: stretch;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.statusEyebrow {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--brand);
+  font-size: .65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.statusPanel strong {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.statusPanel p {
+  margin: 10px 0 20px;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.statusPanel a {
+  color: var(--brand-dark);
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.classifiedSection {
+  display: grid;
+  gap: 24px;
+  align-items: end;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.classifiedSection p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.sourcesSection {
+  padding: 54px 0 86px;
+  border-top: 1px solid var(--line);
+  background: #f6faf8;
+}
+
+.sourceList {
+  display: grid;
+  gap: 8px;
+}
+
+.sourceList article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.sourceList article > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.sourceList strong {
+  font-size: .78rem;
+}
+
+.sourceList span,
+.sourceList a {
+  color: var(--muted);
+  font-size: .66rem;
+}
+
+.sourceList a {
+  flex: 0 0 auto;
+  color: var(--brand-dark);
+  font-weight: 850;
+}
+
+.footer {
+  padding: 34px 0 100px;
+  background: #063d33;
+  color: #ffffff;
+}
+
+.footer :global(.brand) small {
+  color: #b8d9d0;
+}
+
+.footerInner {
+  display: grid;
+  gap: 18px;
+}
+
+.footerInner p {
+  margin: 0;
+  color: #c9e0da;
+}
+
+.footerInner nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: .78rem;
+}
+
+.unavailable {
+  min-height: calc(100svh - 68px);
+  display: grid;
+  align-items: center;
+  padding: 70px 0 120px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(98, 230, 182, .22), transparent 30%),
+    #f7fbfa;
+}
+
+.unavailable h1 {
+  max-width: 820px;
+  margin-bottom: 16px;
+  font-size: clamp(2.2rem, 9vw, 4.6rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+}
+
+.unavailable p:not(.eyebrow) {
+  max-width: 620px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (min-width: 720px) {
+  .heroGrid {
+    padding-top: 66px;
+    padding-bottom: 58px;
+  }
+
+  .metricGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .neighborhoodGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sectionHeading > a {
+    display: inline;
+  }
+
+  .metricsIntro,
+  .sourcesHeader {
+    grid-template-columns: 1fr minmax(320px, .72fr);
+    align-items: end;
+  }
+
+  .classifiedSection {
+    grid-template-columns: 1fr auto;
+  }
+
+  .footer {
+    padding-bottom: 36px;
+  }
+
+  .footerInner {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .footerInner p {
+    text-align: center;
+  }
+}
+
+@media (min-width: 980px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(420px, .78fr);
+    align-items: center;
+    gap: 70px;
+    min-height: 670px;
+  }
+
+  .miniMap {
+    min-height: 390px;
+  }
+
+  .neighborhoodGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .nowGrid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  }
+
+  .nowPrimary,
+  .statusPanel {
+    padding: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neighborhoodCard {
+    transition: none;
+  }
+}

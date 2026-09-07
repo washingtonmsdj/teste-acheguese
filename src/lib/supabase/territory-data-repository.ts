@@ -187,15 +187,31 @@ export class SupabaseTerritoryDataRepository
     territoryId: string,
     metricKeys?: string[],
   ): Promise<TerritoryFact[]> {
+    return this.listFactsForTerritories(
+      [territoryId],
+      metricKeys,
+    );
+  }
+
+  async listFactsForTerritories(
+    territoryIds: string[],
+    metricKeys?: string[],
+  ): Promise<TerritoryFact[]> {
+    if (!territoryIds.length) return [];
+
     let query = this.supabase
       .from('territory_fact_catalog')
       .select('*')
-      .eq('territory_id', territoryId)
+      .in('territory_id', [...new Set(territoryIds)])
+      .order('territory_id')
       .order('metric_key')
       .order('reference_period', { ascending: false });
 
     if (metricKeys?.length) {
-      query = query.in('metric_key', metricKeys);
+      query = query.in(
+        'metric_key',
+        [...new Set(metricKeys)],
+      );
     }
 
     const { data, error } = await query;
@@ -220,17 +236,35 @@ export class SupabaseTerritoryDataRepository
     categoryKeys?: string[],
     limit = 100,
   ): Promise<PublicPlace[]> {
-    const safeLimit = Math.min(Math.max(limit, 1), 200);
+    return this.listPublicPlacesForTerritories(
+      [territoryId],
+      categoryKeys,
+      limit,
+    );
+  }
+
+  async listPublicPlacesForTerritories(
+    territoryIds: string[],
+    categoryKeys?: string[],
+    limit = 200,
+  ): Promise<PublicPlace[]> {
+    if (!territoryIds.length) return [];
+
+    const safeLimit = Math.min(Math.max(limit, 1), 500);
 
     let query = this.supabase
       .from('public_place_catalog')
       .select('*')
-      .eq('territory_id', territoryId)
+      .in('territory_id', [...new Set(territoryIds)])
+      .order('territory_id')
       .order('name')
       .limit(safeLimit);
 
     if (categoryKeys?.length) {
-      query = query.in('category_key', categoryKeys);
+      query = query.in(
+        'category_key',
+        [...new Set(categoryKeys)],
+      );
     }
 
     const { data, error } = await query;

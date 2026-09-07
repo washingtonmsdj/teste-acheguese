@@ -8,11 +8,11 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: {
-    default: 'Achegue-se — o melhor da sua região',
+    default: 'Achegue-se — território, dados e vida local',
     template: '%s | Achegue-se',
   },
   description:
-    'Descubra e resolva o que importa perto de você. Classificados é o primeiro módulo ativo do Achegue-se em Salvador.',
+    'Dados públicos, mapa e utilidade local organizados pelo território. Começando pelo Complexo do Nordeste de Amaralina, em Salvador.',
   applicationName: 'Achegue-se',
   robots: siteUrl
     ? {
