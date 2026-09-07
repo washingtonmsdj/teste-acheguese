@@ -28,7 +28,7 @@ function authError(code: string, next: string): never {
 
 async function requireTrustedAuthOrigin(
   next: string,
-) {
+): Promise<string> {
   const origin = await requireTrustedAuthOrigin(next);
 
   return origin;
@@ -74,7 +74,7 @@ export async function signUpAction(formData: FormData) {
   }
 
   const headerStore = await headers();
-  const origin = getTrustedAuthOrigin(
+  const origin: string | null = getTrustedAuthOrigin(
     headerStore.get('origin'),
   );
 
