@@ -69,3 +69,29 @@ jobs:
           path: territory-public-places-metadata
           if-no-files-found: error
           retention-days: 90
+
+  education-complexo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Node 24 LTS
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Probe official education places
+        env:
+          TERRITORY_DATA_OUTPUT: territory-education-output
+        run: node scripts/territory-data/probe-education-complexo.mjs
+
+      - name: Upload education probe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: territory-education-complexo-probe
+          path: territory-education-output
+          if-no-files-found: error
+          retention-days: 90
