@@ -10,6 +10,7 @@ export function SiteHeader() {
         <nav className="desktopNav" aria-label="Navegação principal">
           <Link href="/#explorar">Explorar</Link>
           <Link href="/#categorias">Categorias</Link>
+          <Link href="/mapa">Mapa</Link>
           <Link href="/classificados">Classificados</Link>
           <Link href="/#empresas">Para empresas</Link>
         </nav>

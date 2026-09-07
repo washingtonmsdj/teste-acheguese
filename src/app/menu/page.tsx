@@ -4,6 +4,7 @@ import { Brand } from '@/shared/ui/brand';
 const links = [
   ['Início', '/'],
   ['Explorar', '/buscar'],
+  ['Mapa', '/mapa'],
   ['Classificados', '/classificados'],
   ['Mensagens', '/mensagens'],
   ['Para empresas', '/empresas'],

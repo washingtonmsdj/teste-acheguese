@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 const items = [
   { href: '/', icon: '⌂', label: 'Início' },
+  { href: '/mapa', icon: '⌖', label: 'Mapa' },
   { href: '/classificados', icon: '⌕', label: 'Classificados' },
-  { href: '/favoritos', icon: '♡', label: 'Favoritos' },
   { href: '/menu', icon: '☰', label: 'Menu' },
 ] as const;
 
@@ -19,7 +19,8 @@ export function MobileTabbar() {
         const active =
           item.href === '/'
             ? pathname === '/'
-            : pathname === item.href || pathname.startsWith(`${item.href}/`);
+            : pathname === item.href ||
+              pathname.startsWith(`${item.href}/`);
 
         return (
           <Link
