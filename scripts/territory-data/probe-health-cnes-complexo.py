@@ -7,7 +7,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-SOURCE_KEY = "cnes-estabelecimentos-brasil"
+SOURCE_KEY = "cnes-estabelecimentos-sus"
 SOURCE_URL = (
     "https://s3.sa-east-1.amazonaws.com/"
     "ckan.saude.gov.br/CNES/cnes_estabelecimentos_json.zip"
@@ -349,14 +349,54 @@ with tempfile.TemporaryDirectory() as temp_dir:
                 )
 
 records.sort(key=lambda item: item["externalId"])
-external_ids = {item["externalId"] for item in records}
 
-if len(external_ids) != len(records):
+TYPE_DESCRIPTIONS = {
+    "1": "POSTO DE SAUDE",
+    "2": "CENTRO DE SAUDE/UNIDADE BASICA",
+    "4": "POLICLINICA",
+    "5": "HOSPITAL GERAL",
+    "7": "HOSPITAL ESPECIALIZADO",
+    "15": "UNIDADE MISTA",
+    "20": "PRONTO SOCORRO GERAL",
+    "21": "PRONTO SOCORRO ESPECIALIZADO",
+    "22": "CONSULTORIO ISOLADO",
+    "36": "CLINICA/CENTRO DE ESPECIALIDADE",
+    "39": "UNIDADE DE APOIO DIAGNOSE E TERAPIA",
+    "40": "UNIDADE MOVEL TERRESTRE",
+    "42": "UNIDADE MOVEL PRE-HOSPITALAR DE URGENCIA",
+    "43": "FARMACIA",
+    "50": "UNIDADE DE VIGILANCIA EM SAUDE",
+    "61": "CENTRO DE PARTO NORMAL",
+    "62": "HOSPITAL/DIA",
+    "67": "LACEN",
+    "69": "CENTRO DE HEMOTERAPIA/HEMATOLOGIA",
+    "70": "CENTRO DE ATENCAO PSICOSSOCIAL",
+    "71": "CENTRO DE APOIO A SAUDE DA FAMILIA",
+    "73": "PRONTO ATENDIMENTO",
+    "74": "POLO ACADEMIA DA SAUDE",
+    "80": "LABORATORIO DE SAUDE PUBLICA",
+    "85": "CENTRO DE IMUNIZACAO",
+}
+
+sus_records = []
+for item in records:
+    if item["ambulatorySus"] != "SIM":
+        continue
+
+    facility_type = item["facilityTypeCode"]
+    item["facilityTypeLabel"] = TYPE_DESCRIPTIONS.get(facility_type)
+    sus_records.append(item)
+
+external_ids = {item["externalId"] for item in sus_records}
+if len(external_ids) != len(sus_records):
     raise RuntimeError("health_duplicate_cnes_code")
+
+if not sus_records:
+    raise RuntimeError("health_no_sus_records_in_mvp")
 
 normalized_text = (
     json.dumps(
-        records,
+        sus_records,
         ensure_ascii=False,
         indent=2,
         sort_keys=True,
@@ -370,14 +410,16 @@ normalized_sha256 = hashlib.sha256(
 counts_by_territory = {
     geographic_path: sum(
         1
-        for item in records
+        for item in sus_records
         if item["geographicPath"] == geographic_path
     )
     for geographic_path in sorted(MVP_PATHS)
 }
 
 manifest = {
-    "schema": "acheguese.public-places-health-probe/1",
+    "schema": "acheguese.public-places-health-probe/2",
+    "selectionPolicy": "active + coordinates + inside-boundary + CO_AMBULATORIAL_SUS=SIM",
+    "deferredPolicy": "non-SUS/private CNES records stay out of Territory public health; future Businesses may consume them separately",
     "sourceKey": SOURCE_KEY,
     "sourceUrl": SOURCE_URL,
     "sourceLastModified": archive["lastModified"],
@@ -394,11 +436,13 @@ manifest = {
     "salvadorActiveWithCoordinates": (
         salvador_active_with_coordinates
     ),
+    "insideMvpAllHealthCount": len(records),
+    "insideMvpDeferredNonSusCount": len(records) - len(sus_records),
     "outsideMvpWithCoordinates": outside_mvp,
-    "recordCount": len(records),
+    "recordCount": len(sus_records),
     "countsByTerritory": counts_by_territory,
     "normalizedSha256": normalized_sha256,
-    "records": records,
+    "records": sus_records,
 }
 
 OUTPUT_DIR.joinpath("health-cnes-complexo-normalized.json").write_text(
