@@ -3,6 +3,7 @@ import {
   type ClassifiedCategoryId,
 } from '@/features/classifieds/domain/categories';
 import type { ClassifiedCondition } from '@/features/classifieds/domain/types';
+import { parseClassifiedPriceInCents } from '@/features/classifieds/domain/classified-validation-core';
 
 export type ClassifiedDraftInput = {
   title: string;
@@ -47,31 +48,6 @@ function stringValue(value: FormDataEntryValue | null): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
-function parsePriceInCents(value: string): number | null | undefined {
-  if (!value) {
-    return null;
-  }
-
-  const normalized = value
-    .replace(/\s/g, '')
-    .replace(/^R\$/i, '')
-    .replace(/\./g, '')
-    .replace(',', '.');
-
-  if (!/^\d+(?:\.\d{1,2})?$/.test(normalized)) {
-    return undefined;
-  }
-
-  const [whole, fraction = ''] = normalized.split('.');
-  const cents = Number(whole) * 100 + Number(fraction.padEnd(2, '0'));
-
-  if (!Number.isSafeInteger(cents) || cents < 0) {
-    return undefined;
-  }
-
-  return cents;
-}
-
 export function validateClassifiedFormData(
   formData: FormData,
 ): ClassifiedDraftValidationResult {
@@ -84,7 +60,7 @@ export function validateClassifiedFormData(
   const priceValue = stringValue(formData.get('price'));
   const cityId = stringValue(formData.get('cityId'));
   const neighborhoodValue = stringValue(formData.get('neighborhood'));
-  const priceInCents = parsePriceInCents(priceValue);
+  const priceInCents = parseClassifiedPriceInCents(priceValue);
 
   if (title.length < 5 || title.length > 120) {
     issues.push({ field: 'title', code: 'invalid_length' });
