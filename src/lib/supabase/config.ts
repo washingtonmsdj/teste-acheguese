@@ -3,19 +3,45 @@ export type SupabasePublicConfig = {
   publishableKey: string;
 };
 
-export function getSupabasePublicConfig(): SupabasePublicConfig | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const publishableKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
+export function parseSupabasePublicConfig(
+  urlValue: string | undefined,
+  publishableKeyValue: string | undefined,
+): SupabasePublicConfig | null {
+  const rawUrl = urlValue?.trim();
+  const publishableKey = publishableKeyValue?.trim();
 
-  if (!url || !publishableKey) {
+  if (!rawUrl || !publishableKey) {
     return null;
   }
 
-  return {
-    url,
-    publishableKey,
-  };
+  try {
+    const url = new URL(rawUrl);
+
+    if (
+      (url.protocol !== 'https:' &&
+        url.protocol !== 'http:') ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash
+    ) {
+      return null;
+    }
+
+    return {
+      url: url.toString().replace(/\/$/, ''),
+      publishableKey,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function getSupabasePublicConfig(): SupabasePublicConfig | null {
+  return parseSupabasePublicConfig(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  );
 }
 
 export function requireSupabasePublicConfig(): SupabasePublicConfig {

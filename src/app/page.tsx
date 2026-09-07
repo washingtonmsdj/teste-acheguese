@@ -59,6 +59,7 @@ export default async function Home({
 
   let data: TerritoryHomeData | null = null;
   let invalidNeighborhood = false;
+  let configurationUnavailable = false;
 
   try {
     data = await loadCachedTerritoryHomeData(
@@ -69,8 +70,15 @@ export default async function Home({
       error instanceof Error &&
       error.message ===
         'territory_home_neighborhood_invalid';
+    configurationUnavailable =
+      error instanceof Error &&
+      error.message ===
+        'territory_home_config_unavailable';
 
-    if (!invalidNeighborhood) {
+    if (
+      !invalidNeighborhood &&
+      !configurationUnavailable
+    ) {
       reportServerError(
         'territory.home.load_failed',
         error,
