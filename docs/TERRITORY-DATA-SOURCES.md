@@ -78,13 +78,56 @@ O probe encontrou **8 divergências em 14 registros** entre o rótulo textual e 
 | Santa Cruz | 8 |
 | Vale das Pedrinhas | 1 |
 
-## 3. Saúde
+## 3. Saúde — CNES / Ministério da Saúde
 
-A camada municipal `Unidades_Saude` encontrada no GeoSalvador possui dados editados em 2022.
+**Status:** VERIFICADO E PÚBLICO para a camada territorial SUS do MVP.
 
-**Status:** NÃO APROVADA como fonte atual do MVP.
+- Provider: Ministério da Saúde / CNES
+- dataset: CNES — Estabelecimentos de Saúde
+- arquivo oficial: `cnes_estabelecimentos_json.zip`
+- source last modified: `2026-09-05T06:59:02Z`
+- Salvador IBGE: `292740`
+- probe run: `34102438196`
+- probe commit: `85590ae2a6c2284afa6d2dd04df7911fc5c9a2d9`
+- artifact ID: `10011007807`
+- artifact digest: `sha256:b30c8961e6e5c7d6de7b120935a16bb5277f512b626d6982c3ee56d950640ed6`
+- archive SHA-256: `8908498b9d1ae69ce475dffe1b8259fa7d74b051551660034f0f3501784f337a`
+- normalized SHA-256: `5ae2db990b81a0655a2abb77a77ec63e1c7349de4f398f9f24ba2bfcdf135098`
 
-Próxima ação: localizar uma fonte oficial mais recente, preferencialmente municipal/estadual ou CNES, validar atualização/schema/coordenadas e aplicar o mesmo pipeline espacial.
+### Política de seleção do MVP
+
+```text
+CO_IBGE = 292740
++ estabelecimento ativo
++ coordenadas válidas
++ ponto dentro de boundary canônico
++ CO_AMBULATORIAL_SUS = SIM
+```
+
+O campo textual `NO_BAIRRO` é somente diagnóstico.
+
+### Auditoria
+
+- registros nacionais: 635.118;
+- Salvador: 5.501;
+- ativos em Salvador: 3.952;
+- ativos com coordenadas: 3.951;
+- dentro dos quatro boundaries: 52;
+- selecionados como utilidade territorial SUS: 6;
+- 46 estabelecimentos privados/não-SUS foram adiados para futuro diretório de serviços/Empresas;
+- 0 rejeitados;
+- 6/6 confirmados por PostGIS `ST_Covers`.
+
+O único ativo de Salvador sem coordenadas foi `REDESAUDE`, Alphaville I, não-SUS; não afeta o MVP.
+
+### Distribuição
+
+| Território | Unidades SUS |
+| --- | ---: |
+| Chapada do Rio Vermelho | 0 |
+| Nordeste de Amaralina | 2 |
+| Santa Cruz | 1 |
+| Vale das Pedrinhas | 3 |
 
 ## Política permanente
 
