@@ -31,19 +31,20 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado é:
 
-`6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
+`6d720e2e5bea84c7d0b1a72df227f0af536fbc60`
 
 Para esse HEAD:
 
-- quality: **PASS** — run `34213809448`;
-- bundle de transporte: **PASS** — run `34213809447`;
+- quality: **PASS** — run `34214797945`;
+- bundle de transporte: **PASS** — run `34214797952`;
 - `deploy/vercel-bundle/SOURCE_SHA` alinhado ao mesmo SHA;
-- Home product-first e loading com breakpoint/rail alinhados;
-- Auth session-aware, logout POST canônico e Origin fail-closed;
+- Home product-first + loading preservados;
+- Auth/account gateway e logout POST preservados;
 - account rail/loadings/moderação/detalhe público preservados;
-- Novo/Editar anúncio agrupam o formulário em seções sem alterar nomes de campos, actions ou lifecycle;
-- produção continua fail-closed para configuração pública incompleta;
-- Supabase/RLS/schema/rollout não foram alterados por este checkpoint.
+- Novo/Editar estruturados em fluxo de produto;
+- resumos de conta derivados sem consultas extras;
+- conversa individual contextualizada sem novas queries;
+- Supabase/RLS/schema/rollout não foram alterados.
 
 ## Transporte de source
 
@@ -89,25 +90,24 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
-- URL: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
+- URL: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
-- quality: `34213809448` PASS;
-- source bundle: `34213809447` PASS;
+- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
+- quality: `34214797945` PASS;
+- source bundle: `34214797952` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home product-first + loading alinhado;
-- Auth/conta/moderação/detalhe público preservados;
-- Novo/Editar anúncio usam fluxo visual de produto;
+- Home/Auth/conta/moderação/detalhe público preservados;
+- formulários, resumos pessoais e conversa refinados;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
 
 ## Próximo deployment
 
-**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`.
+**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`.
 
 Criar outro somente quando houver mudança de source/runtime ou correção motivada por defeito comprovado. Nesse caso, antes de criar o candidato executar em um checkout do HEAD pretendido:
 

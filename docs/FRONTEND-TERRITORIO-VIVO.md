@@ -352,3 +352,25 @@ Novo e Editar anúncio agora usam uma composição de produto sem alterar o dom�
 - nenhuma mudança de schema, RLS, storage ou lifecycle.
 
 Candidate visual: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`.
+
+
+## Resumos da conta e conversa
+
+Checkpoint técnico: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`.
+
+Superfícies pessoais:
+
+- Meus anúncios mostra publicados, em revisão e itens para editar;
+- Favoritos diferencia anúncios ainda públicos de indisponíveis;
+- Mensagens mostra total, conversas como anunciante e como interessado;
+- métricas são derivadas dos arrays já carregados, sem segunda consulta.
+
+Conversa individual:
+
+- mostra papel do usuário, status do anúncio e quantidade de mensagens;
+- estado vazio explícito;
+- composer informa limite e cuidado com dados sensíveis;
+- mantém `classified_conversations` e `classified_messages` com uma consulta cada;
+- mantém `sendConversationMessageAction`, minLength 1 e maxLength 1500.
+
+Candidate visual: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`.

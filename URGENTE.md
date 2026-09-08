@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
+> **HEAD técnico de referência:** `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`
 
 ---
 
@@ -1175,18 +1175,20 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ## Candidate source-aligned atual
 
-- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
-- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
-- preview protegido: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
+- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
+- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
+- preview protegido: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34213809448` PASS;
-- source bundle: `34213809447` PASS;
+- quality: `34214797945` PASS;
+- source bundle: `34214797952` PASS;
 - runtime errors observados: **0**;
 - Home product-first + loading alinhado preservados;
 - Auth/conta/moderação preservados com os guards atuais;
-- Novo/Editar anúncio agora usam fluxo visual estruturado sem alterar contratos de domínio.
+- Novo/Editar anúncio usam fluxo visual estruturado;
+- Meus anúncios/Favoritos/Mensagens exibem resumos sem novas queries;
+- conversa individual ganhou contexto de produto sem alterar actions/queries.
 
 O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
@@ -1218,7 +1220,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
+`6d720e2e5bea84c7d0b1a72df227f0af536fbc60`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1263,6 +1265,9 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - loading Home `e82526be`: skeleton global passou a reservar o rail contextual e adotar o mesmo breakpoint de 1180px da Home real, reduzindo layout shift; teste de contrato cobre rail + breakpoint; quality `34207533838` + bundle `34207533752` = PASS;
 - formulários Classificados `d4f8bcbc`: Novo/Editar passaram a agrupar conteúdo, preço/condição, descrição e localização sem alterar nomes de campos ou Server Actions; Novo exibe fluxo rascunho → fotos → revisão;
 - contrato de formulário `6bbb24b6`: teste garante os sete campos canônicos, `createClassifiedDraftAction`, `updateAction`, bloqueio `disabled={!editable}` e fluxo de revisão; quality `34213809448` + bundle `34213809447` = PASS;
+- resumos de conta `df70b85e`: Meus anúncios, Favoritos e Mensagens exibem métricas derivadas dos dados já carregados, sem consultas adicionais;
+- guard de resumos `f48a89fe`: teste prova que as métricas permanecem sem segunda query nas superfícies principais;
+- conversa `6d720e2e`: thread mostra papel, status do anúncio, contagem de mensagens, estado vazio e composer mais explícito; as queries e limites de mensagem foram preservados; quality `34214797945` + bundle `34214797952` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1354,18 +1359,20 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
-- URL protegida: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
-- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
+- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
+- URL protegida: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
+- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- quality `34213809448` + bundle `34213809447` = PASS;
+- quality `34214797945` + bundle `34214797952` = PASS;
 - runtime errors observados: **0**;
 - Home product-first, Auth/account gateway, account rail, moderação e detalhe público preservados;
-- Novo/Editar anúncio agrupados em seções de produto, com fluxo rascunho → fotos → revisão protegido por teste;
+- formulários de Classificados estruturados como fluxo de produto;
+- superfícies pessoais possuem métricas úteis sem novas queries;
+- conversa individual contextualizada e protegida por teste;
 - módulos futuros continuam fail-closed pelo `releaseScope`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
@@ -1379,7 +1386,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 
