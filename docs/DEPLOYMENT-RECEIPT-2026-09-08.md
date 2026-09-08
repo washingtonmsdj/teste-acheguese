@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`;
-- URL protegida: `https://teste-acheguese-lwr9c4s68-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
+- URL protegida: `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `230a4d7dc74e3380222b1c919e5dba407386d321`;
-- quality: `34243856107` PASS;
+- source/runtime: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`;
+- quality: `34249484987` PASS;
 - vercel-source-bundle: `34227085713` PASS.
 
 ## 2. Provenance e configuração pública
@@ -54,31 +54,19 @@ O prebuild comprovou:
 
 - runtime errors observados: **0**;
 - Home chegou ao app com HTTP 200;
-- o HTML retornado contém App Shell Território Vivo, contexto territorial de tablet, sidebar/toolbar/rail e bottom navigation;
+- resposta contém App Shell Território Vivo, sidebar/toolbar/rail e bottom navigation;
 - Mapa/Classificados/Auth continuam sujeitos à Deployment Protection/SSO quando o cliente não preserva a sessão.
-
 ## 5. Frontend contido
 
-Checkpoint técnico: `47cdaa84296f68264df905aebf5116bc20d821ac`.
+Checkpoint técnico: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`.
 
 - Home product-first e Map Core preservados;
-- Busca/Menu/Auth/área pessoal/moderação/formulários preservados;
-- contexto territorial de tablet 640–979px preservado;
-- Mapa fallback agora oferece `Tentar novamente` e `Voltar ao território`;
-- copy pública deixou de expor `configuração pública`, `neste ambiente` e `demonstração` em Mapa/Auth/Home;
-- teste de contrato cobre essas expressões;
-- nenhuma feature futura foi ativada.
-
-## 5A. Fechamento visual adicional
-
-- favorito no detalhe usa `NavigationIcon('favorite')`;
-- card sem mídia usa `NavigationIcon('tag')`;
-- estado vazio usa `NavigationIcon('search')`;
-- trust badges usam `NavigationIcon('check')`;
-- conversa acompanha o topbar canônico de 74px;
-- testes impedem retorno dos símbolos Unicode/offset legado;
-- Home do candidate chegou ao app com HTTP 200 e runtime `GET / 200 cache=MISS`.
-
+- release geography centralizada em `territoryReleaseScope`, inclusive nome curto do grupo, contagem de bairros e fallback de cidade;
+- Busca deixou de prometer função futura; Novo anúncio deixou de expor linguagem de ambiente/configuração;
+- contrato de copy cobre o fallback autenticado corrigido;
+- detalhe de Classificados usa fallback SVG para mídia temporariamente indisponível;
+- CSS global removeu duplicação real de `stateCard`/`mediaPlaceholder` sem alterar o render final;
+- nenhuma feature `future` foi ativada.
 ## 6. Gate ainda incompleto
 
 Deployment Protection/SSO continua ativo. Ainda **não** marcar como PASS:
@@ -95,12 +83,12 @@ Isso não é evidência de falha do Achegue-se. É um gate ainda não executado 
 
 ## 7. Próxima ação
 
-1. preservar `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`;
+1. preservar `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
 2. abrir o preview com sessão Vercel autenticada persistente;
 3. executar smoke completo;
 4. validar 1440×900 e 390×844;
 5. revisar runtime após exercitar as rotas;
-6. adicionar somente `https://teste-acheguese-lwr9c4s68-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
+6. adicionar somente `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
 8. corrigir somente blockers observados;
 9. fechar FASE 4 somente após todos os gates.
