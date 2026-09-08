@@ -29,41 +29,21 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 ### Source candidato atual
 
-O último HEAD técnico validado antes desta atualização documental é:
+O último HEAD técnico validado é:
 
-`d28dcc9556f90324123c676e2d05de5c3db87b31`
+`6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
 
 Para esse HEAD:
 
-- frontend/source checkpoint: `d28dcc9556f90324123c676e2d05de5c3db87b31`;
-- quality: **PASS** — run `34189520702`;
-- bundle de transporte: **PASS** — run `34189520634`;
-- Home, cabeçalho, navegação mobile, Mapa, menu e estados resilientes refinados sem mudança de schema/API/rollout;
-- `/mapa` e `/classificados` possuem loading states específicos, responsivos e compatíveis com reduced-motion;
-- o App Shell **Território Vivo** é a arquitetura global das superfícies atuais: Home, Mapa, Busca, Classificados público/detalhe e áreas autenticadas/admin do módulo; sidebar/toolbar/rail e registry de módulos futuros estão versionados; o `SiteHeader` standalone foi removido; a bottom navigation é derivada do mesmo registry, sem segunda autoridade; `docs/FRONTEND-TERRITORIO-VIVO.md` é a referência visual canônica;
-- copy pública protegida por contrato contra linguagem de implementação/roadmap;
-- Supabase security advisors: **0 lints**;
-- migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;
-- transport branch sincronizada com o mesmo `SOURCE_SHA`;
-- payload auditado com lifecycle script MapLibre presente e 0 `.env`;
-- pacote declarado como ESM explicitamente, eliminando reparsing heurístico do Node nos testes;
-- login/cadastro/logout/callback protegidos por origem explícita; produção aceita somente a Site URL canônica ou a URL exata do deployment Vercel atual, sem wildcard;
-- redirect interno fail-closed contra separators/backslash/controles percent-encoded e dupla codificação no pathname;
-- smoke territorial pós-deploy disponível fora do bundle de produção;
-- preflight de env pública roda antes de `dev`/`build`, fail-fast para par Supabase incompleto ou URLs inválidas;
-- setup local pode ser validado explicitamente com `npm run env:check`;
-- usar a publishable key moderna ativa do `acheguese-v2`, não service-role;
-- production dependency audit: **0 vulnerabilidades**;
-- CSP + HSTS configurados sem nonce;
-- Map CSP/Image allowlists derivadas de configuração pública, sem wildcard;
-- bucket `classified-media` privado e alinhado ao contrato de upload;
-- banco v2 sem usuários/anúncios/conversas fictícios;
-- anon RLS smoke real = PASS;
-- authenticated/admin RLS smoke real = PASS, rollback-safe e versionado em `supabase/smoke/authenticated-rls.sql`;
-- policies/grants de Classificados auditados;
-- superfícies pessoais/admin explicitamente dinâmicas e `private, no-store`;
-- build route table confirma todas as superfícies protegidas como `ƒ`;
-- adapter SSR revisado contra `@supabase/ssr 0.12.6`, com client por request, `getClaims()` e headers privados de refresh preservados.
+- quality: **PASS** — run `34213809448`;
+- bundle de transporte: **PASS** — run `34213809447`;
+- `deploy/vercel-bundle/SOURCE_SHA` alinhado ao mesmo SHA;
+- Home product-first e loading com breakpoint/rail alinhados;
+- Auth session-aware, logout POST canônico e Origin fail-closed;
+- account rail/loadings/moderação/detalhe público preservados;
+- Novo/Editar anúncio agrupam o formulário em seções sem alterar nomes de campos, actions ou lifecycle;
+- produção continua fail-closed para configuração pública incompleta;
+- Supabase/RLS/schema/rollout não foram alterados por este checkpoint.
 
 ## Transporte de source
 
@@ -109,26 +89,25 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`;
-- URL: `https://teste-acheguese-qbmrxtxca-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
+- URL: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`;
-- quality: `34207533838` PASS;
-- source bundle: `34207533752` PASS;
+- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
+- quality: `34213809448` PASS;
+- source bundle: `34213809447` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home: `GET / 200` na primeira sessão;
-- Home product-first com mapa protagonista em 1180px+;
-- loading Home reserva o rail contextual e usa o mesmo breakpoint, reduzindo layout shift;
-- Auth/conta/moderação preservados no mesmo source;
+- Home product-first + loading alinhado;
+- Auth/conta/moderação/detalhe público preservados;
+- Novo/Editar anúncio usam fluxo visual de produto;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
 
 ## Próximo deployment
 
-**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `bab5273b1c6b757cbd3d0b583416f6c441e533ef`.
+**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`.
 
 Criar outro somente quando houver mudança de source/runtime ou correção motivada por defeito comprovado. Nesse caso, antes de criar o candidato executar em um checkout do HEAD pretendido:
 

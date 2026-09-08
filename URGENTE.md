@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `e82526be3c3ca03861bc352c37f99dd45ad8efd8`
+> **HEAD técnico de referência:** `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
 
 ---
 
@@ -1175,19 +1175,18 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ## Candidate source-aligned atual
 
-- source/runtime: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`;
-- deployment: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`;
-- preview protegido: `https://teste-acheguese-qbmrxtxca-jogo-brasils-projects.vercel.app`;
+- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
+- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
+- preview protegido: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34207533838` PASS;
-- source bundle: `34207533752` PASS;
+- quality: `34213809448` PASS;
+- source bundle: `34213809447` PASS;
 - runtime errors observados: **0**;
-- Home: primeira invocação real `GET / 200`;
-- Home MVP: mapa protagonista já em 1180px+, copy mais curta, seletor territorial compacto e rollout removido do hero;
-- MVP principal: Território + Mapa + Classificados;
-- Auth/conta/moderação permanecem no mesmo source e com os guards já aprovados.
+- Home product-first + loading alinhado preservados;
+- Auth/conta/moderação preservados com os guards atuais;
+- Novo/Editar anúncio agora usam fluxo visual estruturado sem alterar contratos de domínio.
 
 O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
@@ -1219,7 +1218,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`e82526be3c3ca03861bc352c37f99dd45ad8efd8`
+`6bbb24b665f06bf0a1104fdc788e0a494c41e57b`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1262,6 +1261,8 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - moderação `85df68f4`: rail administrativo com contagem real de fila/denúncias e atalhos; breakpoint Auth legado de 720px removido e protegido por teste; quality `34201520319` + bundle `34201520421` = PASS;
 - Home product-first `d148ef3e`: hero simplificado para MVP, badge de rollout removido do fluxo principal, mapa lado a lado já em 1180px+, seletor territorial compacto, utilidades/copy orientadas a ação e Classificados tratado como serviço local; teste `territory-home-product-contract` protege composição; quality `34207533838` + bundle `34207533752` = PASS;
 - loading Home `e82526be`: skeleton global passou a reservar o rail contextual e adotar o mesmo breakpoint de 1180px da Home real, reduzindo layout shift; teste de contrato cobre rail + breakpoint; quality `34207533838` + bundle `34207533752` = PASS;
+- formulários Classificados `d4f8bcbc`: Novo/Editar passaram a agrupar conteúdo, preço/condição, descrição e localização sem alterar nomes de campos ou Server Actions; Novo exibe fluxo rascunho → fotos → revisão;
+- contrato de formulário `6bbb24b6`: teste garante os sete campos canônicos, `createClassifiedDraftAction`, `updateAction`, bloqueio `disabled={!editable}` e fluxo de revisão; quality `34213809448` + bundle `34213809447` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1353,19 +1354,18 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`;
-- URL protegida: `https://teste-acheguese-qbmrxtxca-jogo-brasils-projects.vercel.app`;
-- source/runtime: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`;
+- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
+- URL protegida: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
+- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- quality `34207533838` + bundle `34207533752` = PASS;
+- quality `34213809448` + bundle `34213809447` = PASS;
 - runtime errors observados: **0**;
-- Home real respondeu `GET / 200` na primeira sessão do preview;
-- Home agora é product-first: mapa destacado, ações curtas, seletor territorial compacto e Classificados como utilidade local;
-- Auth: gateway de conta session-aware, logout POST canônico e Origin fail-closed preservados;
+- Home product-first, Auth/account gateway, account rail, moderação e detalhe público preservados;
+- Novo/Editar anúncio agrupados em seções de produto, com fluxo rascunho → fotos → revisão protegido por teste;
 - módulos futuros continuam fail-closed pelo `releaseScope`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
@@ -1379,7 +1379,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

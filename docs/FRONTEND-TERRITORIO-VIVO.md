@@ -336,3 +336,19 @@ O loading da Home acompanha a mesma composição:
 - breakpoint lado a lado também em 1180px;
 - reduz mudança brusca de largura/colunas quando os dados chegam;
 - `prefers-reduced-motion` continua preservado.
+
+
+## Formulários de Classificados
+
+Checkpoint técnico: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`.
+
+Novo e Editar anúncio agora usam uma composição de produto sem alterar o domínio:
+
+- seções visuais para conteúdo, preço/condição, descrição e localização;
+- Novo anúncio mostra o fluxo `rascunho → fotos → revisão`;
+- os campos canônicos `title`, `categoryId`, `price`, `condition`, `description`, `cityId` e `neighborhood` foram preservados;
+- `createClassifiedDraftAction`, `updateAction`, `submitForReviewAction` e bloqueio por estado permanecem intactos;
+- teste `classified-form-layout-contract.test.mjs` protege contratos e fluxo;
+- nenhuma mudança de schema, RLS, storage ou lifecycle.
+
+Candidate visual: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`.

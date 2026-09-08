@@ -8,25 +8,25 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`;
-- URL protegida: `https://teste-acheguese-qbmrxtxca-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
+- URL protegida: `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`;
-- quality: `34207533838` PASS;
-- vercel-source-bundle: `34195671848` PASS.
+- source/runtime: `6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
+- quality: `34213809448` PASS;
+- vercel-source-bundle: `34213809447` PASS.
 
-Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
+Este candidate contém a Home product-first, Auth/conta/moderação já endurecidos e o fluxo visual estruturado de Novo/Editar anúncio.
 
 ## 2. Provenance e configuração pública
 
 Antes do deployment foi confirmado:
 
-- `main source/runtime = fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
-- `deploy/vercel-bundle/SOURCE_SHA = fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
+- `main source/runtime = 6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
+- `deploy/vercel-bundle/SOURCE_SHA = 6bbb24b665f06bf0a1104fdc788e0a494c41e57b`;
 - quality do SHA exato = PASS;
 - vercel-source-bundle do SHA exato = PASS;
 - bundle sem arquivos `.env` versionados;
@@ -52,7 +52,7 @@ O prebuild comprovou:
 
 Provas do deployment:
 
-- 120 deployment files;
+- 131 deployment files;
 - `npm ci`: PASS;
 - audit: 0 vulnerabilities;
 - prebuild env fail-closed: PASS;
@@ -87,8 +87,9 @@ Warning não-blocker preservado:
 ## 4. Runtime
 
 - runtime errors observados: **0**;
-- Home chegou ao app: `GET / 200`, cache MISS;
-- HTML da sessão 200 contém o App Shell Território Vivo, marca pin+heart, sidebar agrupada, toolbar e bottom navigation.
+- o candidate está READY;
+- Deployment Protection/SSO intercepta requests sem sessão persistente antes da aplicação;
+- portanto não inferir smoke/visual PASS somente pelo build.
 
 ## 5. Dados e segurança
 
@@ -135,27 +136,17 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-Home product-first no source `d148ef3e`:
+O candidate contém o frontend técnico atual:
 
-- mapa vira composição lado a lado a partir de 1180px;
-- rollout deixa de ocupar o hero;
-- copy e CTAs ficam orientados a tarefa;
-- seletor Complexo/bairros permanece canônico;
-- dados oficiais, fontes e deep links do mapa são preservados;
-- Classificados aparece como utilidade local, sem assumir o eixo do produto.
-
-Escopo MVP explícito no source `abc52b42`:
-
-- Território/Home = MVP;
-- Mapa = MVP;
-- Classificados = MVP;
-- Auth/Favoritos/Mensagens/Meus/Novo/Editar/Moderação = suporte operacional;
-- Community/Alertas/Eventos/Oportunidades/Empresas = future;
-- Gastronomia/Mobilidade continuam fora do escopo atual;
-- navegação ativa exige `releaseScope=mvp` e `availability=active`;
-- testes impedem exposição acidental de módulo futuro.
-
-O candidate preserva account rail, loadings contextuais, Auth alinhado, detalhe público refinado e moderação contextual.
+- Home product-first com mapa protagonista em 1180px+;
+- loading da Home reserva o mesmo rail/breakpoint;
+- Busca/Menu/Auth alinhados ao Território Vivo;
+- account rail + loadings contextuais;
+- detalhe público e moderação contextual;
+- Novo/Editar anúncio em seções: conteúdo, preço/condição, descrição e localização;
+- Novo anúncio mostra rascunho → fotos → revisão;
+- contratos de campos/Server Actions/lifecycle preservados por teste;
+- módulos futuros continuam fora do MVP pelo `releaseScope`.
 
 ## 8. Previews anteriores
 
@@ -169,12 +160,12 @@ Não usar esses artefatos para aprovar o frontend atual.
 
 ## 9. Próxima ação
 
-1. preservar `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+1. preservar `dpl_8KEbDJwspWrAoRAgj2bo9mfMrKLV`;
 2. abrir o preview com sessão Vercel autenticada persistente;
 3. executar smoke completo;
 4. validar 1440×900 e 390×844;
 5. revisar runtime após exercitar as rotas;
-6. adicionar somente `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
+6. adicionar somente `https://teste-acheguese-5cv3zyaob-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
 8. corrigir somente blockers observados;
 9. fechar FASE 4 somente após todos os gates.
