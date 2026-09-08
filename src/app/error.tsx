@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 import { Brand } from '@/shared/ui/brand';
 
 export default function ErrorPage({
@@ -17,16 +18,26 @@ export default function ErrorPage({
 
   return (
     <main className="statePage">
-      <div className="stateCard">
-        <Brand />
-        <div className="stateCopy">
-          <p className="eyebrow">Não carregou como esperado</p>
-          <h1>Tivemos um problema para abrir esta página.</h1>
-          <p>
-            Tente novamente. Se continuar acontecendo, volte
-            ao território e acesse outra área do Achegue-se.
-          </p>
+      <section className="stateCard">
+        <div className="stateHeader">
+          <Brand />
+          <span className="stateBadge">Erro temporário</span>
         </div>
+
+        <div className="stateBody">
+          <span className="stateIcon" aria-hidden="true">
+            <NavigationIcon name="alert" />
+          </span>
+          <div className="stateCopy">
+            <p className="eyebrow">Não carregou como esperado</p>
+            <h1>Tivemos um problema para abrir esta página.</h1>
+            <p>
+              Tente novamente. Se continuar acontecendo, volte
+              ao território e acesse outra área do Achegue-se.
+            </p>
+          </div>
+        </div>
+
         <div className="stateActions">
           <button
             className="primaryButton"
@@ -39,7 +50,7 @@ export default function ErrorPage({
             Voltar ao território
           </Link>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
