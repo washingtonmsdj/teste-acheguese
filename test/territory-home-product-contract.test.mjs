@@ -24,6 +24,13 @@ const globals = readFileSync(
   new URL('../src/app/globals.css', import.meta.url),
   'utf8',
 );
+const releaseScope = readFileSync(
+  new URL(
+    '../src/config/territory-release-scope.ts',
+    import.meta.url,
+  ),
+  'utf8',
+);
 
 test('Home mantém o mapa como protagonista do MVP', () => {
   assert.match(home, /TerritoryMiniMap/);
@@ -91,10 +98,15 @@ test('fallback mantém a estrutura territorial sem linguagem interna', () => {
   assert.equal(home.includes('MVP territorial'), false);
   assert.equal(home.includes('Estrutura do MVP'), false);
   assert.equal(home.includes('Fundação do MVP'), false);
-  assert.match(home, /Nordeste de Amaralina/);
-  assert.match(home, /Santa Cruz/);
-  assert.match(home, /Vale das Pedrinhas/);
-  assert.match(home, /Chapada do Rio Vermelho/);
+  for (const neighborhood of [
+    'Nordeste de Amaralina',
+    'Santa Cruz',
+    'Vale das Pedrinhas',
+    'Chapada do Rio Vermelho',
+  ]) {
+    assert.match(releaseScope, new RegExp(neighborhood));
+  }
+  assert.match(home, /territoryReleaseScope\.neighborhoods/);
   assert.match(home, /População e domicílios/);
   assert.match(home, /Atendimento SUS/);
 });
