@@ -1033,6 +1033,15 @@ footer .brand small { color: #b9ded4; }
   font-size: 1.8rem;
   font-weight: 900;
 }
+.emptyIcon svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .classifiedEmptyState h3 {
   margin-bottom: 8px;
   font-size: 1.2rem;
@@ -1087,39 +1096,6 @@ footer .brand small { color: #b9ded4; }
   .classifiedTrust { padding-bottom: 44px; }
 }
 
-
-.authCardWide { width: min(760px, 100%); }
-.authForms { display: grid; gap: 16px; }
-.authForm {
-  display: grid;
-  gap: 14px;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: #fbfdfc;
-}
-.authFormSecondary { background: #f3faf7; }
-.authForm h2 { margin: 0 0 2px; font-size: 1.05rem; }
-.authForm label { display: grid; gap: 7px; color: #334155; font-size: .8rem; font-weight: 800; }
-.authForm input {
-  width: 100%;
-  min-height: 46px;
-  padding: 11px 13px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: white;
-  color: var(--ink);
-}
-.authFeedback {
-  padding: 13px 15px;
-  border-radius: 14px;
-  font-size: .84rem;
-  line-height: 1.45;
-  font-weight: 700;
-}
-.authError { background: #fff1f0; color: #9f2d26; border: 1px solid #f3d1ce; }
-.authSuccess { background: #edf9f3; color: var(--brand-dark); border: 1px solid #cdeade; }
-.authFooter { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
 .compactInternalHero {
   min-height: 0;

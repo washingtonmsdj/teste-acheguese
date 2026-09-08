@@ -1,0 +1,143 @@
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.summary,
+.privacy {
+  padding: 16px;
+  border: 1px solid #dce8e4;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(11,72,57,.035);
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: .58rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.summary h2 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.summary p,
+.privacy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .68rem;
+  line-height: 1.5;
+}
+
+.links {
+  display: grid;
+  gap: 6px;
+}
+
+.links a {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  color: #4d5e70;
+  transition:
+    border-color .16s ease,
+    background-color .16s ease,
+    transform .16s ease;
+}
+
+.links a:hover {
+  transform: translateX(2px);
+  border-color: #d4e5df;
+  background: rgba(255,255,255,.76);
+}
+
+.links .active {
+  border-color: #b9dacf;
+  background: #ffffff;
+  color: var(--brand-dark);
+  box-shadow: 0 9px 24px rgba(11,72,57,.045);
+}
+
+.icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eaf7f2;
+  color: var(--brand-dark);
+}
+
+.icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.copy strong {
+  font-size: .69rem;
+}
+
+.copy small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .57rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.links b {
+  color: var(--brand);
+  font-size: .74rem;
+}
+
+.privacy {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(98,230,182,.12), transparent 28%),
+    linear-gradient(145deg, #083f35, #075344);
+  color: #ffffff;
+}
+
+.privacy .eyebrow {
+  color: #7ee6c1;
+}
+
+.privacy strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: .78rem;
+}
+
+.privacy p {
+  color: #c9e2db;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links a {
+    transition: none;
+  }
+}
