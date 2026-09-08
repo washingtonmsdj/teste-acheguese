@@ -21,6 +21,9 @@ const forbiddenPhrases = [
   'o mvp começa',
   'categorias futuras',
   'sem fingir localização automática',
+  'mvp territorial',
+  'estrutura do mvp',
+  'fundação do mvp',
 ];
 
 test('superfícies principais não expõem linguagem interna de implementação', () => {

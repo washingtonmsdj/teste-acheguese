@@ -83,8 +83,14 @@ test('Home monta mini-mapa sem segunda leitura RPC', () => {
   assert.match(loader, /places\.flatMap/);
 });
 
-test('fallback mantém a estrutura territorial do MVP', () => {
-  assert.match(home, /O MVP territorial continua aqui\./);
+test('fallback mantém a estrutura territorial sem linguagem interna', () => {
+  assert.match(
+    home,
+    /Os dados públicos estão temporariamente indisponíveis\./,
+  );
+  assert.equal(home.includes('MVP territorial'), false);
+  assert.equal(home.includes('Estrutura do MVP'), false);
+  assert.equal(home.includes('Fundação do MVP'), false);
   assert.match(home, /Nordeste de Amaralina/);
   assert.match(home, /Santa Cruz/);
   assert.match(home, /Vale das Pedrinhas/);

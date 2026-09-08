@@ -587,14 +587,13 @@ export function TerritoryHomeUnavailable() {
               </div>
               <p className="eyebrow">Território Vivo</p>
               <h1>
-                O MVP territorial continua aqui.
+                Os dados públicos estão temporariamente indisponíveis.
               </h1>
               <p>
-                A base oficial não respondeu nesta tentativa,
-                mas a estrutura do Complexo, seus quatro
-                bairros, mapa e serviços permanece
-                organizada — sem substituir dados públicos
-                por números fictícios.
+                Você ainda pode navegar pelos quatro bairros
+                e pelas áreas do Achegue-se. Os números
+                oficiais voltam a aparecer assim que a leitura
+                das fontes públicas estiver disponível.
               </p>
               <div className={styles.heroActions}>
                 <Link
@@ -613,15 +612,14 @@ export function TerritoryHomeUnavailable() {
             </div>
 
             <aside className={styles.unavailableStatus}>
-              <span>Estrutura do MVP</span>
+              <span>Território organizado</span>
               <strong>
                 4 bairros · dados públicos · mapa
               </strong>
               <p>
-                Censo 2022, Educação e Saúde SUS já fazem
-                parte da base territorial. Os números só
-                aparecem quando a leitura oficial está
-                disponível.
+                Censo 2022, Educação e Saúde SUS fazem parte
+                da base territorial, sempre com origem
+                registrada e sem números de demonstração.
               </p>
             </aside>
           </div>
@@ -658,9 +656,9 @@ export function TerritoryHomeUnavailable() {
             <div className={styles.sectionHeading}>
               <div>
                 <p className="eyebrow">
-                  Fundação do MVP
+                  Informação pública
                 </p>
-                <h2>O que já existe na estrutura.</h2>
+                <h2>O que você encontra por aqui.</h2>
               </div>
             </div>
 
