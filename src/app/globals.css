@@ -1713,7 +1713,9 @@ footer .brand small { color: #b9ded4; }
 .threadShell {
   min-height: calc(100svh - 76px);
   padding: 30px 0 100px;
-  background: linear-gradient(180deg, #f5faf8, #fff 320px);
+  background:
+    radial-gradient(circle at 90% 4%, rgba(98,230,182,.12), transparent 24%),
+    linear-gradient(180deg, #f5faf8, #fff 360px);
 }
 .threadContainer {
   width: min(920px, calc(100% - 32px));
@@ -1721,8 +1723,11 @@ footer .brand small { color: #b9ded4; }
 .threadHeader {
   display: grid;
   gap: 16px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
+  padding: 22px;
+  border: 1px solid #dfe9e6;
+  border-radius: 22px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 12px 34px rgba(11,72,57,.04);
 }
 .threadHeader h1 {
   margin: 10px 0 8px;
@@ -1730,22 +1735,64 @@ footer .brand small { color: #b9ded4; }
   line-height: 1.05;
   letter-spacing: -.04em;
 }
-.threadHeader p {
+.threadHeader p:not(.eyebrow) {
   margin: 0;
   color: var(--muted);
 }
-.messageList {
+.threadContextBar {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+.threadContextBar > span {
+  display: grid;
+  gap: 2px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  background: #f3f8f6;
+}
+.threadContextBar strong {
+  font-size: .69rem;
+}
+.threadContextBar small {
+  color: var(--muted);
+  font-size: .58rem;
+}
+.messageList {
+  min-height: 220px;
+  display: grid;
+  align-content: start;
   gap: 10px;
   padding: 24px 0;
 }
+.messageThreadEmpty {
+  display: grid;
+  gap: 5px;
+  justify-items: center;
+  align-self: center;
+  padding: 34px 20px;
+  text-align: center;
+  border: 1px dashed #ccddd7;
+  border-radius: 20px;
+  background: rgba(255,255,255,.68);
+}
+.messageThreadEmpty strong {
+  font-size: .88rem;
+}
+.messageThreadEmpty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .76rem;
+}
 .messageBubble {
-  width: min(78%, 620px);
+  width: min(82%, 620px);
   justify-self: start;
-  padding: 12px 14px;
+  padding: 13px 15px;
   border: 1px solid var(--line);
-  border-radius: 6px 18px 18px 18px;
+  border-radius: 7px 18px 18px 18px;
   background: white;
+  box-shadow: 0 7px 18px rgba(11,72,57,.025);
 }
 .messageMine {
   justify-self: end;
@@ -1777,7 +1824,13 @@ footer .brand small { color: #b9ded4; }
   backdrop-filter: blur(14px);
 }
 .messageComposer label {
-  display: block;
+  display: grid;
+  gap: 6px;
+}
+.messageComposerHint {
+  color: var(--muted);
+  font-size: .59rem;
+  line-height: 1.35;
 }
 .conversationList {
   display: grid;

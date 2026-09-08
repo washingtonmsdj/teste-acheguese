@@ -71,6 +71,8 @@ export default async function ConversationPage({
 
   const conversation = rawConversation as unknown as ConversationRow;
   const isSeller = conversation.seller_id === userId;
+  const isPublished = conversation.classifieds?.status === 'published';
+  const messageCount = messagesResult.data?.length ?? 0;
   const sendAction = sendConversationMessageAction.bind(null, conversation.id);
 
   return (
@@ -88,18 +90,34 @@ export default async function ConversationPage({
               <Link className="textLink" href="/mensagens">
                 ← Mensagens
               </Link>
+              <p className="eyebrow">Conversa de Classificados</p>
               <h1>{conversation.classifieds?.title ?? 'Classificado'}</h1>
               <p>
                 {isSeller
                   ? 'Você é o anunciante nesta conversa.'
                   : 'Você iniciou esta conversa como interessado.'}
               </p>
+
+              <div className="threadContextBar" aria-label="Contexto da conversa">
+                <span>
+                  <strong>{isSeller ? 'Anunciante' : 'Interessado'}</strong>
+                  <small>Seu papel</small>
+                </span>
+                <span>
+                  <strong>{isPublished ? 'Publicado' : 'Fora da área pública'}</strong>
+                  <small>Status do anúncio</small>
+                </span>
+                <span>
+                  <strong>{messageCount}</strong>
+                  <small>{messageCount === 1 ? 'mensagem' : 'mensagens'}</small>
+                </span>
+              </div>
             </div>
 
-            {conversation.classifieds?.status === 'published' && (
+            {isPublished && (
               <Link
                 className="ghostButton linkButton"
-                href={`/classificados/anuncio/${conversation.classifieds.slug}`}
+                href={`/classificados/anuncio/${conversation.classifieds?.slug}`}
               >
                 Ver anúncio
               </Link>
@@ -107,6 +125,13 @@ export default async function ConversationPage({
           </header>
 
           <div className="messageList" aria-live="polite">
+            {messageCount === 0 && (
+              <div className="messageThreadEmpty">
+                <strong>A conversa está pronta.</strong>
+                <p>Envie a primeira mensagem para continuar por aqui.</p>
+              </div>
+            )}
+
             {messagesResult.data?.map((message) => {
               const mine = message.sender_id === userId;
 
@@ -144,9 +169,12 @@ export default async function ConversationPage({
                 required
                 placeholder="Escreva uma mensagem..."
               />
+              <small className="messageComposerHint">
+                Até 1.500 caracteres · evite compartilhar dados sensíveis.
+              </small>
             </label>
             <button className="primaryButton" type="submit">
-              Enviar
+              Enviar mensagem
             </button>
           </form>
         </div>
