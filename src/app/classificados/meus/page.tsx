@@ -5,6 +5,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { AccountContextRail } from '@/shared/layout/account-context-rail';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -136,7 +137,7 @@ export default async function MyClassifiedsPage({
           </div>
         ) : (
           <div className="classifiedEmptyState">
-            <span className="emptyIcon" aria-hidden="true">＋</span>
+            <span className="emptyIcon" aria-hidden="true"><NavigationIcon name="tag" /></span>
             <div>
               <h3>Você ainda não criou nenhum anúncio.</h3>
               <p>Comece com um rascunho e revise tudo antes de enviar para publicação.</p>

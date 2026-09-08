@@ -8,6 +8,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { AccountContextRail } from '@/shared/layout/account-context-rail';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -108,7 +109,7 @@ export default async function FavoritesPage() {
           </div>
         ) : (
           <div className="classifiedEmptyState">
-            <span className="emptyIcon" aria-hidden="true">♡</span>
+            <span className="emptyIcon" aria-hidden="true"><NavigationIcon name="favorite" /></span>
             <div>
               <h3>Você ainda não salvou nenhum anúncio.</h3>
               <p>

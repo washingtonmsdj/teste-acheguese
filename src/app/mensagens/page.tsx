@@ -5,6 +5,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { AccountContextRail } from '@/shared/layout/account-context-rail';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -104,7 +105,7 @@ export default async function MessagesPage() {
           </div>
         ) : (
           <div className="classifiedEmptyState">
-            <span className="emptyIcon" aria-hidden="true">✉</span>
+            <span className="emptyIcon" aria-hidden="true"><NavigationIcon name="messages" /></span>
             <div>
               <h3>Nenhuma conversa ainda.</h3>
               <p>
