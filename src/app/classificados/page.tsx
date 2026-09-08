@@ -19,7 +19,7 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   title: 'Classificados',
   description:
-    'Classificados locais do Achegue-se em Salvador: encontre e anuncie perto de você.',
+    `Classificados locais do Achegue-se em ${territoryReleaseScope.city.name}: encontre e anuncie perto de você.`,
   alternates: siteUrl
     ? {
         canonical: '/classificados',
@@ -130,8 +130,8 @@ export default async function ClassifiedsPage({
     const { data: city, error: cityError } = await supabase
       .from('cities')
       .select('id')
-      .eq('slug', 'salvador')
-      .eq('state_code', 'BA')
+      .eq('slug', territoryReleaseScope.city.slug)
+      .eq('state_code', territoryReleaseScope.city.stateCode)
       .eq('is_active', true)
       .maybeSingle();
 
@@ -174,7 +174,7 @@ export default async function ClassifiedsPage({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={
         <ClassifiedsContextRail
           resultCount={items.length}
@@ -190,7 +190,7 @@ export default async function ClassifiedsPage({
             <p className="eyebrow">Classificados locais</p>
             <h1>Encontre e anuncie <em>perto de você.</em></h1>
             <p>
-              Produtos e anúncios em Salvador, com localização informada,
+              Produtos e anúncios em {territoryReleaseScope.city.name}, com localização informada,
               favoritos e conversa dentro do Achegue-se.
             </p>
 
