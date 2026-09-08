@@ -19,14 +19,14 @@ Projeto Vercel: `teste-acheguese`
 - quality: `34201520319` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
-Esse é o primeiro candidate que contém o frontend técnico atual após os refinamentos de densidade mobile e fechamento de touch targets.
+Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
 
 ## 2. Provenance e configuração pública
 
 Antes do deployment foi confirmado:
 
-- `main = bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
-- `deploy/vercel-bundle/SOURCE_SHA = bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- `main source/runtime = 85df68f43479aa6b25d8d8613bfd66a29809950c`;
+- `deploy/vercel-bundle/SOURCE_SHA = 85df68f43479aa6b25d8d8613bfd66a29809950c`;
 - quality do SHA exato = PASS;
 - vercel-source-bundle do SHA exato = PASS;
 - bundle sem arquivos `.env` versionados;

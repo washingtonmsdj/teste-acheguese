@@ -240,7 +240,7 @@ Detalhe público de Classificados:
 - bloco de segurança em alto contraste;
 - favoritos, mensagem, denúncia, structured data e lifecycle não foram alterados.
 
-Candidate visual: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`.
+Candidate histórico: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`. O candidate canônico atual é `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`.
 
 
 ## Moderação
