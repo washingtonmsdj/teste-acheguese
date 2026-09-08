@@ -16,6 +16,14 @@ const css = readFileSync(
   ),
   'utf8',
 );
+const loading = readFileSync(
+  new URL('../src/app/loading.tsx', import.meta.url),
+  'utf8',
+);
+const globals = readFileSync(
+  new URL('../src/app/globals.css', import.meta.url),
+  'utf8',
+);
 
 test('Home mantém o mapa como protagonista do MVP', () => {
   assert.match(home, /TerritoryMiniMap/);
@@ -39,4 +47,20 @@ test('Home não expõe rollout como badge principal', () => {
 test('Home mantém Classificados como utilidade local', () => {
   assert.match(home, /Classificados locais/);
   assert.match(home, /Compre e venda perto de você\./);
+});
+
+
+test('loading acompanha a composição responsiva da Home', () => {
+  assert.match(loading, /contextRail=/);
+  assert.match(loading, /loadingContextRail/);
+  assert.match(
+    globals,
+    /@media \(min-width: 1180px\) \{\n  \.loadingHeroLayout/,
+  );
+  assert.equal(
+    globals.includes(
+      '@media (min-width: 980px) {\n  .loadingHeroLayout',
+    ),
+    false,
+  );
 });

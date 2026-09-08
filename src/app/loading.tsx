@@ -5,6 +5,13 @@ export default function Loading() {
     <TerritoryAppShell
       activeId="territory"
       territoryName="Complexo do Nordeste de Amaralina"
+      contextRail={
+        <div className="loadingContextRail" aria-hidden="true">
+          <span className="loadingRailCard loadingRailCardPrimary" />
+          <span className="loadingRailCard" />
+          <span className="loadingRailCard loadingRailCardShort" />
+        </div>
+      }
     >
       <main
         className="loadingPage"

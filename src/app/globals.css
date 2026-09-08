@@ -353,7 +353,8 @@ footer .brand small { color: #b9ded4; }
 .loadingText,
 .loadingActions span,
 .loadingMap,
-.loadingMetrics span {
+.loadingMetrics span,
+.loadingRailCard {
   background: linear-gradient(90deg, #eef4f2 20%, #fafcfc 50%, #eef4f2 80%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite linear;
@@ -407,17 +408,36 @@ footer .brand small { color: #b9ded4; }
 }
 @keyframes shimmer { to { background-position: -200% 0; } }
 
+.loadingContextRail {
+  display: grid;
+  gap: 12px;
+}
+
+.loadingRailCard {
+  display: block;
+  height: 154px;
+  border-radius: 20px;
+}
+
+.loadingRailCardPrimary {
+  height: 222px;
+}
+
+.loadingRailCardShort {
+  height: 124px;
+}
+
 @media (min-width: 720px) {
   .stateCard { padding: 34px; }
   .loadingMetrics { grid-template-columns: repeat(4, 1fr); }
 }
 
-@media (min-width: 980px) {
+@media (min-width: 1180px) {
   .loadingHeroLayout {
-    grid-template-columns: minmax(0, 1fr) minmax(420px, .8fr);
+    grid-template-columns: minmax(0, 1.02fr) minmax(360px, .88fr);
     align-items: center;
     min-height: 560px;
-    gap: 64px;
+    gap: 28px;
   }
   .loadingMap { min-height: 390px; }
 }
