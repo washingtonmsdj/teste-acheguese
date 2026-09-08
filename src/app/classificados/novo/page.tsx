@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClassifiedDraftAction } from '@/app/classificados/novo/actions';
@@ -32,7 +33,7 @@ export default async function NewClassifiedPage({
     return (
       <TerritoryAppShell
         activeId="classifieds"
-        territoryName="Salvador"
+        territoryName={territoryReleaseScope.city.name}
       >
         <main>
         <section className="formShell">
@@ -72,7 +73,7 @@ export default async function NewClassifiedPage({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={<AccountContextRail active="new" />}
     >
       <main>
