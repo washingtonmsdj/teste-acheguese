@@ -119,7 +119,7 @@ O reset da cota ocorreu e o primeiro candidate foi criado:
 
 O preview está protegido por Vercel Deployment Protection/SSO. A proteção intercepta o smoke/visual automático antes da aplicação; isso é o blocker atual de inspeção, não um erro do app.
 
-A `main` já avançou para `0a2848e2...` após esse candidate, portanto ele não representa o HEAD final vivo.
+A `main` já avançou para `f7fe2080...` após esse candidate, portanto ele não representa o HEAD final vivo. O HEAD posterior contém o guard Vercel de env pública e hardening de alvos de toque do frontend.
 
 ## Próximo deployment
 

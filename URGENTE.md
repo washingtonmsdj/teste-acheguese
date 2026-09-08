@@ -1177,7 +1177,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`0a2848e23cc9898db4a6177908fb8f8ef91a5a75`
+`f7fe20806ff3a1f53ba5c4a2d432635bbcdbbb9e`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1208,6 +1208,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - bottom navigation também deriva do registry único; Community já possui posição mobile preparada, mas permanece `planned` e invisível; não existe lista paralela de destinos mobile;
 - frontend territorial foi refinado no source: Home agora prioriza utilidade do morador, mapa, dados e bairros; cabeçalho e tabbar mobile ganharam navegação visual consistente; Mapa ganhou filtros e lista de locais mais claros; menu, loading global, 404, erro e Busca foram alinhados ao mesmo sistema visual; `/mapa` e `/classificados` agora possuem loading states próprios que preservam o layout da rota e reduced-motion; copy de roadmap/MVP foi removida das superfícies públicas e protegida por teste de contrato; nenhum schema/API/rollout mudou; quality run `34180676875` e bundle run `34180676868` = PASS.
 - refinamento visual desktop `a74679aa`: em 1360px+ a Home usa hero + mapa lado a lado mesmo com rail; rail contextual alinha à toolbar; busca/topbar ganharam hierarquia tipográfica melhor; bloco de dados públicos virou seção de alto contraste; rail da Home ganhou cartão territorial de destaque; mobile mantém a arquitetura existente; quality e bundle do commit = PASS.
+- hardening de interação `f7fe2080`: alvos de toque principais normalizados para ~44px+ no menu mobile, seletor territorial, links do rail, conta desktop e controles/lista do Mapa; quality + bundle = PASS.
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1316,7 +1317,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - o shareable-link oficial exige cookie pós-redirect, mas os clientes automáticos disponíveis não preservam essa sessão;
 - portanto smoke completo e revisão visual 1440×900 / 390×844 **ainda não estão aprovados**;
 - não desativar proteção nem promover apenas para contornar a limitação da ferramenta;
-- a `main` avançou após o candidate para `0a2848e2...`, adicionando fail-closed obrigatório de env pública em builds Vercel; quality/bundle = PASS; candidate 1 não contém esse commit posterior.
+- a `main` avançou após o candidate até `f7fe2080...`: inclui fail-closed obrigatório de env pública em builds Vercel (`0a2848e2`) + hardening de alvos de toque do frontend; quality/bundle = PASS; candidate 1 não contém esses commits posteriores.
 
 ### Próxima ação
 

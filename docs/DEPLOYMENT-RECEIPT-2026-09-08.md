@@ -135,12 +135,13 @@ Gate visual ainda obrigatório:
 
 Após a criação do candidate, a `main` avançou para:
 
-`0a2848e23cc9898db4a6177908fb8f8ef91a5a75`
+`f7fe20806ff3a1f53ba5c4a2d432635bbcdbbb9e`
 
-Mudança:
+Mudanças posteriores ao candidate:
 
-- builds Vercel/release agora exigem configuração pública completa;
+- `0a2848e2`: builds Vercel/release agora exigem configuração pública completa;
 - Vercel sem Supabase/Site URL falha fechado;
+- `f7fe2080`: alvos de toque principais do frontend normalizados para ~44px+;
 - quality PASS;
 - vercel-source-bundle PASS;
 - `SOURCE_SHA` sincronizado.
