@@ -23,18 +23,19 @@
   stroke-linejoin: round;
 }
 
-.copy {
+:global(.classifiedCategoryGrid) .copy {
   min-width: 0;
   display: grid;
   gap: 4px;
+  font-size: inherit;
 }
 
-.copy strong {
+:global(.classifiedCategoryGrid) .copy strong {
   font-size: .88rem;
   line-height: 1.15;
 }
 
-.copy small {
+:global(.classifiedCategoryGrid) .copy small {
   max-width: 190px;
   color: var(--muted);
   font-size: .62rem;
@@ -53,7 +54,7 @@
 }
 
 @media (min-width: 720px) {
-  .copy small {
+  :global(.classifiedCategoryGrid) .copy small {
     max-width: 220px;
   }
 }
