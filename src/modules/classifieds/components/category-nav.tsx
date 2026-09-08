@@ -11,6 +11,17 @@ type CategoryNavProps = {
   query?: string;
 };
 
+const categoryDescriptions: Record<ClassifiedCategoryId, string> = {
+  vehicles: 'Carros, motos e peças',
+  'real-estate': 'Casas, apartamentos e aluguel',
+  electronics: 'Celulares, informática e acessórios',
+  home: 'Móveis, decoração e utilidades',
+  fashion: 'Roupas, calçados e acessórios',
+  sports: 'Esporte, lazer e equipamentos',
+  pets: 'Itens e cuidados para animais',
+  other: 'O que não se encaixa nas demais',
+};
+
 export function ClassifiedCategoryNav({
   activeCategory,
   query,
@@ -34,7 +45,10 @@ export function ClassifiedCategoryNav({
             <span className={styles.icon} aria-hidden="true">
               <ClassifiedCategoryIcon category={category.id} />
             </span>
-            <strong>{category.label}</strong>
+            <span className={styles.copy}>
+              <strong>{category.label}</strong>
+              <small>{categoryDescriptions[category.id]}</small>
+            </span>
           </Link>
         );
       })}

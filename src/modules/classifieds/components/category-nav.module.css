@@ -23,6 +23,24 @@
   stroke-linejoin: round;
 }
 
+.copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.copy strong {
+  font-size: .88rem;
+  line-height: 1.15;
+}
+
+.copy small {
+  max-width: 190px;
+  color: var(--muted);
+  font-size: .62rem;
+  line-height: 1.4;
+}
+
 :global(.classifiedCategoryGrid a.active) .icon {
   border-color: rgba(12,148,112,.34);
   background: #dff5ec;
@@ -32,6 +50,12 @@
 :global(.classifiedCategoryGrid a:hover) .icon {
   border-color: rgba(12,148,112,.28);
   background: #e4f6ef;
+}
+
+@media (min-width: 720px) {
+  .copy small {
+    max-width: 220px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
