@@ -31,12 +31,12 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`2e5cc7d72fd86062204e37f11f369a8fd39d457f`
+`3b9f19b219338ce525600edb54efeb158b8888ac`
 
 Para esse HEAD:
 
-- quality: **PASS**;
-- bundle de transporte: **PASS**;
+- quality: **PASS** — run `34177850480`;
+- bundle de transporte: **PASS** — run `34177850536`;
 - Supabase security advisors: **0 lints**;
 - migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;
 - transport branch sincronizada com o mesmo `SOURCE_SHA`;
@@ -114,7 +114,15 @@ O source mais recente já está empacotado; não é necessário alterar arquitet
 
 ## Próximo deployment
 
-Usar o bundle do HEAD mais recente e injetar somente as três variáveis públicas acima.
+Antes de criar qualquer candidato, executar em um checkout do HEAD pretendido:
+
+```bash
+npm run release:preflight
+```
+
+Esse gate falha fechado se o checkout local, a `main`, `deploy/vercel-bundle/SOURCE_SHA`, o workflow `quality` e o workflow `vercel-source-bundle` não estiverem alinhados no mesmo SHA aprovado. `GITHUB_TOKEN` é opcional para autenticação/rate limit e nunca é impresso; `RELEASE_SOURCE_SHA` pode ser usado somente quando o ambiente não possui `.git`.
+
+Usar somente o bundle do HEAD que passou nesse gate e injetar somente as três variáveis públicas acima.
 
 Após READY:
 

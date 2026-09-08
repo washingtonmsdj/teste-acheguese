@@ -17,9 +17,10 @@ Branch canônica: `main`
 
 Checkpoint vivo usado para este receipt:
 
-- `main`: `e53c5ed72d2c5960a69fb1e9b4daad7377ad6a0d`;
-- quality run: `34155962240` — **PASS**;
-- vercel-source-bundle run: `34155962290` — **PASS**;
+- source/runtime checkpoint: `3b9f19b219338ce525600edb54efeb158b8888ac`;
+- quality run: `34177850480` — **PASS**;
+- vercel-source-bundle run: `34177850536` — **PASS**;
+- `deploy/vercel-bundle/SOURCE_SHA`: `3b9f19b219338ce525600edb54efeb158b8888ac` — **MATCH**;
 - deploy transport: `SOURCE_SHA == main HEAD` no momento da prova.
 
 Quality inclui:
@@ -31,6 +32,8 @@ Quality inclui:
 - TypeScript;
 - node:test;
 - next build.
+
+Pré-deploy agora também possui gate executável versionado (`npm run release:preflight`) com testes unitários fail-closed. Ele exige checkout local = `main` = `deploy/vercel-bundle/SOURCE_SHA` e PASS de `quality` + `vercel-source-bundle` no HEAD exato.
 
 PRs para `main` também executam quality + source-closure validate. Publish do transport branch é restrito à `main`.
 
@@ -199,22 +202,19 @@ Blocker externo:
 
 Depois do reset:
 
-1. ler `main` HEAD ao vivo;
-2. confirmar `deploy/vercel-bundle/SOURCE_SHA == main HEAD`;
-3. confirmar quality PASS;
-4. confirmar bundle PASS;
-5. confirmar Supabase security advisor sem blocker;
-6. confirmar rollout ainda `data_preparation`;
-7. criar **um único** deployment candidato;
-8. se build falhar, ler logs antes de segunda tentativa;
-9. adicionar somente `https://<candidato>/auth/callback` à allow-list do Supabase Auth;
-10. executar `territory-release-smoke` com `EXPECT_TERRITORY_PUBLIC=0`;
-11. revisar desktop 1440×900;
-12. revisar mobile 390×844;
-13. revisar logs/runtime;
-14. executar Auth/Classificados E2E;
-15. corrigir somente blockers comprovados;
-16. fechar FASE 4 somente após todos os gates.
+1. executar `npm run release:preflight` no checkout candidato e exigir PASS;
+2. confirmar Supabase security advisor sem blocker;
+3. confirmar rollout ainda `data_preparation`;
+4. criar **um único** deployment candidato;
+5. se build falhar, ler logs antes de segunda tentativa;
+6. adicionar somente `https://<candidato>/auth/callback` à allow-list do Supabase Auth;
+7. executar `territory-release-smoke` com `EXPECT_TERRITORY_PUBLIC=0`;
+8. revisar desktop 1440×900;
+9. revisar mobile 390×844;
+10. revisar logs/runtime;
+11. executar Auth/Classificados E2E;
+12. corrigir somente blockers comprovados;
+13. fechar FASE 4 somente após todos os gates.
 
 ## 11. STOP
 

@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `7f1f2fb0132d38b022927e9eba78c5999d0cb78c`
+> **HEAD técnico de referência:** `3b9f19b219338ce525600edb54efeb158b8888ac`
 
 ---
 
@@ -496,6 +496,7 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 - [x] observabilidade server-side estruturada/redigida em Home, Mapa/API e Health;
 - [x] health canônico exige Territory Core + canário de Classificados;
 - [x] source closure Vercel manifestada e testada, incluindo o script de worker MapLibre e excluindo `.env`;
+- [x] gate de pré-deploy fail-closed versionado: checkout local, `main`, `deploy/vercel-bundle/SOURCE_SHA`, `quality` e `vercel-source-bundle` precisam apontar para o mesmo HEAD aprovado;
 - [x] allowlist obsoleta de imagens Unsplash removida;
 - [x] 35 classes globais marketplace órfãs removidas; comparação automática atual = 0 classes globais órfãs;
 - [x] lint + TypeScript + testes + build + bundle;
@@ -1153,7 +1154,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### Sequência imediata após o reset
 
-1. conferir que `main` e `deploy/vercel-bundle` apontam para o mesmo `SOURCE_SHA`;
+1. executar `npm run release:preflight` em checkout do candidato e exigir PASS; o gate comprova checkout = `main` = `deploy/vercel-bundle/SOURCE_SHA` e PASS de `quality` + `vercel-source-bundle` no HEAD exato;
 2. criar um único deployment candidato com as três variáveis públicas;
 3. aguardar estado `READY`;
 4. validar `/api/health`, `/robots.txt` e `/sitemap.xml`;
@@ -1162,8 +1163,9 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 7. conferir que Home/Mapa permanecem `noindex` enquanto rollout = `data_preparation`;
 8. executar revisão visual real desktop + mobile;
 9. inspecionar runtime logs/erros do deployment;
-10. corrigir qualquer regressão encontrada e repetir quality gate;
-11. somente então fechar FASE 4 e avaliar FASE 5 — Community.
+10. executar Auth/Classificados E2E;
+11. corrigir qualquer regressão encontrada e repetir quality gate;
+12. somente então fechar FASE 4 e avaliar FASE 5 — Community.
 
 ### Regra de avanço
 
@@ -1175,7 +1177,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`2e5cc7d72fd86062204e37f11f369a8fd39d457f`
+`3b9f19b219338ce525600edb54efeb158b8888ac`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1201,6 +1203,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - health endpoint passou a exigir canário do Territory Core + Salvador/Classificados;
 - observabilidade server-side estruturada foi adicionada sem stack/contexto arbitrário e com redaction de keys/JWT;
 - bundle Vercel agora possui manifesto de source closure e teste contra omissão de lifecycle scripts;
+- pré-deploy agora possui gate executável fail-closed (`npm run release:preflight`) que impede candidate com checkout, `main`, transport branch ou workflows divergentes;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
