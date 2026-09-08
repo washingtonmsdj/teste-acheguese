@@ -4,8 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import { sendConversationMessageAction } from '@/app/mensagens/actions';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,8 +73,11 @@ export default async function ConversationPage({
   const sendAction = sendConversationMessageAction.bind(null, conversation.id);
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="threadShell">
         <div className="container threadContainer">
@@ -148,7 +150,7 @@ export default async function ConversationPage({
         </div>
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
