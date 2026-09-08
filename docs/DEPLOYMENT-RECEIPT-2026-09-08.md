@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`;
-- URL protegida: `https://teste-acheguese-fp4rmres7-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`;
+- URL protegida: `https://teste-acheguese-pq4otu1w2-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `702403c01670c5a6853b21f49f438693f798f550`;
-- quality: `34198106553` PASS;
+- source/runtime: `4d07ac9f829fbca93409a1effee86ca59be21db2`;
+- quality: `34200899658` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Esse é o primeiro candidate que contém o frontend técnico atual após os refinamentos de densidade mobile e fechamento de touch targets.
@@ -124,15 +124,15 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém o frontend técnico `702403c0`:
+O candidate contém o frontend técnico `4d07ac9f`:
 
 - Home/Mapa/Classificados no App Shell Território Vivo;
-- Busca como hub territorial separado entre Mapa e Classificados;
-- Menu com contexto territorial e ícones consistentes;
-- Auth alinhado ao Território Vivo;
-- Auth mantém Server Actions, redirects e validações originais;
-- nenhuma busca universal ou módulo futuro fictício foi exposto;
-- runtime errors = 0.
+- Busca, Menu e Auth já alinhados ao mesmo sistema;
+- área pessoal usa rail contextual único em Favoritos/Mensagens/Meus/Novo/Editar;
+- CSS Auth legado removido para evitar sobrescrita por cascata;
+- estados vazios usam o mesmo sistema de ícones;
+- detalhe público de anúncio refinado sem alterar SEO/actions/denúncia;
+- runtime errors observados = 0.
 
 ## 8. Previews anteriores
 

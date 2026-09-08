@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `702403c01670c5a6853b21f49f438693f798f550`
+> **HEAD técnico de referência:** `4d07ac9f829fbca93409a1effee86ca59be21db2`
 
 ---
 
@@ -1183,7 +1183,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`702403c01670c5a6853b21f49f438693f798f550`
+`4d07ac9f829fbca93409a1effee86ca59be21db2`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1219,6 +1219,10 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - fechamento de touch targets `bab5273b`: menu/fechar e rail de Classificados passaram a respeitar alvo ~44px; quality `34195671855` + bundle `34195671848` = PASS;
 - Busca/Menu `7209f824`: Busca virou hub territorial com separação explícita entre Mapa e Classificados; Menu ganhou contexto territorial e ícones consistentes; nenhuma busca universal fictícia ou módulo `planned` foi exposto; quality `34197469384` + bundle `34197469380` = PASS;
 - Auth `702403c0`: tela de entrada alinhada ao Território Vivo com contexto territorial e benefícios reais da conta; `signInAction`, `signUpAction`, redirects e validações permaneceram inalterados; quality `34198106553` + bundle `34198106554` = PASS;
+- Account rail `9460231b`: criado rail único de área pessoal e removido CSS Auth legado que podia sobrescrever o novo visual;
+- superfícies de conta `d7dfe744` + `f0c68f67`: Favoritos, Mensagens, conversa, Meus/Novo/Editar anúncios usam o mesmo rail contextual;
+- account guard `036b7379`: estados vazios usam o sistema de ícones e teste impede retorno de `authCardWide`/perda do rail;
+- detalhe público `4d07ac9f`: galeria, contexto local, preço/ações e bloco de segurança alinhados ao Território Vivo; quality `34200899658` + bundle `34200899596` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1310,17 +1314,18 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`;
-- URL protegida: `https://teste-acheguese-fp4rmres7-jogo-brasils-projects.vercel.app`;
-- source/runtime: `702403c01670c5a6853b21f49f438693f798f550`;
+- deployment: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`;
+- URL protegida: `https://teste-acheguese-pq4otu1w2-jogo-brasils-projects.vercel.app`;
+- source/runtime: `4d07ac9f829fbca93409a1effee86ca59be21db2`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- runtime errors: **0**;
-- contém Home, Mapa, Classificados, Busca, Menu e Auth no mesmo frontend atualizado;
-- inspeção HTTP continua interceptada pelo SSO do preview antes de Auth/Home após a criação desse candidate;
+- runtime errors observados: **0**;
+- contém Home, Mapa, Classificados, Busca, Menu, Auth e área pessoal unificada;
+- detalhe público de Classificados usa o novo acabamento Território Vivo;
+- inspeção HTTP continua interceptada pela Deployment Protection/SSO;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
@@ -1334,7 +1339,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

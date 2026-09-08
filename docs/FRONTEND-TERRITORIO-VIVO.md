@@ -219,3 +219,25 @@ A superfície `/entrar` permanece standalone por design, mas agora usa a mesma l
 - sem mudança em redirects, senha mínima ou validações.
 
 Candidate visual: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`.
+
+
+## Área pessoal e detalhe público
+
+Checkpoint: `4d07ac9f829fbca93409a1effee86ca59be21db2`.
+
+Área pessoal:
+
+- rail único para Meus anúncios, Novo anúncio, Favoritos e Mensagens;
+- Favoritos, Mensagens/conversa e Meus/Novo/Editar usam a mesma autoridade visual;
+- estados vazios usam NavigationIcon;
+- CSS `authCardWide` legado foi removido e possui teste anti-regressão.
+
+Detalhe público de Classificados:
+
+- contexto local explícito;
+- galeria e hierarquia de preço refinadas;
+- card de negociação mais claro;
+- bloco de segurança em alto contraste;
+- favoritos, mensagem, denúncia, structured data e lifecycle não foram alterados.
+
+Candidate visual: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`.
