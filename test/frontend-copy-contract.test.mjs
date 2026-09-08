@@ -11,6 +11,7 @@ const publicSurfacePaths = [
   '../src/app/classificados/page.tsx',
   '../src/app/mapa/page.tsx',
   '../src/app/entrar/page.tsx',
+  '../src/app/classificados/novo/page.tsx',
 ];
 
 const forbiddenPhrases = [
@@ -29,6 +30,9 @@ const forbiddenPhrases = [
   'configuração pública',
   'neste ambiente',
   'demonstração',
+  'configuração segura de autenticação',
+  'quando houver conteúdo suficiente',
+  'uma busca única virá',
 ];
 
 test('superfícies principais não expõem linguagem interna de implementação', () => {
