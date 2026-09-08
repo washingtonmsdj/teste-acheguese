@@ -17,8 +17,7 @@ import { ClassifiedMediaUploader } from '@/modules/classifieds/components/media-
 import { classifiedCategories } from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -123,8 +122,11 @@ export default async function EditClassifiedPage({
   const deleteAction = deleteArchivedClassifiedAction.bind(null, item.id);
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="internalHero compactInternalHero">
         <div className="container narrow">
@@ -380,7 +382,7 @@ export default async function EditClassifiedPage({
         </aside>
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
