@@ -6,6 +6,13 @@ export default function ClassifiedsLoading() {
     <TerritoryAppShell
       activeId="classifieds"
       territoryName={territoryReleaseScope.city.name}
+      contextRail={
+        <div className="classifiedLoadingRail" aria-hidden="true">
+          <span className="classifiedLoadingRailCard classifiedLoadingRailPrimary" />
+          <span className="classifiedLoadingRailCard classifiedLoadingRailActions" />
+          <span className="classifiedLoadingRailCard classifiedLoadingRailTrust" />
+        </div>
+      }
     >
       <main
         className="classifiedLoadingPage"

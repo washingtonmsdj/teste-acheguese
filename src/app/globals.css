@@ -2374,7 +2374,8 @@ footer .brand small { color: #b9ded4; }
 .classifiedLoadingCategories span,
 .classifiedLoadingResultsHead span,
 .classifiedLoadingImage,
-.classifiedLoadingCardLine {
+.classifiedLoadingCardLine,
+.classifiedLoadingRailCard {
   display: block;
   background: linear-gradient(90deg, #edf3f1 20%, #fafcfc 50%, #edf3f1 80%);
   background-size: 200% 100%;
@@ -2480,6 +2481,25 @@ footer .brand small { color: #b9ded4; }
   width: 62%;
 }
 
+.classifiedLoadingRail {
+  display: grid;
+  gap: 12px;
+}
+
+.classifiedLoadingRailCard {
+  display: block;
+  height: 168px;
+  border-radius: 20px;
+}
+
+.classifiedLoadingRailActions {
+  height: 214px;
+}
+
+.classifiedLoadingRailTrust {
+  height: 138px;
+}
+
 @keyframes classifiedLoadingShimmer {
   to { background-position: -200% 0; }
 }
@@ -2520,7 +2540,8 @@ footer .brand small { color: #b9ded4; }
   .classifiedLoadingCategories span,
   .classifiedLoadingResultsHead span,
   .classifiedLoadingImage,
-  .classifiedLoadingCardLine {
+  .classifiedLoadingCardLine,
+  .classifiedLoadingRailCard {
     animation: none;
   }
 }
