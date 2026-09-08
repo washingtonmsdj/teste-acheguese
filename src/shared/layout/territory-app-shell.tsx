@@ -150,7 +150,7 @@ export function TerritoryAppShell({
 
           <Link className={styles.accountButton} href="/entrar">
             <NavigationIcon name="user" />
-            <span>Entrar</span>
+            <span>Sua conta</span>
           </Link>
         </header>
 

@@ -29,7 +29,14 @@ function authError(code: string, next: string): never {
 async function requireTrustedAuthOrigin(
   next: string,
 ): Promise<string> {
-  const origin = await requireTrustedAuthOrigin(next);
+  const headerStore = await headers();
+  const origin = getTrustedAuthOrigin(
+    headerStore.get('origin'),
+  );
+
+  if (!origin) {
+    authError('origem_invalida', next);
+  }
 
   return origin;
 }
@@ -73,14 +80,7 @@ export async function signUpAction(formData: FormData) {
     authError('dados_invalidos', next);
   }
 
-  const headerStore = await headers();
-  const origin: string | null = getTrustedAuthOrigin(
-    headerStore.get('origin'),
-  );
-
-  if (!origin) {
-    authError('origem_invalida', next);
-  }
+  const origin = await requireTrustedAuthOrigin(next);
 
   const supabase = await createSupabaseServerClient();
   const callback = new URL('/auth/callback', origin);

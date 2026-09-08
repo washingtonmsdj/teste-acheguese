@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { signInAction, signUpAction } from '@/app/entrar/actions';
+import { safeInternalPath } from '@/lib/safe-path';
+import { getSupabasePublicConfig } from '@/lib/supabase/config';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 import { Brand } from '@/shared/ui/brand';
 
@@ -33,10 +37,24 @@ export default async function SignInPage({
   searchParams,
 }: SignInPageProps) {
   const params = await searchParams;
+  const requestedNext = safeInternalPath(
+    params.next,
+    '/classificados/meus',
+  );
   const next =
-    params.next?.startsWith('/') && !params.next.startsWith('//')
-      ? params.next
-      : '/classificados/meus';
+    requestedNext === '/entrar' ||
+    requestedNext.startsWith('/entrar?')
+      ? '/classificados/meus'
+      : requestedNext;
+
+  if (getSupabasePublicConfig()) {
+    const supabase = await createSupabaseServerClient();
+    const { data: claimsData } = await supabase.auth.getClaims();
+
+    if (typeof claimsData?.claims?.sub === 'string') {
+      redirect(next);
+    }
+  }
 
   return (
     <main className="authPage">

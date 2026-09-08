@@ -187,3 +187,39 @@ test('VERCEL_URL só é aceita quando vem do ambiente Vercel e é vercel.app', (
     null,
   );
 });
+
+
+test('fluxo Auth não pode reintroduzir recursão no guard de Origin', async () => {
+  const { readFileSync } = await import('node:fs');
+  const actionsSource = readFileSync(
+    new URL('../src/app/entrar/actions.ts', import.meta.url),
+    'utf8',
+  );
+
+  assert.equal(
+    actionsSource.includes(
+      'const origin = await requireTrustedAuthOrigin(next);\n\n  return origin;',
+    ),
+    false,
+  );
+  assert.match(
+    actionsSource,
+    /const headerStore = await headers\(\);[\s\S]*getTrustedAuthOrigin/,
+  );
+  assert.equal(
+    (actionsSource.match(/await requireTrustedAuthOrigin\(next\)/g) ?? []).length,
+    2,
+  );
+});
+
+test('página de conta reutiliza safeInternalPath e reconhece sessão existente', async () => {
+  const { readFileSync } = await import('node:fs');
+  const pageSource = readFileSync(
+    new URL('../src/app/entrar/page.tsx', import.meta.url),
+    'utf8',
+  );
+
+  assert.match(pageSource, /safeInternalPath/);
+  assert.match(pageSource, /supabase\.auth\.getClaims\(\)/);
+  assert.match(pageSource, /redirect\(next\)/);
+});
