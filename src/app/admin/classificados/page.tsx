@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import {
@@ -139,7 +140,7 @@ export default async function ClassifiedAdminPage({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={
         <AdminContextRail
           pendingCount={pendingResult.data?.length ?? 0}
