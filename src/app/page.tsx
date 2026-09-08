@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { redirect } from 'next/navigation';
 import { reportServerError } from '@/core/observability/server-log';
 import {
@@ -22,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Território, dados e mapa local',
     description:
-      'Explore dados públicos verificados, mapa e serviços do Complexo do Nordeste de Amaralina em Salvador.',
+      `Explore dados públicos verificados, mapa e serviços do ${territoryReleaseScope.group.name} em ${territoryReleaseScope.city.name}.`,
     alternates: canIndex
       ? {
           canonical: '/',

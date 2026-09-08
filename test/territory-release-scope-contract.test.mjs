@@ -41,6 +41,7 @@ test('runtime territorial consome o manifesto compartilhado', () => {
 
 test('superfícies visuais consomem o contexto territorial compartilhado', () => {
   const paths = [
+    '../src/app/page.tsx',
     '../src/shared/layout/territory-app-shell.tsx',
     '../src/app/loading.tsx',
     '../src/app/mapa/page.tsx',
@@ -50,6 +51,16 @@ test('superfícies visuais consomem o contexto territorial compartilhado', () =>
     '../src/app/entrar/page.tsx',
     '../src/app/classificados/page.tsx',
     '../src/integrations/map/territory-map-explorer.tsx',
+    '../src/app/admin/classificados/page.tsx',
+    '../src/app/classificados/[id]/editar/page.tsx',
+    '../src/app/classificados/novo/page.tsx',
+    '../src/app/classificados/meus/page.tsx',
+    '../src/app/mensagens/[id]/page.tsx',
+    '../src/app/mensagens/page.tsx',
+    '../src/app/favoritos/page.tsx',
+    '../src/shared/layout/account-surface-loading.tsx',
+    '../src/app/classificados/anuncio/[slug]/page.tsx',
+    '../src/app/classificados/loading.tsx',
   ];
 
   for (const path of paths) {
@@ -58,6 +69,11 @@ test('superfícies visuais consomem o contexto territorial compartilhado', () =>
       source.includes('Complexo do Nordeste de Amaralina'),
       false,
       `${path} não deve duplicar o nome do grupo`,
+    );
+    assert.equal(
+      source.includes('territoryName="Salvador"'),
+      false,
+      `${path} não deve fixar a cidade no App Shell`,
     );
     assert.equal(
       source.includes('Salvador · BA'),
