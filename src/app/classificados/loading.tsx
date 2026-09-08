@@ -1,10 +1,11 @@
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export default function ClassifiedsLoading() {
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
     >
       <main
         className="classifiedLoadingPage"
