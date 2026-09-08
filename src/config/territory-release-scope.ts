@@ -7,6 +7,7 @@ export const territoryReleaseScope = {
   },
   group: {
     name: 'Complexo do Nordeste de Amaralina',
+    shortName: 'Complexo',
     slug: 'complexo-do-nordeste-de-amaralina',
   },
   map: {

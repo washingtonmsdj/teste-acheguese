@@ -60,7 +60,7 @@ function scopeHeadline(data: TerritoryHomeData) {
 
   return (
     <>
-      Tudo que importa no <em>Complexo</em>, em um só lugar.
+      Tudo que importa no <em>{territoryReleaseScope.group.shortName}</em>, em um só lugar.
     </>
   );
 }
@@ -74,7 +74,10 @@ function ScopeSelector({
     <div className={styles.scopeBlock}>
       <div className={styles.scopeLabel}>
         <span>Mudar área</span>
-        <small>Complexo + 4 bairros</small>
+        <small>
+          {territoryReleaseScope.group.shortName} +{' '}
+          {territoryReleaseScope.neighborhoods.length} bairros
+        </small>
       </div>
       <nav
         className={styles.scopeSelector}
@@ -93,7 +96,7 @@ function ScopeSelector({
               : undefined
           }
         >
-          Complexo
+          {territoryReleaseScope.group.shortName}
         </Link>
         {data.neighborhoods.map((neighborhood) => (
           <Link
@@ -233,7 +236,7 @@ export function TerritoryHome({
               <strong>
                 {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
               </strong>
-              <span>Complexo do Nordeste de Amaralina</span>
+              <span>{territoryReleaseScope.group.name}</span>
             </div>
 
             <p className="eyebrow">Território Vivo</p>

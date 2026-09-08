@@ -82,3 +82,29 @@ test('superfícies visuais consomem o contexto territorial compartilhado', () =>
     );
   }
 });
+
+
+test('frontend de release não duplica nomes geográficos fora da config', () => {
+  const files = [
+    '../src/features/territory-home/components/territory-home.tsx',
+    '../src/modules/classifieds/components/classified-card.tsx',
+  ];
+
+  for (const relativePath of files) {
+    const source = readFileSync(
+      new URL(relativePath, import.meta.url),
+      'utf8',
+    );
+
+    assert.equal(
+      source.includes("'Salvador'"),
+      false,
+      `${relativePath} não pode hardcodar Salvador`,
+    );
+    assert.equal(
+      source.includes('Complexo do Nordeste de Amaralina'),
+      false,
+      `${relativePath} não pode duplicar o nome do grupo`,
+    );
+  }
+});

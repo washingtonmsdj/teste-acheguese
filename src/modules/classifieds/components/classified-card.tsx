@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ClassifiedListItem } from '@/modules/classifieds/domain/types';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 type ClassifiedCardProps = {
@@ -60,7 +61,7 @@ export function ClassifiedCard({
             {conditionLabels[item.condition] ?? item.condition}
           </span>
           <span className="publicClassifiedLocation">
-            {location || 'Salvador'}
+            {location || territoryReleaseScope.city.name}
           </span>
         </div>
 
