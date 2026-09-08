@@ -1171,7 +1171,7 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O candidate abaixo representa o último HEAD técnico de runtime.
+A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O source técnico avançou após o último candidate por hardening de development config; portanto o candidate listado abaixo é histórico até um novo deployment source-aligned ser gerado.
 
 ## Candidate source-aligned atual
 
@@ -1217,7 +1217,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### HEAD técnico de referência
 
-`e735797b8f64947de13855cf8cf8c285e16435fa`
+`6329bb61599bdcce49c5b1a2cde3c8c734237251`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1226,6 +1226,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
 
 - Home território-first continua alimentada somente por fatos/lugares oficiais;
 - Data Cache da Home está em **60 segundos**, alinhado à visibilidade de rollout/SEO;

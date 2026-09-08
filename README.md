@@ -66,6 +66,10 @@ npm run env:check
 npm run dev
 ```
 
-O preflight falha antes do Next quando encontra par Supabase incompleto, URL pública inválida ou origem de mapa malformada. CI sem env pública continua suportado.
+`npm run dev` exige a configuração pública completa e falha antes do Next quando `.env.local` não contém a publishable key ativa. Isso evita iniciar a Home em estado `territory_home_config_unavailable`.
+
+Se uma sessão dev já estiver aberta após alterar `.env.local`, reinicie o processo do Next para recarregar as variáveis.
+
+CI sem env pública continua suportado; Vercel/release também permanecem fail-closed para configuração obrigatória.
 
 Nunca versionar service-role, `sb_secret_...`, senha ou token administrativo.
