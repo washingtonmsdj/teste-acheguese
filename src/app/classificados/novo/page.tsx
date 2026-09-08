@@ -41,12 +41,21 @@ export default async function NewClassifiedPage({
             <p className="eyebrow">Novo classificado</p>
             <h1>Publicação temporariamente indisponível.</h1>
             <p>
-              A navegação pública continua funcionando, mas este ambiente ainda não recebeu
-              a configuração segura de autenticação.
+              Não foi possível abrir sua área de publicação
+              agora. Você pode tentar novamente ou continuar
+              explorando os Classificados.
             </p>
-            <Link className="ghostButton linkButton" href="/classificados">
-              Voltar aos Classificados
-            </Link>
+            <div className="stateActions">
+              <Link
+                className="primaryButton linkButton"
+                href="/classificados/novo"
+              >
+                Tentar novamente
+              </Link>
+              <Link className="ghostButton linkButton" href="/classificados">
+                Voltar aos Classificados
+              </Link>
+            </div>
           </div>
         </section>
         </main>
