@@ -6,8 +6,7 @@ import { ClassifiedCard } from '@/modules/classifieds/components/classified-card
 import { SupabaseClassifiedsRepository } from '@/modules/classifieds/data/supabase-classifieds-repository';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -63,8 +62,11 @@ export default async function FavoritesPage() {
   const imageUrls = Object.fromEntries(signedPairs);
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="internalHero compactInternalHero">
         <div className="container narrow">
@@ -118,7 +120,7 @@ export default async function FavoritesPage() {
         )}
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
