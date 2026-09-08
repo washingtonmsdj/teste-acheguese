@@ -86,6 +86,30 @@ export default async function NewClassifiedPage({
               Comece com um rascunho. Depois você poderá adicionar fotos e revisar tudo
               antes de enviar para publicação.
             </p>
+
+            <ol className="classifiedFormFlow" aria-label="Etapas de publicação">
+              <li className="classifiedFormFlowActive">
+                <span>1</span>
+                <div>
+                  <strong>Dados do anúncio</strong>
+                  <small>Agora</small>
+                </div>
+              </li>
+              <li>
+                <span>2</span>
+                <div>
+                  <strong>Fotos</strong>
+                  <small>Depois do rascunho</small>
+                </div>
+              </li>
+              <li>
+                <span>3</span>
+                <div>
+                  <strong>Revisão</strong>
+                  <small>Antes de publicar</small>
+                </div>
+              </li>
+            </ol>
           </div>
 
           <form className="classifiedForm" action={createClassifiedDraftAction}>
@@ -96,7 +120,16 @@ export default async function NewClassifiedPage({
             )}
 
             <fieldset>
-              <label>
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>01</span>
+                  <div>
+                    <strong>O que você está anunciando?</strong>
+                    <small>Título e categoria.</small>
+                  </div>
+                </div>
+
+                <label>
                 Título do anúncio
                 <input
                   name="title"
@@ -119,7 +152,18 @@ export default async function NewClassifiedPage({
                 </select>
               </label>
 
-              <div className="formColumns">
+              </section>
+
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>02</span>
+                  <div>
+                    <strong>Preço e condição</strong>
+                    <small>Ajude quem vê o anúncio a entender a oferta.</small>
+                  </div>
+                </div>
+
+                <div className="formColumns">
                 <label>
                   Preço
                   <input
@@ -141,19 +185,40 @@ export default async function NewClassifiedPage({
                 </label>
               </div>
 
-              <label>
-                Descrição
-                <textarea
-                  name="description"
-                  rows={6}
-                  minLength={20}
-                  maxLength={5000}
-                  required
-                  placeholder="Conte os detalhes importantes, estado, tempo de uso e o que acompanha..."
-                />
-              </label>
+              </section>
 
-              <div className="formColumns">
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>03</span>
+                  <div>
+                    <strong>Descrição</strong>
+                    <small>Conte o estado, uso e o que acompanha.</small>
+                  </div>
+                </div>
+
+                <label>
+                  Descrição
+                  <textarea
+                    name="description"
+                    rows={6}
+                    minLength={20}
+                    maxLength={5000}
+                    required
+                    placeholder="Conte os detalhes importantes, estado, tempo de uso e o que acompanha..."
+                  />
+                </label>
+              </section>
+
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>04</span>
+                  <div>
+                    <strong>Localização informada</strong>
+                    <small>Cidade é obrigatória; bairro é opcional.</small>
+                  </div>
+                </div>
+
+                <div className="formColumns">
                 <label>
                   Cidade
                   <select name="cityId" defaultValue="" required>
@@ -174,7 +239,8 @@ export default async function NewClassifiedPage({
                     placeholder="Opcional"
                   />
                 </label>
-              </div>
+                </div>
+              </section>
             </fieldset>
 
             <div className="formNotice">

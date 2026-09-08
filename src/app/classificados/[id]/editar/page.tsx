@@ -186,7 +186,16 @@ export default async function EditClassifiedPage({
 
           <form className="classifiedForm" action={updateAction}>
             <fieldset disabled={!editable}>
-              <label>
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>01</span>
+                  <div>
+                    <strong>Conteúdo do anúncio</strong>
+                    <small>Título e categoria.</small>
+                  </div>
+                </div>
+
+                <label>
                 Título
                 <input
                   name="title"
@@ -208,7 +217,18 @@ export default async function EditClassifiedPage({
                 </select>
               </label>
 
-              <div className="formColumns">
+              </section>
+
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>02</span>
+                  <div>
+                    <strong>Preço e condição</strong>
+                    <small>Mantenha os dados da oferta atualizados.</small>
+                  </div>
+                </div>
+
+                <div className="formColumns">
                 <label>
                   Preço
                   <input
@@ -230,19 +250,40 @@ export default async function EditClassifiedPage({
                 </label>
               </div>
 
-              <label>
-                Descrição
-                <textarea
-                  name="description"
-                  defaultValue={item.description}
-                  rows={7}
-                  minLength={20}
-                  maxLength={5000}
-                  required
-                />
-              </label>
+              </section>
 
-              <div className="formColumns">
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>03</span>
+                  <div>
+                    <strong>Descrição</strong>
+                    <small>Revise os detalhes antes de enviar novamente.</small>
+                  </div>
+                </div>
+
+                <label>
+                  Descrição
+                  <textarea
+                    name="description"
+                    defaultValue={item.description}
+                    rows={7}
+                    minLength={20}
+                    maxLength={5000}
+                    required
+                  />
+                </label>
+              </section>
+
+              <section className="classifiedFormSection">
+                <div className="classifiedFormSectionHead">
+                  <span>04</span>
+                  <div>
+                    <strong>Localização informada</strong>
+                    <small>Cidade e bairro exibidos no anúncio.</small>
+                  </div>
+                </div>
+
+                <div className="formColumns">
                 <label>
                   Cidade
                   <select name="cityId" defaultValue={String(item.city_id)} required>
@@ -262,7 +303,8 @@ export default async function EditClassifiedPage({
                     maxLength={120}
                   />
                 </label>
-              </div>
+                </div>
+              </section>
             </fieldset>
 
             {editable && (
