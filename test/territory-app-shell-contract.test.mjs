@@ -9,19 +9,29 @@ function read(relativePath) {
   );
 }
 
-test('Home e Mapa usam o Territory App Shell canônico', () => {
+test('superfícies públicas principais usam o Territory App Shell canônico', () => {
   const home = read(
     '../src/features/territory-home/components/territory-home.tsx',
   );
   const map = read('../src/app/mapa/page.tsx');
   const loading = read('../src/app/loading.tsx');
   const mapLoading = read('../src/app/mapa/loading.tsx');
+  const classifieds = read('../src/app/classificados/page.tsx');
+  const classifiedsLoading = read('../src/app/classificados/loading.tsx');
+  const classifiedDetail = read(
+    '../src/app/classificados/anuncio/[slug]/page.tsx',
+  );
+  const search = read('../src/app/buscar/page.tsx');
 
   for (const [name, source] of [
     ['home', home],
     ['map', map],
     ['home loading', loading],
     ['map loading', mapLoading],
+    ['classifieds', classifieds],
+    ['classifieds loading', classifiedsLoading],
+    ['classified detail', classifiedDetail],
+    ['search', search],
   ]) {
     assert.match(
       source,
@@ -40,6 +50,23 @@ test('Home e Mapa usam o Territory App Shell canônico', () => {
     false,
     'Mapa não pode voltar ao header isolado',
   );
+
+  for (const [name, source] of [
+    ['classifieds', classifieds],
+    ['classified detail', classifiedDetail],
+    ['search', search],
+  ]) {
+    assert.equal(
+      source.includes('<SiteHeader'),
+      false,
+      `${name} não pode voltar ao header isolado`,
+    );
+    assert.equal(
+      source.includes('<MobileTabbar'),
+      false,
+      `${name} não pode manter tabbar paralela ao App Shell`,
+    );
+  }
 });
 
 test('App Shell mantém sidebar, toolbar e rail como zonas independentes', () => {

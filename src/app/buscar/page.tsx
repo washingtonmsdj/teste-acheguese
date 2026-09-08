@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const metadata: Metadata = {
   title: 'Buscar no Achegue-se',
@@ -15,9 +14,12 @@ export const metadata: Metadata = {
 
 export default function SearchPage() {
   return (
-    <main>
-      <SiteHeader />
-      <section className="internalHero">
+    <TerritoryAppShell
+      activeId="territory"
+      territoryName="Complexo do Nordeste de Amaralina"
+    >
+      <main>
+        <section className="internalHero">
         <div className="container narrow">
           <p className="eyebrow">Buscar no Achegue-se</p>
           <h1>Encontre o que já está disponível perto de você.</h1>
@@ -41,8 +43,8 @@ export default function SearchPage() {
             </Link>
           </div>
         </div>
-      </section>
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }

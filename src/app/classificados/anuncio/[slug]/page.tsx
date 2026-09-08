@@ -14,8 +14,7 @@ import {
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 type DetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -177,16 +176,19 @@ export default async function ClassifiedDetailPage({
   };
 
   return (
-    <main>
-      <script
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
+        <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
         }}
-      />
-      <SiteHeader />
+        />
 
-      <section className="section container publicDetailLayout">
+        <section className="section container publicDetailLayout">
         <div className="publicDetailMain">
           <Link className="textLink" href="/classificados">
             ← Voltar aos Classificados
@@ -354,9 +356,8 @@ export default async function ClassifiedDetailPage({
             )}
           </div>
         </aside>
-      </section>
-
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }

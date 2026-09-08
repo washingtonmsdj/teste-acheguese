@@ -11,8 +11,7 @@ import {
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 const siteUrl = getSiteUrl();
 
@@ -106,10 +105,12 @@ export default async function ClassifiedsPage({
   if (nextCursor) nextParams.set('cursor', nextCursor);
 
   return (
-    <main>
-      <SiteHeader />
-
-      <section className="classifiedHero">
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
+        <section className="classifiedHero">
         <div className="container classifiedHeroGrid">
           <div>
             <p className="eyebrow">Classificados · Salvador</p>
@@ -222,9 +223,8 @@ export default async function ClassifiedsPage({
           <div><span>✓</span><strong>Privacidade</strong><small>Endereço exato não é público por padrão.</small></div>
           <div><span>✓</span><strong>Moderação</strong><small>Só anúncios aprovados aparecem na área pública.</small></div>
         </div>
-      </section>
-
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }

@@ -1,16 +1,17 @@
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export default function ClassifiedsLoading() {
   return (
-    <main
-      className="classifiedLoadingPage"
-      aria-busy="true"
-      aria-label="Carregando Classificados"
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
     >
-      <SiteHeader />
-
-      <section className="classifiedLoadingHero" aria-hidden="true">
+      <main
+        className="classifiedLoadingPage"
+        aria-busy="true"
+        aria-label="Carregando Classificados"
+      >
+        <section className="classifiedLoadingHero" aria-hidden="true">
         <div className="container classifiedLoadingHeroGrid">
           <div className="classifiedLoadingCopy">
             <span className="classifiedLoadingEyebrow" />
@@ -50,7 +51,7 @@ export default function ClassifiedsLoading() {
         </div>
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
