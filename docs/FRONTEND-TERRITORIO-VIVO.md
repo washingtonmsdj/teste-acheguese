@@ -52,7 +52,7 @@ Breakpoints atuais:
 
 ## Registry e módulos futuros
 
-O registry é a autoridade de navegação.
+O registry é a autoridade de navegação. A bottom navigation também deriva dele por `mobilePrimary`; não manter arrays/sets paralelos de destinos mobile.
 
 Módulos planejados já possuem posição estrutural, mas usam availability: planned:
 
@@ -116,7 +116,8 @@ O Mapa usa o mesmo App Shell em variante imersiva e preserva viewport query, clu
 - sistema verde-mangue com superfícies naturais e acentos quentes/coral;
 - estados de loading coerentes;
 - estrutura pronta para módulos futuros;
-- navegação global sem duplicação: `SiteHeader` antigo removido e `MobileTabbar` pertencente somente ao App Shell.
+- navegação global sem duplicação: `SiteHeader` antigo removido e `MobileTabbar` pertencente somente ao App Shell;
+- destinos da bottom navigation derivados do registry por `mobilePrimary`, permitindo preparar Community sem exibi-la antes da fase.
 
 ### Deliberadamente não materializado ainda
 

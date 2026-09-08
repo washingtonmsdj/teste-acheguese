@@ -31,16 +31,16 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`56d75fc744c744d3fe574f09eafc9629d6973225`
+`d28dcc9556f90324123c676e2d05de5c3db87b31`
 
 Para esse HEAD:
 
-- frontend/source checkpoint: `56d75fc744c744d3fe574f09eafc9629d6973225`;
-- quality: **PASS** — run `34189243064`;
-- bundle de transporte: **PASS** — run `34189243074`;
+- frontend/source checkpoint: `d28dcc9556f90324123c676e2d05de5c3db87b31`;
+- quality: **PASS** — run `34189520702`;
+- bundle de transporte: **PASS** — run `34189520634`;
 - Home, cabeçalho, navegação mobile, Mapa, menu e estados resilientes refinados sem mudança de schema/API/rollout;
 - `/mapa` e `/classificados` possuem loading states específicos, responsivos e compatíveis com reduced-motion;
-- o App Shell **Território Vivo** é a arquitetura global das superfícies atuais: Home, Mapa, Busca, Classificados público/detalhe e áreas autenticadas/admin do módulo; sidebar/toolbar/rail e registry de módulos futuros estão versionados; o `SiteHeader` standalone foi removido; `docs/FRONTEND-TERRITORIO-VIVO.md` é a referência visual canônica;
+- o App Shell **Território Vivo** é a arquitetura global das superfícies atuais: Home, Mapa, Busca, Classificados público/detalhe e áreas autenticadas/admin do módulo; sidebar/toolbar/rail e registry de módulos futuros estão versionados; o `SiteHeader` standalone foi removido; a bottom navigation é derivada do mesmo registry, sem segunda autoridade; `docs/FRONTEND-TERRITORIO-VIVO.md` é a referência visual canônica;
 - copy pública protegida por contrato contra linguagem de implementação/roadmap;
 - Supabase security advisors: **0 lints**;
 - migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;

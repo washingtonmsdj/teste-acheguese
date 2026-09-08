@@ -17,10 +17,10 @@ Branch canônica: `main`
 
 Checkpoint vivo usado para este receipt:
 
-- source/frontend checkpoint: `56d75fc744c744d3fe574f09eafc9629d6973225`;
-- quality run: `34189243064` — **PASS**;
-- vercel-source-bundle run: `34189243074` — **PASS**;
-- `deploy/vercel-bundle/SOURCE_SHA`: `56d75fc744c744d3fe574f09eafc9629d6973225` — **MATCH**;
+- source/frontend checkpoint: `d28dcc9556f90324123c676e2d05de5c3db87b31`;
+- quality run: `34189520702` — **PASS**;
+- vercel-source-bundle run: `34189520634` — **PASS**;
+- `deploy/vercel-bundle/SOURCE_SHA`: `d28dcc9556f90324123c676e2d05de5c3db87b31` — **MATCH**;
 - deploy transport: `SOURCE_SHA == main HEAD` no momento da prova.
 
 Quality inclui:
@@ -138,7 +138,7 @@ Baseline canônico preservado:
 - frontend territorial refinado: Home orientada a utilidade, navegação por bairro, atalhos para Educação/Saúde/Mapa, header/tabbar consistentes e painel do Mapa mais legível;
 - menu, loading global, 404, erro e Busca alinhados ao mesmo sistema visual; copy pública sem linguagem de roadmap/MVP, protegida por teste de contrato;
 - `/mapa` e `/classificados` com loading states próprios e responsivos, reduzindo layout mismatch durante navegação;
-- App Shell **Território Vivo** ativo nas superfícies territoriais, públicas e autenticadas atuais; sidebar desktop, toolbar, rail contextual e registry fail-closed para módulos futuros; `SiteHeader` standalone removido e teste impede navegação paralela;
+- App Shell **Território Vivo** ativo nas superfícies territoriais, públicas e autenticadas atuais; sidebar desktop, toolbar, rail contextual e registry fail-closed para módulos futuros; `SiteHeader` standalone removido e teste impede navegação paralela; bottom navigation deriva do mesmo registry;
 - rollout/SEO fail-closed;
 - Home/Mapa noindex enquanto rollout não for público.
 
