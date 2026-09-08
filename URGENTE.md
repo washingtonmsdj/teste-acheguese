@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `3b9f19b219338ce525600edb54efeb158b8888ac`
+> **HEAD técnico de referência:** `7ad1278c5e060bd18e8fc960886de7fff97761dd`
 
 ---
 
@@ -474,8 +474,8 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 
 ### Entregas
 
-- [~] redesign desktop profissional e organizado — source concluído; revisão visual real pendente;
-- [~] preservar boa experiência mobile — composição responsiva concluída em source; revisão visual real pendente;
+- [~] redesign desktop profissional e organizado — frontend territorial refinado no checkpoint `7ad1278c5e060bd18e8fc960886de7fff97761dd`; revisão visual real pendente;
+- [~] preservar boa experiência mobile — navegação mobile, Home e Mapa refinados em source; revisão visual real pendente;
 - [x] seletor de território Complexo ↔ quatro bairros;
 - [x] contexto Salvador/Complexo/bairro;
 - [x] dados públicos reais agregados sem soma parcial silenciosa;
@@ -1177,7 +1177,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`3b9f19b219338ce525600edb54efeb158b8888ac`
+`7ad1278c5e060bd18e8fc960886de7fff97761dd`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1204,6 +1204,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - observabilidade server-side estruturada foi adicionada sem stack/contexto arbitrário e com redaction de keys/JWT;
 - bundle Vercel agora possui manifesto de source closure e teste contra omissão de lifecycle scripts;
 - pré-deploy agora possui gate executável fail-closed (`npm run release:preflight`) que impede candidate com checkout, `main`, transport branch ou workflows divergentes;
+- frontend territorial foi refinado no source: Home agora prioriza utilidade do morador, mapa, dados e bairros; linguagem interna/arquitetural foi removida da superfície principal; cabeçalho e tabbar mobile ganharam navegação visual consistente; Mapa ganhou filtros e lista de locais mais claros sem alterar o Map Core; quality run `34178976600` e bundle run `34178976676` = PASS.
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
