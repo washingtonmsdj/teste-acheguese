@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`
+> **HEAD técnico de referência:** `e735797b8f64947de13855cf8cf8c285e16435fa`
 
 ---
 
@@ -1171,56 +1171,53 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial, o Map Core e o MVP da Home estão fechados em source/CI. O frontend **Território Vivo** também possui agora um candidate real que contém o HEAD técnico atual.
+A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O candidate abaixo representa o último HEAD técnico de runtime.
 
 ## Candidate source-aligned atual
 
-- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
-- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
-- preview protegido: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
+- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
+- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
+- preview protegido: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34214797945` PASS;
-- source bundle: `34214797952` PASS;
+- quality: `34217026909` PASS;
+- source bundle: `34217026860` PASS;
 - runtime errors observados: **0**;
-- Home product-first + loading alinhado preservados;
-- Auth/conta/moderação preservados com os guards atuais;
-- Novo/Editar anúncio usam fluxo visual estruturado;
-- Meus anúncios/Favoritos/Mensagens exibem resumos sem novas queries;
-- conversa individual ganhou contexto de produto sem alterar actions/queries.
+- uma leitura real da Home chegou ao aplicativo com **HTTP 200**;
+- Home usa dados oficiais e reutiliza o mesmo payload para o mini-mapa, sem segunda RPC;
+- fallback público é user-facing e fail-closed, sem números fictícios;
+- escopo territorial do release possui uma autoridade compartilhada, sem lista duplicada no componente;
+- Classificados, Auth, conta, moderação, formulários, mensagens e detalhe público permanecem alinhados ao Território Vivo.
 
 O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
 ## Gate ainda pendente
 
-A Vercel Deployment Protection/SSO continua interceptando as demais rotas em clientes sem sessão persistente. O Chromium local disponível nesta execução também não possui DNS externo. Portanto ainda **não** marcar como PASS:
+A Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. Portanto ainda **não** marcar como PASS:
 
-1. `territory-release-smoke` completo;
+1. `territory-release-smoke` completo no candidate;
 2. revisão visual real 1440×900;
 3. revisão visual real 390×844;
-4. callback Auth exato do candidate;
+4. callback Auth exata do candidate;
 5. E2E Auth/Classificados.
 
-Isso é limitação do caminho de inspeção, não evidência de falha da aplicação. Não remover Deployment Protection, RLS, CSP ou outros guards para contornar o gate.
+Não remover Deployment Protection, RLS, CSP ou outros guards para contornar esse gate.
 
 ## Próxima ação
 
-> **Preservar o candidate atual → inspecionar o mesmo deployment em sessão Vercel autenticada que preserve cookies → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata do candidate → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
-
-Não criar novo candidate enquanto não houver mudança de source/runtime ou defeito comprovado que exija correção.
+> **Preservar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
 **Não iniciar Community, Empresas, Gastronomia ou Mobilidade antes do gate visual/runtime/E2E da FASE 4.**
 
 ---
-
 # 21. Checkpoint atual
 
 ### HEAD técnico de referência
 
-`6d720e2e5bea84c7d0b1a72df227f0af536fbc60`
+`e735797b8f64947de13855cf8cf8c285e16435fa`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1268,6 +1265,12 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - resumos de conta `df70b85e`: Meus anúncios, Favoritos e Mensagens exibem métricas derivadas dos dados já carregados, sem consultas adicionais;
 - guard de resumos `f48a89fe`: teste prova que as métricas permanecem sem segunda query nas superfícies principais;
 - conversa `6d720e2e`: thread mostra papel, status do anúncio, contagem de mensagens, estado vazio e composer mais explícito; as queries e limites de mensagem foram preservados; quality `34214797945` + bundle `34214797952` = PASS;
+- Classificados browse `3d24f3e9`: copy e cards orientados a tarefa, com condição/local/CTA explícitos;
+- Home resiliente `f8da161e`: mini-mapa passa a reutilizar fatos/places já carregados, eliminando segunda leitura RPC; fallback preserva estrutura territorial sem inventar números;
+- fallback público `fe5aefb6`: removida linguagem interna de MVP da UI e contrato de copy passou a bloquear `MVP territorial`, `Estrutura do MVP` e `Fundação do MVP`;
+- smoke Home `7262b568` + `59c95b4e`: release smoke exige 68.357 pessoas, 30.642 domicílios, 20 locais, 14 Educação e 6 SUS e falha fechado se a Home cair em fallback;
+- territory release scope `b260d75a`: cidade, grupo e quatro bairros passaram a ter uma autoridade compartilhada em `src/config/territory-release-scope.ts`; Home fallback, loader, rollout visibility e health deixaram de duplicar slugs;
+- contrato release scope `e735797b`: testes validam a autoridade compartilhada sem reintroduzir hardcode no componente; quality `34217026909` + bundle `34217026860` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1359,23 +1362,21 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
-- URL protegida: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
-- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
+- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
+- URL protegida: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
+- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- quality `34214797945` + bundle `34214797952` = PASS;
+- quality `34217026909` + bundle `34217026860` = PASS;
 - runtime errors observados: **0**;
-- Home product-first, Auth/account gateway, account rail, moderação e detalhe público preservados;
-- formulários de Classificados estruturados como fluxo de produto;
-- superfícies pessoais possuem métricas úteis sem novas queries;
-- conversa individual contextualizada e protegida por teste;
-- módulos futuros continuam fail-closed pelo `releaseScope`.
+- Home chegou ao aplicativo com HTTP 200 em uma sessão autenticada do preview;
+- authority territorial compartilhada + fallback user-facing estão incluídos;
+- smoke reforçado exige os dados oficiais do Complexo e rejeita fallback.
 
-Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
+Previews anteriores permanecem somente como evidência histórica.
 
 ### Blocker de release atual
 
@@ -1386,7 +1387,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

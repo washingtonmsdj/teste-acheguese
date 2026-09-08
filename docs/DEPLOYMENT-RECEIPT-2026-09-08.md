@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
-- URL protegida: `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
+- URL protegida: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
-- quality: `34214797945` PASS;
+- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
+- quality: `34217026909` PASS;
 - vercel-source-bundle: `34214797952` PASS.
 
 Este candidate contém a Home product-first, Auth/conta/moderação já endurecidos, formulários estruturados, resumos pessoais e conversa refinada.
@@ -136,17 +136,17 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém o frontend técnico atual:
+O candidate contém o frontend técnico `e735797b`:
 
-- Home product-first + loading alinhado;
-- Busca/Menu/Auth no Território Vivo;
-- account rail + loadings contextuais;
-- detalhe público e moderação contextual;
-- Novo/Editar em seções de produto e fluxo rascunho → fotos → revisão;
-- Meus anúncios/Favoritos/Mensagens com métricas derivadas sem nova query;
-- conversa individual com papel, status, contagem e composer contextual;
-- contratos de actions/queries/limites preservados por testes;
-- módulos futuros continuam fora do MVP pelo `releaseScope`.
+- Home product-first com dados oficiais;
+- mini-mapa reutiliza fatos/places já carregados, sem segunda RPC;
+- fallback público não mostra copy interna de MVP nem números fictícios;
+- `src/config/territory-release-scope.ts` centraliza Salvador, Complexo e quatro bairros;
+- Home fallback, loader, rollout visibility e health consomem a mesma autoridade territorial;
+- Classificados público está orientado a tarefa;
+- Auth, conta, mensagens, formulários, moderação e detalhe público preservados;
+- runtime errors observados = 0;
+- Home chegou ao app com HTTP 200 em uma sessão do preview.
 
 ## 8. Previews anteriores
 
@@ -160,12 +160,12 @@ Não usar esses artefatos para aprovar o frontend atual.
 
 ## 9. Próxima ação
 
-1. preservar `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`;
+1. preservar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
 2. abrir o preview com sessão Vercel autenticada persistente;
 3. executar smoke completo;
 4. validar 1440×900 e 390×844;
 5. revisar runtime após exercitar as rotas;
-6. adicionar somente `https://teste-acheguese-e5trf77qz-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
+6. adicionar somente `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
 8. corrigir somente blockers observados;
 9. fechar FASE 4 somente após todos os gates.

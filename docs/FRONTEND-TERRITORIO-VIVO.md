@@ -374,3 +374,19 @@ Conversa individual:
 - mantém `sendConversationMessageAction`, minLength 1 e maxLength 1500.
 
 Candidate visual: `dpl_ACeroqa9WHeNbfsUjjyDCyoF6BBw`.
+
+
+## Fallback territorial e autoridade de release
+
+Checkpoint técnico: `e735797b8f64947de13855cf8cf8c285e16435fa`.
+
+- fallback público fala com o morador, não com a equipe de desenvolvimento;
+- `MVP territorial`, `Estrutura do MVP` e `Fundação do MVP` são bloqueados pelo contrato de copy nas superfícies públicas;
+- nenhum número oficial é substituído por demonstração quando a leitura falha;
+- quatro bairros continuam navegáveis no fallback;
+- a lista deixou de existir dentro do componente;
+- `src/config/territory-release-scope.ts` é a autoridade compartilhada para cidade, grupo e bairros do release;
+- loader, visibility e health usam a mesma configuração;
+- smoke exige 68.357 pessoas, 30.642 domicílios, 20 locais, 14 Educação e 6 SUS antes de aprovar a Home.
+
+Candidate visual: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`.
