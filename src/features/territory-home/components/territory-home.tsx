@@ -72,8 +72,8 @@ function ScopeSelector({
   return (
     <div className={styles.scopeBlock}>
       <div className={styles.scopeLabel}>
-        <span>Escolha a área</span>
-        <small>Complexo ou bairro</small>
+        <span>Mudar área</span>
+        <small>Complexo + 4 bairros</small>
       </div>
       <nav
         className={styles.scopeSelector}
@@ -233,16 +233,11 @@ export function TerritoryHome({
               <span>Complexo do Nordeste de Amaralina</span>
             </div>
 
-            <div className={styles.stageBadge}>
-              {rolloutLabel(data.scope.rolloutStage)}
-            </div>
-
-            <p className="eyebrow">Seu território, organizado</p>
+            <p className="eyebrow">Território Vivo</p>
             <h1>{scopeHeadline(data)}</h1>
             <p className={styles.heroText}>
-              Consulte mapa, população, escolas e unidades
-              de saúde SUS com dados públicos verificados e
-              organizados por bairro.
+              Mapa, escolas, saúde SUS e dados do bairro que
+              você escolher, no mesmo recorte.
             </p>
 
             <div className={styles.heroActions}>
@@ -250,13 +245,13 @@ export function TerritoryHome({
                 className="primaryButton linkButton"
                 href={selectedMapHref}
               >
-                Abrir mapa
+                Explorar mapa
               </Link>
               <a
                 className="ghostButton linkButton"
-                href="#dados"
+                href="#bairros"
               >
-                Conhecer o território
+                Escolher bairro
               </a>
             </div>
 
@@ -266,15 +261,15 @@ export function TerritoryHome({
             >
               <div>
                 <strong>{data.scope.publicPlaceCount}</strong>
-                <span>locais públicos</span>
+                <span>locais</span>
               </div>
               <div>
                 <strong>{data.scope.educationCount}</strong>
-                <span>unidades de educação</span>
+                <span>educação</span>
               </div>
               <div>
                 <strong>{data.scope.healthCount}</strong>
-                <span>unidades SUS</span>
+                <span>saúde SUS</span>
               </div>
             </div>
 
@@ -284,7 +279,7 @@ export function TerritoryHome({
           <aside className={styles.mapCard}>
             <div className={styles.mapCardHeader}>
               <div>
-                <span>Mapa do território</span>
+                <span>Mapa interativo</span>
                 <strong>{data.scope.name}</strong>
               </div>
               <Link href={selectedMapHref}>Explorar ↗</Link>
@@ -305,7 +300,7 @@ export function TerritoryHome({
                 <i className={styles.healthMarker} />
                 Saúde SUS
               </span>
-              <small>Dados verificados</small>
+              <small>{data.scope.publicPlaceCount} locais verificados</small>
             </div>
           </aside>
         </div>
@@ -320,14 +315,14 @@ export function TerritoryHome({
           <div className={styles.metricsIntro}>
             <div>
               <p className="eyebrow">Território em números</p>
-              <h2>Conheça a área pelos dados.</h2>
+              <h2>O território, em números.</h2>
             </div>
             <p>
               {referencePeriod
                 ? `Demografia de ${referencePeriod}. `
                 : ''}
-              Educação e saúde usam bases oficiais já
-              verificadas espacialmente.
+              Educação e saúde usam bases oficiais
+              verificadas para este recorte.
             </p>
           </div>
 
@@ -375,7 +370,7 @@ export function TerritoryHome({
         <div className={styles.sectionHeading}>
           <div>
             <p className="eyebrow">Explore por bairro</p>
-            <h2>Quatro bairros. Um mesmo território.</h2>
+            <h2>Escolha um bairro.</h2>
           </div>
           {data.scope.kind === 'territory' && (
             <Link href="/">Ver o Complexo inteiro →</Link>
@@ -425,8 +420,8 @@ export function TerritoryHome({
         <div className="container">
           <div className={styles.utilityHeader}>
             <div>
-              <p className="eyebrow">Encontre o essencial</p>
-              <h2>Vá direto ao que você precisa.</h2>
+              <p className="eyebrow">Acesso rápido</p>
+              <h2>O que você precisa agora?</h2>
             </div>
             <p>
               O mapa abre já filtrado para a categoria
@@ -466,13 +461,13 @@ export function TerritoryHome({
             </Link>
 
             <aside className={styles.utilityStatus}>
-              <span className={styles.statusEyebrow}>Estado da base</span>
-              <strong>{rolloutLabel(data.scope.rolloutStage)}</strong>
+              <span className={styles.statusEyebrow}>Base pública</span>
+              <strong>Dados com origem registrada</strong>
               <p>
-                A informação pública já está organizada;
-                novas camadas entram somente quando forem
-                verificadas.
+                {data.sources.length} fonte{data.sources.length === 1 ? '' : 's'}
+                sustentam esta visão do território.
               </p>
+              <a href="#fontes">Ver fontes ↓</a>
             </aside>
           </div>
         </div>
@@ -480,12 +475,11 @@ export function TerritoryHome({
 
       <section className={`container ${styles.classifiedSection}`}>
         <div>
-          <p className="eyebrow">Também no Achegue-se</p>
-          <h2>Classificados, sem misturar com a informação pública.</h2>
+          <p className="eyebrow">Classificados locais</p>
+          <h2>Compre e venda perto de você.</h2>
           <p>
-            Comprar, vender e conversar continua em uma área
-            própria, enquanto o território permanece como
-            contexto principal da plataforma.
+            Encontre anúncios da região, salve favoritos e
+            converse com o anunciante dentro do Achegue-se.
           </p>
         </div>
         <Link
