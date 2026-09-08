@@ -1175,21 +1175,22 @@ A fundação territorial, o Map Core e o frontend **Território Vivo** permanece
 
 ## Candidate source-aligned atual
 
-- source/runtime: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`;
-- deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
-- preview protegido: `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app`;
+- source/runtime: `af74240985c43cabd0588328ae51d19d5c921ec5`;
+- deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
+- preview protegido: `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34249484987` PASS;
-- source bundle: `34249484891` PASS;
+- quality: `34265916188` PASS;
+- source bundle: `34265916232` PASS;
 - runtime errors observados: **0**;
-- Home chegou ao aplicativo com **HTTP 200**;
-- labels geográficos residuais foram centralizados em `territoryReleaseScope`;
-- Busca e fallback de Novo anúncio deixaram de expor roadmap/configuração interna;
-- fallback de mídia do detalhe usa o sistema visual canônico;
-- CSS global redundante foi consolidado sem alterar o render final;
+- `/classificados` chegou ao aplicativo com HTTP 200 e cache MISS em sessão anterior do preview;
+- categorias usam SVGs somente na UI, descrições curtas e composição mobile otimizada;
+- estado vazio preserva query/categoria e orienta limpar/ampliar filtros sem inventar conteúdo;
+- `AccountSurfaceLoading` é a única autoridade de loading da área pessoal;
+- a duplicação acidental `AccountAreaLoading` foi removida antes do candidate;
 - módulos `future` continuam fora do MVP e invisíveis por `releaseScope`.
+
 ## Gate ainda pendente
 
 Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. Ainda não marcar como PASS:
@@ -1202,7 +1203,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ## Próxima ação
 
-> **Preservar `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → adicionar somente `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app/auth/callback` → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1213,7 +1214,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ### HEAD técnico de referência
 
-`db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`
+`af74240985c43cabd0588328ae51d19d5c921ec5`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
