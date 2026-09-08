@@ -188,11 +188,16 @@ export default async function ClassifiedDetailPage({
         }}
         />
 
-        <section className="section container publicDetailLayout">
+        <section className="publicDetailPage">
+          <div className="container publicDetailTopline">
+            <Link className="textLink" href="/classificados">
+              ← Voltar aos Classificados
+            </Link>
+            <span>Salvador · negociação local</span>
+          </div>
+
+          <div className="container publicDetailLayout">
         <div className="publicDetailMain">
-          <Link className="textLink" href="/classificados">
-            ← Voltar aos Classificados
-          </Link>
 
           <div className="publicDetailGallery">
             {images.map((image, index) => (
@@ -220,7 +225,7 @@ export default async function ClassifiedDetailPage({
           </div>
 
           <div className="publicDetailContent">
-            <p className="eyebrow">Classificado em Salvador</p>
+            <p className="eyebrow">Classificado · localização informada</p>
             <h1>{item.title}</h1>
             <strong className="detailPrice">
               {formatClassifiedPrice(item.price?.amountInCents ?? null)}
@@ -240,6 +245,7 @@ export default async function ClassifiedDetailPage({
 
         <aside className="publicDetailSidebar">
           <div className="detailActionCard">
+            <span className="detailActionEyebrow">Negociação local</span>
             <strong>{formatClassifiedPrice(item.price?.amountInCents ?? null)}</strong>
             <p>{formatClassifiedLocation(item.location)}</p>
 
@@ -292,6 +298,7 @@ export default async function ClassifiedDetailPage({
           </div>
 
           <div className="detailSafetyCard">
+            <span className="detailSafetyEyebrow">Antes de combinar</span>
             <strong>Negocie com cuidado</strong>
             <p>
               Não faça pagamentos antecipados sem verificar o item e o anunciante.
@@ -356,6 +363,7 @@ export default async function ClassifiedDetailPage({
             )}
           </div>
         </aside>
+          </div>
         </section>
       </main>
     </TerritoryAppShell>
