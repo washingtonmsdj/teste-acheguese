@@ -1961,3 +1961,398 @@ footer .brand small { color: #b9ded4; }
     font-size: clamp(2rem, 10vw, 2.8rem);
   }
 }
+
+
+/* Search hub — Território Vivo */
+.searchHub {
+  min-height: 100svh;
+  padding-bottom: 110px;
+  background:
+    radial-gradient(circle at 88% 4%, rgba(98,230,182,.13), transparent 25%),
+    #f7faf9;
+}
+
+.searchHero {
+  border-bottom: 1px solid #e2ece8;
+  background:
+    radial-gradient(circle at 84% 10%, rgba(98,230,182,.21), transparent 30%),
+    linear-gradient(145deg, #ffffff, #eef8f4);
+}
+
+.searchHeroInner {
+  display: grid;
+  gap: 28px;
+  padding-top: 44px;
+  padding-bottom: 42px;
+}
+
+.searchHeroCopy {
+  max-width: 780px;
+}
+
+.searchAvailability {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 7px 10px;
+  border: 1px solid #d3e6df;
+  border-radius: 999px;
+  background: rgba(255,255,255,.82);
+  color: #506158;
+  font-size: .64rem;
+  font-weight: 850;
+}
+
+.searchAvailability > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4px rgba(12,148,112,.10);
+}
+
+.searchHero h1 {
+  max-width: 800px;
+  margin-bottom: 18px;
+  font-size: clamp(2.55rem, 10vw, 5rem);
+  line-height: .96;
+  letter-spacing: -.058em;
+}
+
+.searchHero h1 em {
+  color: var(--brand);
+  font-style: normal;
+}
+
+.searchHeroCopy > p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 0;
+  color: #4b5b6c;
+  line-height: 1.65;
+}
+
+.searchTerritoryCard {
+  min-height: 108px;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(144,190,173,.5);
+  border-radius: 22px;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 14px 34px rgba(11,72,57,.055);
+}
+
+.searchTerritoryIcon,
+.searchChoiceIcon,
+.searchGuidanceIcon,
+.menuItemIcon {
+  display: grid;
+  place-items: center;
+  color: var(--brand-dark);
+  background: #eaf7f2;
+}
+
+.searchTerritoryIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+}
+
+.searchTerritoryIcon svg,
+.searchChoiceIcon svg,
+.searchGuidanceIcon svg,
+.menuItemIcon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.searchTerritoryCard > span:nth-child(2) {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.searchTerritoryCard small {
+  color: var(--muted);
+  font-size: .6rem;
+}
+
+.searchTerritoryCard strong {
+  overflow: hidden;
+  font-size: .8rem;
+  text-overflow: ellipsis;
+}
+
+.searchTerritoryCard em {
+  color: var(--muted);
+  font-size: .62rem;
+  font-style: normal;
+}
+
+.searchTerritoryCard > b {
+  color: var(--brand);
+}
+
+.searchChoices {
+  display: grid;
+  gap: 14px;
+  padding-top: 28px;
+}
+
+.searchChoiceCard {
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid #dfeae6;
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(11,72,57,.05);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease;
+}
+
+.searchChoiceCard:hover {
+  transform: translateY(-2px);
+  border-color: #b6d7cb;
+  box-shadow: 0 20px 48px rgba(11,72,57,.08);
+}
+
+.searchChoiceMap {
+  background:
+    radial-gradient(circle at 94% 6%, rgba(98,230,182,.18), transparent 28%),
+    #ffffff;
+}
+
+.searchChoiceClassifieds {
+  background:
+    radial-gradient(circle at 94% 6%, rgba(226,164,71,.14), transparent 28%),
+    #ffffff;
+}
+
+.searchChoiceIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+}
+
+.searchChoiceClassifieds .searchChoiceIcon {
+  color: #8c5d17;
+  background: #fff5e5;
+}
+
+.searchChoiceEyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--brand);
+  font-size: .63rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.searchChoiceClassifieds .searchChoiceEyebrow {
+  color: #9a681a;
+}
+
+.searchChoiceCard h2 {
+  margin: 0 0 10px;
+  font-size: 1.65rem;
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.searchChoiceCard p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.6;
+}
+
+.searchChoiceCard ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.searchChoiceCard li {
+  padding: 7px 9px;
+  border: 1px solid #dfe9e6;
+  border-radius: 999px;
+  background: rgba(248,251,250,.9);
+  color: #586777;
+  font-size: .63rem;
+  font-weight: 800;
+}
+
+.searchChoiceAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #e6eeeb;
+  color: var(--ink);
+  font-size: .78rem;
+}
+
+.searchChoiceAction span {
+  color: var(--brand);
+}
+
+.searchGuidance {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr);
+  gap: 14px;
+  margin-top: 14px;
+  padding: 18px;
+  border: 1px solid #dfe9e6;
+  border-radius: 20px;
+  background: rgba(255,255,255,.78);
+}
+
+.searchGuidanceIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+
+.searchGuidance strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: .82rem;
+}
+
+.searchGuidance p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.55;
+}
+
+/* Full-screen menu polish */
+.menuContextPill {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 7px 10px;
+  border: 1px solid #d6e7e1;
+  border-radius: 999px;
+  background: #f5faf8;
+  color: #56675f;
+  font-size: .62rem;
+  font-weight: 850;
+}
+
+.menuContextPill > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.menuSection nav a {
+  grid-template-columns: auto minmax(0,1fr) auto;
+}
+
+.menuItemIcon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 13px;
+}
+
+.menuItemCopy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+@media (min-width: 720px) {
+  .searchHeroInner {
+    padding-top: 58px;
+    padding-bottom: 54px;
+  }
+
+  .searchChoices {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    padding-top: 34px;
+  }
+
+  .searchChoiceCard {
+    min-height: 360px;
+    padding: 28px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .searchHeroInner {
+    grid-template-columns: minmax(0,1.25fr) minmax(300px,.75fr);
+    align-items: end;
+    gap: 54px;
+    min-height: 420px;
+  }
+
+  .searchTerritoryCard {
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 520px) {
+  .searchHub {
+    padding-bottom: 96px;
+  }
+
+  .searchHeroInner {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .searchHero h1 {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+  }
+
+  .searchChoiceCard {
+    min-height: 300px;
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .searchGuidance {
+    margin-bottom: 8px;
+  }
+
+  .menuItemIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menuSection nav a {
+    min-height: 74px;
+    padding: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchChoiceCard {
+    transition: none;
+  }
+}

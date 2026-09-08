@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 export const metadata: Metadata = {
   title: 'Buscar no Achegue-se',
@@ -18,31 +19,107 @@ export default function SearchPage() {
       activeId="territory"
       territoryName="Complexo do Nordeste de Amaralina"
     >
-      <main>
-        <section className="internalHero">
-        <div className="container narrow">
-          <p className="eyebrow">Buscar no Achegue-se</p>
-          <h1>Encontre o que já está disponível perto de você.</h1>
-          <p>
-            Para escolas, unidades SUS e bairros, use o mapa
-            territorial. Para produtos e anúncios, pesquise
-            diretamente em Classificados.
-          </p>
-          <div className="stateActions">
-            <Link
-              className="primaryButton linkButton"
-              href="/mapa"
-            >
-              Buscar no mapa
-            </Link>
-            <Link
-              className="ghostButton linkButton"
-              href="/classificados"
-            >
-              Buscar em Classificados
+      <main className="searchHub">
+        <section className="searchHero">
+          <div className="container searchHeroInner">
+            <div className="searchHeroCopy">
+              <div className="searchAvailability">
+                <span aria-hidden="true" />
+                Disponível agora no território
+              </div>
+              <p className="eyebrow">Buscar no Achegue-se</p>
+              <h1>
+                Encontre pelo <em>território</em>, não por
+                uma lista genérica.
+              </h1>
+              <p>
+                Escolha onde procurar. O mapa organiza
+                informação pública; Classificados reúne
+                anúncios em uma área separada.
+              </p>
+            </div>
+
+            <Link className="searchTerritoryCard" href="/">
+              <span className="searchTerritoryIcon">
+                <NavigationIcon name="home" />
+              </span>
+              <span>
+                <small>Território atual</small>
+                <strong>
+                  Complexo do Nordeste de Amaralina
+                </strong>
+                <em>Salvador · BA</em>
+              </span>
+              <b aria-hidden="true">→</b>
             </Link>
           </div>
-        </div>
+        </section>
+
+        <section className="container searchChoices" aria-label="Onde buscar">
+          <Link className="searchChoiceCard searchChoiceMap" href="/mapa">
+            <span className="searchChoiceIcon">
+              <NavigationIcon name="map" />
+            </span>
+            <div>
+              <span className="searchChoiceEyebrow">
+                Informação pública
+              </span>
+              <h2>Mapa territorial</h2>
+              <p>
+                Encontre escolas, unidades SUS, limites e
+                bairros na área que você estiver explorando.
+              </p>
+            </div>
+            <ul aria-label="Conteúdo disponível no mapa">
+              <li>Educação</li>
+              <li>Saúde SUS</li>
+              <li>Bairros</li>
+            </ul>
+            <strong className="searchChoiceAction">
+              Explorar mapa <span aria-hidden="true">↗</span>
+            </strong>
+          </Link>
+
+          <Link
+            className="searchChoiceCard searchChoiceClassifieds"
+            href="/classificados"
+          >
+            <span className="searchChoiceIcon">
+              <NavigationIcon name="tag" />
+            </span>
+            <div>
+              <span className="searchChoiceEyebrow">
+                Serviço local
+              </span>
+              <h2>Classificados</h2>
+              <p>
+                Pesquise produtos e anúncios com categoria,
+                preço e localização informada pelo anunciante.
+              </p>
+            </div>
+            <ul aria-label="Conteúdo disponível em Classificados">
+              <li>Produtos</li>
+              <li>Categorias</li>
+              <li>Local informado</li>
+            </ul>
+            <strong className="searchChoiceAction">
+              Ver anúncios <span aria-hidden="true">↗</span>
+            </strong>
+          </Link>
+        </section>
+
+        <section className="container searchGuidance">
+          <span className="searchGuidanceIcon">
+            <NavigationIcon name="search" />
+          </span>
+          <div>
+            <strong>Uma busca única virá quando houver conteúdo suficiente.</strong>
+            <p>
+              Hoje cada superfície pesquisa somente o que
+              realmente existe, sem misturar dados públicos
+              com conteúdo comercial.
+            </p>
+          </div>
         </section>
       </main>
     </TerritoryAppShell>

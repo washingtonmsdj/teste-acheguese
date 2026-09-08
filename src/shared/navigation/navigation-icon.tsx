@@ -1,7 +1,17 @@
 import type { TerritoryNavigationIcon } from './territory-navigation';
 
+export type NavigationIconName =
+  | TerritoryNavigationIcon
+  | 'search'
+  | 'user'
+  | 'menu'
+  | 'data'
+  | 'neighborhood'
+  | 'messages'
+  | 'favorite';
+
 type TerritoryNavigationIconProps = {
-  name: TerritoryNavigationIcon | 'search' | 'user' | 'menu';
+  name: NavigationIconName;
 };
 
 export function NavigationIcon({
@@ -75,6 +85,41 @@ export function NavigationIcon({
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 9h16v11H4zM6 9l1-5h10l1 5" />
         <path d="M8 13h3v7M15 13h2" />
+      </svg>
+    );
+  }
+
+  if (name === 'data') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 19V11M12 19V5M19 19v-7" />
+        <path d="M3.5 19.5h17" />
+      </svg>
+    );
+  }
+
+  if (name === 'neighborhood') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m4 10 5-4 4 3 3-2 4 3v9H4z" />
+        <path d="M8 19v-5h3v5M16 13h1" />
+      </svg>
+    );
+  }
+
+  if (name === 'messages') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-5 3v-3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+        <path d="M8 9h8M8 13h5" />
+      </svg>
+    );
+  }
+
+  if (name === 'favorite') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
       </svg>
     );
   }

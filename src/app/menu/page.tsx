@@ -3,12 +3,18 @@ import {
   activeTerritoryNavigationBySection,
   type TerritoryNavigationItem,
 } from '@/shared/navigation/territory-navigation';
+import {
+  NavigationIcon,
+  type NavigationIconName,
+} from '@/shared/navigation/navigation-icon';
 import { Brand } from '@/shared/ui/brand';
 
 type MenuLink = Pick<
   TerritoryNavigationItem,
   'id' | 'label' | 'href' | 'description'
->;
+> & {
+  icon: NavigationIconName;
+};
 
 const territoryExtras: readonly MenuLink[] = [
   {
@@ -16,12 +22,14 @@ const territoryExtras: readonly MenuLink[] = [
     label: 'Dados públicos',
     href: '/#dados',
     description: 'População e serviços',
+    icon: 'data',
   },
   {
     id: 'territory-neighborhoods' as TerritoryNavigationItem['id'],
     label: 'Bairros',
     href: '/#bairros',
     description: 'Explore cada bairro',
+    icon: 'neighborhood',
   },
 ];
 
@@ -31,18 +39,21 @@ const accountLinks = [
     label: 'Mensagens',
     href: '/mensagens',
     description: 'Suas conversas',
+    icon: 'messages',
   },
   {
     id: 'favorites',
     label: 'Favoritos',
     href: '/favoritos',
     description: 'Itens que você salvou',
+    icon: 'favorite',
   },
   {
     id: 'signin',
     label: 'Entrar',
     href: '/entrar',
     description: 'Acessar sua conta',
+    icon: 'user',
   },
 ] as const;
 
@@ -56,6 +67,7 @@ function MenuGroup({
     label: string;
     href: string;
     description: string;
+    icon: NavigationIconName;
   }[];
 }) {
   if (!links.length) return null;
@@ -66,7 +78,10 @@ function MenuGroup({
       <nav aria-label={title}>
         {links.map((item) => (
           <Link href={item.href} key={item.id}>
-            <span>
+            <span className="menuItemIcon">
+              <NavigationIcon name={item.icon} />
+            </span>
+            <span className="menuItemCopy">
               <strong>{item.label}</strong>
               <small>{item.description}</small>
             </span>
@@ -79,13 +94,13 @@ function MenuGroup({
 }
 
 export default function MenuPage() {
-  const territoryLinks = [
+  const territoryLinks: MenuLink[] = [
     ...activeTerritoryNavigationBySection('territory'),
     ...territoryExtras,
   ];
-  const localLifeLinks =
+  const localLifeLinks: MenuLink[] =
     activeTerritoryNavigationBySection('local-life');
-  const serviceLinks =
+  const serviceLinks: MenuLink[] =
     activeTerritoryNavigationBySection('services');
 
   return (
@@ -105,11 +120,15 @@ export default function MenuPage() {
         </div>
 
         <div className="menuIntro">
+          <div className="menuContextPill">
+            <span aria-hidden="true" />
+            Complexo do Nordeste de Amaralina
+          </div>
           <p className="eyebrow">Navegação</p>
           <h1>Onde você quer chegar?</h1>
           <p>
-            Explore o território ou acesse suas áreas
-            pessoais.
+            Explore o território, acesse serviços locais ou
+            entre nas suas áreas pessoais.
           </p>
         </div>
 
