@@ -62,6 +62,7 @@ export default async function FavoritesPage() {
   );
 
   const imageUrls = Object.fromEntries(signedPairs);
+  const unavailableCount = Math.max(0, favoriteIds.length - items.length);
 
   return (
     <TerritoryAppShell
@@ -80,6 +81,19 @@ export default async function FavoritesPage() {
             Explorar Classificados
           </Link>
         </div>
+      </section>
+
+      <section className="accountMetricStrip container" aria-label="Resumo dos favoritos">
+        <article className="accountMetric">
+          <span>Disponíveis</span>
+          <strong>{items.length}</strong>
+          <small>Anúncios públicos salvos</small>
+        </article>
+        <article className="accountMetric">
+          <span>Indisponíveis</span>
+          <strong>{unavailableCount}</strong>
+          <small>Fora da área pública agora</small>
+        </article>
       </section>
 
       <section className="section container">

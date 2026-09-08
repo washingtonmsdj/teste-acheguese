@@ -70,6 +70,17 @@ export default async function MyClassifiedsPage({
 
   if (error) throw error;
 
+  const classifiedItems = items ?? [];
+  const publishedCount = classifiedItems.filter(
+    (item) => item.status === 'published',
+  ).length;
+  const reviewCount = classifiedItems.filter(
+    (item) => item.status === 'pending_review',
+  ).length;
+  const editableCount = classifiedItems.filter((item) =>
+    ['draft', 'paused', 'rejected'].includes(item.status),
+  ).length;
+
   return (
     <TerritoryAppShell
       activeId="classifieds"
@@ -90,6 +101,24 @@ export default async function MyClassifiedsPage({
             <SignOutControl />
           </div>
         </div>
+      </section>
+
+      <section className="accountMetricStrip container" aria-label="Resumo dos seus anúncios">
+        <article className="accountMetric">
+          <span>Publicados</span>
+          <strong>{publishedCount}</strong>
+          <small>Visíveis em Classificados</small>
+        </article>
+        <article className="accountMetric">
+          <span>Em revisão</span>
+          <strong>{reviewCount}</strong>
+          <small>Aguardando moderação</small>
+        </article>
+        <article className="accountMetric">
+          <span>Para editar</span>
+          <strong>{editableCount}</strong>
+          <small>Rascunhos ou ajustes</small>
+        </article>
       </section>
 
       <section className="section container">

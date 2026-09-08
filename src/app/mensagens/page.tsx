@@ -51,6 +51,11 @@ export default async function MessagesPage() {
   if (error) throw error;
 
   const conversations = (data ?? []) as unknown as ConversationRow[];
+  const sellerConversationCount = conversations.filter(
+    (conversation) => conversation.seller_id === userId,
+  ).length;
+  const buyerConversationCount =
+    conversations.length - sellerConversationCount;
 
   return (
     <TerritoryAppShell
@@ -68,6 +73,24 @@ export default async function MessagesPage() {
             Converse dentro do Achegue-se sem publicar telefone ou e-mail no anúncio.
           </p>
         </div>
+      </section>
+
+      <section className="accountMetricStrip container" aria-label="Resumo das mensagens">
+        <article className="accountMetric">
+          <span>Conversas</span>
+          <strong>{conversations.length}</strong>
+          <small>Total da sua conta</small>
+        </article>
+        <article className="accountMetric">
+          <span>Como anunciante</span>
+          <strong>{sellerConversationCount}</strong>
+          <small>Interesse nos seus anúncios</small>
+        </article>
+        <article className="accountMetric">
+          <span>Como interessado</span>
+          <strong>{buyerConversationCount}</strong>
+          <small>Conversas que você iniciou</small>
+        </article>
       </section>
 
       <section className="section container">
