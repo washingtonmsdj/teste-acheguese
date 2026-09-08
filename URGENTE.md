@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `230a4d7dc74e3380222b1c919e5dba407386d321`
+> **HEAD técnico de referência:** `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`
 
 ---
 
@@ -1175,19 +1175,21 @@ A fundação territorial, o Map Core e o frontend **Território Vivo** permanece
 
 ## Candidate source-aligned atual
 
-- source/runtime: `230a4d7dc74e3380222b1c919e5dba407386d321`;
-- deployment: `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`;
-- preview protegido: `https://teste-acheguese-lwr9c4s68-jogo-brasils-projects.vercel.app`;
+- source/runtime: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`;
+- deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
+- preview protegido: `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34243856107` PASS;
-- source bundle: `34243855637` PASS;
+- quality: `34249484987` PASS;
+- source bundle: `34249484891` PASS;
 - runtime errors observados: **0**;
-- Home chegou ao aplicativo com **HTTP 200**; runtime confirmou `GET / 200`, `cache=MISS`;
-- iconografia de Classificados foi fechada no sistema SVG canônico;
+- Home chegou ao aplicativo com **HTTP 200**;
+- labels geográficos residuais foram centralizados em `territoryReleaseScope`;
+- Busca e fallback de Novo anúncio deixaram de expor roadmap/configuração interna;
+- fallback de mídia do detalhe usa o sistema visual canônico;
+- CSS global redundante foi consolidado sem alterar o render final;
 - módulos `future` continuam fora do MVP e invisíveis por `releaseScope`.
-
 ## Gate ainda pendente
 
 Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. Ainda não marcar como PASS:
@@ -1200,7 +1202,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ## Próxima ação
 
-> **Preservar `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1211,7 +1213,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ### HEAD técnico de referência
 
-`230a4d7dc74e3380222b1c919e5dba407386d321`
+`db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1220,6 +1222,10 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- release geography `64b6dcbe`: nome curto/completo do grupo, quantidade de bairros e fallback de cidade passaram a vir de `territoryReleaseScope`; contrato impede hardcode geográfico nas superfícies centrais;
+- copy MVP `44be6dbf` + `d3ea333b` + `e2db8d50`: Busca removeu promessa de funcionalidade futura, Novo anúncio removeu linguagem de ambiente/configuração e o contrato de copy passou a proteger esse fallback;
+- media fallback `17c157ca`: falha temporária de URL assinada no detalhe usa `NavigationIcon` + copy de produto;
+- CSS closure `db5785d`: regras redundantes de `stateCard`/`mediaPlaceholder` foram consolidadas sem alterar render; quality `34249484987` + bundle `34249484891` = PASS; candidate `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU` READY, Home HTTP 200 e runtime errors = 0;
 - iconografia final `230a4d7d`: favorito, placeholder sem mídia, estado vazio e trust badges usam `NavigationIcon`; conversa acompanha topbar de 74px; quality `34243856107` + bundle `34243855637` = PASS;
 - recovery público `47cdaa84`: Mapa/Auth/Home fallback removeram linguagem técnica de ambiente/configuração/demo; Mapa ganhou ações de tentar novamente/voltar ao território; contrato de copy cobre Mapa e Auth; quality `34227085645` + bundle `34227085713` = PASS;
 - dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
