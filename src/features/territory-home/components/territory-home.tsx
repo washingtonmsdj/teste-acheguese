@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { formatMapUrlState } from '@/core/map';
-import type {
-  TerritoryRolloutStage,
-} from '@/core/territory';
+import type { TerritoryRolloutStage } from '@/core/territory';
 import type {
   TerritoryHomeData,
   TerritoryHomeMetric,
@@ -26,7 +24,7 @@ function formatMetric(
 function rolloutLabel(stage: TerritoryRolloutStage) {
   switch (stage) {
     case 'data_preparation':
-      return 'Base territorial em preparação';
+      return 'Dados em preparação';
     case 'internal_preview':
       return 'Prévia interna';
     case 'public_preview':
@@ -38,11 +36,14 @@ function rolloutLabel(stage: TerritoryRolloutStage) {
   }
 }
 
-function mapHref(data: TerritoryHomeData) {
+function mapHref(
+  data: TerritoryHomeData,
+  categories: string[] = ['education', 'health'],
+) {
   const state = formatMapUrlState({
     bounds: data.mapData.bounds,
     zoom: data.scope.kind === 'territory' ? 15 : 14,
-    categories: ['education', 'health'],
+    categories,
   });
 
   return `/mapa?${new URLSearchParams(state).toString()}`;
@@ -52,15 +53,14 @@ function scopeHeadline(data: TerritoryHomeData) {
   if (data.scope.kind === 'territory') {
     return (
       <>
-        <em>{data.scope.name}</em>, com informação pública
-        que você consegue conferir.
+        <em>{data.scope.name}</em>, perto de você.
       </>
     );
   }
 
   return (
     <>
-      O território primeiro. <em>O resto vem depois.</em>
+      Tudo que importa no <em>Complexo</em>, em um só lugar.
     </>
   );
 }
@@ -71,44 +71,50 @@ function ScopeSelector({
   data: TerritoryHomeData;
 }) {
   return (
-    <nav
-      className={styles.scopeSelector}
-      aria-label="Escolher território"
-    >
-      <Link
-        href="/"
-        aria-current={
-          data.scope.kind === 'group'
-            ? 'page'
-            : undefined
-        }
-        className={
-          data.scope.kind === 'group'
-            ? styles.scopeActive
-            : undefined
-        }
+    <div className={styles.scopeBlock}>
+      <div className={styles.scopeLabel}>
+        <span>Escolha a área</span>
+        <small>Complexo ou bairro</small>
+      </div>
+      <nav
+        className={styles.scopeSelector}
+        aria-label="Escolher território"
       >
-        Complexo
-      </Link>
-      {data.neighborhoods.map((neighborhood) => (
         <Link
-          href={`/?bairro=${neighborhood.slug}`}
-          key={neighborhood.id}
+          href="/"
           aria-current={
-            neighborhood.selected
+            data.scope.kind === 'group'
               ? 'page'
               : undefined
           }
           className={
-            neighborhood.selected
+            data.scope.kind === 'group'
               ? styles.scopeActive
               : undefined
           }
         >
-          {neighborhood.name}
+          Complexo
         </Link>
-      ))}
-    </nav>
+        {data.neighborhoods.map((neighborhood) => (
+          <Link
+            href={`/?bairro=${neighborhood.slug}`}
+            key={neighborhood.id}
+            aria-current={
+              neighborhood.selected
+                ? 'page'
+                : undefined
+            }
+            className={
+              neighborhood.selected
+                ? styles.scopeActive
+                : undefined
+            }
+          >
+            {neighborhood.name}
+          </Link>
+        ))}
+      </nav>
+    </div>
   );
 }
 
@@ -121,6 +127,8 @@ export function TerritoryHome({
     data.scope.population.referencePeriod ??
     data.scope.households.referencePeriod;
   const selectedMapHref = mapHref(data);
+  const educationMapHref = mapHref(data, ['education']);
+  const healthMapHref = mapHref(data, ['health']);
 
   return (
     <main className={styles.page}>
@@ -139,13 +147,12 @@ export function TerritoryHome({
               {rolloutLabel(data.scope.rolloutStage)}
             </div>
 
-            <p className="eyebrow">Achegue-se território vivo</p>
+            <p className="eyebrow">Seu território, organizado</p>
             <h1>{scopeHeadline(data)}</h1>
             <p className={styles.heroText}>
-              Dados oficiais, mapa e serviços públicos
-              organizados por território. Sem empresas,
-              avaliações, alertas ou comunidade inventados
-              para preencher a tela.
+              Consulte mapa, população, escolas e unidades
+              de saúde SUS com dados públicos verificados e
+              organizados por bairro.
             </p>
 
             <div className={styles.heroActions}>
@@ -153,14 +160,32 @@ export function TerritoryHome({
                 className="primaryButton linkButton"
                 href={selectedMapHref}
               >
-                Explorar mapa
+                Abrir mapa
               </Link>
               <a
                 className="ghostButton linkButton"
                 href="#dados"
               >
-                Ver dados públicos
+                Conhecer o território
               </a>
+            </div>
+
+            <div
+              className={styles.heroHighlights}
+              aria-label="Resumo do território"
+            >
+              <div>
+                <strong>{data.scope.publicPlaceCount}</strong>
+                <span>locais públicos</span>
+              </div>
+              <div>
+                <strong>{data.scope.educationCount}</strong>
+                <span>unidades de educação</span>
+              </div>
+              <div>
+                <strong>{data.scope.healthCount}</strong>
+                <span>unidades SUS</span>
+              </div>
             </div>
 
             <ScopeSelector data={data} />
@@ -169,10 +194,10 @@ export function TerritoryHome({
           <aside className={styles.mapCard}>
             <div className={styles.mapCardHeader}>
               <div>
-                <span>Mapa territorial</span>
+                <span>Mapa do território</span>
                 <strong>{data.scope.name}</strong>
               </div>
-              <Link href={selectedMapHref}>Abrir ↗</Link>
+              <Link href={selectedMapHref}>Explorar ↗</Link>
             </div>
 
             <TerritoryMiniMap
@@ -190,10 +215,7 @@ export function TerritoryHome({
                 <i className={styles.healthMarker} />
                 Saúde SUS
               </span>
-              <small>
-                {data.scope.publicPlaceCount} locais
-                verificados
-              </small>
+              <small>Dados verificados</small>
             </div>
           </aside>
         </div>
@@ -207,15 +229,15 @@ export function TerritoryHome({
         <div className="container">
           <div className={styles.metricsIntro}>
             <div>
-              <p className="eyebrow">Dados públicos reais</p>
-              <h2>Uma leitura rápida do território.</h2>
+              <p className="eyebrow">Território em números</p>
+              <h2>Conheça a área pelos dados.</h2>
             </div>
             <p>
               {referencePeriod
                 ? `Demografia de ${referencePeriod}. `
                 : ''}
-              Escolas e unidades SUS vêm dos catálogos
-              oficiais já validados espacialmente.
+              Educação e saúde usam bases oficiais já
+              verificadas espacialmente.
             </p>
           </div>
 
@@ -227,8 +249,8 @@ export function TerritoryHome({
               </strong>
               <small>
                 {data.scope.population.referencePeriod
-                  ? `referência ${data.scope.population.referencePeriod}`
-                  : 'sem referência publicada'}
+                  ? `Censo ${data.scope.population.referencePeriod}`
+                  : 'Referência não publicada'}
               </small>
             </article>
             <article>
@@ -238,14 +260,14 @@ export function TerritoryHome({
               </strong>
               <small>
                 {data.scope.households.referencePeriod
-                  ? `referência ${data.scope.households.referencePeriod}`
-                  : 'sem referência publicada'}
+                  ? `Censo ${data.scope.households.referencePeriod}`
+                  : 'Referência não publicada'}
               </small>
             </article>
             <article>
               <span>Educação</span>
               <strong>{data.scope.educationCount}</strong>
-              <small>unidades oficiais verificadas</small>
+              <small>unidades oficiais</small>
             </article>
             <article>
               <span>Saúde SUS</span>
@@ -262,8 +284,8 @@ export function TerritoryHome({
       >
         <div className={styles.sectionHeading}>
           <div>
-            <p className="eyebrow">Quatro bairros · uma base</p>
-            <h2>Entre no detalhe sem perder o contexto.</h2>
+            <p className="eyebrow">Explore por bairro</p>
+            <h2>Quatro bairros. Um mesmo território.</h2>
           </div>
           {data.scope.kind === 'territory' && (
             <Link href="/">Ver o Complexo inteiro →</Link>
@@ -289,13 +311,11 @@ export function TerritoryHome({
                 <div>
                   <dt>População</dt>
                   <dd>
-                    {formatMetric(
-                      neighborhood.population,
-                    )}
+                    {formatMetric(neighborhood.population)}
                   </dd>
                 </div>
                 <div>
-                  <dt>Escolas</dt>
+                  <dt>Educação</dt>
                   <dd>{neighborhood.educationCount}</dd>
                 </div>
                 <div>
@@ -304,65 +324,85 @@ export function TerritoryHome({
                 </div>
               </dl>
               <span className={styles.cardAction}>
-                Ver território →
+                Abrir bairro →
               </span>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className={styles.nowSection}>
-        <div className={`container ${styles.nowGrid}`}>
-          <article className={styles.nowPrimary}>
-            <p className="eyebrow">Agora no território</p>
-            <h2>A utilidade começa antes do feed.</h2>
-            <p>
-              A camada comunitária ainda não foi liberada
-              neste território. Enquanto isso, o Achegue-se
-              já organiza o que pode ser comprovado:
-              limites, população, escolas e saúde SUS.
-            </p>
-            <div className={styles.nowChecks}>
-              <span>✓ Mapa por viewport</span>
-              <span>✓ Fontes rastreáveis</span>
-              <span>✓ Zero conteúdo social fictício</span>
+      <section className={styles.utilitySection}>
+        <div className="container">
+          <div className={styles.utilityHeader}>
+            <div>
+              <p className="eyebrow">Encontre o essencial</p>
+              <h2>Vá direto ao que você precisa.</h2>
             </div>
-          </article>
-
-          <aside className={styles.statusPanel}>
-            <span className={styles.statusEyebrow}>
-              Estado da base
-            </span>
-            <strong>
-              {rolloutLabel(data.scope.rolloutStage)}
-            </strong>
             <p>
-              Dados públicos podem ser consultados sem
-              significar que o rollout do território já foi
-              lançado.
+              O mapa abre já filtrado para a categoria
+              escolhida e mantém o recorte do território.
             </p>
-            <Link href={selectedMapHref}>
-              Ver o que já está mapeado →
+          </div>
+
+          <div className={styles.utilityGrid}>
+            <Link
+              href={educationMapHref}
+              className={`${styles.utilityCard} ${styles.utilityEducation}`}
+            >
+              <span className={styles.utilityCardMeta}>Educação</span>
+              <strong>{data.scope.educationCount} unidades</strong>
+              <p>Veja escolas e unidades educacionais no mapa.</p>
+              <b aria-hidden="true">↗</b>
             </Link>
-          </aside>
+
+            <Link
+              href={healthMapHref}
+              className={`${styles.utilityCard} ${styles.utilityHealth}`}
+            >
+              <span className={styles.utilityCardMeta}>Saúde SUS</span>
+              <strong>{data.scope.healthCount} unidades</strong>
+              <p>Localize unidades com atendimento SUS.</p>
+              <b aria-hidden="true">↗</b>
+            </Link>
+
+            <Link
+              href={selectedMapHref}
+              className={`${styles.utilityCard} ${styles.utilityMap}`}
+            >
+              <span className={styles.utilityCardMeta}>Mapa completo</span>
+              <strong>{data.scope.publicPlaceCount} locais</strong>
+              <p>Explore limites, pontos e bairros no mesmo mapa.</p>
+              <b aria-hidden="true">↗</b>
+            </Link>
+
+            <aside className={styles.utilityStatus}>
+              <span className={styles.statusEyebrow}>Estado da base</span>
+              <strong>{rolloutLabel(data.scope.rolloutStage)}</strong>
+              <p>
+                A informação pública já está organizada;
+                novas camadas entram somente quando forem
+                verificadas.
+              </p>
+            </aside>
+          </div>
         </div>
       </section>
 
       <section className={`container ${styles.classifiedSection}`}>
         <div>
-          <p className="eyebrow">Vertical já disponível</p>
-          <h2>Classificados ficam dentro do território — não no centro dele.</h2>
+          <p className="eyebrow">Também no Achegue-se</p>
+          <h2>Classificados, sem misturar com a informação pública.</h2>
           <p>
-            O módulo continua acessível enquanto a nova base
-            territorial passa a organizar a experiência do
-            Achegue-se.
+            Comprar, vender e conversar continua em uma área
+            própria, enquanto o território permanece como
+            contexto principal da plataforma.
           </p>
         </div>
         <Link
-          className="primaryButton linkButton"
+          className="ghostButton linkButton"
           href="/classificados"
         >
-          Explorar Classificados
+          Ver Classificados
         </Link>
       </section>
 
@@ -370,12 +410,12 @@ export function TerritoryHome({
         <div className="container">
           <div className={styles.sourcesHeader}>
             <div>
-              <p className="eyebrow">Proveniência</p>
-              <h2>De onde vieram estes dados?</h2>
+              <p className="eyebrow">Fontes públicas</p>
+              <h2>Dados que você pode conferir.</h2>
             </div>
             <p>
-              O Achegue-se não publica número oficial sem
-              fonte rastreável.
+              Cada número e local oficial mantém sua origem
+              registrada.
             </p>
           </div>
 
@@ -394,7 +434,7 @@ export function TerritoryHome({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Consultar fonte ↗
+                    Consultar ↗
                   </a>
                 ) : (
                   <span>Fonte registrada</span>
@@ -408,10 +448,7 @@ export function TerritoryHome({
       <footer className={styles.footer}>
         <div className={`container ${styles.footerInner}`}>
           <Brand />
-          <p>
-            Tudo que importa no seu bairro, organizado pelo
-            território.
-          </p>
+          <p>Tudo que importa no seu bairro, em um só lugar.</p>
           <nav aria-label="Links do rodapé">
             <Link href={selectedMapHref}>Mapa</Link>
             <Link href="/classificados">Classificados</Link>
@@ -431,18 +468,18 @@ export function TerritoryHomeUnavailable() {
       <SiteHeader />
       <section className={styles.unavailable}>
         <div className="container">
-          <p className="eyebrow">Base territorial</p>
-          <h1>Os dados do território não estão disponíveis neste ambiente.</h1>
+          <p className="eyebrow">Território</p>
+          <h1>Não foi possível carregar os dados públicos desta área agora.</h1>
           <p>
-            Nenhum número ou local de demonstração foi
-            colocado no lugar dos dados reais.
+            A página não substitui informação oficial por
+            conteúdo de demonstração.
           </p>
           <div className={styles.heroActions}>
             <Link
               className="ghostButton linkButton"
               href="/classificados"
             >
-              Ir para Classificados
+              Ver Classificados
             </Link>
           </div>
         </div>

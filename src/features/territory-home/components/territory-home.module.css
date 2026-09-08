@@ -4,18 +4,36 @@
 }
 
 .hero {
+  position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   background:
-    radial-gradient(circle at 82% 16%, rgba(98, 230, 182, .24), transparent 28%),
-    radial-gradient(circle at 12% 84%, rgba(12, 148, 112, .10), transparent 26%),
-    linear-gradient(145deg, #f7fcfa 0%, #edf8f4 52%, #f9fcfb 100%);
+    radial-gradient(circle at 90% 8%, rgba(98, 230, 182, .26), transparent 28%),
+    radial-gradient(circle at 12% 92%, rgba(12, 148, 112, .09), transparent 24%),
+    linear-gradient(145deg, #fbfefd 0%, #edf8f4 55%, #f8fcfa 100%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -150px;
+  bottom: -210px;
+  border: 1px solid rgba(12, 148, 112, .14);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 54px rgba(12, 148, 112, .035),
+    0 0 0 108px rgba(12, 148, 112, .025);
+  pointer-events: none;
 }
 
 .heroGrid {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 32px;
-  padding-top: 48px;
+  gap: 34px;
+  padding-top: 42px;
   padding-bottom: 42px;
 }
 
@@ -28,9 +46,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 7px 10px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   color: #536274;
-  font-size: .76rem;
+  font-size: .75rem;
 }
 
 .contextLine strong {
@@ -47,22 +65,22 @@
 
 .stageBadge {
   width: fit-content;
-  margin-bottom: 24px;
-  padding: 7px 10px;
-  border: 1px solid #c8e8dc;
+  margin-bottom: 22px;
+  padding: 6px 10px;
+  border: 1px solid #cbe9df;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
+  background: rgba(255, 255, 255, .75);
   color: var(--brand-dark);
-  font-size: .68rem;
+  font-size: .66rem;
   font-weight: 850;
 }
 
 .hero h1 {
-  max-width: 790px;
+  max-width: 760px;
   margin: 0 0 20px;
-  font-size: clamp(2.65rem, 11vw, 5.7rem);
-  line-height: .92;
-  letter-spacing: -.064em;
+  font-size: clamp(2.55rem, 10vw, 5.1rem);
+  line-height: .94;
+  letter-spacing: -.06em;
 }
 
 .hero h1 em {
@@ -71,25 +89,83 @@
 }
 
 .heroText {
-  max-width: 680px;
+  max-width: 640px;
   margin: 0;
   color: #46566b;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.68;
 }
 
 .heroActions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 24px;
+}
+
+.heroHighlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 620px;
+  margin-top: 28px;
+  border-top: 1px solid rgba(159, 191, 180, .58);
+  border-bottom: 1px solid rgba(159, 191, 180, .58);
+}
+
+.heroHighlights div {
+  min-width: 0;
+  padding: 14px 10px 14px 0;
+}
+
+.heroHighlights div + div {
+  padding-left: 12px;
+  border-left: 1px solid rgba(159, 191, 180, .45);
+}
+
+.heroHighlights strong {
+  display: block;
+  color: var(--brand-dark);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.heroHighlights span {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: .64rem;
+  line-height: 1.25;
+}
+
+.scopeBlock {
   margin-top: 26px;
+}
+
+.scopeLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  max-width: 620px;
+  margin-bottom: 8px;
+}
+
+.scopeLabel span {
+  color: #304052;
+  font-size: .7rem;
+  font-weight: 850;
+}
+
+.scopeLabel small {
+  color: var(--muted);
+  font-size: .64rem;
 }
 
 .scopeSelector {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   overflow-x: auto;
-  margin: 30px -16px 0 0;
+  margin-right: -16px;
   padding: 2px 16px 6px 0;
   scrollbar-width: none;
 }
@@ -101,12 +177,17 @@
 .scopeSelector a {
   flex: 0 0 auto;
   padding: 9px 12px;
-  border: 1px solid rgba(182, 207, 198, .72);
+  border: 1px solid rgba(182, 207, 198, .78);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
+  background: rgba(255, 255, 255, .82);
   color: #4f5f6f;
-  font-size: .72rem;
+  font-size: .7rem;
   font-weight: 800;
+  transition: border-color .16s ease, background-color .16s ease, color .16s ease;
+}
+
+.scopeSelector a:hover {
+  border-color: #9ccdbb;
 }
 
 .scopeSelector .scopeActive {
@@ -116,13 +197,13 @@
 }
 
 .mapCard {
-  align-self: end;
-  padding: 14px;
-  border: 1px solid rgba(197, 219, 211, .88);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, .88);
-  box-shadow: 0 28px 70px rgba(11, 72, 57, .13);
-  backdrop-filter: blur(14px);
+  align-self: center;
+  padding: 12px;
+  border: 1px solid rgba(190, 215, 206, .92);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 30px 80px rgba(10, 76, 59, .14);
+  backdrop-filter: blur(16px);
 }
 
 .mapCardHeader {
@@ -130,36 +211,42 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 7px 6px 13px;
+  padding: 9px 8px 14px;
 }
 
 .mapCardHeader div {
+  min-width: 0;
   display: grid;
-  gap: 2px;
+  gap: 3px;
 }
 
 .mapCardHeader span {
   color: var(--muted);
-  font-size: .66rem;
-  font-weight: 800;
+  font-size: .64rem;
+  font-weight: 850;
   text-transform: uppercase;
   letter-spacing: .08em;
 }
 
 .mapCardHeader strong {
+  overflow: hidden;
   font-size: .9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mapCardHeader a {
+  flex: 0 0 auto;
   color: var(--brand-dark);
-  font-size: .73rem;
+  font-size: .72rem;
   font-weight: 850;
 }
 
 .miniMap {
   min-height: 300px;
-  border-radius: 19px;
-  box-shadow: none;
+  border: 0;
+  border-radius: 21px;
+  box-shadow: inset 0 0 0 1px rgba(11, 24, 48, .05);
 }
 
 .mapLegend {
@@ -167,9 +254,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 9px 14px;
-  padding: 13px 6px 3px;
+  padding: 13px 8px 4px;
   color: #516171;
-  font-size: .68rem;
+  font-size: .66rem;
   font-weight: 750;
 }
 
@@ -205,7 +292,8 @@
 }
 
 .metricsIntro,
-.sourcesHeader {
+.sourcesHeader,
+.utilityHeader {
   display: grid;
   gap: 14px;
   margin-bottom: 24px;
@@ -213,17 +301,18 @@
 
 .metricsIntro h2,
 .sectionHeading h2,
-.nowPrimary h2,
+.utilityHeader h2,
 .classifiedSection h2,
 .sourcesHeader h2 {
   margin: 0;
-  font-size: clamp(1.8rem, 7vw, 3.05rem);
+  font-size: clamp(1.8rem, 7vw, 3rem);
   line-height: 1;
   letter-spacing: -.045em;
 }
 
 .metricsIntro > p,
-.sourcesHeader > p {
+.sourcesHeader > p,
+.utilityHeader > p {
   max-width: 620px;
   margin: 0;
   color: var(--muted);
@@ -237,38 +326,53 @@
 }
 
 .metricGrid article {
+  position: relative;
   min-width: 0;
+  min-height: 140px;
   padding: 18px;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: #fbfdfc;
+  background:
+    linear-gradient(145deg, #ffffff, #f8fbfa);
+}
+
+.metricGrid article::after {
+  content: "";
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  right: -28px;
+  top: -28px;
+  border-radius: 50%;
+  background: rgba(12, 148, 112, .07);
 }
 
 .metricGrid article > span {
   display: block;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   color: var(--muted);
-  font-size: .7rem;
+  font-size: .68rem;
   font-weight: 800;
 }
 
 .metricGrid strong {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   color: var(--brand-dark);
-  font-size: clamp(1.65rem, 8vw, 2.7rem);
+  font-size: clamp(1.65rem, 8vw, 2.65rem);
   line-height: 1;
   letter-spacing: -.04em;
 }
 
 .metricGrid small {
   color: #738075;
-  font-size: .64rem;
+  font-size: .63rem;
 }
 
 .neighborhoodSection {
-  padding-top: 60px;
-  padding-bottom: 62px;
+  padding-top: 62px;
+  padding-bottom: 64px;
 }
 
 .sectionHeading {
@@ -282,7 +386,7 @@
 .sectionHeading > a {
   display: none;
   color: var(--brand);
-  font-size: .8rem;
+  font-size: .78rem;
   font-weight: 850;
 }
 
@@ -312,8 +416,10 @@
 }
 
 .neighborhoodSelected {
-  border-color: #98d7c1;
-  background: linear-gradient(145deg, #ffffff, #effaf6);
+  border-color: #8fcfb8;
+  background:
+    linear-gradient(145deg, #ffffff, #edf9f4);
+  box-shadow: 0 16px 38px rgba(12, 148, 112, .09);
 }
 
 .neighborhoodCard > div:first-child {
@@ -323,14 +429,16 @@
 
 .neighborhoodCard > div:first-child span {
   color: var(--brand);
-  font-size: .64rem;
+  font-size: .63rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: .09em;
 }
 
 .neighborhoodCard > div:first-child strong {
-  font-size: 1.05rem;
+  min-height: 2.5em;
+  font-size: 1.02rem;
+  line-height: 1.25;
 }
 
 .neighborhoodCard dl {
@@ -346,117 +454,140 @@
 
 .neighborhoodCard dt {
   color: var(--muted);
-  font-size: .62rem;
+  font-size: .6rem;
 }
 
 .neighborhoodCard dd {
   margin: 4px 0 0;
-  font-size: .86rem;
+  font-size: .83rem;
   font-weight: 900;
 }
 
 .cardAction {
   color: var(--brand-dark);
-  font-size: .72rem;
+  font-size: .7rem;
   font-weight: 850;
 }
 
-.nowSection {
-  padding: 60px 0;
+.utilitySection {
+  padding: 62px 0;
   background:
-    linear-gradient(145deg, #071f1b 0%, #0a4437 100%);
-  color: #ffffff;
+    linear-gradient(180deg, #f4faf8 0%, #eef7f4 100%);
+  border-top: 1px solid #e2eeea;
+  border-bottom: 1px solid #e2eeea;
 }
 
-.nowGrid {
+.utilityGrid {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
-.nowPrimary,
-.statusPanel {
-  padding: 26px;
+.utilityCard,
+.utilityStatus {
+  position: relative;
+  min-height: 190px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(182, 207, 198, .72);
   border-radius: 24px;
-}
-
-.nowPrimary {
-  border: 1px solid rgba(255, 255, 255, .12);
-  background:
-    radial-gradient(circle at 88% 12%, rgba(98, 230, 182, .18), transparent 30%),
-    rgba(255, 255, 255, .04);
-}
-
-.nowPrimary .eyebrow {
-  color: #77e2bd;
-}
-
-.nowPrimary h2 {
-  max-width: 640px;
-}
-
-.nowPrimary > p:not(.eyebrow) {
-  max-width: 700px;
-  margin: 16px 0 0;
-  color: #c4dbd4;
-  line-height: 1.65;
-}
-
-.nowChecks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 24px;
-}
-
-.nowChecks span {
-  padding: 8px 10px;
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 999px;
-  color: #d9ebe6;
-  font-size: .7rem;
-  font-weight: 750;
-}
-
-.statusPanel {
-  align-self: stretch;
   background: #ffffff;
-  color: var(--ink);
+}
+
+.utilityCard {
+  display: grid;
+  align-content: end;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.utilityCard::before {
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  right: -38px;
+  top: -38px;
+  border-radius: 50%;
+}
+
+.utilityCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(11, 72, 57, .08);
+}
+
+.utilityEducation::before {
+  background: rgba(12, 148, 112, .12);
+}
+
+.utilityHealth::before {
+  background: rgba(216, 86, 63, .11);
+}
+
+.utilityMap::before {
+  background: rgba(53, 104, 180, .10);
+}
+
+.utilityCardMeta {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: .65rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.utilityCard strong,
+.utilityStatus strong {
+  display: block;
+  max-width: 18ch;
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.utilityCard p,
+.utilityStatus p {
+  max-width: 34ch;
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.utilityCard b {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  color: var(--brand-dark);
+  font-size: 1rem;
+}
+
+.utilityStatus {
+  color: #ffffff;
+  border-color: #0b5a48;
+  background:
+    radial-gradient(circle at 86% 12%, rgba(98, 230, 182, .16), transparent 30%),
+    linear-gradient(145deg, #092e27, #0b5848);
+}
+
+.utilityStatus p {
+  color: #c8e0d9;
 }
 
 .statusEyebrow {
   display: block;
-  margin-bottom: 14px;
-  color: var(--brand);
-  font-size: .65rem;
+  margin-bottom: 12px;
+  color: #78e3bd;
+  font-size: .64rem;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: .1em;
-}
-
-.statusPanel strong {
-  display: block;
-  font-size: 1.2rem;
-}
-
-.statusPanel p {
-  margin: 10px 0 20px;
-  color: var(--muted);
-  font-size: .82rem;
-  line-height: 1.55;
-}
-
-.statusPanel a {
-  color: var(--brand-dark);
-  font-size: .78rem;
-  font-weight: 850;
+  letter-spacing: .09em;
 }
 
 .classifiedSection {
   display: grid;
   gap: 24px;
   align-items: end;
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 58px;
+  padding-bottom: 58px;
 }
 
 .classifiedSection p:not(.eyebrow) {
@@ -467,9 +598,9 @@
 }
 
 .sourcesSection {
-  padding: 54px 0 86px;
+  padding: 52px 0 84px;
   border-top: 1px solid var(--line);
-  background: #f6faf8;
+  background: #f8fbfa;
 }
 
 .sourceList {
@@ -495,13 +626,13 @@
 }
 
 .sourceList strong {
-  font-size: .78rem;
+  font-size: .77rem;
 }
 
 .sourceList span,
 .sourceList a {
   color: var(--muted);
-  font-size: .66rem;
+  font-size: .65rem;
 }
 
 .sourceList a {
@@ -534,7 +665,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  font-size: .78rem;
+  font-size: .76rem;
 }
 
 .unavailable {
@@ -550,8 +681,8 @@
 .unavailable h1 {
   max-width: 820px;
   margin-bottom: 16px;
-  font-size: clamp(2.2rem, 9vw, 4.6rem);
-  line-height: .96;
+  font-size: clamp(2.2rem, 9vw, 4.4rem);
+  line-height: .97;
   letter-spacing: -.055em;
 }
 
@@ -563,8 +694,8 @@
 
 @media (min-width: 720px) {
   .heroGrid {
-    padding-top: 66px;
-    padding-bottom: 58px;
+    padding-top: 62px;
+    padding-bottom: 56px;
   }
 
   .metricGrid {
@@ -580,9 +711,14 @@
   }
 
   .metricsIntro,
-  .sourcesHeader {
-    grid-template-columns: 1fr minmax(320px, .72fr);
+  .sourcesHeader,
+  .utilityHeader {
+    grid-template-columns: 1fr minmax(300px, .72fr);
     align-items: end;
+  }
+
+  .utilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .classifiedSection {
@@ -605,32 +741,34 @@
 
 @media (min-width: 980px) {
   .heroGrid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(420px, .78fr);
+    grid-template-columns: minmax(0, 1.02fr) minmax(430px, .82fr);
     align-items: center;
-    gap: 70px;
-    min-height: 670px;
+    gap: 68px;
+    min-height: 650px;
   }
 
   .miniMap {
-    min-height: 390px;
+    min-height: 400px;
   }
 
   .neighborhoodGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .nowGrid {
-    grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  .utilityGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .nowPrimary,
-  .statusPanel {
-    padding: 36px;
+  .utilityCard,
+  .utilityStatus {
+    min-height: 220px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .neighborhoodCard {
+  .scopeSelector a,
+  .neighborhoodCard,
+  .utilityCard {
     transition: none;
   }
 }

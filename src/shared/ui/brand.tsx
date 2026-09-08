@@ -8,7 +8,7 @@ export function Brand() {
       aria-label="Achegue-se, página inicial"
     >
       <span className="brandMark" aria-hidden="true">
-        ♥
+        <span>♥</span>
       </span>
       <span>
         <strong>Achegue-se</strong>

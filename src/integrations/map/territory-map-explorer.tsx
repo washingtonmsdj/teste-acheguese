@@ -14,6 +14,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import Link from 'next/link';
 import {
   formatMapUrlState,
   type MapPointFeature,
@@ -107,6 +108,13 @@ export function TerritoryMapExplorer({
     }),
     [initialData.bounds],
   );
+
+  const visibleEducation = data.points.filter(
+    (point) => point.kind === 'education',
+  ).length;
+  const visibleHealth = data.points.filter(
+    (point) => point.kind === 'health',
+  ).length;
 
   const loadViewport = useCallback(
     async (
@@ -274,8 +282,6 @@ export function TerritoryMapExplorer({
         clustered: true,
       });
 
-      // Revalida o viewport real do dispositivo. Isso mantém
-      // o zoom do deep link intacto sem depender de fitBounds.
       void loadViewport(map, categoriesRef.current);
     });
 
@@ -415,13 +421,17 @@ export function TerritoryMapExplorer({
   return (
     <section className={styles.shell}>
       <aside className={styles.controlsPane}>
+        <Link className={styles.backLink} href="/">
+          ← Voltar ao território
+        </Link>
+
         <div>
           <p className="eyebrow">Complexo do Nordeste</p>
           <h1>Mapa do território</h1>
           <p className={styles.intro}>
-            Explore limites oficiais, escolas e unidades
-            SUS verificadas. O mapa carrega somente a área
-            que está visível.
+            Navegue pelos bairros e encontre escolas e
+            unidades SUS. A consulta acompanha somente a
+            área visível no mapa.
           </p>
         </div>
 
@@ -432,7 +442,7 @@ export function TerritoryMapExplorer({
           </div>
           <div>
             <strong>{data.points.length}</strong>
-            <span>locais no viewport</span>
+            <span>locais no mapa</span>
           </div>
         </div>
 
@@ -441,8 +451,8 @@ export function TerritoryMapExplorer({
           aria-label="Camadas do mapa"
         >
           <div className={styles.filterHeading}>
-            <strong>Camadas</strong>
-            <span>Escolha o que ver</span>
+            <strong>O que mostrar</strong>
+            <span>Filtros do mapa</span>
           </div>
           <button
             className={
@@ -458,7 +468,10 @@ export function TerritoryMapExplorer({
               className={styles.educationDot}
               aria-hidden="true"
             />
-            Educação
+            <span className={styles.filterButtonText}>
+              <strong>Educação</strong>
+              <small>{visibleEducation} visíveis</small>
+            </span>
           </button>
           <button
             className={
@@ -474,7 +487,10 @@ export function TerritoryMapExplorer({
               className={styles.healthDot}
               aria-hidden="true"
             />
-            Saúde SUS
+            <span className={styles.filterButtonText}>
+              <strong>Saúde SUS</strong>
+              <small>{visibleHealth} visíveis</small>
+            </span>
           </button>
         </div>
       </aside>
@@ -485,8 +501,8 @@ export function TerritoryMapExplorer({
           className={styles.visuallyHidden}
         >
           Use os controles do mapa para aproximar ou afastar.
-          A lista de locais abaixo oferece uma alternativa
-          acessível para focalizar cada ponto.
+          A lista de locais oferece uma alternativa acessível
+          para focalizar cada ponto.
         </p>
 
         <div
@@ -502,9 +518,8 @@ export function TerritoryMapExplorer({
           aria-live="polite"
           aria-atomic="true"
         >
-          <span>
-            {data.points.length} locais visíveis
-          </span>
+          <span>Dados oficiais · viewport atual</span>
+          <span>{data.points.length} locais</span>
           {loading && (
             <span className={styles.mapStatusLoading}>
               Atualizando…
@@ -523,10 +538,8 @@ export function TerritoryMapExplorer({
         <div className={styles.placeList}>
           <div className={styles.placeListHeader}>
             <div>
-              <strong>Locais visíveis</strong>
-              <span>
-                Selecione um local para focalizar no mapa
-              </span>
+              <strong>Locais nesta área</strong>
+              <span>Toque para localizar no mapa</span>
             </div>
             <small>{data.points.length} resultados</small>
           </div>
@@ -566,14 +579,15 @@ export function TerritoryMapExplorer({
             ))
           ) : (
             <p className={styles.empty}>
-              Nenhum local desta camada no viewport atual.
+              Nenhum local desta categoria na área visível.
             </p>
           )}
         </div>
 
         <p className={styles.provenance}>
-          Dados territoriais: GeoSalvador e CNES/Ministério
-          da Saúde. Mapa-base: OpenFreeMap/OpenStreetMap.
+          Território e educação: GeoSalvador. Saúde:
+          CNES/Ministério da Saúde. Mapa-base:
+          OpenFreeMap/OpenStreetMap.
         </p>
       </aside>
     </section>

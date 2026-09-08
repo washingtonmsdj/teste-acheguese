@@ -39,11 +39,33 @@ h1, h2, h3, p { margin-top: 0; }
 }
 .headerInner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .brand { display: flex; align-items: center; gap: 10px; min-width: max-content; }
-.brandMark { width: 38px; height: 38px; border-radius: 16px 16px 16px 4px; display: grid; place-items: center; background: var(--brand); color: white; transform: rotate(-8deg); }
-.brand strong { display: block; font-size: 1.2rem; line-height: 1; }
-.brand small { color: var(--muted); font-size: .66rem; }
+.brandMark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50% 50% 50% 9px;
+  background: linear-gradient(145deg, var(--brand), #08765c);
+  color: white;
+  transform: rotate(-45deg);
+  box-shadow: 0 8px 20px rgba(12,148,112,.18);
+}
+.brandMark > span { display: block; transform: rotate(45deg); font-size: .78rem; }
+.brand strong { display: block; font-size: 1.12rem; line-height: 1; letter-spacing: -.02em; }
+.brand small { display: block; margin-top: 3px; color: var(--muted); font-size: .61rem; }
 .desktopNav, .headerActions { display: none; }
-.menuButton { border: 0; background: transparent; font-size: 1.5rem; padding: 10px; color: var(--ink); }
+.menuButton {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fff;
+  padding: 0;
+  color: var(--ink);
+}
+.menuButton svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .linkButton { display: inline-flex; align-items: center; justify-content: center; width: fit-content; }
 
 .hero { background: linear-gradient(140deg, #effbf7 0%, #f7fcfb 50%, #e5f7f0 100%); overflow: hidden; }
@@ -70,10 +92,52 @@ footer .brand small { color: #b9ded4; }
 .footerInner p { color: #cce7e0; margin: 0; }
 .footerInner > div { display: flex; gap: 18px; font-size: .8rem; }
 
-.mobileTabbar { position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 60; height: 66px; display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid rgba(255,255,255,.75); border-radius: 22px; background: rgba(255,255,255,.93); backdrop-filter: blur(20px); box-shadow: 0 16px 44px rgba(5,43,34,.20); }
-.mobileTabbar a { display: grid; place-items: center; align-content: center; gap: 2px; color: #526274; font-size: .62rem; font-weight: 750; }
-.mobileTabbar a.active { color: var(--brand); }
-.mobileTabbar span { font-size: 1.25rem; }
+.mobileTabbar {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 60;
+  height: 66px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  border: 1px solid rgba(212,225,220,.92);
+  border-radius: 21px;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 44px rgba(5,43,34,.18);
+}
+.mobileTabbar a {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  color: #667484;
+  font-size: .58rem;
+  font-weight: 800;
+}
+.mobileTabbar a::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  width: 26px;
+  height: 3px;
+  border-radius: 999px;
+  background: transparent;
+}
+.mobileTabbar a.active { color: var(--brand-dark); }
+.mobileTabbar a.active::before { background: var(--brand); }
+.mobileTabbar svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mobileTabbar a > span { font-size: .58rem; }
 
 @media (min-width: 720px) {
   .container { width: min(var(--container), calc(100% - 56px)); }
@@ -83,7 +147,10 @@ footer .brand small { color: #b9ded4; }
 @media (min-width: 980px) {
   .headerInner { min-height: 76px; }
   .desktopNav, .headerActions { display: flex; align-items: center; gap: 22px; }
-  .desktopNav { font-size: .86rem; font-weight: 750; }
+  .desktopNav { font-size: .8rem; font-weight: 780; color: #48586a; }
+  .desktopNav a { position: relative; padding: 8px 0; }
+  .desktopNav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 2px; border-radius: 999px; background: var(--brand); transition: right .16s ease; }
+  .desktopNav a:hover::after { right: 0; }
   .headerActions { gap: 8px; }
   .menuButton, .mobileTabbar { display: none; }
   .heroGrid { grid-template-columns: 1.05fr .95fr; align-items: stretch; padding-top: 0; }

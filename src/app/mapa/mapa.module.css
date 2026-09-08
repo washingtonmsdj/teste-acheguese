@@ -1,6 +1,6 @@
 .page {
   min-height: 100svh;
-  background: #f5f8f7;
+  background: #f3f7f5;
 }
 
 .shell {
@@ -10,7 +10,7 @@
     "map"
     "results";
   min-height: calc(100svh - 68px);
-  background: #f5f8f7;
+  background: #f3f7f5;
 }
 
 .controlsPane,
@@ -22,8 +22,8 @@
   grid-area: controls;
   display: grid;
   align-content: start;
-  gap: 22px;
-  padding: 26px 20px 24px;
+  gap: 20px;
+  padding: 22px 20px 20px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -36,11 +36,18 @@
   border-top: 1px solid var(--line);
 }
 
+.backLink {
+  width: fit-content;
+  color: var(--brand-dark);
+  font-size: .7rem;
+  font-weight: 850;
+}
+
 .controlsPane h1,
 .unavailable h1 {
   margin: 0 0 12px;
-  font-size: clamp(2rem, 9vw, 3.6rem);
-  line-height: .95;
+  font-size: clamp(2rem, 8vw, 3.45rem);
+  line-height: .96;
   letter-spacing: -.055em;
 }
 
@@ -48,31 +55,34 @@
 .unavailable p:not(.eyebrow) {
   margin: 0;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.58;
 }
 
 .summary {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 9px;
 }
 
 .summary > div {
-  padding: 16px;
+  padding: 14px 15px;
   border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #f8fbfa;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f7fbf9);
 }
 
 .summary strong {
   display: block;
-  font-size: 1.5rem;
   color: var(--brand-dark);
+  font-size: 1.45rem;
+  line-height: 1;
 }
 
 .summary span {
+  display: block;
+  margin-top: 4px;
   color: var(--muted);
-  font-size: .72rem;
+  font-size: .65rem;
 }
 
 .filters {
@@ -90,33 +100,31 @@
   margin-bottom: 2px;
 }
 
-.filterHeading strong,
+.filterHeading > strong,
 .placeListHeader strong {
-  font-size: .78rem;
+  font-size: .72rem;
   text-transform: uppercase;
   letter-spacing: .08em;
 }
 
-.filterHeading span,
+.filterHeading > span,
 .placeListHeader span,
 .placeListHeader small {
   color: var(--muted);
-  font-size: .68rem;
+  font-size: .64rem;
 }
 
 .filters button {
-  min-height: 46px;
+  min-height: 54px;
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 0 13px;
+  padding: 9px 11px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: white;
   color: #455368;
   font: inherit;
-  font-size: .78rem;
-  font-weight: 800;
   cursor: pointer;
   transition:
     border-color .16s ease,
@@ -141,6 +149,23 @@
   color: var(--brand-dark);
 }
 
+.filterButtonText {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.filterButtonText strong {
+  font-size: .72rem;
+}
+
+.filterButtonText small {
+  color: var(--muted);
+  font-size: .6rem;
+  font-weight: 650;
+}
+
 .educationDot,
 .healthDot {
   width: 10px;
@@ -160,7 +185,8 @@
 .mapStage {
   grid-area: map;
   position: relative;
-  min-height: 58svh;
+  min-height: 56svh;
+  overflow: hidden;
   background: #dfe9e5;
   isolation: isolate;
 }
@@ -172,24 +198,25 @@
 
 .mapHud {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 12px;
+  left: 12px;
+  right: 62px;
   z-index: 4;
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
   pointer-events: none;
 }
 
 .mapHud span {
-  padding: 8px 10px;
+  padding: 7px 9px;
   border: 1px solid rgba(255, 255, 255, .82);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .93);
   color: #26384a;
-  font-size: .7rem;
+  font-size: .62rem;
   font-weight: 800;
-  box-shadow: 0 8px 24px rgba(11, 24, 48, .12);
+  box-shadow: 0 8px 24px rgba(11, 24, 48, .11);
   backdrop-filter: blur(10px);
 }
 
@@ -199,23 +226,23 @@
 
 .mapError {
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
   z-index: 4;
   padding: 12px 14px;
   border: 1px solid #eed3cd;
   border-radius: 14px;
   background: rgba(255, 248, 246, .96);
   color: #873e32;
-  font-size: .78rem;
+  font-size: .75rem;
   font-weight: 750;
   box-shadow: var(--shadow);
 }
 
 .placeList {
   display: grid;
-  gap: 6px;
+  gap: 9px;
 }
 
 .placeListHeader {
@@ -223,7 +250,7 @@
   justify-content: space-between;
   gap: 12px;
   align-items: end;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .placeListHeader > div {
@@ -232,7 +259,10 @@
 }
 
 .placeList article {
-  border-bottom: 1px solid var(--line);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #ffffff;
+  overflow: hidden;
 }
 
 .placeButton {
@@ -241,13 +271,18 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 10px;
   align-items: start;
-  padding: 13px 4px;
+  padding: 13px 12px;
   border: 0;
   background: transparent;
   color: inherit;
   text-align: left;
   font: inherit;
   cursor: pointer;
+  transition: background-color .16s ease;
+}
+
+.placeButton:hover {
+  background: #f7fbf9;
 }
 
 .placeButton > .educationDot,
@@ -258,25 +293,25 @@
 .placeButton strong {
   display: block;
   margin-bottom: 3px;
-  font-size: .82rem;
+  font-size: .78rem;
   line-height: 1.3;
 }
 
 .placeButton small {
   color: var(--muted);
-  font-size: .68rem;
+  font-size: .63rem;
 }
 
 .placeButton p {
   margin: 4px 0 0;
   color: #5a6878;
-  font-size: .7rem;
+  font-size: .67rem;
   line-height: 1.4;
 }
 
 .placeArrow {
   color: #819089;
-  font-size: .78rem;
+  font-size: .75rem;
   transition: transform .16s ease;
 }
 
@@ -287,13 +322,21 @@
 .empty,
 .provenance {
   color: var(--muted);
-  font-size: .72rem;
+  font-size: .69rem;
   line-height: 1.5;
+}
+
+.empty {
+  margin: 0;
+  padding: 18px;
+  border: 1px dashed #cadbd5;
+  border-radius: 15px;
+  background: #f8fbfa;
 }
 
 .provenance {
   margin: 0;
-  padding-top: 4px;
+  padding-top: 5px;
 }
 
 .visuallyHidden {
@@ -316,9 +359,21 @@
   background: linear-gradient(145deg, #f0faf6, #fff);
 }
 
+@media (min-width: 720px) {
+  .controlsPane {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .resultsPane {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
 @media (min-width: 980px) {
   .shell {
-    grid-template-columns: 380px minmax(0, 1fr);
+    grid-template-columns: 365px minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
     grid-template-areas:
       "controls map"
@@ -329,7 +384,7 @@
 
   .controlsPane {
     min-height: 0;
-    padding: 32px 26px 24px;
+    padding: 28px 24px 22px;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
@@ -337,13 +392,13 @@
   .resultsPane {
     min-height: 0;
     overflow-y: auto;
-    padding: 20px 26px 42px;
+    padding: 18px 24px 34px;
     border-top: 0;
     border-right: 1px solid var(--line);
   }
 
   .controlsPane h1 {
-    font-size: 2.65rem;
+    font-size: 2.5rem;
   }
 
   .mapStage {
@@ -351,13 +406,15 @@
   }
 
   .mapHud {
-    top: 18px;
-    left: 18px;
+    top: 16px;
+    left: 16px;
+    right: 72px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .filters button,
+  .placeButton,
   .placeArrow {
     transition: none;
   }
