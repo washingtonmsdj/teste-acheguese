@@ -188,15 +188,16 @@ async function run() {
     );
   }
 
-  assert(
-    !homeHtml.includes(
-      'Não foi possível carregar os dados públicos desta área agora.',
-    ) &&
-      !homeHtml.includes(
-        'O MVP territorial continua aqui.',
-      ),
-    'Home MVP caiu no fallback de dados',
-  );
+  for (const forbiddenFallbackText of [
+    'Não foi possível carregar os dados públicos desta área agora.',
+    'O MVP territorial continua aqui.',
+    'Os dados públicos estão temporariamente indisponíveis.',
+  ]) {
+    assert(
+      !homeHtml.includes(forbiddenFallbackText),
+      `Home MVP caiu no fallback de dados: ${forbiddenFallbackText}`,
+    );
+  }
 
   for (const [slug, label] of neighborhoods) {
     await expectHtml(
