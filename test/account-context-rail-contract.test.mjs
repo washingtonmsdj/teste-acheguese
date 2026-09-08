@@ -83,3 +83,11 @@ test('área pessoal expõe logout visível usando POST canônico', () => {
   assert.match(control, /method="post"/);
   assert.match(control, /Sair da conta/);
 });
+
+
+test('Meus anúncios mantém logout acessível fora do rail desktop', () => {
+  const source = read('../src/app/classificados/meus/page.tsx');
+
+  assert.match(source, /SignOutControl/);
+  assert.match(source, /Criar novo anúncio/);
+});

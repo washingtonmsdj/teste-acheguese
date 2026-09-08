@@ -5,6 +5,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { AccountContextRail } from '@/shared/layout/account-context-rail';
+import { SignOutControl } from '@/shared/layout/sign-out-control';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 export const dynamic = 'force-dynamic';
@@ -82,9 +83,12 @@ export default async function MyClassifiedsPage({
           <p className="eyebrow">Sua conta</p>
           <h1>Meus anúncios</h1>
           <p>Gerencie rascunhos e acompanhe o estado dos seus Classificados.</p>
-          <Link className="primaryButton linkButton" href="/classificados/novo">
-            Criar novo anúncio
-          </Link>
+          <div className="stateActions">
+            <Link className="primaryButton linkButton" href="/classificados/novo">
+              Criar novo anúncio
+            </Link>
+            <SignOutControl />
+          </div>
         </div>
       </section>
 
