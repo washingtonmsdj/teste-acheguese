@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `85df68f43479aa6b25d8d8613bfd66a29809950c`
+> **HEAD técnico de referência:** `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`
 
 ---
 
@@ -1183,7 +1183,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`85df68f43479aa6b25d8d8613bfd66a29809950c`
+`fa1639244fb30908a48fcf974e33f9b7dc14b7fe`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1315,31 +1315,32 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`;
-- URL protegida: `https://teste-acheguese-6riiqf8vv-jogo-brasils-projects.vercel.app`;
-- source/runtime: `85df68f43479aa6b25d8d8613bfd66a29809950c`;
+- deployment: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`;
+- URL protegida: `https://teste-acheguese-gk1f00tad-jogo-brasils-projects.vercel.app`;
+- source/runtime: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- runtime errors observados: **0**;
-- Home real: `GET / 200` no próprio deployment;
-- contém Home, Mapa, Classificados, Busca, Menu, Auth, área pessoal e moderação no mesmo frontend;
+- runtime errors: **0**;
+- Home real: `GET / 200`;
+- contém Home, Mapa, Classificados, Busca, Menu, Auth, área pessoal, moderação e loadings contextuais;
+- loadings de Favoritos/Mensagens/Meus/Novo/Editar não reutilizam mais o skeleton global da Home;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
 
 ### Blocker de release atual
 
-- Deployment Protection/SSO ainda impede smoke/visual completo sem sessão persistente;
+- Deployment Protection/SSO exige sessão/cookie persistente para smoke/visual completo;
 - revisão visual 1440×900 / 390×844 continua pendente;
 - callback Auth exata do candidate e E2E Auth/Classificados continuam pendentes;
 - não desativar proteção, RLS ou CSP para contornar a limitação de inspeção.
 
 ### Próxima ação
 
-**Inspecionar `dpl_8dmirY6fshiZg6EuAr55PGCwii1S` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

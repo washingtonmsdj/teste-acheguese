@@ -256,3 +256,24 @@ A área administrativa de Classificados permanece restrita por role, mas agora a
 - breakpoint Auth legado de 720px removido.
 
 Candidate visual: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`.
+
+
+## Loading contextual da área pessoal
+
+Checkpoint: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`.
+
+Foi criada uma autoridade visual única `AccountSurfaceLoading` com variantes:
+
+- `list`: Favoritos, Mensagens e Meus anúncios;
+- `thread`: conversa individual;
+- `form`: Novo anúncio e Editar anúncio.
+
+Benefícios:
+
+- mantém App Shell e Account Rail durante navegação;
+- não mostra mais skeleton territorial da Home em rotas pessoais;
+- reduced-motion preservado;
+- wrappers de rota mínimos, sem duplicar o skeleton;
+- teste de contrato impede perda do loading contextual.
+
+Candidate visual: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`.

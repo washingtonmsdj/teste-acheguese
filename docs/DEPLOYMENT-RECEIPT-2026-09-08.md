@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`;
-- URL protegida: `https://teste-acheguese-6riiqf8vv-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`;
+- URL protegida: `https://teste-acheguese-gk1f00tad-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `85df68f43479aa6b25d8d8613bfd66a29809950c`;
-- quality: `34201520319` PASS;
+- source/runtime: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
+- quality: `34202712077` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
@@ -25,8 +25,8 @@ Este é o candidate canônico que contém o frontend técnico atual, incluindo a
 
 Antes do deployment foi confirmado:
 
-- `main source/runtime = 85df68f43479aa6b25d8d8613bfd66a29809950c`;
-- `deploy/vercel-bundle/SOURCE_SHA = 85df68f43479aa6b25d8d8613bfd66a29809950c`;
+- `main source/runtime = fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
+- `deploy/vercel-bundle/SOURCE_SHA = fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
 - quality do SHA exato = PASS;
 - vercel-source-bundle do SHA exato = PASS;
 - bundle sem arquivos `.env` versionados;
