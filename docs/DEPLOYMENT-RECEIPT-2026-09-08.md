@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`;
-- URL protegida: `https://teste-acheguese-gk1f00tad-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
+- URL protegida: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
-- quality: `34202712077` PASS;
+- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
+- quality: `34204462075` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
@@ -124,17 +124,18 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém o frontend técnico `85df68f4`:
+Escopo MVP explícito no source `abc52b42`:
 
-- Home/Mapa/Classificados no App Shell Território Vivo;
-- Busca, Menu e Auth alinhados ao mesmo sistema;
-- área pessoal usa rail contextual único;
-- moderação usa rail administrativo com contagem real de fila e denúncias;
-- detalhe público refinado;
-- CSS Auth legado e breakpoint redundante de 720px removidos;
-- testes anti-regressão cobrem rail de conta e legado Auth;
-- runtime errors observados = 0;
-- Home real = GET / 200.
+- Território/Home = MVP;
+- Mapa = MVP;
+- Classificados = MVP;
+- Auth/Favoritos/Mensagens/Meus/Novo/Editar/Moderação = suporte operacional;
+- Community/Alertas/Eventos/Oportunidades/Empresas = future;
+- Gastronomia/Mobilidade continuam fora do escopo atual;
+- navegação ativa exige `releaseScope=mvp` e `availability=active`;
+- testes impedem exposição acidental de módulo futuro.
+
+O candidate preserva account rail, loadings contextuais, Auth alinhado, detalhe público refinado e moderação contextual.
 
 ## 8. Previews anteriores
 

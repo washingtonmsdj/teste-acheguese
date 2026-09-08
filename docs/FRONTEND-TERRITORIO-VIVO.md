@@ -277,3 +277,20 @@ Benefícios:
 - teste de contrato impede perda do loading contextual.
 
 Candidate visual: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`.
+
+
+## Escopo visual do MVP
+
+Checkpoint: `abc52b42a0b2336d3e0d018b4a4600223da55f84`.
+
+Navegação principal do lançamento:
+
+- Território;
+- Mapa;
+- Classificados.
+
+Auth, Favoritos, Mensagens, gerenciamento de anúncios e Moderação são suporte do fluxo de Classificados e não competem com a navegação principal.
+
+Community, Alertas, Eventos, Oportunidades e Empresas permanecem `future` no registry. Gastronomia e Mobilidade continuam fora do MVP atual.
+
+Candidate visual: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`.

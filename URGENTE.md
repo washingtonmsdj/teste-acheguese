@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`
+> **HEAD técnico de referência:** `abc52b42a0b2336d3e0d018b4a4600223da55f84`
 
 ---
 
@@ -53,6 +53,39 @@ Os módulos existem **dentro do território**, nunca o contrário.
 
 ---
 
+# 2A. Escopo funcional do MVP
+
+O lançamento inicial deve permanecer deliberadamente pequeno e completo.
+
+## Superfícies principais
+
+- **Território/Home** — entrada e contexto do Complexo/bairro;
+- **Mapa** — bairros, Educação e Saúde/SUS com dados oficiais;
+- **Classificados** — serviço local já existente e incluído no MVP.
+
+## Suporte operacional
+
+- Auth;
+- Favoritos;
+- Mensagens;
+- Meus anúncios / Novo / Editar;
+- Moderação administrativa.
+
+Essas superfícies suportam o fluxo de Classificados e não são novos módulos independentes do produto.
+
+## Fora do MVP atual
+
+- Community;
+- Alertas;
+- Eventos;
+- Oportunidades;
+- Empresas;
+- Gastronomia;
+- Mobilidade.
+
+No registry, `releaseScope: 'mvp'` é a autoridade técnica. Um módulo futuro não pode aparecer apenas mudando `availability`; precisa ser promovido conscientemente de escopo e passar pelos gates da fase correspondente.
+
+---
 # 2. Estratégia geográfica do MVP
 
 ## 2.1 Lançamento inicial
@@ -1183,7 +1216,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`fa1639244fb30908a48fcf974e33f9b7dc14b7fe`
+`abc52b42a0b2336d3e0d018b4a4600223da55f84`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1315,18 +1348,18 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`;
-- URL protegida: `https://teste-acheguese-gk1f00tad-jogo-brasils-projects.vercel.app`;
-- source/runtime: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
+- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
+- URL protegida: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
+- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- runtime errors: **0**;
-- Home real: `GET / 200`;
-- contém Home, Mapa, Classificados, Busca, Menu, Auth, área pessoal, moderação e loadings contextuais;
-- loadings de Favoritos/Mensagens/Meus/Novo/Editar não reutilizam mais o skeleton global da Home;
+- runtime errors observados: **0**;
+- escopo MVP explícito: Território + Mapa + Classificados;
+- Auth/Favoritos/Mensagens/Meus anúncios/Moderação = suporte operacional;
+- Community/Alertas/Eventos/Oportunidades/Empresas = future e invisíveis;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
@@ -1340,7 +1373,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

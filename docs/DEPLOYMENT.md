@@ -109,18 +109,17 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_HZSm3ih3n3wicw8eGPsaF758KVi1`;
-- URL: `https://teste-acheguese-gk1f00tad-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
+- URL: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `fa1639244fb30908a48fcf974e33f9b7dc14b7fe`;
-- quality: `34202712077` PASS;
-- source bundle: `34202712273` PASS;
+- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
+- quality: `34204462075` PASS;
+- source bundle: `34204462010` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home: `GET / 200`;
-- account/moderation rails preservados;
-- loadings contextuais das áreas pessoais incluídos;
+- escopo MVP fail-closed: Território + Mapa + Classificados;
+- suporte: Auth/Conta/Moderação;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
