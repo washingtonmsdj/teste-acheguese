@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `bab5273b1c6b757cbd3d0b583416f6c441e533ef`
+> **HEAD técnico de referência:** `7209f8242de36ec7d6c1f5c85cff72b64105fec3`
 
 ---
 
@@ -1183,7 +1183,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`bab5273b1c6b757cbd3d0b583416f6c441e533ef`
+`7209f8242de36ec7d6c1f5c85cff72b64105fec3`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1217,6 +1217,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - hardening de interação `f7fe2080`: alvos de toque principais normalizados para ~44px+ no menu mobile, seletor territorial, links do rail, conta desktop e controles/lista do Mapa; quality + bundle = PASS.
 - densidade mobile `299ad9a1`: heroes internos, formulários e espaço seguro acima da bottom navigation foram refinados para telas pequenas sem alterar lógica/API;
 - fechamento de touch targets `bab5273b`: menu/fechar e rail de Classificados passaram a respeitar alvo ~44px; quality `34195671855` + bundle `34195671848` = PASS;
+- Busca/Menu `7209f824`: Busca virou hub territorial com separação explícita entre Mapa e Classificados; Menu ganhou contexto territorial e ícones consistentes; nenhuma busca universal fictícia ou módulo `planned` foi exposto; quality `34197469384` + bundle `34197469380` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1308,9 +1309,9 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
-- URL protegida: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
-- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- deployment: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`;
+- URL protegida: `https://teste-acheguese-db7ey1p9r-jogo-brasils-projects.vercel.app`;
+- source/runtime: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
@@ -1318,24 +1319,22 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - static generation: 12/12 PASS;
 - runtime errors: **0**;
 - Home real: `GET / 200`;
-- security advisors Supabase: **0 lints**;
-- rollout: Complexo + quatro bairros em `data_preparation`, sem ativação;
+- Busca/Menu estão no mesmo source e passaram build; inspeção HTTP subsequente continua interceptada pelo SSO do preview;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
-Previews anteriores `dpl_4j5FX...`, `dpl_6iMz...` e `dpl_G5CZ...` permanecem apenas como evidência histórica e **não** são o candidate canônico atual.
+Previews anteriores permanecem apenas como evidência histórica e **não** são o candidate visual atual.
 
 ### Blocker de release atual
 
-- Deployment Protection/SSO exige sessão/cookie persistente para as rotas protegidas;
-- o fetch automatizado disponível consegue alcançar a Home em uma sessão, mas não preserva de modo estável a sessão para o smoke completo;
-- Chromium local não resolve DNS externo nesta execução;
-- portanto smoke completo e revisão visual 1440×900 / 390×844 continuam pendentes;
+- Deployment Protection/SSO exige sessão/cookie persistente para smoke/visual completo;
+- a Home chegou ao app com 200, mas as chamadas seguintes para Busca/Menu voltaram à camada SSO;
+- revisão visual 1440×900 / 390×844 continua pendente;
 - callback Auth exata do candidate e E2E Auth/Classificados continuam pendentes;
-- não desativar proteção nem promover apenas para contornar a limitação de inspeção.
+- não desativar proteção, RLS ou CSP para contornar a limitação de inspeção.
 
 ### Próxima ação
 
-**Inspecionar o candidate `dpl_GC8UY...` com sessão Vercel autenticada persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

@@ -107,24 +107,22 @@ Preparação confirmada em 2026-09-07:
 
 ## Candidate atual
 
-Candidate canônico source-aligned:
+Candidate visual canônico:
 
-- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
-- URL: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`;
+- URL: `https://teste-acheguese-db7ey1p9r-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
-- quality: `34195671855` PASS;
-- source bundle: `34195671848` PASS;
+- source/runtime: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`;
+- quality: `34197469384` PASS;
+- source bundle: `34197469380` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
 - Home: `GET / 200`;
-- Supabase security advisors: 0 lints;
-- rollout territorial: `data_preparation`, sem ativação.
+- Busca e Menu atualizados no mesmo source;
+- Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
-
-A Deployment Protection/SSO permanece habilitada. Não desabilitar proteção apenas para permitir automação de smoke/visual.
 
 ## Próximo deployment
 

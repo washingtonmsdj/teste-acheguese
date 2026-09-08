@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
-- URL protegida: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`;
+- URL protegida: `https://teste-acheguese-db7ey1p9r-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
-- quality: `34195671855` PASS;
+- source/runtime: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`;
+- quality: `34197469384` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Esse é o primeiro candidate que contém o frontend técnico atual após os refinamentos de densidade mobile e fechamento de touch targets.
@@ -124,23 +124,14 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém:
+O candidate contém também o refinamento `7209f824`:
 
-- App Shell Território Vivo;
-- sidebar agrupada por Território/Serviços;
-- topbar com contexto territorial e busca;
-- marca pin+heart;
-- rail contextual;
-- Home hero + mini-mapa em desktop útil;
-- seção de dados públicos em alto contraste;
-- Mapa com Educação/Saúde visualmente distintos;
-- Classificados como serviço local, não eixo do produto;
-- loadings específicos;
-- heroes internos/formulários mais compactos;
-- mobile com área segura acima da bottom navigation;
-- principais touch targets em aproximadamente 44px+;
-- reduced-motion/foco/acessibilidade preservados;
-- módulos futuros continuam ocultos por registry.
+- Busca virou hub territorial com duas superfícies reais: Mapa e Classificados;
+- Menu ganhou contexto territorial e ícones consistentes;
+- nenhuma busca universal inexistente foi simulada;
+- módulos futuros continuam ocultos por registry;
+- Home permanece no App Shell Território Vivo;
+- runtime errors = 0 e Home = GET / 200.
 
 ## 8. Previews anteriores
 

@@ -183,3 +183,24 @@ Provas já disponíveis:
 - rollout continua não público.
 
 A revisão pixel-level continua pendente porque o preview exige sessão SSO persistente e o Chromium local desta execução não possui DNS externo. Não inferir aprovação 1440×900 ou 390×844 apenas pelo source.
+
+
+## Busca e Menu
+
+Checkpoint: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`.
+
+Busca passa a funcionar como hub territorial:
+
+- Mapa territorial para informação pública;
+- Classificados para anúncios;
+- contexto do Complexo visível;
+- nenhuma busca universal simulada antes de existir índice/conteúdo suficiente.
+
+Menu fullscreen recebeu:
+
+- contexto territorial;
+- ícones alinhados ao mesmo sistema de navegação;
+- hierarquia visual compatível com Home/Mapa;
+- preservação da regra `planned` invisível.
+
+Candidate visual: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`.
