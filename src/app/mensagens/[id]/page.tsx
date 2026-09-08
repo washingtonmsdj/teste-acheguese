@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { sendConversationMessageAction } from '@/app/mensagens/actions';
@@ -78,7 +79,7 @@ export default async function ConversationPage({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={<AccountContextRail active="messages" />}
     >
       <main>
