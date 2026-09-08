@@ -12,6 +12,25 @@ import styles from './territory-home.module.css';
 
 const numberFormatter = new Intl.NumberFormat('pt-BR');
 
+const unavailableNeighborhoods = [
+  {
+    slug: 'nordeste-de-amaralina',
+    name: 'Nordeste de Amaralina',
+  },
+  {
+    slug: 'santa-cruz',
+    name: 'Santa Cruz',
+  },
+  {
+    slug: 'vale-das-pedrinhas',
+    name: 'Vale das Pedrinhas',
+  },
+  {
+    slug: 'chapada-do-rio-vermelho',
+    name: 'Chapada do Rio Vermelho',
+  },
+] as const;
+
 function formatMetric(
   metric: TerritoryHomeMetric,
 ): string {
@@ -554,22 +573,129 @@ export function TerritoryHomeUnavailable() {
     >
       <main className={styles.page}>
         <section className={styles.unavailable}>
-        <div className="container">
-          <p className="eyebrow">Território</p>
-          <h1>Não foi possível carregar os dados públicos desta área agora.</h1>
-          <p>
-            A página não substitui informação oficial por
-            conteúdo de demonstração.
-          </p>
-          <div className={styles.heroActions}>
-            <Link
-              className="ghostButton linkButton"
-              href="/classificados"
-            >
-              Ver Classificados
-            </Link>
+          <div className={`container ${styles.unavailableGrid}`}>
+            <div>
+              <div className={styles.contextLine}>
+                <span
+                  className={styles.liveDot}
+                  aria-hidden="true"
+                />
+                <strong>Salvador · BA</strong>
+                <span>
+                  Complexo do Nordeste de Amaralina
+                </span>
+              </div>
+              <p className="eyebrow">Território Vivo</p>
+              <h1>
+                O MVP territorial continua aqui.
+              </h1>
+              <p>
+                A base oficial não respondeu nesta tentativa,
+                mas a estrutura do Complexo, seus quatro
+                bairros, mapa e serviços permanece
+                organizada — sem substituir dados públicos
+                por números fictícios.
+              </p>
+              <div className={styles.heroActions}>
+                <Link
+                  className="primaryButton linkButton"
+                  href="/"
+                >
+                  Tentar carregar novamente
+                </Link>
+                <Link
+                  className="ghostButton linkButton"
+                  href="/mapa"
+                >
+                  Abrir mapa
+                </Link>
+              </div>
+            </div>
+
+            <aside className={styles.unavailableStatus}>
+              <span>Estrutura do MVP</span>
+              <strong>
+                4 bairros · dados públicos · mapa
+              </strong>
+              <p>
+                Censo 2022, Educação e Saúde SUS já fazem
+                parte da base territorial. Os números só
+                aparecem quando a leitura oficial está
+                disponível.
+              </p>
+            </aside>
           </div>
-        </div>
+        </section>
+
+        <section
+          className={`container ${styles.unavailableNeighborhoods}`}
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className="eyebrow">Território</p>
+              <h2>Quatro bairros. Um mesmo Complexo.</h2>
+            </div>
+          </div>
+
+          <div className={styles.unavailableNeighborhoodGrid}>
+            {unavailableNeighborhoods.map(
+              (neighborhood) => (
+                <Link
+                  href={`/?bairro=${neighborhood.slug}`}
+                  key={neighborhood.slug}
+                >
+                  <span>Bairro</span>
+                  <strong>{neighborhood.name}</strong>
+                  <b aria-hidden="true">Abrir →</b>
+                </Link>
+              ),
+            )}
+          </div>
+        </section>
+
+        <section className={styles.unavailableCapabilities}>
+          <div className="container">
+            <div className={styles.sectionHeading}>
+              <div>
+                <p className="eyebrow">
+                  Fundação do MVP
+                </p>
+                <h2>O que já existe na estrutura.</h2>
+              </div>
+            </div>
+
+            <div className={styles.unavailableCapabilityGrid}>
+              <article>
+                <span>Dados</span>
+                <strong>População e domicílios</strong>
+                <p>Censo 2022 com origem registrada.</p>
+              </article>
+              <article>
+                <span>Educação</span>
+                <strong>Unidades oficiais</strong>
+                <p>
+                  Equipamentos públicos organizados por
+                  território.
+                </p>
+              </article>
+              <article>
+                <span>Saúde</span>
+                <strong>Atendimento SUS</strong>
+                <p>
+                  Unidades verificadas para os quatro
+                  bairros.
+                </p>
+              </article>
+              <article>
+                <span>Mapa</span>
+                <strong>Território navegável</strong>
+                <p>
+                  Limites e locais no mesmo recorte
+                  geográfico.
+                </p>
+              </article>
+            </div>
+          </div>
         </section>
       </main>
     </TerritoryAppShell>

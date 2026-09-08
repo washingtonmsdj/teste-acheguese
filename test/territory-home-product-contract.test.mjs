@@ -64,3 +64,45 @@ test('loading acompanha a composição responsiva da Home', () => {
     false,
   );
 });
+
+
+test('Home monta mini-mapa sem segunda leitura RPC', () => {
+  const loader = readFileSync(
+    new URL(
+      '../src/features/territory-home/server/load-territory-home.ts',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+
+  assert.equal(
+    loader.includes('SupabaseMapDataRepository'),
+    false,
+  );
+  assert.match(loader, /buildHomeMapData/);
+  assert.match(loader, /places\.flatMap/);
+});
+
+test('fallback mantém a estrutura territorial do MVP', () => {
+  assert.match(home, /O MVP territorial continua aqui\./);
+  assert.match(home, /Nordeste de Amaralina/);
+  assert.match(home, /Santa Cruz/);
+  assert.match(home, /Vale das Pedrinhas/);
+  assert.match(home, /Chapada do Rio Vermelho/);
+  assert.match(home, /População e domicílios/);
+  assert.match(home, /Atendimento SUS/);
+});
+
+test('configuração pública é congelada no bundle de build', () => {
+  const nextConfig = readFileSync(
+    new URL('../next.config.ts', import.meta.url),
+    'utf8',
+  );
+
+  assert.match(nextConfig, /env:\s*\{/);
+  assert.match(nextConfig, /NEXT_PUBLIC_SUPABASE_URL/);
+  assert.match(
+    nextConfig,
+    /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/,
+  );
+});

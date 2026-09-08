@@ -167,6 +167,18 @@ const privateRoutePatterns = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_SITE_URL:
+      process.env.NEXT_PUBLIC_SITE_URL ?? '',
+    NEXT_PUBLIC_SUPABASE_URL:
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? '',
+    NEXT_PUBLIC_MAP_STYLE_URL:
+      process.env.NEXT_PUBLIC_MAP_STYLE_URL ?? '',
+    NEXT_PUBLIC_MAP_CSP_ORIGINS:
+      process.env.NEXT_PUBLIC_MAP_CSP_ORIGINS ?? '',
+  },
   reactStrictMode: true,
   poweredByHeader: false,
   images: {

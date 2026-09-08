@@ -75,10 +75,18 @@ export default async function Home({
       error.message ===
         'territory_home_config_unavailable';
 
-    if (
-      !invalidNeighborhood &&
-      !configurationUnavailable
-    ) {
+    if (configurationUnavailable) {
+      reportServerError(
+        'territory.home.config_unavailable',
+        error,
+        {
+          scope:
+            scopeQuery.kind === 'neighborhood'
+              ? 'neighborhood'
+              : 'group',
+        },
+      );
+    } else if (!invalidNeighborhood) {
       reportServerError(
         'territory.home.load_failed',
         error,

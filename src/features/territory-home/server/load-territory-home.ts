@@ -3,6 +3,7 @@ import type {
   TerritoryBoundary,
   TerritoryReference,
 } from '@/core/territory';
+import type { MapViewportData } from '@/core/map';
 import {
   aggregateNumericMetric,
   collectSources,
@@ -12,7 +13,6 @@ import type {
   TerritoryHomeData,
   TerritoryHomeNeighborhood,
 } from '@/features/territory-home/types';
-import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
 import type { Database } from '@/lib/supabase/database.types';
 import { SupabaseTerritoryBoundaryRepository } from '@/lib/supabase/territory-boundary-repository';
 import { SupabaseTerritoryDataRepository } from '@/lib/supabase/territory-data-repository';
@@ -61,6 +61,99 @@ function combineBoundaryBounds(
     south,
     east,
     north,
+  };
+}
+
+function buildHomeMapData({
+  bounds,
+  boundaries,
+  places,
+  members,
+  scopeIds,
+}: {
+  bounds: BoundingBox;
+  boundaries: TerritoryBoundary[];
+  places: Awaited<
+    ReturnType<
+      SupabaseTerritoryDataRepository['listPublicPlacesForTerritories']
+    >
+  >;
+  members: TerritoryReference[];
+  scopeIds: string[];
+}): MapViewportData {
+  const scopeIdSet = new Set(scopeIds);
+  const memberById = new Map(
+    members.map((member) => [member.id, member]),
+  );
+
+  return {
+    bounds,
+    boundaries: boundaries
+      .filter((boundary) =>
+        scopeIdSet.has(boundary.territoryId),
+      )
+      .map((boundary) => ({
+        id: boundary.territoryId,
+        territoryId: boundary.territoryId,
+        territorySlug: boundary.slug,
+        territoryName: boundary.name,
+        geographicPath: boundary.geographicPath,
+        geometry: boundary.geojson,
+        bboxGeometry: boundary.bboxGeojson,
+        areaInSquareMeters:
+          boundary.areaInSquareMeters,
+        source: {
+          key: 'territory-boundary',
+          providerName: boundary.sourceName,
+          datasetName: boundary.sourceName,
+          sourceUrl: boundary.sourceUrl ?? '',
+          attribution: boundary.sourceName,
+        },
+      })),
+    points: places.flatMap((place) => {
+      if (
+        !scopeIdSet.has(place.territoryId) ||
+        place.latitude === null ||
+        place.longitude === null
+      ) {
+        return [];
+      }
+
+      const territory = memberById.get(
+        place.territoryId,
+      );
+
+      if (!territory) return [];
+
+      return [{
+        id: place.id,
+        territoryId: place.territoryId,
+        territorySlug: territory.slug,
+        territoryName: territory.name,
+        geographicPath: territory.geographicPath,
+        kind: place.categoryKey,
+        kindLabel: place.categoryLabel,
+        coordinates: {
+          latitude: place.latitude,
+          longitude: place.longitude,
+        },
+        title: place.name,
+        description: place.description,
+        address: place.addressText,
+        phone: place.phone,
+        website: place.website,
+        source: {
+          key: place.provenance.sourceKey,
+          providerName:
+            place.provenance.providerName,
+          datasetName:
+            place.provenance.datasetName,
+          sourceUrl: place.provenance.sourceUrl,
+          attribution:
+            place.provenance.attribution,
+        },
+      }];
+    }),
   };
 }
 
@@ -121,8 +214,6 @@ export async function loadTerritoryHomeData(
     new SupabaseTerritoryBoundaryRepository(supabase);
   const rolloutRepository =
     new SupabaseTerritoryRolloutRepository(supabase);
-  const mapRepository =
-    new SupabaseMapDataRepository(supabase);
 
   const city =
     await territoryRepository.findByGeographicPath(
@@ -212,26 +303,13 @@ export async function loadTerritoryHomeData(
   );
   const bounds = combineBoundaryBounds(scopeBoundaries);
 
-  const rawMapData = await mapRepository.loadViewport({
+  const mapData = buildHomeMapData({
     bounds,
-    zoom: selectedMember ? 15 : 14,
-    layers: ['boundaries', 'public_places'],
-    publicPlaceCategories: ['education', 'health'],
-    placeLimit: 200,
-    boundaryLimit: 100,
+    boundaries: scopeBoundaries,
+    places,
+    members,
+    scopeIds,
   });
-
-  const scopeIdSet = new Set(scopeIds);
-  const mapData = {
-    ...rawMapData,
-    boundaries: rawMapData.boundaries.filter(
-      (boundary) =>
-        scopeIdSet.has(boundary.territoryId),
-    ),
-    points: rawMapData.points.filter((point) =>
-      scopeIdSet.has(point.territoryId),
-    ),
-  };
 
   const neighborhoods = members.map((member) =>
     buildNeighborhood(
