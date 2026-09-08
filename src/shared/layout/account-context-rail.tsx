@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
+import { SignOutControl } from '@/shared/layout/sign-out-control';
 import styles from './account-context-rail.module.css';
 
 type AccountContextRailProps = {
@@ -83,6 +84,8 @@ export function AccountContextRail({
           pertencem à sua conta e exigem autenticação.
         </p>
       </section>
+
+      <SignOutControl />
     </div>
   );
 }

@@ -72,3 +72,14 @@ test('áreas pessoais possuem loading contextual', () => {
     );
   }
 });
+
+
+test('área pessoal expõe logout visível usando POST canônico', () => {
+  const rail = read('../src/shared/layout/account-context-rail.tsx');
+  const control = read('../src/shared/layout/sign-out-control.tsx');
+
+  assert.match(rail, /SignOutControl/);
+  assert.match(control, /action="\/auth\/signout"/);
+  assert.match(control, /method="post"/);
+  assert.match(control, /Sair da conta/);
+});
