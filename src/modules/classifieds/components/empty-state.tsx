@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 type EmptyStateProps = {
   query?: string;
@@ -11,7 +12,9 @@ export function ClassifiedsEmptyState({
 }: EmptyStateProps) {
   return (
     <div className="classifiedEmptyState">
-      <span className="emptyIcon" aria-hidden="true">⌕</span>
+      <span className="emptyIcon" aria-hidden="true">
+        <NavigationIcon name="search" />
+      </span>
       <div>
         <h3>
           {query

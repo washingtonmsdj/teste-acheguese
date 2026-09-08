@@ -13,6 +13,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 const siteUrl = getSiteUrl();
 
@@ -296,9 +297,21 @@ export default async function ClassifiedsPage({
 
       <section className="classifiedTrust">
         <div className="container trustGrid">
-          <div><span>✓</span><strong>Território claro</strong><small>Os anúncios exibem a área informada sem presumir sua localização.</small></div>
-          <div><span>✓</span><strong>Privacidade</strong><small>Endereço exato não é público por padrão.</small></div>
-          <div><span>✓</span><strong>Moderação</strong><small>Só anúncios aprovados aparecem na área pública.</small></div>
+          <div>
+            <span aria-hidden="true"><NavigationIcon name="check" /></span>
+            <strong>Território claro</strong>
+            <small>Os anúncios exibem a área informada sem presumir sua localização.</small>
+          </div>
+          <div>
+            <span aria-hidden="true"><NavigationIcon name="check" /></span>
+            <strong>Privacidade</strong>
+            <small>Endereço exato não é público por padrão.</small>
+          </div>
+          <div>
+            <span aria-hidden="true"><NavigationIcon name="check" /></span>
+            <strong>Moderação</strong>
+            <small>Só anúncios aprovados aparecem na área pública.</small>
+          </div>
         </div>
         </section>
       </main>

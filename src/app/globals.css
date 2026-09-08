@@ -1359,7 +1359,15 @@ footer .brand small { color: #b9ded4; }
   border-radius: 50%;
   background: #e9f9f3;
   color: var(--brand);
-  font-weight: 900;
+}
+.trustGrid span svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .trustGrid strong { font-size: .86rem; }
 .trustGrid small { color: var(--muted); line-height: 1.4; }

@@ -8,7 +8,8 @@ export type NavigationIconName =
   | 'data'
   | 'neighborhood'
   | 'messages'
-  | 'favorite';
+  | 'favorite'
+  | 'check';
 
 type TerritoryNavigationIconProps = {
   name: NavigationIconName;
@@ -120,6 +121,14 @@ export function NavigationIcon({
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
+      </svg>
+    );
+  }
+
+  if (name === 'check') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m6.5 12.5 3.4 3.4L17.8 8" />
       </svg>
     );
   }
