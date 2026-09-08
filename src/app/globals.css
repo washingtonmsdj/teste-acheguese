@@ -3524,3 +3524,119 @@ footer .brand small { color: #b9ded4; }
     animation: none;
   }
 }
+
+
+/* Route-specific loading: moderation */
+.adminLoadingEyebrow,
+.adminLoadingTitle,
+.adminLoadingText,
+.adminLoadingSectionTitle,
+.adminLoadingPill,
+.adminLoadingLine,
+.adminLoadingActions,
+.adminLoadingRailCard {
+  display: block;
+  background: linear-gradient(90deg, #eaf2ef 20%, #f9fbfa 50%, #eaf2ef 80%);
+  background-size: 200% 100%;
+  animation: routeLoadingShimmer 1.35s linear infinite;
+}
+
+.adminLoadingPage {
+  min-height: 100svh;
+  background: #ffffff;
+}
+
+.adminLoadingEyebrow {
+  width: 118px;
+  height: 10px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+}
+
+.adminLoadingTitle {
+  width: min(520px, 88%);
+  height: 52px;
+  margin-bottom: 14px;
+  border-radius: 13px;
+}
+
+.adminLoadingText {
+  width: min(640px, 94%);
+  height: 13px;
+  border-radius: 999px;
+}
+
+.adminLoadingSectionTitle {
+  width: 210px;
+  height: 30px;
+  margin-bottom: 22px;
+  border-radius: 10px;
+}
+
+.adminLoadingQueue {
+  display: grid;
+  gap: 12px;
+}
+
+.adminLoadingQueue article {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid #dfe9e6;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.adminLoadingPill {
+  width: 108px;
+  height: 24px;
+  border-radius: 999px;
+}
+
+.adminLoadingLine {
+  width: min(520px, 92%);
+  height: 13px;
+  border-radius: 999px;
+}
+
+.adminLoadingLineShort {
+  width: min(330px, 64%);
+}
+
+.adminLoadingActions {
+  width: 240px;
+  height: 42px;
+  margin-top: 4px;
+  border-radius: 12px;
+}
+
+.adminLoadingRail {
+  display: grid;
+  gap: 12px;
+}
+
+.adminLoadingRailCard {
+  height: 174px;
+  border-radius: 20px;
+}
+
+.adminLoadingRailLinks {
+  height: 108px;
+}
+
+.adminLoadingRailPolicy {
+  height: 150px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adminLoadingEyebrow,
+  .adminLoadingTitle,
+  .adminLoadingText,
+  .adminLoadingSectionTitle,
+  .adminLoadingPill,
+  .adminLoadingLine,
+  .adminLoadingActions,
+  .adminLoadingRailCard {
+    animation: none;
+  }
+}
