@@ -417,3 +417,20 @@ Checkpoint: `47cdaa84296f68264df905aebf5116bc20d821ac`.
 - comportamento fail-closed e observabilidade permanecem inalterados.
 
 Candidate visual: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`.
+
+
+## Fechamento iconográfico de Classificados
+
+Checkpoint: `230a4d7dc74e3380222b1c919e5dba407386d321`.
+
+- favorito no detalhe usa `NavigationIcon('favorite')`;
+- card sem mídia usa `NavigationIcon('tag')`;
+- estado vazio usa `NavigationIcon('search')`;
+- trust badges usam `NavigationIcon('check')`;
+- símbolos Unicode decorativos saíram dessas superfícies;
+- conversa usa o offset canônico de 74px;
+- testes de contrato protegem esses pontos.
+
+Candidate visual atual: `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`.
+
+O candidate está READY, com env pública fail-closed configurada, build completo, 0 runtime errors e Home exercitada com HTTP 200. A revisão 1440×900 / 390×844 continua pendente por Deployment Protection/SSO.
