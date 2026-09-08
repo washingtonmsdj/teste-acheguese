@@ -149,3 +149,17 @@ A fidelidade final não deve ser declarada apenas por source.
 É obrigatório validar no deployment candidato: desktop 1440×900, mobile 390×844, teclado/foco, reduced motion, layout shift/loading, mapa real e logs/runtime.
 
 Correções após essa revisão devem ser baseadas em defeitos observados no deployment, não em reescrever a arquitetura.
+
+
+## Acessibilidade de interação
+
+No checkpoint de frontend pós-candidate, os controles interativos principais foram normalizados para alvo mínimo de aproximadamente 44 px:
+
+- botão de menu mobile;
+- conta na toolbar desktop;
+- seletor de território/bairro;
+- links do rail contextual;
+- voltar do Mapa;
+- itens acionáveis da lista do Mapa.
+
+Isso complementa foco visível, `aria-pressed`, lista textual do mapa e reduced-motion já existentes.

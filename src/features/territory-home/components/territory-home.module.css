@@ -175,8 +175,11 @@
 }
 
 .scopeSelector a {
+  min-height: 44px;
   flex: 0 0 auto;
-  padding: 9px 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
   border: 1px solid rgba(182, 207, 198, .78);
   border-radius: 999px;
   background: rgba(255, 255, 255, .82);
@@ -980,7 +983,7 @@
 }
 
 .contextRailLinks a {
-  min-height: 40px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;

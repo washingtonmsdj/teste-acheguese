@@ -40,7 +40,7 @@
   width: fit-content;
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
+  min-height: 44px;
   padding: 0 9px;
   border: 1px solid #d9e7e2;
   border-radius: 999px;
@@ -295,6 +295,7 @@
 
 .placeButton {
   width: 100%;
+  min-height: 52px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 10px;
