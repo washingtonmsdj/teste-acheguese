@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-07  
-> **HEAD técnico de referência:** `f3a228b2fb6c13602fa37b10bc92a9732621b93a`
+> **HEAD técnico de referência:** `059177145fc206731af80602648c080cb96c34e1`
 
 ---
 
@@ -474,8 +474,8 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 
 ### Entregas
 
-- [~] redesign desktop profissional e organizado — frontend territorial refinado no checkpoint `f3a228b2fb6c13602fa37b10bc92a9732621b93a`; revisão visual real pendente;
-- [~] preservar boa experiência mobile — navegação mobile, Home e Mapa refinados em source; revisão visual real pendente;
+- [~] redesign desktop profissional e organizado — conceito canônico **Território Vivo** materializado estruturalmente no checkpoint `059177145fc206731af80602648c080cb96c34e1` com sidebar + toolbar + conteúdo + rail contextual; revisão visual real pendente;
+- [~] preservar boa experiência mobile — navegação mobile, Home, Mapa e loadings refinados em source; módulos futuros permanecem ocultos por registry até a fase correspondente; revisão visual real pendente;
 - [x] seletor de território Complexo ↔ quatro bairros;
 - [x] contexto Salvador/Complexo/bairro;
 - [x] dados públicos reais agregados sem soma parcial silenciosa;
@@ -1177,7 +1177,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`f3a228b2fb6c13602fa37b10bc92a9732621b93a`
+`059177145fc206731af80602648c080cb96c34e1`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1204,6 +1204,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - observabilidade server-side estruturada foi adicionada sem stack/contexto arbitrário e com redaction de keys/JWT;
 - bundle Vercel agora possui manifesto de source closure e teste contra omissão de lifecycle scripts;
 - pré-deploy agora possui gate executável fail-closed (`npm run release:preflight`) que impede candidate com checkout, `main`, transport branch ou workflows divergentes;
+- frontend **Território Vivo** foi materializado estruturalmente: App Shell adaptativo com sidebar desktop, toolbar contextual, rail lateral, Home/Mapa no mesmo shell, navegação unificada por registry e módulos futuros `planned` ocultos até suas fases; quality run `34181363159` e bundle run `34181363162` = PASS; decisão visual detalhada em `docs/FRONTEND-TERRITORIO-VIVO.md`;
 - frontend territorial foi refinado no source: Home agora prioriza utilidade do morador, mapa, dados e bairros; cabeçalho e tabbar mobile ganharam navegação visual consistente; Mapa ganhou filtros e lista de locais mais claros; menu, loading global, 404, erro e Busca foram alinhados ao mesmo sistema visual; `/mapa` e `/classificados` agora possuem loading states próprios que preservam o layout da rota e reduced-motion; copy de roadmap/MVP foi removida das superfícies públicas e protegida por teste de contrato; nenhum schema/API/rollout mudou; quality run `34180676875` e bundle run `34180676868` = PASS.
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;

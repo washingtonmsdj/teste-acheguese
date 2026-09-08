@@ -31,15 +31,16 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`f3a228b2fb6c13602fa37b10bc92a9732621b93a`
+`059177145fc206731af80602648c080cb96c34e1`
 
 Para esse HEAD:
 
-- frontend/source checkpoint: `f3a228b2fb6c13602fa37b10bc92a9732621b93a`;
-- quality: **PASS** — run `34180676875`;
-- bundle de transporte: **PASS** — run `34180676868`;
+- frontend/source checkpoint: `059177145fc206731af80602648c080cb96c34e1`;
+- quality: **PASS** — run `34181363159`;
+- bundle de transporte: **PASS** — run `34181363162`;
 - Home, cabeçalho, navegação mobile, Mapa, menu e estados resilientes refinados sem mudança de schema/API/rollout;
 - `/mapa` e `/classificados` possuem loading states específicos, responsivos e compatíveis com reduced-motion;
+- Home e Mapa usam o App Shell **Território Vivo**; sidebar/toolbar/rail e registry de módulos futuros estão versionados; `docs/FRONTEND-TERRITORIO-VIVO.md` é a referência visual canônica;
 - copy pública protegida por contrato contra linguagem de implementação/roadmap;
 - Supabase security advisors: **0 lints**;
 - migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;
