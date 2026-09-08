@@ -109,17 +109,18 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_GCiz4EZbhHPJXikS9J5tZVxqhX5y`;
-- URL: `https://teste-acheguese-7spinhi6v-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`;
+- URL: `https://teste-acheguese-qbmrxtxca-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `d148ef3eeeea3d52249443726ac1646de0737088`;
-- quality: `34206902501` PASS;
-- source bundle: `34206902458` PASS;
+- source/runtime: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`;
+- quality: `34207533838` PASS;
+- source bundle: `34207533752` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
 - Home: `GET / 200` na primeira sessão;
 - Home product-first com mapa protagonista em 1180px+;
+- loading Home reserva o rail contextual e usa o mesmo breakpoint, reduzindo layout shift;
 - Auth/conta/moderação preservados no mesmo source;
 - Deployment Protection/SSO permanece habilitada.
 

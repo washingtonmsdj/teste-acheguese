@@ -312,7 +312,7 @@ Candidate visual: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`.
 
 ## Home product-first
 
-Checkpoint: `d148ef3eeeea3d52249443726ac1646de0737088`.
+Checkpoint: `e82526be3c3ca03861bc352c37f99dd45ad8efd8`.
 
 A Home foi refinada para se comportar como produto MVP, não como landing explicativa:
 
@@ -328,4 +328,11 @@ A Home foi refinada para se comportar como produto MVP, não como landing explic
 - nenhum dado fake, nova API, schema ou rollout foi introduzido;
 - teste `territory-home-product-contract.test.mjs` protege a composição.
 
-Candidate visual: `dpl_GCiz4EZbhHPJXikS9J5tZVxqhX5y`.
+Candidate visual: `dpl_GNRwVoH5RyBHFnoRGuTZeBGiwvHh`.
+
+O loading da Home acompanha a mesma composição:
+
+- rail contextual reservado no skeleton em desktop largo;
+- breakpoint lado a lado também em 1180px;
+- reduz mudança brusca de largura/colunas quando os dados chegam;
+- `prefers-reduced-motion` continua preservado.
