@@ -4,8 +4,9 @@ import { Brand } from '@/shared/ui/brand';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 import {
-  activeTerritoryNavigation,
+  activeTerritoryNavigationBySection,
   type TerritoryNavigationId,
+  type TerritoryNavigationSection,
 } from '@/shared/navigation/territory-navigation';
 import styles from './territory-app-shell.module.css';
 
@@ -26,7 +27,14 @@ export function TerritoryAppShell({
   contextRail,
   immersive = false,
 }: TerritoryAppShellProps) {
-  const activeItems = activeTerritoryNavigation();
+  const navigationGroups: Array<{
+    id: TerritoryNavigationSection;
+    label: string;
+  }> = [
+    { id: 'territory', label: 'Território' },
+    { id: 'local-life', label: 'Agora no bairro' },
+    { id: 'services', label: 'Serviços' },
+  ];
 
   return (
     <div
@@ -57,18 +65,38 @@ export function TerritoryAppShell({
           className={styles.sidebarNav}
           aria-label="Navegação territorial"
         >
-          {activeItems.map((item) => {
-            const active = item.id === activeId;
+          {navigationGroups.map((group) => {
+            const items = activeTerritoryNavigationBySection(
+              group.id,
+            );
+
+            if (!items.length) return null;
+
             return (
-              <Link
-                href={item.href}
-                key={item.id}
-                className={active ? styles.navActive : undefined}
-                aria-current={active ? 'page' : undefined}
-              >
-                <NavigationIcon name={item.icon} />
-                <span>{item.label}</span>
-              </Link>
+              <div className={styles.navGroup} key={group.id}>
+                <span className={styles.navGroupLabel}>
+                  {group.label}
+                </span>
+                <div className={styles.navGroupItems}>
+                  {items.map((item) => {
+                    const active = item.id === activeId;
+
+                    return (
+                      <Link
+                        href={item.href}
+                        key={item.id}
+                        className={
+                          active ? styles.navActive : undefined
+                        }
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        <NavigationIcon name={item.icon} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             );
           })}
         </nav>
@@ -111,8 +139,13 @@ export function TerritoryAppShell({
 
           <Link className={styles.searchCommand} href="/buscar">
             <NavigationIcon name="search" />
-            <span>Buscar no território</span>
-            <kbd>⌘ K</kbd>
+            <span className={styles.searchText}>
+              <strong>Buscar no Achegue-se</strong>
+              <small>Mapa, bairros e serviços</small>
+            </span>
+            <span className={styles.searchArrow} aria-hidden="true">
+              →
+            </span>
           </Link>
 
           <Link className={styles.accountButton} href="/entrar">

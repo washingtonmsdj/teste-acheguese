@@ -1,6 +1,8 @@
 .shell {
   min-height: 100svh;
-  background: #f3f7f5;
+  background:
+    radial-gradient(circle at 6% 4%, rgba(98, 230, 182, .10), transparent 22%),
+    #eef4f1;
 }
 
 .sidebar,
@@ -12,6 +14,7 @@
 .mainColumn {
   min-width: 0;
   background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(11, 24, 48, .015);
 }
 
 .mobileHeader {
@@ -61,7 +64,7 @@
 @media (min-width: 980px) {
   .shell {
     display: grid;
-    grid-template-columns: 224px minmax(0, 1fr);
+    grid-template-columns: 236px minmax(0, 1fr);
     min-height: 100svh;
   }
 
@@ -72,26 +75,27 @@
     height: 100svh;
     display: flex;
     flex-direction: column;
-    padding: 24px 18px 20px;
-    border-right: 1px solid #dfe9e5;
+    padding: 22px 16px 18px;
+    border-right: 1px solid rgba(198, 216, 209, .76);
     background:
-      radial-gradient(circle at 20% 8%, rgba(98, 230, 182, .12), transparent 24%),
-      linear-gradient(180deg, #f7fbf9 0%, #eef6f3 100%);
+      radial-gradient(circle at 18% 7%, rgba(98, 230, 182, .15), transparent 24%),
+      linear-gradient(180deg, #f8fbf9 0%, #eef5f2 100%);
   }
 
   .sidebarBrand {
-    padding: 0 5px 22px;
+    padding: 2px 6px 20px;
   }
 
   .territoryContext {
     display: grid;
     gap: 4px;
-    margin-bottom: 22px;
-    padding: 14px;
-    border: 1px solid rgba(161, 197, 184, .62);
+    margin-bottom: 18px;
+    padding: 14px 15px;
+    border: 1px solid rgba(161, 197, 184, .54);
     border-radius: 18px;
-    background: rgba(255, 255, 255, .78);
-    box-shadow: 0 12px 30px rgba(11, 72, 57, .04);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(245, 251, 248, .92));
+    box-shadow: 0 12px 30px rgba(11, 72, 57, .045);
   }
 
   .territoryContext > span {
@@ -114,16 +118,37 @@
 
   .sidebarNav {
     display: grid;
+    gap: 16px;
+  }
+
+  .navGroup {
+    display: grid;
     gap: 6px;
+  }
+
+  .navGroupLabel {
+    padding: 0 10px;
+    color: #89958f;
+    font-size: .56rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .11em;
+  }
+
+  .navGroupItems {
+    display: grid;
+    gap: 5px;
   }
 
   .sidebarNav a,
   .sidebarUtility a {
+    position: relative;
     min-height: 44px;
     display: flex;
     align-items: center;
     gap: 11px;
     padding: 0 12px;
+    border: 1px solid transparent;
     border-radius: 13px;
     color: #526173;
     font-size: .77rem;
@@ -142,9 +167,20 @@
   }
 
   .sidebarNav .navActive {
-    color: #ffffff;
-    background: linear-gradient(135deg, var(--brand), #08785d);
-    box-shadow: 0 10px 24px rgba(12, 148, 112, .18);
+    color: var(--brand-dark);
+    border-color: rgba(130, 187, 166, .46);
+    background: rgba(255, 255, 255, .94);
+    box-shadow: 0 10px 24px rgba(11, 72, 57, .07);
+  }
+
+  .sidebarNav .navActive::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    width: 3px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--brand);
   }
 
   .sidebarUtility {
@@ -167,12 +203,12 @@
     position: sticky;
     top: 0;
     z-index: 35;
-    min-height: 72px;
+    min-height: 74px;
     display: grid;
-    grid-template-columns: minmax(180px, .7fr) minmax(280px, 1.25fr) auto;
+    grid-template-columns: minmax(175px, .72fr) minmax(310px, 1.35fr) auto;
     align-items: center;
     gap: 18px;
-    padding: 0 22px;
+    padding: 0 24px;
     border-bottom: 1px solid rgba(230, 236, 234, .9);
     background: rgba(255, 255, 255, .94);
     backdrop-filter: blur(18px);
@@ -214,27 +250,54 @@
 
   .searchCommand {
     min-width: 0;
-    min-height: 40px;
+    min-height: 44px;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 10px;
-    padding: 0 12px;
-    border: 1px solid var(--line);
-    border-radius: 13px;
-    background: #f8fbfa;
+    padding: 0 13px;
+    border: 1px solid #dce7e3;
+    border-radius: 14px;
+    background: #f7faf9;
     color: #627082;
-    font-size: .72rem;
+    transition:
+      border-color .16s ease,
+      background-color .16s ease,
+      box-shadow .16s ease;
   }
 
-  .searchCommand kbd {
-    padding: 4px 6px;
-    border: 1px solid #dbe5e1;
-    border-radius: 7px;
+  .searchCommand:hover {
+    border-color: #b8d8cc;
     background: #ffffff;
-    color: #849087;
-    font: inherit;
-    font-size: .58rem;
+    box-shadow: 0 8px 22px rgba(11, 72, 57, .05);
+  }
+
+  .searchText {
+    min-width: 0;
+    display: grid;
+    gap: 1px;
+  }
+
+  .searchText strong {
+    overflow: hidden;
+    color: #334456;
+    font-size: .7rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .searchText small {
+    overflow: hidden;
+    color: #89948f;
+    font-size: .56rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .searchArrow {
+    color: var(--brand);
+    font-size: .9rem;
+    font-weight: 900;
   }
 
   .accountButton {
@@ -253,7 +316,7 @@
 
 @media (min-width: 1280px) {
   .shell.hasRail {
-    grid-template-columns: 224px minmax(0, 1fr) 286px;
+    grid-template-columns: 236px minmax(0, 1fr) 286px;
   }
 
   .contextRail {
@@ -275,7 +338,7 @@
 
 @media (min-width: 1500px) {
   .shell.hasRail {
-    grid-template-columns: 238px minmax(0, 1fr) 310px;
+    grid-template-columns: 246px minmax(0, 1fr) 310px;
   }
 }
 

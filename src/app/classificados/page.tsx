@@ -113,11 +113,12 @@ export default async function ClassifiedsPage({
         <section className="classifiedHero">
         <div className="container classifiedHeroGrid">
           <div>
-            <p className="eyebrow">Classificados · Salvador</p>
-            <h1>Compre e venda <em>na sua cidade.</em></h1>
+            <p className="eyebrow">Classificados · serviço local</p>
+            <h1>Compre e venda <em>com contexto local.</em></h1>
             <p>
-              Encontre oportunidades em Salvador e publique de forma simples,
-              com foco em clareza, segurança e moderação.
+              Encontre anúncios em Salvador com localização informada,
+              privacidade e moderação, sem tirar o território do centro
+              da experiência.
             </p>
 
             <form className="classifiedSearch" action="/classificados">
@@ -139,9 +140,12 @@ export default async function ClassifiedsPage({
           </div>
 
           <aside className="classifiedPitch">
-            <span>Venda em Salvador</span>
-            <strong>Publique sem complicação.</strong>
-            <p>Fotos, categoria, preço e bairro em um fluxo direto e mobile-first.</p>
+            <span>Seu anúncio, no contexto certo</span>
+            <strong>Publique com clareza.</strong>
+            <p>
+              Fotos, categoria, preço e bairro em um fluxo direto,
+              com revisão antes de aparecer publicamente.
+            </p>
             <Link className="primaryButton linkButton" href="/classificados/novo">
               Criar anúncio
             </Link>
