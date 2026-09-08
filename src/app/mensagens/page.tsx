@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -52,8 +51,11 @@ export default async function MessagesPage() {
   const conversations = (data ?? []) as unknown as ConversationRow[];
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="internalHero compactInternalHero">
         <div className="container narrow">
@@ -114,7 +116,7 @@ export default async function MessagesPage() {
         )}
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
