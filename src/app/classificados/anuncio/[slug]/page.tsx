@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -178,7 +179,7 @@ export default async function ClassifiedDetailPage({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
     >
       <main>
         <script
@@ -193,7 +194,7 @@ export default async function ClassifiedDetailPage({
             <Link className="textLink" href="/classificados">
               ← Voltar aos Classificados
             </Link>
-            <span>Salvador · negociação local</span>
+            <span>{territoryReleaseScope.city.name} · negociação local</span>
           </div>
 
           <div className="container publicDetailLayout">
