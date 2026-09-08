@@ -66,6 +66,29 @@ Enquanto estiverem planned, não aparecem na sidebar, header, menu ou bottom nav
 
 Quando uma fase for liberada, a navegação deve ser ativada pela mesma autoridade, sem criar um segundo menu paralelo.
 
+## Superfícies atuais no App Shell
+
+Usam o App Shell global:
+
+- Home territorial;
+- Mapa;
+- Busca;
+- Classificados — listagem e detalhe;
+- Favoritos;
+- Mensagens — inbox e conversa;
+- Meus anúncios;
+- Novo anúncio;
+- Editar/gerenciar anúncio;
+- Moderação administrativa de Classificados.
+
+Permanecem standalone por design:
+
+- `/entrar` — superfície de autenticação;
+- `/menu` — navegação fullscreen mobile;
+- estados globais de erro/404.
+
+Essas superfícies standalone não podem criar uma segunda navegação global.
+
 ## Home
 
 A Home mantém contexto territorial, troca Complexo ↔ bairro, mapa, dados públicos reais, bairros, utilidades disponíveis, módulos ativos como conteúdo secundário e fontes/proveniência.
@@ -92,7 +115,8 @@ O Mapa usa o mesmo App Shell em variante imersiva e preserva viewport query, clu
 - bottom navigation mobile;
 - sistema verde-mangue com superfícies naturais e acentos quentes/coral;
 - estados de loading coerentes;
-- estrutura pronta para módulos futuros.
+- estrutura pronta para módulos futuros;
+- navegação global sem duplicação: `SiteHeader` antigo removido e `MobileTabbar` pertencente somente ao App Shell.
 
 ### Deliberadamente não materializado ainda
 
@@ -112,7 +136,7 @@ Para o hero, não usar stock/foto arbitrária apenas para parecer com o mock. At
 ## Contratos anti-regressão
 
 - test/navigation-registry.test.mjs — planned não aparece como active;
-- test/territory-app-shell-contract.test.mjs — Home/Mapa permanecem no App Shell;
+- test/territory-app-shell-contract.test.mjs — superfícies atuais permanecem no App Shell; todas as páginas são varridas para impedir import direto de header/tabbar paralelos; o `SiteHeader` legado deve permanecer inexistente;
 - test/frontend-copy-contract.test.mjs — linguagem de implementação/roadmap não vaza para a UI.
 
 ## Próximo gate visual
