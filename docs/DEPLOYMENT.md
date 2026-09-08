@@ -109,17 +109,16 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`;
-- URL: `https://teste-acheguese-db7ey1p9r-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`;
+- URL: `https://teste-acheguese-fp4rmres7-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`;
-- quality: `34197469384` PASS;
-- source bundle: `34197469380` PASS;
+- source/runtime: `702403c01670c5a6853b21f49f438693f798f550`;
+- quality: `34198106553` PASS;
+- source bundle: `34198106554` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home: `GET / 200`;
-- Busca e Menu atualizados no mesmo source;
+- Home, Mapa, Classificados, Busca, Menu e Auth estão no mesmo source;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.

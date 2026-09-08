@@ -204,3 +204,18 @@ Menu fullscreen recebeu:
 - preservação da regra `planned` invisível.
 
 Candidate visual: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`.
+
+
+## Auth
+
+Checkpoint: `702403c01670c5a6853b21f49f438693f798f550`.
+
+A superfície `/entrar` permanece standalone por design, mas agora usa a mesma linguagem visual do Território Vivo:
+
+- painel territorial;
+- explicação clara de leitura pública vs ações privadas;
+- benefícios reais da conta: publicar/gerenciar, Favoritos e Mensagens;
+- formulários preservam os mesmos Server Actions e contratos de segurança;
+- sem mudança em redirects, senha mínima ou validações.
+
+Candidate visual: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`.

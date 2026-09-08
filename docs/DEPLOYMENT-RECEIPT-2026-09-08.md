@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_5gDyuPLpEuhPWkaTFkATShRJuMAK`;
-- URL protegida: `https://teste-acheguese-db7ey1p9r-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_2k8PUJCN1k226jCzjeahW7ym9PEo`;
+- URL protegida: `https://teste-acheguese-fp4rmres7-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `7209f8242de36ec7d6c1f5c85cff72b64105fec3`;
-- quality: `34197469384` PASS;
+- source/runtime: `702403c01670c5a6853b21f49f438693f798f550`;
+- quality: `34198106553` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Esse é o primeiro candidate que contém o frontend técnico atual após os refinamentos de densidade mobile e fechamento de touch targets.
@@ -124,14 +124,15 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém também o refinamento `7209f824`:
+O candidate contém o frontend técnico `702403c0`:
 
-- Busca virou hub territorial com duas superfícies reais: Mapa e Classificados;
-- Menu ganhou contexto territorial e ícones consistentes;
-- nenhuma busca universal inexistente foi simulada;
-- módulos futuros continuam ocultos por registry;
-- Home permanece no App Shell Território Vivo;
-- runtime errors = 0 e Home = GET / 200.
+- Home/Mapa/Classificados no App Shell Território Vivo;
+- Busca como hub territorial separado entre Mapa e Classificados;
+- Menu com contexto territorial e ícones consistentes;
+- Auth alinhado ao Território Vivo;
+- Auth mantém Server Actions, redirects e validações originais;
+- nenhuma busca universal ou módulo futuro fictício foi exposto;
+- runtime errors = 0.
 
 ## 8. Previews anteriores
 
