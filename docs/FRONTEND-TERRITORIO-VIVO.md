@@ -434,3 +434,23 @@ Checkpoint: `230a4d7dc74e3380222b1c919e5dba407386d321`.
 Candidate visual atual: `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`.
 
 O candidate está READY, com env pública fail-closed configurada, build completo, 0 runtime errors e Home exercitada com HTTP 200. A revisão 1440×900 / 390×844 continua pendente por Deployment Protection/SSO.
+
+
+## Candidate visual canônico atual
+
+Checkpoint técnico: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`.
+
+Deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`.
+
+Fechamento desta rodada:
+
+- labels geográficos residuais passaram para `territoryReleaseScope`;
+- Busca descreve somente capacidades existentes e não promete busca futura;
+- fallback de Novo anúncio usa linguagem de produto, sem ambiente/configuração;
+- contrato de copy protege esse fallback autenticado;
+- mídia temporariamente indisponível no detalhe usa `NavigationIcon`;
+- CSS global consolidou overrides redundantes sem alterar o visual;
+- quality `34249484987` + bundle `34249484891` = PASS;
+- Vercel READY, public env fail-closed PASS, Home HTTP 200, runtime errors = 0.
+
+Previews anteriores são históricos. A aprovação 1440×900 / 390×844 continua pendente por Deployment Protection/SSO.
