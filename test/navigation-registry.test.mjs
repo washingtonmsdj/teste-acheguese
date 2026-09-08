@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   activeTerritoryNavigation,
+  activeMobileNavigation,
   activeTerritoryNavigationBySection,
   territoryNavigationRegistry,
 } from '../src/shared/navigation/territory-navigation.ts';
@@ -45,4 +46,19 @@ test('registry distribui navegação ativa por zona sem duplicar autoridade', ()
     ),
     ['classifieds'],
   );
+});
+
+
+test('bottom navigation também deriva do registry único', () => {
+  assert.deepEqual(
+    activeMobileNavigation().map((item) => item.id),
+    ['territory', 'map', 'classifieds'],
+  );
+
+  const community = territoryNavigationRegistry.find(
+    (item) => item.id === 'community',
+  );
+
+  assert.equal(community?.mobilePrimary, true);
+  assert.equal(community?.availability, 'planned');
 });

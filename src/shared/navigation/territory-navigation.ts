@@ -31,6 +31,7 @@ export type TerritoryNavigationItem = {
   icon: TerritoryNavigationIcon;
   section: TerritoryNavigationSection;
   phase: number;
+  mobilePrimary: boolean;
   availability: 'active' | 'planned';
 };
 
@@ -43,6 +44,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'home',
     section: 'territory',
     phase: 4,
+    mobilePrimary: true,
     availability: 'active',
   },
   {
@@ -53,6 +55,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'map',
     section: 'territory',
     phase: 4,
+    mobilePrimary: true,
     availability: 'active',
   },
   {
@@ -63,6 +66,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'community',
     section: 'local-life',
     phase: 5,
+    mobilePrimary: true,
     availability: 'planned',
   },
   {
@@ -73,6 +77,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'alert',
     section: 'local-life',
     phase: 6,
+    mobilePrimary: false,
     availability: 'planned',
   },
   {
@@ -83,6 +88,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'event',
     section: 'local-life',
     phase: 6,
+    mobilePrimary: false,
     availability: 'planned',
   },
   {
@@ -93,6 +99,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'opportunity',
     section: 'local-life',
     phase: 6,
+    mobilePrimary: false,
     availability: 'planned',
   },
   {
@@ -103,6 +110,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'tag',
     section: 'services',
     phase: 7,
+    mobilePrimary: true,
     availability: 'active',
   },
   {
@@ -113,6 +121,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'business',
     section: 'services',
     phase: 8,
+    mobilePrimary: false,
     availability: 'planned',
   },
 ] as const;
@@ -128,5 +137,12 @@ export function activeTerritoryNavigationBySection(
 ) {
   return activeTerritoryNavigation().filter(
     (item) => item.section === section,
+  );
+}
+
+
+export function activeMobileNavigation() {
+  return activeTerritoryNavigation().filter(
+    (item) => item.mobilePrimary,
   );
 }

@@ -3,19 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
-import { activeTerritoryNavigation } from '@/shared/navigation/territory-navigation';
-
-const mobileIds = new Set([
-  'territory',
-  'map',
-  'classifieds',
-]);
+import { activeMobileNavigation } from '@/shared/navigation/territory-navigation';
 
 export function MobileTabbar() {
   const pathname = usePathname();
-  const items = activeTerritoryNavigation().filter((item) =>
-    mobileIds.has(item.id),
-  );
+  const items = activeMobileNavigation();
 
   return (
     <nav className="mobileTabbar" aria-label="Navegação mobile">
