@@ -1217,7 +1217,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### HEAD técnico de referência
 
-`6329bb61599bdcce49c5b1a2cde3c8c734237251`
+`58100eeb7cc1b9e14d87eda2bae7361c16376e34`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1227,6 +1227,8 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### Concluído recentemente
 - dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
+- local config fallback `76eb2c60`: fallback da Home mostra orientação somente em development quando a conexão pública não está configurada; produção não expõe instrução interna;
+- env check `58100eeb`: `npm run env:check` e `npm run dev` agora compartilham o mesmo contrato fail-closed de configuração pública; quality `34223558040` + bundle `34223558196` = PASS;
 
 - Home território-first continua alimentada somente por fatos/lugares oficiais;
 - Data Cache da Home está em **60 segundos**, alinhado à visibilidade de rollout/SEO;
