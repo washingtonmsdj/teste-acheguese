@@ -419,3 +419,132 @@
     transition: none;
   }
 }
+
+
+.loadingShell {
+  pointer-events: none;
+}
+
+.loadingBack,
+.loadingControlCopy span,
+.loadingSummary span,
+.loadingFilters span,
+.loadingMapStage,
+.loadingHud,
+.loadingResultsHeader span,
+.loadingResultsList span {
+  background: linear-gradient(90deg, #e7efec 20%, #f7faf9 50%, #e7efec 80%);
+  background-size: 200% 100%;
+  animation: mapLoadingShimmer 1.35s linear infinite;
+}
+
+.loadingBack {
+  width: 118px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.loadingControlCopy {
+  display: grid;
+  gap: 10px;
+}
+
+.loadingControlCopy span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.loadingControlCopy span:first-child {
+  width: 112px;
+  height: 9px;
+}
+
+.loadingControlCopy span:nth-child(2) {
+  width: 88%;
+  height: 38px;
+  border-radius: 12px;
+}
+
+.loadingControlCopy span:nth-child(3) {
+  width: 100%;
+}
+
+.loadingControlCopy span:nth-child(4) {
+  width: 72%;
+}
+
+.loadingSummary,
+.loadingFilters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.loadingSummary span {
+  height: 74px;
+  border-radius: 16px;
+}
+
+.loadingFilters span {
+  height: 54px;
+  border-radius: 14px;
+}
+
+.loadingMapStage {
+  position: relative;
+}
+
+.loadingHud {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 170px;
+  height: 28px;
+  border-radius: 999px;
+}
+
+.loadingResultsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.loadingResultsHeader span {
+  display: block;
+  width: 132px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.loadingResultsHeader span:last-child {
+  width: 74px;
+}
+
+.loadingResultsList {
+  display: grid;
+  gap: 9px;
+}
+
+.loadingResultsList span {
+  display: block;
+  height: 72px;
+  border-radius: 15px;
+}
+
+@keyframes mapLoadingShimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingBack,
+  .loadingControlCopy span,
+  .loadingSummary span,
+  .loadingFilters span,
+  .loadingMapStage,
+  .loadingHud,
+  .loadingResultsHeader span,
+  .loadingResultsList span {
+    animation: none;
+  }
+}
