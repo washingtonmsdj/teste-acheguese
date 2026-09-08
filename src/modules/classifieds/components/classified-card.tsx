@@ -53,8 +53,12 @@ export function ClassifiedCard({
 
       <div className="publicClassifiedBody">
         <div className="publicClassifiedMeta">
-          <span>{conditionLabels[item.condition] ?? item.condition}</span>
-          <span>{location || 'Salvador'}</span>
+          <span className="publicClassifiedCondition">
+            {conditionLabels[item.condition] ?? item.condition}
+          </span>
+          <span className="publicClassifiedLocation">
+            {location || 'Salvador'}
+          </span>
         </div>
 
         <h3>
@@ -66,6 +70,13 @@ export function ClassifiedCard({
         <strong className="publicClassifiedPrice">
           {formatPrice(item.price?.amountInCents ?? null)}
         </strong>
+
+        <Link
+          className="publicClassifiedAction"
+          href={`/classificados/anuncio/${item.slug}`}
+        >
+          Ver anúncio <span aria-hidden="true">→</span>
+        </Link>
       </div>
     </article>
   );

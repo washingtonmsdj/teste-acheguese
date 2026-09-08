@@ -186,12 +186,11 @@ export default async function ClassifiedsPage({
         <section className="classifiedHero">
         <div className="container classifiedHeroGrid">
           <div>
-            <p className="eyebrow">Classificados · serviço local</p>
-            <h1>Compre e venda <em>com contexto local.</em></h1>
+            <p className="eyebrow">Classificados locais</p>
+            <h1>Encontre e anuncie <em>perto de você.</em></h1>
             <p>
-              Encontre anúncios em Salvador com localização informada,
-              privacidade e moderação, sem tirar o território do centro
-              da experiência.
+              Produtos e anúncios em Salvador, com localização informada,
+              favoritos e conversa dentro do Achegue-se.
             </p>
 
             <form className="classifiedSearch" action="/classificados">
@@ -202,7 +201,7 @@ export default async function ClassifiedsPage({
                 id="classified-search"
                 name="q"
                 defaultValue={query}
-                placeholder="O que você está procurando?"
+                placeholder="Buscar produto ou anúncio"
                 autoComplete="off"
               />
               {activeCategory && (
@@ -213,11 +212,11 @@ export default async function ClassifiedsPage({
           </div>
 
           <aside className="classifiedPitch">
-            <span>Seu anúncio, no contexto certo</span>
-            <strong>Publique com clareza.</strong>
+            <span>Quer anunciar?</span>
+            <strong>Comece por um rascunho.</strong>
             <p>
-              Fotos, categoria, preço e bairro em um fluxo direto,
-              com revisão antes de aparecer publicamente.
+              Informe os dados principais, adicione fotos e envie
+              para revisão antes de ficar público.
             </p>
             <Link className="primaryButton linkButton" href="/classificados/novo">
               Criar anúncio
@@ -231,7 +230,7 @@ export default async function ClassifiedsPage({
           <div>
             <p className="eyebrow">Explorar</p>
             <h2>Categorias</h2>
-            <p>Escolha uma categoria ou faça uma busca direta.</p>
+            <p>Escolha uma categoria ou pesquise pelo que precisa.</p>
           </div>
           {hasFilters && <Link href="/classificados">Limpar filtros →</Link>}
         </div>

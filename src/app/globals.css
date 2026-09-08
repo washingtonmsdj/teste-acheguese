@@ -1433,6 +1433,15 @@ footer .brand small { color: #b9ded4; }
   border-radius: 22px;
   background: white;
   box-shadow: 0 10px 28px rgba(11,24,48,.05);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+.publicClassifiedCard:hover {
+  transform: translateY(-2px);
+  border-color: #bfd9d0;
+  box-shadow: 0 16px 38px rgba(11,72,57,.075);
 }
 .publicClassifiedImage {
   position: relative;
@@ -1450,14 +1459,35 @@ footer .brand small { color: #b9ded4; }
   color: #94a39f;
   font-size: 2.4rem;
 }
-.publicClassifiedBody { padding: 16px; }
+.publicClassifiedBody {
+  display: grid;
+  padding: 16px;
+}
 .publicClassifiedMeta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 10px;
+  align-items: center;
+  gap: 7px;
   color: var(--muted);
-  font-size: .7rem;
-  font-weight: 700;
+  font-size: .68rem;
+  font-weight: 750;
+}
+.publicClassifiedCondition,
+.publicClassifiedLocation {
+  min-height: 25px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 999px;
+}
+.publicClassifiedCondition {
+  background: #eaf7f2;
+  color: var(--brand-dark);
+}
+.publicClassifiedLocation {
+  border: 1px solid #e0e9e6;
+  background: #fafcfb;
+  color: #65736e;
 }
 .publicClassifiedBody h3 {
   margin: 10px 0 12px;
@@ -1467,7 +1497,25 @@ footer .brand small { color: #b9ded4; }
 .publicClassifiedPrice {
   display: block;
   color: var(--ink);
-  font-size: 1.1rem;
+  font-size: 1.16rem;
+  letter-spacing: -.025em;
+}
+.publicClassifiedAction {
+  min-height: 42px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid #e7eeeb;
+  color: #34485a;
+  font-size: .7rem;
+  font-weight: 850;
+}
+.publicClassifiedAction span {
+  color: var(--brand);
+  font-size: .85rem;
 }
 .paginationBar {
   display: flex;
@@ -3094,5 +3142,12 @@ footer .brand small { color: #b9ded4; }
 
   .accountMetric {
     min-height: 112px;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .publicClassifiedCard {
+    transition: none;
   }
 }
