@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { getSiteUrl } from '@/lib/site-url';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './globals.css';
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     template: '%s | Achegue-se',
   },
   description:
-    'Dados públicos, mapa e utilidade local organizados pelo território. Começando pelo Complexo do Nordeste de Amaralina, em Salvador.',
+    `Dados públicos, mapa e utilidade local organizados pelo território. Começando por ${territoryReleaseScope.group.name}, em ${territoryReleaseScope.city.name}.`,
   applicationName: 'Achegue-se',
   icons: {
     icon: '/favicon.svg',

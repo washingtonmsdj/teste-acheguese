@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { signInAction, signUpAction } from '@/app/entrar/actions';
@@ -110,8 +111,10 @@ export default async function SignInPage({
           </div>
 
           <div className="authStoryFooter">
-            <span>Complexo do Nordeste de Amaralina</span>
-            <small>Salvador · BA</small>
+            <span>{territoryReleaseScope.group.name}</span>
+            <small>
+              {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
+            </small>
           </div>
         </aside>
 

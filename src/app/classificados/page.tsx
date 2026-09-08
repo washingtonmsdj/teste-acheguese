@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { ClassifiedCategoryNav } from '@/modules/classifieds/components/category-nav';
 import { ClassifiedCard } from '@/modules/classifieds/components/classified-card';
@@ -56,7 +57,7 @@ function ClassifiedsContextRail({
       <section className="classifiedRailCard">
         <span className="classifiedRailEyebrow">Recorte atual</span>
         <h2>{currentLabel}</h2>
-        <p>Salvador · BA</p>
+        <p>{territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}</p>
         <div className="classifiedRailMetric">
           <strong>{resultCount}</strong>
           <span>
@@ -245,7 +246,7 @@ export default async function ClassifiedsPage({
         <div className="container">
           <div className="classifiedResultsHeader">
             <div>
-              <p className="eyebrow">Salvador · BA</p>
+              <p className="eyebrow">{territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}</p>
               <h2>
                 {category
                   ? category.label
