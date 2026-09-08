@@ -169,10 +169,35 @@ async function run() {
   );
   console.log('PASS sitemap rollout policy');
 
-  await expectHtml(
+  const { html: homeHtml } = await expectHtml(
     '/',
     'Complexo do Nordeste de Amaralina',
   );
+
+  for (const expectedText of [
+    'Território em números',
+    '68.357',
+    '30.642',
+    '20 locais verificados',
+    '14 unidades',
+    '6 unidades',
+  ]) {
+    assert(
+      homeHtml.includes(expectedText),
+      `Home MVP sem conteúdo esperado: ${expectedText}`,
+    );
+  }
+
+  assert(
+    !homeHtml.includes(
+      'Não foi possível carregar os dados públicos desta área agora.',
+    ) &&
+      !homeHtml.includes(
+        'O MVP territorial continua aqui.',
+      ),
+    'Home MVP caiu no fallback de dados',
+  );
+
   for (const [slug, label] of neighborhoods) {
     await expectHtml(
       `/?bairro=${encodeURIComponent(slug)}`,
@@ -180,7 +205,9 @@ async function run() {
     );
   }
   await expectHtml('/mapa', 'Mapa');
-  console.log('PASS Home Complexo + 4 bairros + Mapa');
+  console.log(
+    'PASS Home MVP 68.357 pessoas / 30.642 domicílios / 20 locais / 14 Educação / 6 SUS + 4 bairros + Mapa',
+  );
 
   for (const path of [
     '/?bairro=../admin',
