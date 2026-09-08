@@ -1610,8 +1610,19 @@ footer .brand small { color: #b9ded4; }
   height: 100%;
   display: grid;
   place-items: center;
-  color: #94a39f;
-  font-size: 2.4rem;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(98,230,182,.12), transparent 30%),
+    #edf3f1;
+  color: #76978c;
+}
+.publicClassifiedPlaceholder svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .publicClassifiedBody {
   display: grid;
@@ -1820,6 +1831,21 @@ footer .brand small { color: #b9ded4; }
 .detailActionCard form button {
   width: 100%;
 }
+.favoriteActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.favoriteActionButton svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .detailSafetyCard {
   overflow: hidden;
   border-color: rgba(117,178,156,.34);
@@ -1913,7 +1939,7 @@ footer .brand small { color: #b9ded4; }
   width: 100%;
 }
 .threadShell {
-  min-height: calc(100svh - 76px);
+  min-height: calc(100svh - 74px);
   padding: 30px 0 100px;
   background:
     radial-gradient(circle at 90% 4%, rgba(98,230,182,.12), transparent 24%),

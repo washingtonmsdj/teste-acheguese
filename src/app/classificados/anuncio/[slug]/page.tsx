@@ -16,6 +16,7 @@ import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { getSiteUrl } from '@/lib/site-url';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 type DetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -291,8 +292,16 @@ export default async function ClassifiedDetailPage({
 
             {!isOwner && (
               <form action={favoriteAction}>
-                <button className="ghostButton" type="submit">
-                  {isFavorite ? 'Remover dos favoritos' : '♡ Salvar nos favoritos'}
+                <button
+                  className="ghostButton favoriteActionButton"
+                  type="submit"
+                >
+                  <NavigationIcon name="favorite" />
+                  <span>
+                    {isFavorite
+                      ? 'Remover dos favoritos'
+                      : 'Salvar nos favoritos'}
+                  </span>
                 </button>
               </form>
             )}

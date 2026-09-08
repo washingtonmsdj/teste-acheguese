@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ClassifiedListItem } from '@/modules/classifieds/domain/types';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 
 type ClassifiedCardProps = {
   item: ClassifiedListItem;
@@ -47,7 +48,9 @@ export function ClassifiedCard({
             sizes="(min-width: 980px) 25vw, (min-width: 620px) 50vw, 100vw"
           />
         ) : (
-          <span className="publicClassifiedPlaceholder" aria-hidden="true">▧</span>
+          <span className="publicClassifiedPlaceholder" aria-hidden="true">
+            <NavigationIcon name="tag" />
+          </span>
         )}
       </Link>
 
