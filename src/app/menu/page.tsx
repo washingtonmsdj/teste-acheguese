@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import {
   activeTerritoryNavigationBySection,
   type TerritoryNavigationItem,
