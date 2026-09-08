@@ -1736,3 +1736,120 @@ footer .brand small { color: #b9ded4; }
     animation: none;
   }
 }
+
+
+.classifiedRailStack {
+  display: grid;
+  gap: 12px;
+}
+
+.classifiedRailCard {
+  padding: 16px;
+  border: 1px solid #dde9e5;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(11,72,57,.04);
+}
+
+.classifiedRailEyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: .6rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.classifiedRailCard h2 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.classifiedRailCard > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .69rem;
+  line-height: 1.5;
+}
+
+.classifiedRailMetric {
+  display: grid;
+  gap: 3px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #f4faf7;
+}
+
+.classifiedRailMetric strong {
+  color: var(--brand-dark);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.classifiedRailMetric span {
+  color: var(--muted);
+  font-size: .62rem;
+}
+
+.classifiedRailLinks {
+  display: grid;
+  gap: 5px;
+}
+
+.classifiedRailLinks a {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px;
+  border-radius: 11px;
+  background: #f7faf9;
+  color: #405166;
+  font-size: .69rem;
+  font-weight: 800;
+  transition:
+    background-color .16s ease,
+    transform .16s ease;
+}
+
+.classifiedRailLinks a:hover {
+  background: #edf7f3;
+  transform: translateX(2px);
+}
+
+.classifiedRailLinks b {
+  color: var(--brand);
+}
+
+.classifiedRailTrust {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(226,164,71,.14), transparent 32%),
+    linear-gradient(145deg, #0a3e34, #0a5545);
+  color: #ffffff;
+}
+
+.classifiedRailTrust .classifiedRailEyebrow {
+  color: #83e5c3;
+}
+
+.classifiedRailTrust > strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: .86rem;
+}
+
+.classifiedRailTrust > p {
+  color: #c8e4dc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .classifiedRailLinks a {
+    transition: none;
+  }
+}

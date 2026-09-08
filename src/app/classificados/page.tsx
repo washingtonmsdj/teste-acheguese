@@ -38,6 +38,72 @@ type ClassifiedsPageProps = {
   }>;
 };
 
+function ClassifiedsContextRail({
+  resultCount,
+  query,
+  categoryLabel,
+}: {
+  resultCount: number;
+  query?: string;
+  categoryLabel?: string;
+}) {
+  const currentLabel =
+    categoryLabel ??
+    (query ? `Busca por “${query}”` : 'Todos os anúncios');
+
+  return (
+    <div className="classifiedRailStack">
+      <section className="classifiedRailCard">
+        <span className="classifiedRailEyebrow">Recorte atual</span>
+        <h2>{currentLabel}</h2>
+        <p>Salvador · BA</p>
+        <div className="classifiedRailMetric">
+          <strong>{resultCount}</strong>
+          <span>
+            {resultCount === 1
+              ? 'resultado nesta página'
+              : 'resultados nesta página'}
+          </span>
+        </div>
+      </section>
+
+      <section className="classifiedRailCard">
+        <span className="classifiedRailEyebrow">Sua área</span>
+        <nav
+          className="classifiedRailLinks"
+          aria-label="Atalhos de Classificados"
+        >
+          <Link href="/classificados/novo">
+            <span>Criar anúncio</span>
+            <b aria-hidden="true">→</b>
+          </Link>
+          <Link href="/classificados/meus">
+            <span>Meus anúncios</span>
+            <b aria-hidden="true">→</b>
+          </Link>
+          <Link href="/favoritos">
+            <span>Favoritos</span>
+            <b aria-hidden="true">→</b>
+          </Link>
+          <Link href="/mensagens">
+            <span>Mensagens</span>
+            <b aria-hidden="true">→</b>
+          </Link>
+        </nav>
+      </section>
+
+      <section className="classifiedRailCard classifiedRailTrust">
+        <span className="classifiedRailEyebrow">Negociação local</span>
+        <strong>Privacidade e moderação.</strong>
+        <p>
+          Endereço exato não é público por padrão e anúncios
+          só entram na área pública após aprovação.
+        </p>
+      </section>
+    </div>
+  );
+}
+
 export default async function ClassifiedsPage({
   searchParams,
 }: ClassifiedsPageProps) {
@@ -108,6 +174,13 @@ export default async function ClassifiedsPage({
     <TerritoryAppShell
       activeId="classifieds"
       territoryName="Salvador"
+      contextRail={
+        <ClassifiedsContextRail
+          resultCount={items.length}
+          query={query}
+          categoryLabel={category?.label}
+        />
+      }
     >
       <main>
         <section className="classifiedHero">
