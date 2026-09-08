@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { reportServerError } from '@/core/observability/server-log';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import type { Database } from '@/lib/supabase/database.types';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 
 export const dynamic = 'force-dynamic';
-
-const COMPLEXO_SLUG =
-  'complexo-do-nordeste-de-amaralina';
 
 export async function GET() {
   const checkedAt = new Date().toISOString();
@@ -48,13 +46,13 @@ export async function GET() {
         .from('territory_rollout_catalog')
         .select('stage')
         .eq('target_kind', 'group')
-        .eq('slug', COMPLEXO_SLUG)
+        .eq('slug', territoryReleaseScope.group.slug)
         .maybeSingle(),
       supabase
         .from('cities')
         .select('id')
-        .eq('slug', 'salvador')
-        .eq('state_code', 'BA')
+        .eq('slug', territoryReleaseScope.city.slug)
+        .eq('state_code', territoryReleaseScope.city.stateCode)
         .eq('is_active', true)
         .maybeSingle(),
     ]);

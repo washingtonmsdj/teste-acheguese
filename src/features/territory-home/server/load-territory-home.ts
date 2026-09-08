@@ -4,6 +4,7 @@ import type {
   TerritoryReference,
 } from '@/core/territory';
 import type { MapViewportData } from '@/core/map';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import {
   aggregateNumericMetric,
   collectSources,
@@ -19,10 +20,6 @@ import { SupabaseTerritoryDataRepository } from '@/lib/supabase/territory-data-r
 import { SupabaseTerritoryRepository } from '@/lib/supabase/territory-repository';
 import { SupabaseTerritoryRolloutRepository } from '@/lib/supabase/territory-rollout-repository';
 import type { SupabaseClient } from '@supabase/supabase-js';
-
-const SALVADOR_PATH = '/br/ba/salvador';
-const COMPLEXO_SLUG =
-  'complexo-do-nordeste-de-amaralina';
 
 function combineBoundaryBounds(
   boundaries: TerritoryBoundary[],
@@ -217,7 +214,7 @@ export async function loadTerritoryHomeData(
 
   const city =
     await territoryRepository.findByGeographicPath(
-      SALVADOR_PATH,
+      territoryReleaseScope.city.geographicPath,
     );
 
   if (!city) {
@@ -227,7 +224,7 @@ export async function loadTerritoryHomeData(
   const group =
     await territoryRepository.findGroupBySlug(
       city.id,
-      COMPLEXO_SLUG,
+      territoryReleaseScope.group.slug,
     );
 
   if (!group) {

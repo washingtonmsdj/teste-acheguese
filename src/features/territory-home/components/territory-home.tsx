@@ -6,30 +6,12 @@ import type {
   TerritoryHomeMetric,
 } from '@/features/territory-home/types';
 import { TerritoryMiniMap } from '@/integrations/map';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { Brand } from '@/shared/ui/brand';
 import styles from './territory-home.module.css';
 
 const numberFormatter = new Intl.NumberFormat('pt-BR');
-
-const unavailableNeighborhoods = [
-  {
-    slug: 'nordeste-de-amaralina',
-    name: 'Nordeste de Amaralina',
-  },
-  {
-    slug: 'santa-cruz',
-    name: 'Santa Cruz',
-  },
-  {
-    slug: 'vale-das-pedrinhas',
-    name: 'Vale das Pedrinhas',
-  },
-  {
-    slug: 'chapada-do-rio-vermelho',
-    name: 'Chapada do Rio Vermelho',
-  },
-] as const;
 
 function formatMetric(
   metric: TerritoryHomeMetric,
@@ -569,7 +551,7 @@ export function TerritoryHomeUnavailable() {
   return (
     <TerritoryAppShell
       activeId="territory"
-      territoryName="Complexo do Nordeste de Amaralina"
+      territoryName={territoryReleaseScope.group.name}
     >
       <main className={styles.page}>
         <section className={styles.unavailable}>
@@ -636,7 +618,7 @@ export function TerritoryHomeUnavailable() {
           </div>
 
           <div className={styles.unavailableNeighborhoodGrid}>
-            {unavailableNeighborhoods.map(
+            {territoryReleaseScope.neighborhoods.map(
               (neighborhood) => (
                 <Link
                   href={`/?bairro=${neighborhood.slug}`}

@@ -1,4 +1,5 @@
 import { unstable_cache } from 'next/cache';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { reportServerError } from '@/core/observability/server-log';
 import {
   HIDDEN_TERRITORY_SURFACE,
@@ -7,9 +8,6 @@ import {
 } from '@/features/territory-home/domain/surface-visibility';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 import { SupabaseTerritoryRolloutRepository } from '@/lib/supabase/territory-rollout-repository';
-
-const COMPLEXO_SLUG =
-  'complexo-do-nordeste-de-amaralina';
 
 async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibility> {
   const supabase = createSupabasePublicServerClient();
@@ -22,7 +20,7 @@ async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibil
     const repository =
       new SupabaseTerritoryRolloutRepository(supabase);
     const rollouts =
-      await repository.findBySlug(COMPLEXO_SLUG);
+      await repository.findBySlug(territoryReleaseScope.group.slug);
     const groupRollout = rollouts.find(
       (rollout) => rollout.targetKind === 'group',
     );
@@ -50,7 +48,7 @@ async function readTerritorySurfaceVisibility(): Promise<TerritorySurfaceVisibil
 export const getTerritorySurfaceVisibility =
   unstable_cache(
     readTerritorySurfaceVisibility,
-    ['territory-surface-visibility', COMPLEXO_SLUG],
+    ['territory-surface-visibility', territoryReleaseScope.group.slug],
     {
       revalidate: 60,
       tags: ['territory-rollout'],
