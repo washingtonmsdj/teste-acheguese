@@ -52,3 +52,45 @@ test('preflight valida site URL e origens extras do mapa', () => {
     'map_csp_origin_invalid',
   );
 });
+
+
+test('preflight Vercel/release exige configuração pública completa', () => {
+  assert.equal(
+    validatePublicEnv(
+      {},
+      { requirePublicConfig: true },
+    ).error,
+    'supabase_required',
+  );
+
+  assert.equal(
+    validatePublicEnv(
+      {
+        NEXT_PUBLIC_SUPABASE_URL:
+          'https://project.supabase.co',
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
+          'sb_publishable_test',
+      },
+      { requirePublicConfig: true },
+    ).error,
+    'site_url_required',
+  );
+
+  assert.deepEqual(
+    validatePublicEnv(
+      {
+        NEXT_PUBLIC_SITE_URL:
+          'https://acheguese.example',
+        NEXT_PUBLIC_SUPABASE_URL:
+          'https://project.supabase.co',
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
+          'sb_publishable_test',
+      },
+      { requirePublicConfig: true },
+    ),
+    {
+      ok: true,
+      supabaseConfigured: true,
+    },
+  );
+});

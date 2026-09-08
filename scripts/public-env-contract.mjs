@@ -56,11 +56,25 @@ function validHttpUrl(value) {
   }
 }
 
-export function validatePublicEnv(values) {
+export function validatePublicEnv(
+  values,
+  { requirePublicConfig = false } = {},
+) {
   const supabaseUrl =
     values.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const supabaseKey =
     values.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
+
+  if (
+    requirePublicConfig &&
+    !supabaseUrl &&
+    !supabaseKey
+  ) {
+    return {
+      ok: false,
+      error: 'supabase_required',
+    };
+  }
 
   if (Boolean(supabaseUrl) !== Boolean(supabaseKey)) {
     return {
@@ -83,6 +97,13 @@ export function validatePublicEnv(values) {
   }
 
   const siteUrl = values.NEXT_PUBLIC_SITE_URL?.trim();
+
+  if (requirePublicConfig && !siteUrl) {
+    return {
+      ok: false,
+      error: 'site_url_required',
+    };
+  }
 
   if (siteUrl && !parseHttpOrigin(siteUrl)) {
     return {
