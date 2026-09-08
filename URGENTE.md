@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `4d07ac9f829fbca93409a1effee86ca59be21db2`
+> **HEAD técnico de referência:** `85df68f43479aa6b25d8d8613bfd66a29809950c`
 
 ---
 
@@ -1183,7 +1183,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`4d07ac9f829fbca93409a1effee86ca59be21db2`
+`85df68f43479aa6b25d8d8613bfd66a29809950c`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1223,6 +1223,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 - superfícies de conta `d7dfe744` + `f0c68f67`: Favoritos, Mensagens, conversa, Meus/Novo/Editar anúncios usam o mesmo rail contextual;
 - account guard `036b7379`: estados vazios usam o sistema de ícones e teste impede retorno de `authCardWide`/perda do rail;
 - detalhe público `4d07ac9f`: galeria, contexto local, preço/ações e bloco de segurança alinhados ao Território Vivo; quality `34200899658` + bundle `34200899596` = PASS;
+- moderação `85df68f4`: rail administrativo com contagem real de fila/denúncias e atalhos; breakpoint Auth legado de 720px removido e protegido por teste; quality `34201520319` + bundle `34201520421` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1314,32 +1315,31 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`;
-- URL protegida: `https://teste-acheguese-pq4otu1w2-jogo-brasils-projects.vercel.app`;
-- source/runtime: `4d07ac9f829fbca93409a1effee86ca59be21db2`;
+- deployment: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`;
+- URL protegida: `https://teste-acheguese-6riiqf8vv-jogo-brasils-projects.vercel.app`;
+- source/runtime: `85df68f43479aa6b25d8d8613bfd66a29809950c`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
 - runtime errors observados: **0**;
-- contém Home, Mapa, Classificados, Busca, Menu, Auth e área pessoal unificada;
-- detalhe público de Classificados usa o novo acabamento Território Vivo;
-- inspeção HTTP continua interceptada pela Deployment Protection/SSO;
+- Home real: `GET / 200` no próprio deployment;
+- contém Home, Mapa, Classificados, Busca, Menu, Auth, área pessoal e moderação no mesmo frontend;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
 
 ### Blocker de release atual
 
-- Deployment Protection/SSO exige sessão/cookie persistente para smoke/visual completo;
+- Deployment Protection/SSO ainda impede smoke/visual completo sem sessão persistente;
 - revisão visual 1440×900 / 390×844 continua pendente;
 - callback Auth exata do candidate e E2E Auth/Classificados continuam pendentes;
 - não desativar proteção, RLS ou CSP para contornar a limitação de inspeção.
 
 ### Próxima ação
 
-**Inspecionar `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_8dmirY6fshiZg6EuAr55PGCwii1S` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

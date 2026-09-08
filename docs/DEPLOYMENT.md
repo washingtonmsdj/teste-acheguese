@@ -109,16 +109,17 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`;
-- URL: `https://teste-acheguese-pq4otu1w2-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`;
+- URL: `https://teste-acheguese-6riiqf8vv-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `4d07ac9f829fbca93409a1effee86ca59be21db2`;
-- quality: `34200899658` PASS;
-- source bundle: `34200899596` PASS;
+- source/runtime: `85df68f43479aa6b25d8d8613bfd66a29809950c`;
+- quality: `34201520319` PASS;
+- source bundle: `34201520421` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- área pessoal usa rail contextual único;
+- Home: `GET / 200`;
+- área pessoal e moderação usam rails contextuais;
 - CSS Auth legado removido;
 - detalhe público de Classificados refinado;
 - Deployment Protection/SSO permanece habilitada.

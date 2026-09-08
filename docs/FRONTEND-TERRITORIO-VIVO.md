@@ -241,3 +241,18 @@ Detalhe público de Classificados:
 - favoritos, mensagem, denúncia, structured data e lifecycle não foram alterados.
 
 Candidate visual: `dpl_25zbkdq9xwDSmWcb1NabQHF1x2kD`.
+
+
+## Moderação
+
+Checkpoint: `85df68f43479aa6b25d8d8613bfd66a29809950c`.
+
+A área administrativa de Classificados permanece restrita por role, mas agora acompanha o sistema visual:
+
+- rail contextual com fila pendente e denúncias recentes;
+- atalhos internos para revisão e denúncias;
+- regra operacional de moderação visível;
+- nenhuma alteração em `hasClassifiedAdminRole`, queries ou Server Actions;
+- breakpoint Auth legado de 720px removido.
+
+Candidate visual: `dpl_8dmirY6fshiZg6EuAr55PGCwii1S`.
