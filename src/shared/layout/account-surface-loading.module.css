@@ -1,0 +1,135 @@
+.page {
+  min-height: 100svh;
+  background: #ffffff;
+}
+
+.hero {
+  padding: 38px 0 40px;
+  border-bottom: 1px solid #e5eeeb;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(98,230,182,.13), transparent 26%),
+    linear-gradient(145deg, #f7fbf9, #ffffff);
+}
+
+.eyebrow,
+.title,
+.copy,
+.copyShort,
+.blockTitle,
+.line,
+.lineShort,
+.field,
+.action,
+.rowPill,
+.rowTitle,
+.rowCopy {
+  display: block;
+  background: linear-gradient(90deg, #edf3f1 20%, #fafcfc 50%, #edf3f1 80%);
+  background-size: 200% 100%;
+  animation: shimmer 1.35s linear infinite;
+}
+
+.eyebrow { width: 105px; height: 9px; margin-bottom: 14px; border-radius: 999px; }
+.title { width: min(420px, 72%); height: 38px; margin-bottom: 15px; border-radius: 11px; }
+.copy,
+.copyShort { height: 12px; border-radius: 999px; }
+.copy { width: min(610px, 94%); }
+.copyShort { width: min(450px, 72%); margin-top: 8px; }
+
+.body {
+  padding: 34px 0 108px;
+  background:
+    radial-gradient(circle at 92% 4%, rgba(98,230,182,.07), transparent 22%),
+    #ffffff;
+}
+
+.layout { display: grid; gap: 18px; }
+.list { display: grid; gap: 12px; }
+
+.row {
+  min-height: 132px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #e0e9e6;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.rowPill { width: 86px; height: 22px; border-radius: 999px; }
+.rowTitle { width: min(330px, 72%); height: 20px; border-radius: 7px; }
+.rowCopy { width: min(240px, 58%); height: 10px; border-radius: 999px; }
+
+.formLayout { gap: 28px; }
+.formIntro { display: none; }
+
+.formCard {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid #e0e9e6;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgba(11,72,57,.04);
+}
+
+.blockTitle { width: 68%; height: 30px; border-radius: 9px; }
+.line,
+.lineShort { height: 11px; border-radius: 999px; }
+.line { width: 92%; }
+.lineShort { width: 66%; }
+.field { min-height: 48px; border-radius: 13px; }
+.field:nth-child(4) { min-height: 124px; }
+.action { width: 150px; height: 44px; margin-top: 4px; border-radius: 14px; }
+
+.threadLayout .row {
+  min-height: 104px;
+  width: min(78%, 620px);
+}
+
+.threadLayout .rowMine {
+  justify-self: end;
+  background: #f1faf6;
+}
+
+.threadLayout .rowTheirs { justify-self: start; }
+
+@media (min-width: 980px) {
+  .hero { padding: 42px 0 44px; }
+  .body { padding-top: 52px; padding-bottom: 72px; }
+
+  .formLayout {
+    grid-template-columns: minmax(260px,.72fr) minmax(0,1.28fr);
+    gap: 48px;
+  }
+
+  .formIntro {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+
+  .formCard { padding: 28px; }
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .title,
+  .copy,
+  .copyShort,
+  .blockTitle,
+  .line,
+  .lineShort,
+  .field,
+  .action,
+  .rowPill,
+  .rowTitle,
+  .rowCopy {
+    animation: none;
+  }
+}
