@@ -90,25 +90,24 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
-- URL: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`;
+- URL: `https://teste-acheguese-5a9w818kb-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
-- quality: `34223933038` PASS;
-- source bundle: `34223933044` PASS;
+- source/runtime: `47cdaa84296f68264df905aebf5116bc20d821ac`;
+- quality: `34227085645` PASS;
+- source bundle: `34227085713` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- dev config agora é fail-closed antes do Next;
-- fallback de configuração é development-only;
-- contexto territorial de tablet atualizado;
+- Home: HTTP 200;
+- Mapa/Auth/Home recovery não expõem mais copy interna de configuração/ambiente/demo;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
 
 ## Próximo deployment
 
-**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `e735797b8f64947de13855cf8cf8c285e16435fa`.
+**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `47cdaa84296f68264df905aebf5116bc20d821ac`.
 
 Criar outro somente quando houver mudança de source/runtime ou correção motivada por defeito comprovado. Nesse caso, antes de criar o candidato executar em um checkout do HEAD pretendido:
 

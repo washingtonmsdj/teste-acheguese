@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `e735797b8f64947de13855cf8cf8c285e16435fa`
+> **HEAD técnico de referência:** `47cdaa84296f68264df905aebf5116bc20d821ac`
 
 ---
 
@@ -1175,19 +1175,18 @@ A fundação territorial, Map Core e frontend Território Vivo estão fechados e
 
 ## Candidate source-aligned atual
 
-- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
-- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
-- preview protegido: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
+- source/runtime: `47cdaa84296f68264df905aebf5116bc20d821ac`;
+- deployment: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`;
+- preview protegido: `https://teste-acheguese-5a9w818kb-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34223933038` PASS;
-- source bundle: `34223933044` PASS;
+- quality: `34227085645` PASS;
+- source bundle: `34227085713` PASS;
 - runtime errors observados: **0**;
-- `npm run dev` e `npm run env:check` agora exigem configuração pública completa antes do Next iniciar;
-- fallback da Home orienta configuração local somente em development;
-- tablet 640–979px mantém contexto territorial no header; telefone 390px preserva header compacto;
-- produção não expõe instruções internas de ambiente.
+- Home chegou ao aplicativo com HTTP 200;
+- recovery público do Mapa/Auth/Home usa linguagem de produto e ações úteis, sem expor configuração/ambiente/demo;
+- o contrato de copy bloqueia regressão dessas expressões técnicas.
 
 O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
@@ -1205,7 +1204,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ## Próxima ação
 
-> **Preservar `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1216,7 +1215,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### HEAD técnico de referência
 
-`efbc0af47721215719b2f3a4440b579ee55a81df`
+`47cdaa84296f68264df905aebf5116bc20d821ac`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1225,6 +1224,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- recovery público `47cdaa84`: Mapa/Auth/Home fallback removeram linguagem técnica de ambiente/configuração/demo; Mapa ganhou ações de tentar novamente/voltar ao território; contrato de copy cobre Mapa e Auth; quality `34227085645` + bundle `34227085713` = PASS;
 - dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
 - local config fallback `76eb2c60`: fallback da Home mostra orientação somente em development quando a conexão pública não está configurada; produção não expõe instrução interna;
 - env check `58100eeb`: `npm run env:check` e `npm run dev` agora compartilham o mesmo contrato fail-closed de configuração pública; quality `34223558040` + bundle `34223558196` = PASS;

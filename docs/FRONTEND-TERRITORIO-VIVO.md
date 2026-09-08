@@ -404,3 +404,16 @@ Checkpoint: `efbc0af47721215719b2f3a4440b579ee55a81df`.
 - em telefone estreito o contexto extra permanece oculto para preservar densidade.
 
 Candidate visual: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`.
+
+
+## Recovery público
+
+Checkpoint: `47cdaa84296f68264df905aebf5116bc20d821ac`.
+
+- Mapa indisponível usa linguagem de produto e ações para tentar novamente ou voltar ao território;
+- Auth indisponível fala em indisponibilidade temporária, sem mencionar ambiente;
+- fallback da Home comunica fontes públicas sem explicar conteúdo de demonstração;
+- `frontend-copy-contract` passou a cobrir Mapa e Auth e bloqueia `configuração pública`, `neste ambiente` e `demonstração` nessas superfícies;
+- comportamento fail-closed e observabilidade permanecem inalterados.
+
+Candidate visual: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`.

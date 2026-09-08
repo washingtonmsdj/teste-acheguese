@@ -8,39 +8,29 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
-- URL protegida: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`;
+- URL protegida: `https://teste-acheguese-5a9w818kb-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
-- quality: `34223933038` PASS;
-- vercel-source-bundle: `34214797952` PASS.
-
-Este candidate contém a Home product-first, Auth/conta/moderação já endurecidos, formulários estruturados, resumos pessoais e conversa refinada.
+- source/runtime: `47cdaa84296f68264df905aebf5116bc20d821ac`;
+- quality: `34227085645` PASS;
+- vercel-source-bundle: `34227085713` PASS.
 
 ## 2. Provenance e configuração pública
 
 Antes do deployment foi confirmado:
 
-- `main source/runtime = 6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
-- `deploy/vercel-bundle/SOURCE_SHA = 6d720e2e5bea84c7d0b1a72df227f0af536fbc60`;
+- `main = 47cdaa84296f68264df905aebf5116bc20d821ac`;
+- `deploy/vercel-bundle/SOURCE_SHA = 47cdaa84296f68264df905aebf5116bc20d821ac`;
 - quality do SHA exato = PASS;
 - vercel-source-bundle do SHA exato = PASS;
 - bundle sem arquivos `.env` versionados;
-- Supabase security advisors = 0 lints;
-- rollout Complexo + quatro bairros = `data_preparation`;
-- `activated_at = null`.
+- nenhuma mudança de schema/RLS/rollout nesta atualização de frontend.
 
-O payload do deployment recebeu um `.env.production` **efêmero e não versionado** somente com:
-
-- `NEXT_PUBLIC_SITE_URL`;
-- `NEXT_PUBLIC_SUPABASE_URL`;
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-
-Nenhum secret/service-role foi usado.
+O payload do deployment recebeu `.env.production` efêmero e não versionado somente com `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Nenhum secret/service-role foi usado.
 
 O prebuild comprovou:
 
@@ -50,11 +40,9 @@ O prebuild comprovou:
 
 ## 3. Build
 
-Provas do deployment:
-
-- 131 deployment files;
+- 139 deployment files;
 - `npm ci`: PASS;
-- audit: 0 vulnerabilities;
+- audit: 0 vulnerabilidades;
 - prebuild env fail-closed: PASS;
 - Next compile: PASS;
 - TypeScript: PASS;
@@ -62,122 +50,56 @@ Provas do deployment:
 - outputs: PASS;
 - deployment: READY.
 
-Rotas principais presentes no build:
-
-- `/`;
-- `/api/health`;
-- `/api/map/viewport`;
-- `/mapa`;
-- `/classificados`;
-- `/buscar`;
-- `/entrar`;
-- `/auth/callback`;
-- `/auth/signout`;
-- `/favoritos`;
-- `/mensagens`;
-- `/menu`;
-- `/robots.txt`;
-- `/sitemap.xml`.
-
-Warning não-blocker preservado:
-
-- `unrs-resolver@1.12.2` possui postinstall não aprovado;
-- não aprovar install script transitivo às cegas.
-
 ## 4. Runtime
 
 - runtime errors observados: **0**;
-- o candidate está READY;
-- Deployment Protection/SSO intercepta requests sem sessão persistente antes da aplicação;
-- portanto não inferir smoke/visual PASS somente pelo build.
+- Home chegou ao app com HTTP 200;
+- o HTML retornado contém App Shell Território Vivo, contexto territorial de tablet, sidebar/toolbar/rail e bottom navigation;
+- Mapa/Classificados/Auth continuam sujeitos à Deployment Protection/SSO quando o cliente não preserva a sessão.
 
-## 5. Dados e segurança
+## 5. Frontend contido
 
-Revalidação na mesma rodada:
+Checkpoint técnico: `47cdaa84296f68264df905aebf5116bc20d821ac`.
 
-- 4 boundaries;
-- 20 public places verificados;
-- 14 Educação;
-- 6 Saúde/SUS;
-- Supabase security advisors: 0 lints;
-- Complexo + quatro bairros: `data_preparation`;
-- nenhuma ativação de rollout;
-- nenhuma mutation de schema/RLS/rollout.
+- Home product-first e Map Core preservados;
+- Busca/Menu/Auth/área pessoal/moderação/formulários preservados;
+- contexto territorial de tablet 640–979px preservado;
+- Mapa fallback agora oferece `Tentar novamente` e `Voltar ao território`;
+- copy pública deixou de expor `configuração pública`, `neste ambiente` e `demonstração` em Mapa/Auth/Home;
+- teste de contrato cobre essas expressões;
+- nenhuma feature futura foi ativada.
 
 ## 6. Gate ainda incompleto
 
-Deployment Protection/SSO continua ativo.
-
-O cliente Vercel conseguiu uma sessão 200 da Home, mas as chamadas seguintes voltaram a ser interceptadas pelo SSO por não manterem de forma estável o cookie da sessão. O Chromium local disponível nesta execução não possui resolução DNS externa.
-
-Portanto ainda **não** marcar como PASS:
+Deployment Protection/SSO continua ativo. Ainda **não** marcar como PASS:
 
 - `territory-release-smoke` completo;
 - Home dos quatro `?bairro=`;
 - Mapa real/filtros/clustering/deep links em browser;
-- `robots.txt` e `sitemap.xml` no candidate;
 - revisão visual 1440×900;
 - revisão visual 390×844;
 - callback Auth exata do candidate;
 - Auth/Classificados E2E.
 
-Isso não é evidência de falha do Achegue-se. É um gate não executado por limitação de sessão/ambiente.
+Isso não é evidência de falha do Achegue-se. É um gate ainda não executado com sessão persistente.
 
-## 6A. Correções Auth do checkpoint
+## 7. Próxima ação
 
-- recursão em `requireTrustedAuthOrigin` removida;
-- login e cadastro usam a mesma validação de Origin;
-- `/entrar` usa `safeInternalPath` e redireciona sessão já autenticada;
-- shell usa rótulo neutro “Sua conta”;
-- logout usa somente `POST /auth/signout` existente e protegido;
-- rail de conta oferece “Sair da conta”;
-- Meus anúncios mantém o mesmo logout acessível no mobile;
-- testes de regressão cobrem recursão, session-aware gateway e POST de logout.
-
-## 7. Frontend contido
-
-O candidate contém o frontend técnico `efbc0af4`:
-
-- App Shell Território Vivo preservado;
-- dev config fail-closed antes de `next dev`;
-- fallback local acionável apenas em development;
-- warning estruturado substitui falso erro de aplicação para sessão dev já aberta;
-- header mobile respeita safe-area;
-- tablet 640–979px mostra contexto territorial compacto;
-- telefone mantém header compacto e bottom navigation existente;
-- runtime errors observados = 0.
-
-## 8. Previews anteriores
-
-Os previews abaixo são históricos e não são o candidate canônico atual:
-
-- `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
-- `dpl_6iMzFBhrfgs3jfBxJdnMY5wfC76y`;
-- `dpl_G5CZ14AZNcAygUjd8VJAhe8wicSv`.
-
-Não usar esses artefatos para aprovar o frontend atual.
-
-## 9. Próxima ação
-
-1. preservar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
+1. preservar `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`;
 2. abrir o preview com sessão Vercel autenticada persistente;
 3. executar smoke completo;
 4. validar 1440×900 e 390×844;
 5. revisar runtime após exercitar as rotas;
-6. adicionar somente `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
+6. adicionar somente `https://teste-acheguese-5a9w818kb-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
 8. corrigir somente blockers observados;
 9. fechar FASE 4 somente após todos os gates.
 
-## 10. STOP
+## 8. STOP
 
-Ainda não:
-
-- promover para produção;
-- alterar rollout para público;
-- iniciar Community;
-- iniciar Empresas/Gastronomia/Mobilidade;
-- relaxar RLS/CSP/Deployment Protection;
-- adicionar wildcard Vercel ao Auth;
-- criar novo candidate sem mudança de source/runtime ou blocker real;
-- inventar conteúdo para preencher estados vazios.
+- não promover para produção;
+- não alterar rollout para público;
+- não iniciar Community/Empresas/Gastronomia/Mobilidade;
+- não relaxar RLS/CSP/Deployment Protection;
+- não adicionar wildcard Vercel ao Auth;
+- não inventar conteúdo para preencher estados vazios.
