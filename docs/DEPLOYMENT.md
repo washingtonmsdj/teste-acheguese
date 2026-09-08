@@ -109,17 +109,19 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
-- URL: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`;
+- URL: `https://teste-acheguese-n23hjhszi-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
-- quality: `34204462075` PASS;
-- source bundle: `34204462010` PASS;
+- source/runtime: `c61abe9b110c5584933149a4987a55cf17433c7c`;
+- quality: `34205750701` PASS;
+- source bundle: `34205750661` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- escopo MVP fail-closed: Território + Mapa + Classificados;
-- suporte: Auth/Conta/Moderação;
+- MVP: Território + Mapa + Classificados;
+- Auth origin guard corrigido;
+- `/entrar` session-aware;
+- logout POST disponível em desktop e mobile;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.

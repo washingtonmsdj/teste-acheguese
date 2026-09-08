@@ -294,3 +294,17 @@ Auth, Favoritos, Mensagens, gerenciamento de anúncios e Moderação são suport
 Community, Alertas, Eventos, Oportunidades e Empresas permanecem `future` no registry. Gastronomia e Mobilidade continuam fora do MVP atual.
 
 Candidate visual: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`.
+
+
+## Conta MVP fechada
+
+Checkpoint: `c61abe9b110c5584933149a4987a55cf17433c7c`.
+
+- “Sua conta” é o gateway visual único do App Shell;
+- visitante em `/entrar` vê login/cadastro;
+- sessão existente em `/entrar` segue para o `next` interno seguro ou Meus anúncios;
+- login e cadastro compartilham o mesmo guard de Origin;
+- logout reutiliza exclusivamente o endpoint POST existente;
+- logout aparece no rail desktop e no gateway móvel de Meus anúncios.
+
+Candidate visual: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`.

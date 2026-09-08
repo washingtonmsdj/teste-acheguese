@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `abc52b42a0b2336d3e0d018b4a4600223da55f84`
+> **HEAD técnico de referência:** `c61abe9b110c5584933149a4987a55cf17433c7c`
 
 ---
 
@@ -1216,7 +1216,7 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### HEAD técnico de referência
 
-`abc52b42a0b2336d3e0d018b4a4600223da55f84`
+`c61abe9b110c5584933149a4987a55cf17433c7c`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1348,18 +1348,19 @@ Não criar novo candidate enquanto não houver mudança de source/runtime ou def
 
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
-- URL protegida: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
-- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
+- deployment: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`;
+- URL protegida: `https://teste-acheguese-n23hjhszi-jogo-brasils-projects.vercel.app`;
+- source/runtime: `c61abe9b110c5584933149a4987a55cf17433c7c`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
 - runtime errors observados: **0**;
-- escopo MVP explícito: Território + Mapa + Classificados;
-- Auth/Favoritos/Mensagens/Meus anúncios/Moderação = suporte operacional;
-- Community/Alertas/Eventos/Oportunidades/Empresas = future e invisíveis;
+- MVP principal: Território + Mapa + Classificados;
+- Auth: guard de Origin corrigido; `/entrar` funciona como gateway de conta;
+- logout: POST canônico visível no rail e também acessível no gateway mobile de Meus anúncios;
+- módulos futuros continuam fail-closed;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
 Previews anteriores permanecem apenas como evidência histórica e não aprovam o frontend atual.
@@ -1373,7 +1374,7 @@ Previews anteriores permanecem apenas como evidência histórica e não aprovam 
 
 ### Próxima ação
 
-**Inspecionar `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Inspecionar `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

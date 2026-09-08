@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_D9BqwYuKiQUJToyKUgdZNpePSt8a`;
-- URL protegida: `https://teste-acheguese-f8vn9kjn1-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`;
+- URL protegida: `https://teste-acheguese-n23hjhszi-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `abc52b42a0b2336d3e0d018b4a4600223da55f84`;
-- quality: `34204462075` PASS;
+- source/runtime: `c61abe9b110c5584933149a4987a55cf17433c7c`;
+- quality: `34205750701` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
@@ -121,6 +121,17 @@ Portanto ainda **não** marcar como PASS:
 - Auth/Classificados E2E.
 
 Isso não é evidência de falha do Achegue-se. É um gate não executado por limitação de sessão/ambiente.
+
+## 6A. Correções Auth do checkpoint
+
+- recursão em `requireTrustedAuthOrigin` removida;
+- login e cadastro usam a mesma validação de Origin;
+- `/entrar` usa `safeInternalPath` e redireciona sessão já autenticada;
+- shell usa rótulo neutro “Sua conta”;
+- logout usa somente `POST /auth/signout` existente e protegido;
+- rail de conta oferece “Sair da conta”;
+- Meus anúncios mantém o mesmo logout acessível no mobile;
+- testes de regressão cobrem recursão, session-aware gateway e POST de logout.
 
 ## 7. Frontend contido
 
