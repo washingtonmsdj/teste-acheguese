@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toggleFavoriteAction } from '@/app/classificados/favorite-actions';
@@ -67,7 +68,7 @@ export default async function FavoritesPage() {
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={<AccountContextRail active="favorites" />}
     >
       <main>
