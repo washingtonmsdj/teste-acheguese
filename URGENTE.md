@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `d28dcc9556f90324123c676e2d05de5c3db87b31`
+> **HEAD técnico de referência:** `a74679aac8b2e6d52ad853044ef6e2e4ac873644`
 
 ---
 
@@ -474,7 +474,7 @@ A Home deve deixar de parecer landing page/marketplace genérico.
 
 ### Entregas
 
-- [~] redesign desktop profissional e organizado — conceito canônico **Território Vivo** materializado estruturalmente no checkpoint `d28dcc9556f90324123c676e2d05de5c3db87b31` com sidebar + toolbar + conteúdo + rail contextual; revisão visual real pendente;
+- [~] redesign desktop profissional e organizado — conceito canônico **Território Vivo** materializado e refinado até `a74679aac8b2e6d52ad853044ef6e2e4ac873644`, com sidebar + toolbar + conteúdo + rail contextual, hero/mapa lado a lado em desktop útil e maior contraste entre seções; revisão visual real no deployment ainda pendente;
 - [~] preservar boa experiência mobile — navegação mobile, Home, Mapa e loadings refinados em source; módulos futuros permanecem ocultos por registry até a fase correspondente; revisão visual real pendente;
 - [x] seletor de território Complexo ↔ quatro bairros;
 - [x] contexto Salvador/Complexo/bairro;
@@ -1207,6 +1207,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - frontend **Território Vivo** foi materializado estruturalmente e consolidado: App Shell adaptativo com sidebar desktop, toolbar contextual, rail lateral e registry único; Home, Mapa, Busca, Classificados público/detalhe, Favoritos, Mensagens, Meus/Novo/Editar anúncio e Moderação usam a mesma arquitetura global; `SiteHeader` legado e CSS correspondente foram removidos; módulos futuros `planned` seguem ocultos até suas fases; quality run `34189520702` e bundle run `34189520634` = PASS; decisão visual detalhada em `docs/FRONTEND-TERRITORIO-VIVO.md`;
 - bottom navigation também deriva do registry único; Community já possui posição mobile preparada, mas permanece `planned` e invisível; não existe lista paralela de destinos mobile;
 - frontend territorial foi refinado no source: Home agora prioriza utilidade do morador, mapa, dados e bairros; cabeçalho e tabbar mobile ganharam navegação visual consistente; Mapa ganhou filtros e lista de locais mais claros; menu, loading global, 404, erro e Busca foram alinhados ao mesmo sistema visual; `/mapa` e `/classificados` agora possuem loading states próprios que preservam o layout da rota e reduced-motion; copy de roadmap/MVP foi removida das superfícies públicas e protegida por teste de contrato; nenhum schema/API/rollout mudou; quality run `34180676875` e bundle run `34180676868` = PASS.
+- refinamento visual desktop `a74679aa`: em 1360px+ a Home usa hero + mapa lado a lado mesmo com rail; rail contextual alinha à toolbar; busca/topbar ganharam hierarquia tipográfica melhor; bloco de dados públicos virou seção de alto contraste; rail da Home ganhou cartão territorial de destaque; mobile mantém a arquitetura existente; quality e bundle do commit = PASS.
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;

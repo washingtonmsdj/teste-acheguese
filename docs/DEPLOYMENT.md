@@ -140,3 +140,15 @@ Após READY:
 6. manter Site URL oficial e adicionar somente a redirect exata `https://<candidato>/auth/callback` no Supabase Auth; validar cadastro/login no candidato;
 7. executar E2E do vertical Classificados;
 8. somente então tratar o alias como candidato de release da fundação territorial.
+
+
+## Gate visual obrigatório
+
+Validar o candidato real antes de fechar a FASE 4 em pelo menos:
+
+- desktop: **1440×900**;
+- mobile: **390×844**.
+
+Conferir Home, Mapa, Classificados, Busca e estados de loading/erro. Verificar sidebar/toolbar/rail, hero + mapa, overflow, hierarquia, foco/teclado, reduced motion, bottom navigation e ausência de layout shift perceptível.
+
+A aprovação visual deve usar o deployment candidato contendo o HEAD atual; source/CSS sozinho não prova fidelidade final.
