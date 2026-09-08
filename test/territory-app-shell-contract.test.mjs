@@ -140,3 +140,17 @@ test('nenhuma página pode recriar navegação paralela ao App Shell', () => {
     'SiteHeader legado deve permanecer removido',
   );
 });
+
+
+test('App Shell preserva contexto territorial no tablet sem duplicar header', () => {
+  const shell = read(
+    '../src/shared/layout/territory-app-shell.tsx',
+  );
+  const css = read(
+    '../src/shared/layout/territory-app-shell.module.css',
+  );
+
+  assert.match(shell, /styles\.mobileTerritory/);
+  assert.match(css, /@media \(min-width: 640px\) and \(max-width: 979px\)/);
+  assert.match(css, /env\(safe-area-inset-top\)/);
+});

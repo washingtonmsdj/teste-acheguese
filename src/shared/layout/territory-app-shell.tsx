@@ -120,6 +120,17 @@ export function TerritoryAppShell({
         <header className={styles.mobileHeader}>
           <Brand />
           <Link
+            className={styles.mobileTerritory}
+            href={territoryHref}
+            aria-label={`Território atual: ${territoryName}`}
+          >
+            <span className={styles.mobileTerritoryDot} aria-hidden="true" />
+            <span>
+              <small>Território atual</small>
+              <strong>{territoryName}</strong>
+            </span>
+          </Link>
+          <Link
             className={styles.mobileMenu}
             href="/menu"
             aria-label="Abrir menu"
