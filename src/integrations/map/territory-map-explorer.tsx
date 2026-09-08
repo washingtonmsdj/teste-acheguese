@@ -426,12 +426,14 @@ export function TerritoryMapExplorer({
         </Link>
 
         <div>
-          <p className="eyebrow">Complexo do Nordeste</p>
+          <p className="eyebrow">
+            Complexo do Nordeste de Amaralina
+          </p>
           <h1>Mapa do território</h1>
           <p className={styles.intro}>
-            Navegue pelos bairros e encontre escolas e
-            unidades SUS. A consulta acompanha somente a
-            área visível no mapa.
+            Movimente o mapa para explorar bairros, escolas
+            e unidades SUS. Os resultados acompanham a área
+            que está visível.
           </p>
         </div>
 
@@ -451,13 +453,13 @@ export function TerritoryMapExplorer({
           aria-label="Camadas do mapa"
         >
           <div className={styles.filterHeading}>
-            <strong>O que mostrar</strong>
-            <span>Filtros do mapa</span>
+            <strong>Camadas</strong>
+            <span>O que mostrar</span>
           </div>
           <button
             className={
               categories.includes('education')
-                ? styles.filterActive
+                ? `${styles.filterActive} ${styles.filterEducationActive}`
                 : undefined
             }
             type="button"
@@ -476,7 +478,7 @@ export function TerritoryMapExplorer({
           <button
             className={
               categories.includes('health')
-                ? styles.filterActive
+                ? `${styles.filterActive} ${styles.filterHealthActive}`
                 : undefined
             }
             type="button"
@@ -538,8 +540,8 @@ export function TerritoryMapExplorer({
         <div className={styles.placeList}>
           <div className={styles.placeListHeader}>
             <div>
-              <strong>Locais nesta área</strong>
-              <span>Toque para localizar no mapa</span>
+              <strong>Locais na área visível</strong>
+              <span>Selecione para localizar no mapa</span>
             </div>
             <small>{data.points.length} resultados</small>
           </div>
