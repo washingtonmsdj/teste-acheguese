@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   buildServerErrorEvent,
+  buildServerWarningEvent,
 } from '../src/core/observability/server-log.ts';
 
 test('estrutura evento server-side sem stack ou contexto arbitrário', () => {
@@ -64,4 +65,23 @@ test('evento inválido cai para código canônico', () => {
   assert.equal(event.event, 'server.error');
   assert.equal(event.errorName, 'UnknownError');
   assert.equal(event.message, 'unknown_error');
+});
+
+
+test('warning estruturado preserva redação e não vira erro', () => {
+  const event = buildServerWarningEvent(
+    'territory.home.config_unavailable',
+    new Error('territory_home_config_unavailable'),
+    { scope: 'group' },
+  );
+
+  assert.deepEqual(event, {
+    level: 'warning',
+    event: 'territory.home.config_unavailable',
+    errorName: 'Error',
+    message: 'territory_home_config_unavailable',
+    context: {
+      scope: 'group',
+    },
+  });
 });

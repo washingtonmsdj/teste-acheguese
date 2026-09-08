@@ -47,17 +47,20 @@ function sanitizeContext(
   return safe;
 }
 
-export function buildServerErrorEvent(
+function buildServerEvent(
+  level: 'error' | 'warning',
   event: string,
   error: unknown,
   context: ServerLogContext = {},
 ) {
   const safeEvent = /^[a-z0-9_.-]{1,80}$/.test(event)
     ? event
-    : 'server.error';
+    : level === 'error'
+      ? 'server.error'
+      : 'server.warning';
 
   return {
-    level: 'error' as const,
+    level,
     event: safeEvent,
     errorName:
       error instanceof Error
@@ -71,6 +74,32 @@ export function buildServerErrorEvent(
   };
 }
 
+export function buildServerErrorEvent(
+  event: string,
+  error: unknown,
+  context: ServerLogContext = {},
+) {
+  return buildServerEvent(
+    'error',
+    event,
+    error,
+    context,
+  );
+}
+
+export function buildServerWarningEvent(
+  event: string,
+  error: unknown,
+  context: ServerLogContext = {},
+) {
+  return buildServerEvent(
+    'warning',
+    event,
+    error,
+    context,
+  );
+}
+
 export function reportServerError(
   event: string,
   error: unknown,
@@ -80,6 +109,20 @@ export function reportServerError(
     '[acheguese]',
     JSON.stringify(
       buildServerErrorEvent(event, error, context),
+    ),
+  );
+}
+
+
+export function reportServerWarning(
+  event: string,
+  error: unknown,
+  context: ServerLogContext = {},
+) {
+  console.warn(
+    '[acheguese]',
+    JSON.stringify(
+      buildServerWarningEvent(event, error, context),
     ),
   );
 }

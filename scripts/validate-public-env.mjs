@@ -9,6 +9,7 @@ const mode =
   'development';
 
 const requirePublicConfig =
+  process.argv.includes('--require-public-config') ||
   process.env.ACHEGUESE_REQUIRE_PUBLIC_ENV === '1' ||
   (mode === 'production' && process.env.VERCEL === '1');
 
@@ -18,8 +19,15 @@ const result = validatePublicEnv(
 );
 
 if (!result.ok) {
+  const guidance =
+    result.error === 'supabase_required'
+      ? ' copie .env.example para .env.local e preencha NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY'
+      : result.error === 'site_url_required'
+        ? ' configure NEXT_PUBLIC_SITE_URL'
+        : '';
+
   console.error(
-    `[acheguese] public_env_invalid: ${result.error}`,
+    `[acheguese] public_env_invalid: ${result.error}.${guidance}`,
   );
   process.exitCode = 1;
 } else {

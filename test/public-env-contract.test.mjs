@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   validatePublicEnv,
@@ -92,5 +93,20 @@ test('preflight Vercel/release exige configuração pública completa', () => {
       ok: true,
       supabaseConfigured: true,
     },
+  );
+});
+
+
+test('dev exige configuração pública antes de iniciar o Next', () => {
+  const packageJson = JSON.parse(
+    readFileSync(
+      new URL('../package.json', import.meta.url),
+      'utf8',
+    ),
+  );
+
+  assert.match(
+    packageJson.scripts.predev,
+    /validate-public-env\.mjs development --require-public-config/,
   );
 });

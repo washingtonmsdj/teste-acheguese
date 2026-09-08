@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { redirect } from 'next/navigation';
-import { reportServerError } from '@/core/observability/server-log';
+import {
+  reportServerError,
+  reportServerWarning,
+} from '@/core/observability/server-log';
 import {
   TerritoryHome,
   TerritoryHomeUnavailable,
@@ -77,16 +80,26 @@ export default async function Home({
         'territory_home_config_unavailable';
 
     if (configurationUnavailable) {
-      reportServerError(
-        'territory.home.config_unavailable',
-        error,
-        {
-          scope:
-            scopeQuery.kind === 'neighborhood'
-              ? 'neighborhood'
-              : 'group',
-        },
-      );
+      const context = {
+        scope:
+          scopeQuery.kind === 'neighborhood'
+            ? 'neighborhood'
+            : 'group',
+      };
+
+      if (process.env.NODE_ENV === 'development') {
+        reportServerWarning(
+          'territory.home.config_unavailable',
+          error,
+          context,
+        );
+      } else {
+        reportServerError(
+          'territory.home.config_unavailable',
+          error,
+          context,
+        );
+      }
     } else if (!invalidNeighborhood) {
       reportServerError(
         'territory.home.load_failed',

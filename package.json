@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
     "test": "node --test",
-    "predev": "node ./scripts/validate-public-env.mjs development && node ./scripts/copy-maplibre-worker.mjs",
+    "predev": "node ./scripts/validate-public-env.mjs development --require-public-config && node ./scripts/copy-maplibre-worker.mjs",
     "prebuild": "node ./scripts/validate-public-env.mjs production && node ./scripts/copy-maplibre-worker.mjs",
     "env:check": "node ./scripts/validate-public-env.mjs development",
     "security:scan": "node ./scripts/ci/scan-repository-secrets.mjs",
