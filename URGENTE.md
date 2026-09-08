@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `a74679aac8b2e6d52ad853044ef6e2e4ac873644`
+> **HEAD técnico de referência:** `bab5273b1c6b757cbd3d0b583416f6c441e533ef`
 
 ---
 
@@ -1138,38 +1138,44 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial, o Map Core e o MVP da Home estão fechados em source/CI com hardening de segurança, cache e rollout SEO. A próxima fase de produto continua bloqueada.
+A fundação territorial, o Map Core e o MVP da Home estão fechados em source/CI. O frontend **Território Vivo** também possui agora um candidate real que contém o HEAD técnico atual.
 
-## Próximo passo
+## Candidate source-aligned atual
 
-> **Após o reset da cota Vercel, publicar exatamente o bundle do HEAD territorial mais recente com as três variáveis públicas e executar a revisão visual/runtime real de Home + Mapa antes de abrir Community.**
+- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+- preview protegido: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
+- Vercel: **READY**;
+- build: `public_env=PASS mode=production required=yes supabase=configured`;
+- compile/TypeScript/static generation: PASS;
+- runtime errors observados: **0**;
+- Home: invocação real `GET / 200`;
+- Supabase security advisors: **0 lints**;
+- rollout: Complexo + quatro bairros continuam em `data_preparation`, `activated_at=null`.
 
-### Inputs já preparados
+O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
-- `NEXT_PUBLIC_SITE_URL`: alias canônico do projeto Vercel;
-- `NEXT_PUBLIC_SUPABASE_URL`: URL do projeto `acheguese-v2` confirmada;
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: existe uma publishable key ativa confirmada no Supabase;
-- nenhum secret/service-role deve entrar no bundle;
-- o conector Vercel disponível não persiste env vars no projeto, portanto os valores públicos devem ser enviados no payload do deployment conforme o mecanismo já documentado.
+## Gate ainda pendente
 
-### Sequência imediata após o reset
+A Vercel Deployment Protection/SSO continua interceptando as demais rotas em clientes sem sessão persistente. O Chromium local disponível nesta execução também não possui DNS externo. Portanto ainda **não** marcar como PASS:
 
-1. executar `npm run release:preflight` em checkout do candidato e exigir PASS; o gate comprova checkout = `main` = `deploy/vercel-bundle/SOURCE_SHA` e PASS de `quality` + `vercel-source-bundle` no HEAD exato;
-2. criar um único deployment candidato com as três variáveis públicas;
-3. aguardar estado `READY`;
-4. validar `/api/health`, `/robots.txt` e `/sitemap.xml`;
-5. validar Home no Complexo e nos quatro `?bairro=<slug>`;
-6. validar `/mapa`, filtros, clustering, deep links e fallback;
-7. conferir que Home/Mapa permanecem `noindex` enquanto rollout = `data_preparation`;
-8. executar revisão visual real desktop + mobile;
-9. inspecionar runtime logs/erros do deployment;
-10. executar Auth/Classificados E2E;
-11. corrigir qualquer regressão encontrada e repetir quality gate;
-12. somente então fechar FASE 4 e avaliar FASE 5 — Community.
+1. `territory-release-smoke` completo;
+2. revisão visual real 1440×900;
+3. revisão visual real 390×844;
+4. callback Auth exato do candidate;
+5. E2E Auth/Classificados.
+
+Isso é limitação do caminho de inspeção, não evidência de falha da aplicação. Não remover Deployment Protection, RLS, CSP ou outros guards para contornar o gate.
+
+## Próxima ação
+
+> **Preservar o candidate atual → inspecionar o mesmo deployment em sessão Vercel autenticada que preserve cookies → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata do candidate → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+
+Não criar novo candidate enquanto não houver mudança de source/runtime ou defeito comprovado que exija correção.
 
 ### Regra de avanço
 
-**Não iniciar Community, Empresas, Gastronomia ou Mobilidade antes desse gate de deployment.** Não alterar arquitetura para contornar a cota Vercel.
+**Não iniciar Community, Empresas, Gastronomia ou Mobilidade antes do gate visual/runtime/E2E da FASE 4.**
 
 ---
 
@@ -1177,7 +1183,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`f7fe20806ff3a1f53ba5c4a2d432635bbcdbbb9e`
+`bab5273b1c6b757cbd3d0b583416f6c441e533ef`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1209,6 +1215,8 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 - frontend territorial foi refinado no source: Home agora prioriza utilidade do morador, mapa, dados e bairros; cabeçalho e tabbar mobile ganharam navegação visual consistente; Mapa ganhou filtros e lista de locais mais claros; menu, loading global, 404, erro e Busca foram alinhados ao mesmo sistema visual; `/mapa` e `/classificados` agora possuem loading states próprios que preservam o layout da rota e reduced-motion; copy de roadmap/MVP foi removida das superfícies públicas e protegida por teste de contrato; nenhum schema/API/rollout mudou; quality run `34180676875` e bundle run `34180676868` = PASS.
 - refinamento visual desktop `a74679aa`: em 1360px+ a Home usa hero + mapa lado a lado mesmo com rail; rail contextual alinha à toolbar; busca/topbar ganharam hierarquia tipográfica melhor; bloco de dados públicos virou seção de alto contraste; rail da Home ganhou cartão territorial de destaque; mobile mantém a arquitetura existente; quality e bundle do commit = PASS.
 - hardening de interação `f7fe2080`: alvos de toque principais normalizados para ~44px+ no menu mobile, seletor territorial, links do rail, conta desktop e controles/lista do Mapa; quality + bundle = PASS.
+- densidade mobile `299ad9a1`: heroes internos, formulários e espaço seguro acima da bottom navigation foram refinados para telas pequenas sem alterar lógica/API;
+- fechamento de touch targets `bab5273b`: menu/fechar e rail de Classificados passaram a respeitar alvo ~44px; quality `34195671855` + bundle `34195671848` = PASS;
 - payload atual contém o `scripts/copy-maplibre-worker.mjs` e **0 arquivos .env**;
 - allowlist obsoleta `images.unsplash.com` foi removida;
 - `package.json` declara ESM explicitamente; os warnings `MODULE_TYPELESS_PACKAGE_JSON` foram eliminados sem alterar arquivos CommonJS, pois o repositório não possui `.js/.cjs`;
@@ -1298,30 +1306,36 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 - receipt consolidado de pré-deploy registrado em `docs/PREDEPLOY-RECEIPT-2026-09-07.md`; usar esse arquivo como checkpoint curto junto do `URGENTE.md` em novas conversas;
 
-### Deployment candidate 1 — 2026-09-08
+### Deployment candidate source-aligned — 2026-09-08
 
-- primeiro candidate pós-reset criado: `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
-- URL protegida: `https://teste-acheguese-gi4o7hjpa-jogo-brasils-projects.vercel.app`;
-- source usado no candidate: `e1c71391f8220354de582d9cbe4fe8fc1e4e7846`;
-- frontend técnico contido: `a74679aac8b2e6d52ad853044ef6e2e4ac873644`;
+- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+- URL protegida: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
+- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
 - deployment: **READY**;
-- build comprovou `public_env=PASS`, Supabase configurado, compile/TypeScript/static generation PASS;
-- `/api/health`: HTTP 200 com database/territory/classifieds = ok;
-- security headers do candidate: PASS;
-- runtime errors observados: **0**;
+- build provou `required=yes supabase=configured`;
+- Next.js 16.3.4: compile PASS;
+- TypeScript: PASS;
+- static generation: 12/12 PASS;
+- runtime errors: **0**;
+- Home real: `GET / 200`;
+- security advisors Supabase: **0 lints**;
+- rollout: Complexo + quatro bairros em `data_preparation`, sem ativação;
 - receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
+
+Previews anteriores `dpl_4j5FX...`, `dpl_6iMz...` e `dpl_G5CZ...` permanecem apenas como evidência histórica e **não** são o candidate canônico atual.
 
 ### Blocker de release atual
 
-- Deployment Protection/SSO intercepta as demais rotas do preview antes do app;
-- o shareable-link oficial exige cookie pós-redirect, mas os clientes automáticos disponíveis não preservam essa sessão;
-- portanto smoke completo e revisão visual 1440×900 / 390×844 **ainda não estão aprovados**;
-- não desativar proteção nem promover apenas para contornar a limitação da ferramenta;
-- a `main` avançou após o candidate até `f7fe2080...`: inclui fail-closed obrigatório de env pública em builds Vercel (`0a2848e2`) + hardening de alvos de toque do frontend; quality/bundle = PASS; candidate 1 não contém esses commits posteriores.
+- Deployment Protection/SSO exige sessão/cookie persistente para as rotas protegidas;
+- o fetch automatizado disponível consegue alcançar a Home em uma sessão, mas não preserva de modo estável a sessão para o smoke completo;
+- Chromium local não resolve DNS externo nesta execução;
+- portanto smoke completo e revisão visual 1440×900 / 390×844 continuam pendentes;
+- callback Auth exata do candidate e E2E Auth/Classificados continuam pendentes;
+- não desativar proteção nem promover apenas para contornar a limitação de inspeção.
 
 ### Próxima ação
 
-**Preservar candidate 1 → obter sessão SSO válida para inspeção protegida (ou inspeção manual do owner) → executar smoke/visual completo → configurar callback Auth exato → E2E Classificados/Auth → só então criar novo candidate se houver correção/HEAD adicional ou promover.**
+**Inspecionar o candidate `dpl_GC8UY...` com sessão Vercel autenticada persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

@@ -107,23 +107,30 @@ Preparação confirmada em 2026-09-07:
 
 ## Candidate atual
 
-O reset da cota ocorreu e o primeiro candidate foi criado:
+Candidate canônico source-aligned:
 
-- deployment: `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
-- URL: `https://teste-acheguese-gi4o7hjpa-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+- URL: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source usado: `e1c71391f8220354de582d9cbe4fe8fc1e4e7846`;
-- health: PASS;
-- runtime errors: 0;
-- receipt: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
+- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- quality: `34195671855` PASS;
+- source bundle: `34195671848` PASS;
+- build Vercel: `required=yes supabase=configured`;
+- compile/TypeScript/static generation: PASS;
+- runtime errors: **0**;
+- Home: `GET / 200`;
+- Supabase security advisors: 0 lints;
+- rollout territorial: `data_preparation`, sem ativação.
 
-O preview está protegido por Vercel Deployment Protection/SSO. A proteção intercepta o smoke/visual automático antes da aplicação; isso é o blocker atual de inspeção, não um erro do app.
+Os previews anteriores são históricos e não substituem esse candidate.
 
-A `main` já avançou para `f7fe2080...` após esse candidate, portanto ele não representa o HEAD final vivo. O HEAD posterior contém o guard Vercel de env pública e hardening de alvos de toque do frontend.
+A Deployment Protection/SSO permanece habilitada. Não desabilitar proteção apenas para permitir automação de smoke/visual.
 
 ## Próximo deployment
 
-Antes de criar qualquer candidato, executar em um checkout do HEAD pretendido:
+**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `bab5273b1c6b757cbd3d0b583416f6c441e533ef`.
+
+Criar outro somente quando houver mudança de source/runtime ou correção motivada por defeito comprovado. Nesse caso, antes de criar o candidato executar em um checkout do HEAD pretendido:
 
 ```bash
 npm run release:preflight

@@ -163,3 +163,23 @@ No checkpoint de frontend pós-candidate, os controles interativos principais fo
 - itens acionáveis da lista do Mapa.
 
 Isso complementa foco visível, `aria-pressed`, lista textual do mapa e reduced-motion já existentes.
+
+
+## Candidate visual source-aligned
+
+Checkpoint técnico: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`.
+
+Deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`.
+
+Provas já disponíveis:
+
+- quality + source bundle PASS no SHA exato;
+- Vercel READY;
+- configuração pública fail-closed PASS;
+- compile/TypeScript/static generation PASS;
+- Home chegou ao runtime com HTTP 200;
+- runtime errors = 0;
+- segurança Supabase = 0 lints;
+- rollout continua não público.
+
+A revisão pixel-level continua pendente porque o preview exige sessão SSO persistente e o Chromium local desta execução não possui DNS externo. Não inferir aprovação 1440×900 ou 390×844 apenas pelo source.

@@ -1,4 +1,4 @@
-# Deployment Receipt — FASE 4 candidate 1
+# Deployment Receipt — FASE 4 candidate source-aligned
 
 Data: 2026-09-08  
 Repositório: `washingtonmsdj/teste-acheguese`  
@@ -6,181 +6,173 @@ Projeto Vercel: `teste-acheguese`
 
 > A autoridade de sequência continua sendo `/URGENTE.md`.
 
-## 1. Candidate 1
+## 1. Candidate canônico atual
 
-Deployment:
-
-- id: `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
-- URL: `https://teste-acheguese-gi4o7hjpa-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+- URL protegida: `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/bundle usado: `e1c71391f8220354de582d9cbe4fe8fc1e4e7846`;
-- frontend técnico contido: `a74679aac8b2e6d52ad853044ef6e2e4ac873644`.
+- source/runtime: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- quality: `34195671855` PASS;
+- vercel-source-bundle: `34195671848` PASS.
 
-Esse foi o primeiro deployment criado após o reset da cota Hobby.
+Esse é o primeiro candidate que contém o frontend técnico atual após os refinamentos de densidade mobile e fechamento de touch targets.
 
-## 2. Configuração pública do candidate
+## 2. Provenance e configuração pública
 
-O payload canônico do transport branch foi usado e recebeu, **somente dentro da requisição de deployment**, um `.env.production` efêmero com:
+Antes do deployment foi confirmado:
+
+- `main = bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- `deploy/vercel-bundle/SOURCE_SHA = bab5273b1c6b757cbd3d0b583416f6c441e533ef`;
+- quality do SHA exato = PASS;
+- vercel-source-bundle do SHA exato = PASS;
+- bundle sem arquivos `.env` versionados;
+- Supabase security advisors = 0 lints;
+- rollout Complexo + quatro bairros = `data_preparation`;
+- `activated_at = null`.
+
+O payload do deployment recebeu um `.env.production` **efêmero e não versionado** somente com:
 
 - `NEXT_PUBLIC_SITE_URL`;
 - `NEXT_PUBLIC_SUPABASE_URL`;
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
-Nenhum secret/service-role foi usado ou gravado no Git.
+Nenhum secret/service-role foi usado.
 
-Build log comprovou:
+O prebuild comprovou:
 
 ```text
-[acheguese] public_env=PASS mode=production supabase=configured
+[acheguese] public_env=PASS mode=production required=yes supabase=configured
 ```
 
-O build também confirmou todas as rotas App Router esperadas e terminou com deployment READY.
+## 3. Build
 
-A Vercel emitiu warning recomendando o mecanismo nativo de env por ter detectado o arquivo efêmero. Isso não é erro de build. Para lançamento definitivo, preferir env vars do próprio projeto Vercel quando a integração/administração permitir.
+Provas do deployment:
 
-## 3. Provas executadas
-
-### Build
-
-- download: 120 deployment files;
-- install: PASS;
-- prebuild env: PASS;
+- 120 deployment files;
+- `npm ci`: PASS;
+- audit: 0 vulnerabilities;
+- prebuild env fail-closed: PASS;
 - Next compile: PASS;
 - TypeScript: PASS;
-- static generation: PASS;
-- deploy outputs: PASS;
+- static generation: 12/12 PASS;
+- outputs: PASS;
 - deployment: READY.
 
-Warning conhecido e não-blocker:
+Rotas principais presentes no build:
 
-- `unrs-resolver@1.12.2` postinstall não aprovado;
-- cadeia já classificada como dev-only;
-- não aprovar install script às cegas.
+- `/`;
+- `/api/health`;
+- `/api/map/viewport`;
+- `/mapa`;
+- `/classificados`;
+- `/buscar`;
+- `/entrar`;
+- `/auth/callback`;
+- `/auth/signout`;
+- `/favoritos`;
+- `/mensagens`;
+- `/menu`;
+- `/robots.txt`;
+- `/sitemap.xml`.
 
-### Health/runtime
+Warning não-blocker preservado:
 
-`GET /api/health` no candidate retornou HTTP 200:
+- `unrs-resolver@1.12.2` possui postinstall não aprovado;
+- não aprovar install script transitivo às cegas.
 
-- `status=ok`;
-- `database=ok`;
-- `territory=ok`;
-- `classifieds=ok`.
+## 4. Runtime
 
-Headers comprovados:
+- runtime errors observados: **0**;
+- Home chegou ao app: `GET / 200`, cache MISS;
+- HTML da sessão 200 contém o App Shell Território Vivo, marca pin+heart, sidebar agrupada, toolbar e bottom navigation.
 
-- CSP canônica;
-- HSTS `max-age=31536000`;
-- `X-Content-Type-Options: nosniff`;
-- `X-Frame-Options: DENY`;
-- `Referrer-Policy: strict-origin-when-cross-origin`;
-- `Permissions-Policy`;
-- sem `X-Powered-By`;
-- `X-Robots-Tag: noindex`.
+## 5. Dados e segurança
 
-Runtime observability do deployment:
+Revalidação na mesma rodada:
 
-- runtime errors: **0**;
-- invocação observada no app: `GET /api/health 200`.
+- 4 boundaries;
+- 20 public places verificados;
+- 14 Educação;
+- 6 Saúde/SUS;
+- Supabase security advisors: 0 lints;
+- Complexo + quatro bairros: `data_preparation`;
+- nenhuma ativação de rollout;
+- nenhuma mutation de schema/RLS/rollout.
 
-## 4. Smoke incompleto por Deployment Protection
+## 6. Gate ainda incompleto
 
-O preview está protegido por Vercel SSO/Deployment Protection.
+Deployment Protection/SSO continua ativo.
 
-As tentativas automatizadas de acessar:
+O cliente Vercel conseguiu uma sessão 200 da Home, mas as chamadas seguintes voltaram a ser interceptadas pelo SSO por não manterem de forma estável o cookie da sessão. O Chromium local disponível nesta execução não possui resolução DNS externa.
 
-- Home;
-- quatro bairros;
-- Mapa;
-- robots;
-- sitemap;
-- Map API;
-- Auth signout;
+Portanto ainda **não** marcar como PASS:
 
-foram interceptadas pela camada SSO **antes de chegar à aplicação**.
+- `territory-release-smoke` completo;
+- Home dos quatro `?bairro=`;
+- Mapa real/filtros/clustering/deep links em browser;
+- `robots.txt` e `sitemap.xml` no candidate;
+- revisão visual 1440×900;
+- revisão visual 390×844;
+- callback Auth exata do candidate;
+- Auth/Classificados E2E.
 
-O conector gerou shareable URL temporária oficial, porém o cliente de fetch disponível não preserva o cookie necessário após o redirect SSO. O ambiente Chromium local também não possui DNS externo.
+Isso não é evidência de falha do Achegue-se. É um gate não executado por limitação de sessão/ambiente.
 
-Portanto:
+## 7. Frontend contido
 
-- isso **não é falha do Achegue-se**;
-- não desativar proteção apenas para satisfazer a ferramenta;
-- não marcar o `territory-release-smoke` como PASS;
-- não marcar a revisão visual como PASS;
-- não promover o candidate às cegas.
-
-## 5. Frontend contido no candidate
-
-O candidate contém o checkpoint frontend `a74679aa`:
+O candidate contém:
 
 - App Shell Território Vivo;
-- sidebar + toolbar + rail contextual;
-- hero + mini-mapa lado a lado a partir de 1360px;
-- bloco de dados públicos em alto contraste;
-- Home orientada por território/utilidade;
-- Mapa refinado;
-- Classificados integrado ao shell;
-- mobile navigation derivada do registry;
-- módulos futuros permanecem ocultos.
+- sidebar agrupada por Território/Serviços;
+- topbar com contexto territorial e busca;
+- marca pin+heart;
+- rail contextual;
+- Home hero + mini-mapa em desktop útil;
+- seção de dados públicos em alto contraste;
+- Mapa com Educação/Saúde visualmente distintos;
+- Classificados como serviço local, não eixo do produto;
+- loadings específicos;
+- heroes internos/formulários mais compactos;
+- mobile com área segura acima da bottom navigation;
+- principais touch targets em aproximadamente 44px+;
+- reduced-motion/foco/acessibilidade preservados;
+- módulos futuros continuam ocultos por registry.
 
-Gate visual ainda obrigatório:
+## 8. Previews anteriores
 
-- desktop 1440×900;
-- mobile 390×844.
+Os previews abaixo são históricos e não são o candidate canônico atual:
 
-## 6. Main avançou após o candidate
+- `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
+- `dpl_6iMzFBhrfgs3jfBxJdnMY5wfC76y`;
+- `dpl_G5CZ14AZNcAygUjd8VJAhe8wicSv`.
 
-Após a criação do candidate, a `main` avançou para:
+Não usar esses artefatos para aprovar o frontend atual.
 
-`f7fe20806ff3a1f53ba5c4a2d432635bbcdbbb9e`
+## 9. Próxima ação
 
-Mudanças posteriores ao candidate:
-
-- `0a2848e2`: builds Vercel/release agora exigem configuração pública completa;
-- Vercel sem Supabase/Site URL falha fechado;
-- `f7fe2080`: alvos de toque principais do frontend normalizados para ~44px+;
-- quality PASS;
-- vercel-source-bundle PASS;
-- `SOURCE_SHA` sincronizado.
-
-O candidate 1 **não contém esse commit posterior**.
-
-Consequência:
-
-- candidate 1 é evidência válida de build/frontend/env/health;
-- ele não deve ser tratado como artefato final da `main`;
-- não criar candidate 2 enquanto o blocker de visual/smoke continuar sendo apenas acesso SSO da ferramenta;
-- quando houver caminho para executar o gate completo, usar o HEAD vivo alinhado ao `SOURCE_SHA`.
-
-## 7. Rollout
-
-Durante a criação do candidate:
-
-- Complexo + quatro bairros continuavam em `data_preparation`;
-- `activated_at = null`;
-- nenhum rollout foi publicado.
-
-## 8. Próxima ação
-
-1. preservar candidate 1 para inspeção manual/protegida;
-2. obter caminho autenticado que preserve sessão SSO para smoke/visual, ou executar inspeção manual pelo owner;
-3. rodar `territory-release-smoke` completo;
+1. preservar `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`;
+2. abrir o preview com sessão Vercel autenticada persistente;
+3. executar smoke completo;
 4. validar 1440×900 e 390×844;
-5. revisar runtime após as rotas reais serem exercitadas;
-6. configurar callback exato do candidate no Supabase Auth para E2E;
+5. revisar runtime após exercitar as rotas;
+6. adicionar somente `https://teste-acheguese-4kprvakec-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
-8. somente depois decidir sobre novo candidate/promote.
+8. corrigir somente blockers observados;
+9. fechar FASE 4 somente após todos os gates.
 
-## 9. STOP
+## 10. STOP
 
 Ainda não:
 
 - promover para produção;
-- lançar rollout;
+- alterar rollout para público;
 - iniciar Community;
 - iniciar Empresas/Gastronomia/Mobilidade;
-- mesclar Dependabot sem blocker;
-- desligar RLS/CSP/Deployment Protection por conveniência de teste.
+- relaxar RLS/CSP/Deployment Protection;
+- adicionar wildcard Vercel ao Auth;
+- criar novo candidate sem mudança de source/runtime ou blocker real;
+- inventar conteúdo para preencher estados vazios.
