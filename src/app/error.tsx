@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { Brand } from '@/shared/ui/brand';
 
 export default function ErrorPage({
   error,
@@ -16,15 +17,27 @@ export default function ErrorPage({
 
   return (
     <main className="statePage">
-      <div>
-        <p className="eyebrow">Algo saiu do caminho</p>
-        <h1>Não foi possível carregar esta página.</h1>
-        <p>Tente novamente. Se o problema continuar, o erro poderá ser rastreado pela observabilidade.</p>
+      <div className="stateCard">
+        <Brand />
+        <div className="stateCopy">
+          <p className="eyebrow">Não carregou como esperado</p>
+          <h1>Tivemos um problema para abrir esta página.</h1>
+          <p>
+            Tente novamente. Se continuar acontecendo, volte
+            ao território e acesse outra área do Achegue-se.
+          </p>
+        </div>
         <div className="stateActions">
-          <button className="primaryButton" type="button" onClick={reset}>
+          <button
+            className="primaryButton"
+            type="button"
+            onClick={reset}
+          >
             Tentar novamente
           </button>
-          <Link className="ghostButton linkButton" href="/">Ir para a Home</Link>
+          <Link className="ghostButton linkButton" href="/">
+            Voltar ao território
+          </Link>
         </div>
       </div>
     </main>
