@@ -7,6 +7,8 @@ const publicSurfacePaths = [
   '../src/app/error.tsx',
   '../src/app/not-found.tsx',
   '../src/app/menu/page.tsx',
+  '../src/app/buscar/page.tsx',
+  '../src/app/classificados/page.tsx',
 ];
 
 const forbiddenPhrases = [
@@ -16,6 +18,9 @@ const forbiddenPhrases = [
   'zero conteúdo social fictício',
   'a utilidade começa antes do feed',
   'erro poderá ser rastreado pela observabilidade',
+  'o mvp começa',
+  'categorias futuras',
+  'sem fingir localização automática',
 ];
 
 test('superfícies principais não expõem linguagem interna de implementação', () => {

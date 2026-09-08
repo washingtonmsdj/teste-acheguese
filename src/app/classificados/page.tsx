@@ -218,7 +218,7 @@ export default async function ClassifiedsPage({
 
       <section className="classifiedTrust">
         <div className="container trustGrid">
-          <div><span>✓</span><strong>Território claro</strong><small>O MVP começa por Salvador, sem fingir localização automática.</small></div>
+          <div><span>✓</span><strong>Território claro</strong><small>Os anúncios exibem a área informada sem presumir sua localização.</small></div>
           <div><span>✓</span><strong>Privacidade</strong><small>Endereço exato não é público por padrão.</small></div>
           <div><span>✓</span><strong>Moderação</strong><small>Só anúncios aprovados aparecem na área pública.</small></div>
         </div>

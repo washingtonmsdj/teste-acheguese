@@ -4,9 +4,9 @@ import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
 import { SiteHeader } from '@/shared/layout/site-header';
 
 export const metadata: Metadata = {
-  title: 'Busca territorial',
+  title: 'Buscar no Achegue-se',
   description:
-    'A busca geral do Achegue-se será habilitada por etapas, sem exibir categorias ou serviços ainda não lançados.',
+    'Encontre informações do território pelo mapa ou pesquise anúncios em Classificados.',
   robots: {
     index: false,
     follow: true,
@@ -19,20 +19,19 @@ export default function SearchPage() {
       <SiteHeader />
       <section className="internalHero">
         <div className="container narrow">
-          <p className="eyebrow">Busca territorial</p>
-          <h1>A busca geral entra quando houver dados reais para responder.</h1>
+          <p className="eyebrow">Buscar no Achegue-se</p>
+          <h1>Encontre o que já está disponível perto de você.</h1>
           <p>
-            Por enquanto, use o mapa para consultar o
-            território verificado ou a busca própria de
-            Classificados. O Achegue-se não mostra categorias
-            futuras como se já estivessem disponíveis.
+            Para escolas, unidades SUS e bairros, use o mapa
+            territorial. Para produtos e anúncios, pesquise
+            diretamente em Classificados.
           </p>
           <div className="stateActions">
             <Link
               className="primaryButton linkButton"
               href="/mapa"
             >
-              Explorar mapa
+              Buscar no mapa
             </Link>
             <Link
               className="ghostButton linkButton"
