@@ -155,10 +155,10 @@ Correções após essa revisão devem ser baseadas em defeitos observados no dep
 
 No checkpoint de frontend pós-candidate, os controles interativos principais foram normalizados para alvo mínimo de aproximadamente 44 px:
 
-- botão de menu mobile;
+- botão de menu mobile e fechar do menu;
 - conta na toolbar desktop;
 - seletor de território/bairro;
-- links do rail contextual;
+- links do rail contextual, inclusive Classificados;
 - voltar do Mapa;
 - itens acionáveis da lista do Mapa.
 
