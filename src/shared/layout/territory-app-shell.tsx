@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { Brand } from '@/shared/ui/brand';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
@@ -58,7 +59,9 @@ export function TerritoryAppShell({
         >
           <span>Território atual</span>
           <strong>{territoryName}</strong>
-          <small>Salvador · BA</small>
+          <small>
+            {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
+          </small>
         </Link>
 
         <nav

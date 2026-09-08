@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
@@ -17,7 +18,7 @@ export default function SearchPage() {
   return (
     <TerritoryAppShell
       activeId="territory"
-      territoryName="Complexo do Nordeste de Amaralina"
+      territoryName={territoryReleaseScope.group.name}
     >
       <main className="searchHub">
         <section className="searchHero">
@@ -46,9 +47,11 @@ export default function SearchPage() {
               <span>
                 <small>Território atual</small>
                 <strong>
-                  Complexo do Nordeste de Amaralina
+                  {territoryReleaseScope.group.name}
                 </strong>
-                <em>Salvador · BA</em>
+                <em>
+                  {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
+                </em>
               </span>
               <b aria-hidden="true">→</b>
             </Link>

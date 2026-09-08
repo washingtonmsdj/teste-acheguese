@@ -122,7 +122,7 @@ export default function MenuPage() {
         <div className="menuIntro">
           <div className="menuContextPill">
             <span aria-hidden="true" />
-            Complexo do Nordeste de Amaralina
+            {territoryReleaseScope.group.name}
           </div>
           <p className="eyebrow">Navegação</p>
           <h1>Onde você quer chegar?</h1>

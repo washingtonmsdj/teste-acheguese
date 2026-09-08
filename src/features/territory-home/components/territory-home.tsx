@@ -230,7 +230,9 @@ export function TerritoryHome({
           <div className={styles.heroCopy}>
             <div className={styles.contextLine}>
               <span className={styles.liveDot} aria-hidden="true" />
-              <strong>Salvador · BA</strong>
+              <strong>
+                {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
+              </strong>
               <span>Complexo do Nordeste de Amaralina</span>
             </div>
 
@@ -562,9 +564,11 @@ export function TerritoryHomeUnavailable() {
                   className={styles.liveDot}
                   aria-hidden="true"
                 />
-                <strong>Salvador · BA</strong>
+                <strong>
+                  {territoryReleaseScope.city.name} · {territoryReleaseScope.city.stateCode}
+                </strong>
                 <span>
-                  Complexo do Nordeste de Amaralina
+                  {territoryReleaseScope.group.name}
                 </span>
               </div>
               <p className="eyebrow">Território Vivo</p>
