@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { ClassifiedCategoryIcon } from '@/modules/classifieds/components/category-icon';
+import styles from '@/modules/classifieds/components/category-nav.module.css';
 import {
   classifiedCategories,
   type ClassifiedCategoryId,
@@ -29,7 +31,9 @@ export function ClassifiedCategoryNav({
             key={category.id}
             aria-current={active ? 'page' : undefined}
           >
-            <span aria-hidden="true">{category.icon}</span>
+            <span className={styles.icon} aria-hidden="true">
+              <ClassifiedCategoryIcon category={category.id} />
+            </span>
             <strong>{category.label}</strong>
           </Link>
         );
