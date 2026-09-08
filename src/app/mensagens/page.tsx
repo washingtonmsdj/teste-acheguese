@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
@@ -60,7 +61,7 @@ export default async function MessagesPage() {
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={<AccountContextRail active="messages" />}
     >
       <main>
