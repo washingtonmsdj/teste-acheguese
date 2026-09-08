@@ -90,25 +90,26 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
-- URL: `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
+- URL: `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`;
-- quality: `34249484987` PASS;
-- source bundle: `34249484891` PASS;
+- source/runtime: `af74240985c43cabd0588328ae51d19d5c921ec5`;
+- quality: `34265916188` PASS;
+- source bundle: `34265916232` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home: HTTP 200;
-- release geography centralizada em `territoryReleaseScope`;
-- copy MVP sem roadmap/configuração interna nas superfícies corrigidas;
-- fallback de mídia e CSS global consolidados;
+- Classificados: HTTP 200, cache MISS;
+- categorias usam SVGs na camada de UI, descrições e layout mobile otimizado;
+- estado vazio preserva query/categoria;
+- `AccountSurfaceLoading` é a autoridade única de loading pessoal;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.
+
 ## Próximo deployment
 
-**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`.
+**Não criar novo candidate por padrão.** O deployment atual já representa o HEAD técnico `af74240985c43cabd0588328ae51d19d5c921ec5`.
 
 Criar outro somente quando houver mudança de source/runtime ou correção motivada por defeito comprovado. Nesse caso, antes de criar o candidato executar em um checkout do HEAD pretendido:
 

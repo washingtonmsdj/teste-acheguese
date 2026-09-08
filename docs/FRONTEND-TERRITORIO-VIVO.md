@@ -167,23 +167,21 @@ Isso complementa foco visível, `aria-pressed`, lista textual do mapa e reduced-
 
 ## Candidate visual source-aligned
 
-Checkpoint técnico: `bab5273b1c6b757cbd3d0b583416f6c441e533ef`.
+Checkpoint técnico: `af74240985c43cabd0588328ae51d19d5c921ec5`.
 
-Deployment: `dpl_GC8UYAX1Rx8ZjiffMkby4TCwofWq`.
+Deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`.
 
-Provas já disponíveis:
+Provas disponíveis:
 
-- quality + source bundle PASS no SHA exato;
+- quality `34265916188` + bundle `34265916232` PASS;
 - Vercel READY;
-- configuração pública fail-closed PASS;
+- `required=yes supabase=configured`;
 - compile/TypeScript/static generation PASS;
-- Home chegou ao runtime com HTTP 200;
+- `/classificados` = HTTP 200, cache MISS;
 - runtime errors = 0;
-- segurança Supabase = 0 lints;
-- rollout continua não público.
+- Deployment Protection/SSO continua ativa.
 
-A revisão pixel-level continua pendente porque o preview exige sessão SSO persistente e o Chromium local desta execução não possui DNS externo. Não inferir aprovação 1440×900 ou 390×844 apenas pelo source.
-
+A revisão pixel-level 1440×900 / 390×844 continua pendente por exigir sessão SSO persistente.
 
 ## Busca e Menu
 
@@ -454,3 +452,17 @@ Fechamento desta rodada:
 - Vercel READY, public env fail-closed PASS, Home HTTP 200, runtime errors = 0.
 
 Previews anteriores são históricos. A aprovação 1440×900 / 390×844 continua pendente por Deployment Protection/SSO.
+
+
+## Categorias e estado vazio de Classificados
+
+Checkpoint técnico: `af74240985c43cabd0588328ae51d19d5c921ec5`.
+
+- ícones de categoria são SVGs da camada de UI; o domínio permanece sem apresentação;
+- cards explicam cada categoria com uma descrição curta;
+- mobile ≤520 px usa uma coluna para preservar leitura e alvos de toque;
+- estado vazio combina busca e categoria quando ambos existem;
+- limpar/ampliar filtros substitui qualquer incentivo a inventar conteúdo;
+- `AccountSurfaceLoading` permanece a autoridade única dos loadings pessoais.
+
+Candidate visual: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`.

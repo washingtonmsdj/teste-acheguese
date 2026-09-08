@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`
+> **HEAD técnico de referência:** `af74240985c43cabd0588328ae51d19d5c921ec5`
 
 ---
 
@@ -1366,34 +1366,38 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 - receipt consolidado de pré-deploy registrado em `docs/PREDEPLOY-RECEIPT-2026-09-07.md`; usar esse arquivo como checkpoint curto junto do `URGENTE.md` em novas conversas;
 
+- Classificados recebeu categorias visuais desacopladas do domínio (`8abceff4`), descrições (`de1ed303`), tipografia isolada (`777f2047`) e composição mobile otimizada (`0ebe5595`);
+- estado vazio preserva query + categoria e orienta ampliar/limpar filtros sem inventar conteúdo (`a1f9cc2a` + `ccc9dcbf`);
+- `AccountSurfaceLoading` permanece a única autoridade de loading da área pessoal; a duplicação acidental `AccountAreaLoading` foi removida em `ad392860` + `af742409`;
 ### Deployment candidate source-aligned — 2026-09-08
 
-- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
-- URL protegida: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
-- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
+- deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
+- URL protegida: `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app`;
+- source/runtime: `af74240985c43cabd0588328ae51d19d5c921ec5`;
 - deployment: **READY**;
 - build provou `required=yes supabase=configured`;
 - Next.js 16.3.4: compile PASS;
 - TypeScript: PASS;
 - static generation: 12/12 PASS;
-- quality `34217026909` + bundle `34217026860` = PASS;
+- quality `34265916188` + bundle `34265916232` = PASS;
 - runtime errors observados: **0**;
-- Home chegou ao aplicativo com HTTP 200 em uma sessão autenticada do preview;
-- authority territorial compartilhada + fallback user-facing estão incluídos;
-- smoke reforçado exige os dados oficiais do Complexo e rejeita fallback.
+- `/classificados` chegou ao aplicativo com HTTP 200 e cache MISS;
+- HTML do runtime contém App Shell Território Vivo, contexto Salvador, navegação ativa de Classificados e loading específico da rota;
+- categorias atuais usam SVGs na UI, descrições e composição mobile sem contaminar o domínio;
+- área pessoal mantém `AccountSurfaceLoading` como autoridade única.
 
-Previews anteriores permanecem somente como evidência histórica.
+Previews anteriores permanecem somente como evidência histórica e **não** aprovam o frontend atual.
 
 ### Blocker de release atual
 
-- Deployment Protection/SSO exige sessão/cookie persistente para smoke/visual completo;
+- Deployment Protection/SSO ainda exige sessão/cookie persistente para o smoke completo e inspeção sequencial das demais rotas;
 - revisão visual 1440×900 / 390×844 continua pendente;
 - callback Auth exata do candidate e E2E Auth/Classificados continuam pendentes;
 - não desativar proteção, RLS ou CSP para contornar a limitação de inspeção.
 
 ### Próxima ação
 
-**Inspecionar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5` com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` → abrir com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

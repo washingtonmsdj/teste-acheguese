@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
-- URL protegida: `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
+- URL protegida: `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`;
-- quality: `34249484987` PASS;
+- source/runtime: `af74240985c43cabd0588328ae51d19d5c921ec5`;
+- quality: `34265916188` PASS;
 - vercel-source-bundle: `34227085713` PASS.
 
 ## 2. Provenance e configuração pública
@@ -53,20 +53,21 @@ O prebuild comprovou:
 ## 4. Runtime
 
 - runtime errors observados: **0**;
-- Home chegou ao app com HTTP 200;
+- Classificados chegou ao app com HTTP 200;
 - resposta contém App Shell Território Vivo, sidebar/toolbar/rail e bottom navigation;
 - Mapa/Classificados/Auth continuam sujeitos à Deployment Protection/SSO quando o cliente não preserva a sessão.
 ## 5. Frontend contido
 
-Checkpoint técnico: `db5785d27b1f9b08d04ea0efd71b793c7e8bf2d9`.
+Checkpoint técnico: `af74240985c43cabd0588328ae51d19d5c921ec5`.
 
-- Home product-first e Map Core preservados;
-- release geography centralizada em `territoryReleaseScope`, inclusive nome curto do grupo, contagem de bairros e fallback de cidade;
-- Busca deixou de prometer função futura; Novo anúncio deixou de expor linguagem de ambiente/configuração;
-- contrato de copy cobre o fallback autenticado corrigido;
-- detalhe de Classificados usa fallback SVG para mídia temporariamente indisponível;
-- CSS global removeu duplicação real de `stateCard`/`mediaPlaceholder` sem alterar o render final;
-- nenhuma feature `future` foi ativada.
+- Território Vivo/App Shell preservados;
+- Classificados usa ícones SVG na camada de UI, sem apresentação no domínio;
+- categorias mostram descrições e usam composição mobile em lista de uma coluna;
+- estado vazio preserva query + categoria e oferece limpar/ampliar filtros;
+- `AccountSurfaceLoading` permanece a única autoridade de loading contextual;
+- duplicação `AccountAreaLoading` removida antes do candidate;
+- nenhuma feature `future`, schema, RLS ou rollout foi alterado.
+
 ## 6. Gate ainda incompleto
 
 Deployment Protection/SSO continua ativo. Ainda **não** marcar como PASS:
@@ -83,12 +84,12 @@ Isso não é evidência de falha do Achegue-se. É um gate ainda não executado 
 
 ## 7. Próxima ação
 
-1. preservar `dpl_BrgvXHyXqLJpQkigV1y8j98LBVCU`;
+1. preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
 2. abrir o preview com sessão Vercel autenticada persistente;
 3. executar smoke completo;
 4. validar 1440×900 e 390×844;
 5. revisar runtime após exercitar as rotas;
-6. adicionar somente `https://teste-acheguese-hauxzft9x-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
+6. adicionar somente `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app/auth/callback` na allow-list Auth;
 7. executar Auth/Classificados E2E;
 8. corrigir somente blockers observados;
 9. fechar FASE 4 somente após todos os gates.
