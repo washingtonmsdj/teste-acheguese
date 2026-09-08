@@ -51,3 +51,24 @@ test('breakpoint Auth legado de 720px permanece removido', () => {
     'Auth novo usa seu breakpoint canônico de 760px',
   );
 });
+
+
+test('áreas pessoais possuem loading contextual', () => {
+  const loadingFiles = [
+    '../src/app/favoritos/loading.tsx',
+    '../src/app/mensagens/loading.tsx',
+    '../src/app/mensagens/[id]/loading.tsx',
+    '../src/app/classificados/meus/loading.tsx',
+    '../src/app/classificados/novo/loading.tsx',
+    '../src/app/classificados/[id]/editar/loading.tsx',
+  ];
+
+  for (const relativePath of loadingFiles) {
+    const source = read(relativePath);
+    assert.match(
+      source,
+      /AccountSurfaceLoading/,
+      relativePath + ' precisa usar AccountSurfaceLoading',
+    );
+  }
+});
