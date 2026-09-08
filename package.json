@@ -15,7 +15,7 @@
     "test": "node --test",
     "predev": "node ./scripts/validate-public-env.mjs development --require-public-config && node ./scripts/copy-maplibre-worker.mjs",
     "prebuild": "node ./scripts/validate-public-env.mjs production && node ./scripts/copy-maplibre-worker.mjs",
-    "env:check": "node ./scripts/validate-public-env.mjs development",
+    "env:check": "node ./scripts/validate-public-env.mjs development --require-public-config",
     "security:scan": "node ./scripts/ci/scan-repository-secrets.mjs",
     "release:preflight": "node ./scripts/release-preflight.mjs"
   },

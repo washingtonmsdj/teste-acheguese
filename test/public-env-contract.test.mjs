@@ -110,3 +110,18 @@ test('dev exige configuração pública antes de iniciar o Next', () => {
     /validate-public-env\.mjs development --require-public-config/,
   );
 });
+
+
+test('env:check usa o mesmo contrato fail-closed do dev', () => {
+  const packageJson = JSON.parse(
+    readFileSync(
+      new URL('../package.json', import.meta.url),
+      'utf8',
+    ),
+  );
+
+  assert.match(
+    packageJson.scripts['env:check'],
+    /development --require-public-config/,
+  );
+});
