@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
+import { AccountContextRail } from '@/shared/layout/account-context-rail';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,6 +55,7 @@ export default async function MessagesPage() {
     <TerritoryAppShell
       activeId="classifieds"
       territoryName="Salvador"
+      contextRail={<AccountContextRail active="messages" />}
     >
       <main>
 
