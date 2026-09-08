@@ -289,6 +289,7 @@ export default async function ClassifiedsPage({
           ) : (
             <ClassifiedsEmptyState
               query={query}
+              categoryLabel={category?.label}
               hasFilters={hasFilters}
             />
           )}
