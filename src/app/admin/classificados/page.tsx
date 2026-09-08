@@ -9,7 +9,7 @@ import {
 import { hasClassifiedAdminRole } from '@/lib/auth/roles';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,8 +90,11 @@ export default async function ClassifiedAdminPage({
   const reports = (reportsResult.data ?? []) as unknown as ReportRow[];
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="adminHero">
         <div className="container">
@@ -255,6 +258,7 @@ export default async function ClassifiedAdminPage({
           )}
         </div>
       </section>
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
