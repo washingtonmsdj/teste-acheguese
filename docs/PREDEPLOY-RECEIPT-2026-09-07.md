@@ -17,10 +17,10 @@ Branch canônica: `main`
 
 Checkpoint vivo usado para este receipt:
 
-- source/frontend checkpoint: `398e39e76203614cb59703ac39a1ad0013a54af1`;
-- quality run: `34180212208` — **PASS**;
-- vercel-source-bundle run: `34180212249` — **PASS**;
-- `deploy/vercel-bundle/SOURCE_SHA`: `398e39e76203614cb59703ac39a1ad0013a54af1` — **MATCH**;
+- source/frontend checkpoint: `f3a228b2fb6c13602fa37b10bc92a9732621b93a`;
+- quality run: `34180676875` — **PASS**;
+- vercel-source-bundle run: `34180676868` — **PASS**;
+- `deploy/vercel-bundle/SOURCE_SHA`: `f3a228b2fb6c13602fa37b10bc92a9732621b93a` — **MATCH**;
 - deploy transport: `SOURCE_SHA == main HEAD` no momento da prova.
 
 Quality inclui:
@@ -136,7 +136,8 @@ Baseline canônico preservado:
 - até 10 categorias;
 - Home Cache 60s;
 - frontend territorial refinado: Home orientada a utilidade, navegação por bairro, atalhos para Educação/Saúde/Mapa, header/tabbar consistentes e painel do Mapa mais legível;
-- menu, loading, 404, erro e Busca alinhados ao mesmo sistema visual; copy pública sem linguagem de roadmap/MVP, protegida por teste de contrato;
+- menu, loading global, 404, erro e Busca alinhados ao mesmo sistema visual; copy pública sem linguagem de roadmap/MVP, protegida por teste de contrato;
+- `/mapa` e `/classificados` com loading states próprios e responsivos, reduzindo layout mismatch durante navegação;
 - rollout/SEO fail-closed;
 - Home/Mapa noindex enquanto rollout não for público.
 

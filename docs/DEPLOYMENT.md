@@ -31,14 +31,15 @@ As rotas públicas desse deployment antigo respondem, mas ele ainda não recebeu
 
 O último HEAD técnico validado antes desta atualização documental é:
 
-`398e39e76203614cb59703ac39a1ad0013a54af1`
+`f3a228b2fb6c13602fa37b10bc92a9732621b93a`
 
 Para esse HEAD:
 
-- frontend/source checkpoint: `398e39e76203614cb59703ac39a1ad0013a54af1`;
-- quality: **PASS** — run `34180212208`;
-- bundle de transporte: **PASS** — run `34180212249`;
+- frontend/source checkpoint: `f3a228b2fb6c13602fa37b10bc92a9732621b93a`;
+- quality: **PASS** — run `34180676875`;
+- bundle de transporte: **PASS** — run `34180676868`;
 - Home, cabeçalho, navegação mobile, Mapa, menu e estados resilientes refinados sem mudança de schema/API/rollout;
+- `/mapa` e `/classificados` possuem loading states específicos, responsivos e compatíveis com reduced-motion;
 - copy pública protegida por contrato contra linguagem de implementação/roadmap;
 - Supabase security advisors: **0 lints**;
 - migration history Supabase/Git alinhado até `20260907130331_classified_favorites_publication_guard_v1`;
