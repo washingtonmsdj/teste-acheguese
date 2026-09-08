@@ -10,8 +10,7 @@ import { TerritoryMapExplorer } from '@/integrations/map/territory-map-explorer'
 import { SupabaseMapDataRepository } from '@/lib/supabase/map-data-repository';
 import { createSupabasePublicServerClient } from '@/lib/supabase/public-server';
 import { getSiteUrl } from '@/lib/site-url';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import styles from './mapa.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -59,17 +58,21 @@ function MapUnavailable({
   message: string;
 }) {
   return (
-    <main>
-      <SiteHeader />
-      <section className={styles.unavailable}>
+    <TerritoryAppShell
+      activeId="map"
+      territoryName="Complexo do Nordeste de Amaralina"
+      immersive
+    >
+      <main>
+        <section className={styles.unavailable}>
         <div className="container">
           <p className="eyebrow">Mapa territorial</p>
           <h1>Mapa temporariamente indisponível</h1>
           <p>{message}</p>
         </div>
-      </section>
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }
 
@@ -128,14 +131,18 @@ export default async function MapaPage({
   }
 
   return (
-    <main className={styles.page}>
-      <SiteHeader />
-      <TerritoryMapExplorer
-        initialData={initialData}
-        initialZoom={initialState.zoom}
-        initialCategories={initialState.categories}
-      />
-      <MobileTabbar />
-    </main>
+    <TerritoryAppShell
+      activeId="map"
+      territoryName="Complexo do Nordeste de Amaralina"
+      immersive
+    >
+      <main className={styles.page}>
+        <TerritoryMapExplorer
+          initialData={initialData}
+          initialZoom={initialState.zoom}
+          initialCategories={initialState.categories}
+        />
+      </main>
+    </TerritoryAppShell>
   );
 }

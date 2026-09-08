@@ -1,16 +1,19 @@
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import styles from './mapa.module.css';
 
 export default function MapLoading() {
   return (
-    <main
-      className={styles.page}
-      aria-busy="true"
-      aria-label="Carregando o mapa do território"
+    <TerritoryAppShell
+      activeId="map"
+      territoryName="Complexo do Nordeste de Amaralina"
+      immersive
     >
-      <SiteHeader />
-      <section className={`${styles.shell} ${styles.loadingShell}`}>
+      <main
+        className={styles.page}
+        aria-busy="true"
+        aria-label="Carregando o mapa do território"
+      >
+        <section className={`${styles.shell} ${styles.loadingShell}`}>
         <aside className={styles.controlsPane} aria-hidden="true">
           <div className={styles.loadingBack} />
           <div className={styles.loadingControlCopy}>
@@ -47,8 +50,8 @@ export default function MapLoading() {
             ))}
           </div>
         </aside>
-      </section>
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }

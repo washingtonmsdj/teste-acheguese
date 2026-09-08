@@ -6,8 +6,7 @@ import type {
   TerritoryHomeMetric,
 } from '@/features/territory-home/types';
 import { TerritoryMiniMap } from '@/integrations/map';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
-import { SiteHeader } from '@/shared/layout/site-header';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import { Brand } from '@/shared/ui/brand';
 import styles from './territory-home.module.css';
 
@@ -118,6 +117,81 @@ function ScopeSelector({
   );
 }
 
+function TerritoryContextRail({
+  data,
+  selectedMapHref,
+  educationMapHref,
+  healthMapHref,
+}: {
+  data: TerritoryHomeData;
+  selectedMapHref: string;
+  educationMapHref: string;
+  healthMapHref: string;
+}) {
+  return (
+    <div className={styles.contextRailStack}>
+      <section className={styles.contextRailCard}>
+        <span className={styles.contextRailEyebrow}>Neste território</span>
+        <h2>{data.scope.name}</h2>
+        <p>
+          Informação pública organizada para o recorte que
+          você está vendo agora.
+        </p>
+        <dl className={styles.contextRailMetrics}>
+          <div>
+            <dt>População</dt>
+            <dd>{formatMetric(data.scope.population)}</dd>
+          </div>
+          <div>
+            <dt>Locais públicos</dt>
+            <dd>{data.scope.publicPlaceCount}</dd>
+          </div>
+          <div>
+            <dt>Educação</dt>
+            <dd>{data.scope.educationCount}</dd>
+          </div>
+          <div>
+            <dt>Saúde SUS</dt>
+            <dd>{data.scope.healthCount}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className={styles.contextRailCard}>
+        <span className={styles.contextRailEyebrow}>Explorar agora</span>
+        <nav className={styles.contextRailLinks} aria-label="Atalhos do território">
+          <Link href={selectedMapHref}>
+            <span>Mapa completo</span>
+            <b aria-hidden="true">↗</b>
+          </Link>
+          <Link href={educationMapHref}>
+            <span>Educação no mapa</span>
+            <b aria-hidden="true">↗</b>
+          </Link>
+          <Link href={healthMapHref}>
+            <span>Saúde SUS no mapa</span>
+            <b aria-hidden="true">↗</b>
+          </Link>
+        </nav>
+      </section>
+
+      <section className={styles.contextRailCard}>
+        <span className={styles.contextRailEyebrow}>Base pública</span>
+        <strong className={styles.contextRailStatus}>
+          {rolloutLabel(data.scope.rolloutStage)}
+        </strong>
+        <p>
+          {data.sources.length} fonte{data.sources.length === 1 ? '' : 's'} com
+          origem registrada sustentam esta visão.
+        </p>
+        <a className={styles.contextRailSourceLink} href="#fontes">
+          Conferir fontes ↓
+        </a>
+      </section>
+    </div>
+  );
+}
+
 export function TerritoryHome({
   data,
 }: {
@@ -130,11 +204,27 @@ export function TerritoryHome({
   const educationMapHref = mapHref(data, ['education']);
   const healthMapHref = mapHref(data, ['health']);
 
-  return (
-    <main className={styles.page}>
-      <SiteHeader />
+  const territoryHref =
+    data.scope.kind === 'territory'
+      ? `/?bairro=${data.scope.slug}`
+      : '/';
 
-      <section className={styles.hero}>
+  return (
+    <TerritoryAppShell
+      activeId="territory"
+      territoryName={data.scope.name}
+      territoryHref={territoryHref}
+      contextRail={
+        <TerritoryContextRail
+          data={data}
+          selectedMapHref={selectedMapHref}
+          educationMapHref={educationMapHref}
+          healthMapHref={healthMapHref}
+        />
+      }
+    >
+      <main className={styles.page}>
+        <section className={styles.hero}>
         <div className={`container ${styles.heroGrid}`}>
           <div className={styles.heroCopy}>
             <div className={styles.contextLine}>
@@ -406,7 +496,7 @@ export function TerritoryHome({
         </Link>
       </section>
 
-      <section className={styles.sourcesSection}>
+      <section className={styles.sourcesSection} id="fontes">
         <div className="container">
           <div className={styles.sourcesHeader}>
             <div>
@@ -457,16 +547,19 @@ export function TerritoryHome({
         </div>
       </footer>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
 
 export function TerritoryHomeUnavailable() {
   return (
-    <main className={styles.page}>
-      <SiteHeader />
-      <section className={styles.unavailable}>
+    <TerritoryAppShell
+      activeId="territory"
+      territoryName="Complexo do Nordeste de Amaralina"
+    >
+      <main className={styles.page}>
+        <section className={styles.unavailable}>
         <div className="container">
           <p className="eyebrow">Território</p>
           <h1>Não foi possível carregar os dados públicos desta área agora.</h1>
@@ -483,8 +576,8 @@ export function TerritoryHomeUnavailable() {
             </Link>
           </div>
         </div>
-      </section>
-      <MobileTabbar />
-    </main>
+        </section>
+      </main>
+    </TerritoryAppShell>
   );
 }
