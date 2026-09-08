@@ -1,21 +1,49 @@
 import Link from 'next/link';
+import {
+  activeTerritoryNavigationBySection,
+  type TerritoryNavigationItem,
+} from '@/shared/navigation/territory-navigation';
 import { Brand } from '@/shared/ui/brand';
 
-const territoryLinks = [
-  ['Território', '/', 'Visão geral da área'],
-  ['Mapa', '/mapa', 'Bairros, educação e saúde'],
-  ['Dados públicos', '/#dados', 'População e serviços'],
-  ['Bairros', '/#bairros', 'Explore cada bairro'],
-] as const;
+type MenuLink = Pick<
+  TerritoryNavigationItem,
+  'id' | 'label' | 'href' | 'description'
+>;
 
-const serviceLinks = [
-  ['Classificados', '/classificados', 'Comprar e vender'],
-] as const;
+const territoryExtras: readonly MenuLink[] = [
+  {
+    id: 'territory-data' as TerritoryNavigationItem['id'],
+    label: 'Dados públicos',
+    href: '/#dados',
+    description: 'População e serviços',
+  },
+  {
+    id: 'territory-neighborhoods' as TerritoryNavigationItem['id'],
+    label: 'Bairros',
+    href: '/#bairros',
+    description: 'Explore cada bairro',
+  },
+];
 
 const accountLinks = [
-  ['Mensagens', '/mensagens', 'Suas conversas'],
-  ['Favoritos', '/favoritos', 'Itens que você salvou'],
-  ['Entrar', '/entrar', 'Acessar sua conta'],
+  {
+    id: 'messages',
+    label: 'Mensagens',
+    href: '/mensagens',
+    description: 'Suas conversas',
+  },
+  {
+    id: 'favorites',
+    label: 'Favoritos',
+    href: '/favoritos',
+    description: 'Itens que você salvou',
+  },
+  {
+    id: 'signin',
+    label: 'Entrar',
+    href: '/entrar',
+    description: 'Acessar sua conta',
+  },
 ] as const;
 
 function MenuGroup({
@@ -23,17 +51,24 @@ function MenuGroup({
   links,
 }: {
   title: string;
-  links: readonly (readonly [string, string, string])[];
+  links: readonly {
+    id: string;
+    label: string;
+    href: string;
+    description: string;
+  }[];
 }) {
+  if (!links.length) return null;
+
   return (
     <section className="menuSection">
       <h2>{title}</h2>
       <nav aria-label={title}>
-        {links.map(([label, href, description]) => (
-          <Link href={href} key={href}>
+        {links.map((item) => (
+          <Link href={item.href} key={item.id}>
             <span>
-              <strong>{label}</strong>
-              <small>{description}</small>
+              <strong>{item.label}</strong>
+              <small>{item.description}</small>
             </span>
             <b aria-hidden="true">→</b>
           </Link>
@@ -44,6 +79,15 @@ function MenuGroup({
 }
 
 export default function MenuPage() {
+  const territoryLinks = [
+    ...activeTerritoryNavigationBySection('territory'),
+    ...territoryExtras,
+  ];
+  const localLifeLinks =
+    activeTerritoryNavigationBySection('local-life');
+  const serviceLinks =
+    activeTerritoryNavigationBySection('services');
+
   return (
     <main className="menuPage">
       <div className="container menuPanel">
@@ -71,6 +115,7 @@ export default function MenuPage() {
 
         <div className="menuGroups">
           <MenuGroup title="Território" links={territoryLinks} />
+          <MenuGroup title="Agora no bairro" links={localLifeLinks} />
           <MenuGroup title="Serviços" links={serviceLinks} />
           <MenuGroup title="Sua conta" links={accountLinks} />
         </div>
