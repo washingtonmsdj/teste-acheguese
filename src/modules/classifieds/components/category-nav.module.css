@@ -53,6 +53,28 @@
   background: #e4f6ef;
 }
 
+@media (max-width: 520px) {
+  :global(.classifiedCategoryGrid) {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  :global(.classifiedCategoryGrid) a {
+    min-height: 84px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    justify-content: initial;
+    gap: 13px;
+    padding: 12px 14px;
+    border-radius: 17px;
+  }
+
+  :global(.classifiedCategoryGrid) .copy small {
+    max-width: none;
+  }
+}
+
 @media (min-width: 720px) {
   :global(.classifiedCategoryGrid) .copy small {
     max-width: 220px;
