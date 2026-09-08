@@ -33,6 +33,7 @@ import styles from '@/app/mapa/mapa.module.css';
 const CLUSTER_LAYER = 'acheguese-place-clusters';
 
 type TerritoryMapExplorerProps = {
+  territoryName: string;
   initialData: MapViewportData;
   initialZoom: number;
   initialCategories: string[];
@@ -81,6 +82,7 @@ function prefersReducedMotion() {
 }
 
 export function TerritoryMapExplorer({
+  territoryName,
   initialData,
   initialZoom,
   initialCategories,
@@ -426,9 +428,7 @@ export function TerritoryMapExplorer({
         </Link>
 
         <div>
-          <p className="eyebrow">
-            Complexo do Nordeste de Amaralina
-          </p>
+          <p className="eyebrow">{territoryName}</p>
           <h1>Mapa do território</h1>
           <p className={styles.intro}>
             Movimente o mapa para explorar bairros, escolas
@@ -511,7 +511,7 @@ export function TerritoryMapExplorer({
           ref={mapContainerRef}
           className={styles.map}
           role="region"
-          aria-label="Mapa interativo do Complexo do Nordeste de Amaralina"
+          aria-label={`Mapa interativo de ${territoryName}`}
           aria-describedby="territory-map-help"
         />
 

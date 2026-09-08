@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import {
   parseMapUrlState,
   type MapUrlParams,
@@ -24,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Mapa do território',
     description:
-      'Explore bairros, escolas e unidades SUS verificadas no Complexo do Nordeste de Amaralina.',
+      `Explore bairros, escolas e unidades SUS verificadas em ${territoryReleaseScope.group.name}.`,
     alternates: canIndex
       ? {
           canonical: '/mapa',
@@ -36,17 +37,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-
-const DEFAULT_MAP_STATE = {
-  bounds: {
-    west: -38.4873837606422,
-    south: -13.0134576151743,
-    east: -38.4668939364098,
-    north: -12.9958446983238,
-  },
-  zoom: 14,
-  categories: ['education', 'health'],
-} as const;
 
 type MapaPageProps = {
   searchParams: Promise<MapUrlParams>;
@@ -60,7 +50,7 @@ function MapUnavailable({
   return (
     <TerritoryAppShell
       activeId="map"
-      territoryName="Complexo do Nordeste de Amaralina"
+      territoryName={territoryReleaseScope.group.name}
       immersive
     >
       <main>
@@ -90,9 +80,9 @@ export default async function MapaPage({
   const initialState = parseMapUrlState(
     await searchParams,
     {
-      bounds: DEFAULT_MAP_STATE.bounds,
-      zoom: DEFAULT_MAP_STATE.zoom,
-      categories: [...DEFAULT_MAP_STATE.categories],
+      bounds: territoryReleaseScope.map.bounds,
+      zoom: territoryReleaseScope.map.zoom,
+      categories: [...territoryReleaseScope.map.categories],
     },
   );
 
@@ -133,11 +123,12 @@ export default async function MapaPage({
   return (
     <TerritoryAppShell
       activeId="map"
-      territoryName="Complexo do Nordeste de Amaralina"
+      territoryName={territoryReleaseScope.group.name}
       immersive
     >
       <main className={styles.page}>
         <TerritoryMapExplorer
+          territoryName={territoryReleaseScope.group.name}
           initialData={initialData}
           initialZoom={initialState.zoom}
           initialCategories={initialState.categories}

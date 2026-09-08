@@ -1,3 +1,4 @@
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import styles from './mapa.module.css';
 
@@ -5,7 +6,7 @@ export default function MapLoading() {
   return (
     <TerritoryAppShell
       activeId="map"
-      territoryName="Complexo do Nordeste de Amaralina"
+      territoryName={territoryReleaseScope.group.name}
       immersive
     >
       <main
