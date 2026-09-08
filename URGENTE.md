@@ -4,7 +4,7 @@
 > **Autoridade:** este documento é a rota canônica de execução do projeto.  
 > **Branch de trabalho:** `main`  
 > **Última atualização:** 2026-09-08  
-> **HEAD técnico de referência:** `47cdaa84296f68264df905aebf5116bc20d821ac`
+> **HEAD técnico de referência:** `230a4d7dc74e3380222b1c919e5dba407386d321`
 
 ---
 
@@ -1171,40 +1171,36 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O candidate abaixo representa o último HEAD técnico de runtime.
+A fundação territorial, o Map Core e o frontend **Território Vivo** permanecem fechados em source/CI para o escopo MVP atual.
 
 ## Candidate source-aligned atual
 
-- source/runtime: `47cdaa84296f68264df905aebf5116bc20d821ac`;
-- deployment: `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6`;
-- preview protegido: `https://teste-acheguese-5a9w818kb-jogo-brasils-projects.vercel.app`;
+- source/runtime: `230a4d7dc74e3380222b1c919e5dba407386d321`;
+- deployment: `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj`;
+- preview protegido: `https://teste-acheguese-lwr9c4s68-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34227085645` PASS;
-- source bundle: `34227085713` PASS;
+- quality: `34243856107` PASS;
+- source bundle: `34243855637` PASS;
 - runtime errors observados: **0**;
-- Home chegou ao aplicativo com HTTP 200;
-- recovery público do Mapa/Auth/Home usa linguagem de produto e ações úteis, sem expor configuração/ambiente/demo;
-- o contrato de copy bloqueia regressão dessas expressões técnicas.
-
-O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
+- Home chegou ao aplicativo com **HTTP 200**; runtime confirmou `GET / 200`, `cache=MISS`;
+- iconografia de Classificados foi fechada no sistema SVG canônico;
+- módulos `future` continuam fora do MVP e invisíveis por `releaseScope`.
 
 ## Gate ainda pendente
 
-A Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. Portanto ainda **não** marcar como PASS:
+Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. Ainda não marcar como PASS:
 
-1. `territory-release-smoke` completo no candidate;
-2. revisão visual real 1440×900;
-3. revisão visual real 390×844;
+1. `territory-release-smoke` completo;
+2. revisão visual 1440×900;
+3. revisão visual 390×844;
 4. callback Auth exata do candidate;
 5. E2E Auth/Classificados.
 
-Não remover Deployment Protection, RLS, CSP ou outros guards para contornar esse gate.
-
 ## Próxima ação
 
-> **Preservar `dpl_4dYDMFFzZdaBnUwnoqD9WtMWQrA6` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_6wKbHuWBidLaVTDCHrQtpFvSKurj` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1215,7 +1211,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### HEAD técnico de referência
 
-`47cdaa84296f68264df905aebf5116bc20d821ac`
+`230a4d7dc74e3380222b1c919e5dba407386d321`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1224,6 +1220,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- iconografia final `230a4d7d`: favorito, placeholder sem mídia, estado vazio e trust badges usam `NavigationIcon`; conversa acompanha topbar de 74px; quality `34243856107` + bundle `34243855637` = PASS;
 - recovery público `47cdaa84`: Mapa/Auth/Home fallback removeram linguagem técnica de ambiente/configuração/demo; Mapa ganhou ações de tentar novamente/voltar ao território; contrato de copy cobre Mapa e Auth; quality `34227085645` + bundle `34227085713` = PASS;
 - dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
 - local config fallback `76eb2c60`: fallback da Home mostra orientação somente em development quando a conexão pública não está configurada; produção não expõe instrução interna;
