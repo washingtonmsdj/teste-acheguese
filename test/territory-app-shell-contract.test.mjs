@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+} from 'node:fs';
 import test from 'node:test';
 
 function read(relativePath) {
@@ -78,4 +82,61 @@ test('App Shell mantém sidebar, toolbar e rail como zonas independentes', () =>
   assert.match(shell, /styles\.desktopTopbar/);
   assert.match(shell, /styles\.contextRail/);
   assert.match(shell, /activeTerritoryNavigation/);
+});
+
+
+function collectPageFiles(directoryUrl) {
+  const entries = readdirSync(directoryUrl, {
+    withFileTypes: true,
+  });
+  const pages = [];
+
+  for (const entry of entries) {
+    const child = new URL(
+      `${entry.name}${entry.isDirectory() ? '/' : ''}`,
+      directoryUrl,
+    );
+
+    if (entry.isDirectory()) {
+      pages.push(...collectPageFiles(child));
+      continue;
+    }
+
+    if (entry.name === 'page.tsx') {
+      pages.push(child);
+    }
+  }
+
+  return pages;
+}
+
+test('nenhuma página pode recriar navegação paralela ao App Shell', () => {
+  const appRoot = new URL('../src/app/', import.meta.url);
+  const pages = collectPageFiles(appRoot);
+
+  for (const pageUrl of pages) {
+    const source = readFileSync(pageUrl, 'utf8');
+
+    assert.equal(
+      source.includes("shared/layout/site-header"),
+      false,
+      `${pageUrl.pathname} não pode importar SiteHeader legado`,
+    );
+    assert.equal(
+      source.includes("shared/layout/mobile-tabbar"),
+      false,
+      `${pageUrl.pathname} não pode importar MobileTabbar diretamente`,
+    );
+  }
+
+  assert.equal(
+    existsSync(
+      new URL(
+        '../src/shared/layout/site-header.tsx',
+        import.meta.url,
+      ),
+    ),
+    false,
+    'SiteHeader legado deve permanecer removido',
+  );
 });
