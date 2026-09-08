@@ -1156,7 +1156,6 @@ footer .brand small { color: #b9ded4; }
 .mutedMeta { color: var(--muted); font-size: .72rem; }
 
 @media (min-width: 720px) {
-  .authForms { grid-template-columns: 1fr 1fr; }
   .ownerClassifiedList article {
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -2747,4 +2746,111 @@ footer .brand small { color: #b9ded4; }
   .detailFacts {
     margin-bottom: 24px;
   }
+}
+
+
+.adminContextStack {
+  display: grid;
+  gap: 12px;
+}
+
+.adminContextCard {
+  padding: 16px;
+  border: 1px solid #dce8e4;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(11,72,57,.035);
+}
+
+.adminContextEyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: .58rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.adminContextCard h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  letter-spacing: -.025em;
+}
+
+.adminContextCard dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.adminContextCard dl > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  background: #f5faf8;
+}
+
+.adminContextCard dt {
+  color: var(--muted);
+  font-size: .62rem;
+}
+
+.adminContextCard dd {
+  margin: 0;
+  color: var(--brand-dark);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.adminContextLinks {
+  display: grid;
+  gap: 6px;
+}
+
+.adminContextLinks a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 12px;
+  border: 1px solid #dce8e4;
+  border-radius: 14px;
+  background: rgba(255,255,255,.82);
+  color: #46586a;
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+.adminContextLinks b {
+  color: var(--brand);
+}
+
+.adminContextPolicy {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(226,164,71,.16), transparent 30%),
+    linear-gradient(145deg, #2e3d38, #172a25);
+  color: #ffffff;
+}
+
+.adminContextPolicy .adminContextEyebrow {
+  color: #9be8cd;
+}
+
+.adminContextPolicy strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: .8rem;
+}
+
+.adminContextPolicy p {
+  margin: 0;
+  color: #cfdfda;
+  font-size: .67rem;
+  line-height: 1.5;
 }

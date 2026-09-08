@@ -51,6 +51,53 @@ const reportLabels: Record<string, string> = {
   other: 'Outro motivo',
 };
 
+function AdminContextRail({
+  pendingCount,
+  reportCount,
+}: {
+  pendingCount: number;
+  reportCount: number;
+}) {
+  return (
+    <div className="adminContextStack">
+      <section className="adminContextCard">
+        <span className="adminContextEyebrow">Moderação</span>
+        <h2>Visão da fila</h2>
+        <dl>
+          <div>
+            <dt>Aguardando revisão</dt>
+            <dd>{pendingCount}</dd>
+          </div>
+          <div>
+            <dt>Denúncias recentes</dt>
+            <dd>{reportCount}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <nav className="adminContextLinks" aria-label="Atalhos da moderação">
+        <a href="#fila">
+          <span>Fila de revisão</span>
+          <b aria-hidden="true">↓</b>
+        </a>
+        <a href="#denuncias">
+          <span>Denúncias</span>
+          <b aria-hidden="true">↓</b>
+        </a>
+      </nav>
+
+      <section className="adminContextCard adminContextPolicy">
+        <span className="adminContextEyebrow">Regra operacional</span>
+        <strong>Moderar sem reescrever o anúncio.</strong>
+        <p>
+          Aprovação, rejeição e retirada do ar preservam o
+          conteúdo original e o histórico do fluxo.
+        </p>
+      </section>
+    </div>
+  );
+}
+
 export default async function ClassifiedAdminPage({
   searchParams,
 }: AdminPageProps) {
@@ -93,6 +140,12 @@ export default async function ClassifiedAdminPage({
     <TerritoryAppShell
       activeId="classifieds"
       territoryName="Salvador"
+      contextRail={
+        <AdminContextRail
+          pendingCount={pendingResult.data?.length ?? 0}
+          reportCount={reports.length}
+        />
+      }
     >
       <main>
 
@@ -107,7 +160,7 @@ export default async function ClassifiedAdminPage({
         </div>
       </section>
 
-      <section className="section container">
+      <section className="section container" id="fila">
         {query.ok && (
           <div className="successNotice">
             Ação de moderação concluída.
@@ -190,7 +243,7 @@ export default async function ClassifiedAdminPage({
         )}
       </section>
 
-      <section className="section sectionSoft">
+      <section className="section sectionSoft" id="denuncias">
         <div className="container">
           <div className="adminSectionHeading">
             <div>

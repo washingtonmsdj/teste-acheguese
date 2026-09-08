@@ -38,3 +38,16 @@ test('Auth legado não pode voltar a sobrescrever o visual atual', () => {
     'bloco authCardWide legado deve permanecer removido',
   );
 });
+
+
+test('breakpoint Auth legado de 720px permanece removido', () => {
+  const css = read('../src/app/globals.css');
+
+  assert.equal(
+    css.includes(
+      '@media (min-width: 720px) {\n  .authForms { grid-template-columns: 1fr 1fr; }',
+    ),
+    false,
+    'Auth novo usa seu breakpoint canônico de 760px',
+  );
+});
