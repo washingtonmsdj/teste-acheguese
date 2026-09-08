@@ -31,6 +31,7 @@ export type TerritoryNavigationItem = {
   icon: TerritoryNavigationIcon;
   section: TerritoryNavigationSection;
   phase: number;
+  releaseScope: 'mvp' | 'future';
   mobilePrimary: boolean;
   availability: 'active' | 'planned';
 };
@@ -44,6 +45,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'home',
     section: 'territory',
     phase: 4,
+    releaseScope: 'mvp',
     mobilePrimary: true,
     availability: 'active',
   },
@@ -55,6 +57,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'map',
     section: 'territory',
     phase: 4,
+    releaseScope: 'mvp',
     mobilePrimary: true,
     availability: 'active',
   },
@@ -66,6 +69,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'community',
     section: 'local-life',
     phase: 5,
+    releaseScope: 'future',
     mobilePrimary: true,
     availability: 'planned',
   },
@@ -77,6 +81,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'alert',
     section: 'local-life',
     phase: 6,
+    releaseScope: 'future',
     mobilePrimary: false,
     availability: 'planned',
   },
@@ -88,6 +93,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'event',
     section: 'local-life',
     phase: 6,
+    releaseScope: 'future',
     mobilePrimary: false,
     availability: 'planned',
   },
@@ -99,6 +105,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'opportunity',
     section: 'local-life',
     phase: 6,
+    releaseScope: 'future',
     mobilePrimary: false,
     availability: 'planned',
   },
@@ -110,6 +117,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'tag',
     section: 'services',
     phase: 7,
+    releaseScope: 'mvp',
     mobilePrimary: true,
     availability: 'active',
   },
@@ -121,6 +129,7 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
     icon: 'business',
     section: 'services',
     phase: 8,
+    releaseScope: 'future',
     mobilePrimary: false,
     availability: 'planned',
   },
@@ -128,7 +137,15 @@ export const territoryNavigationRegistry: readonly TerritoryNavigationItem[] = [
 
 export function activeTerritoryNavigation() {
   return territoryNavigationRegistry.filter(
-    (item) => item.availability === 'active',
+    (item) =>
+      item.releaseScope === 'mvp' &&
+      item.availability === 'active',
+  );
+}
+
+export function mvpTerritoryNavigation() {
+  return territoryNavigationRegistry.filter(
+    (item) => item.releaseScope === 'mvp',
   );
 }
 

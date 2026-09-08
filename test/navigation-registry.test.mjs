@@ -4,6 +4,7 @@ import {
   activeTerritoryNavigation,
   activeMobileNavigation,
   activeTerritoryNavigationBySection,
+  mvpTerritoryNavigation,
   territoryNavigationRegistry,
 } from '../src/shared/navigation/territory-navigation.ts';
 
@@ -61,4 +62,36 @@ test('bottom navigation também deriva do registry único', () => {
 
   assert.equal(community?.mobilePrimary, true);
   assert.equal(community?.availability, 'planned');
+});
+
+
+test('escopo explícito do MVP não inclui módulos futuros', () => {
+  assert.deepEqual(
+    mvpTerritoryNavigation().map((item) => item.id),
+    ['territory', 'map', 'classifieds'],
+  );
+
+  const future = territoryNavigationRegistry
+    .filter((item) => item.releaseScope === 'future')
+    .map((item) => item.id);
+
+  assert.deepEqual(future, [
+    'community',
+    'alerts',
+    'events',
+    'opportunities',
+    'businesses',
+  ]);
+});
+
+test('um módulo futuro não aparece só por ficar active', () => {
+  const futureActive = territoryNavigationRegistry
+    .filter(
+      (item) =>
+        item.releaseScope === 'future' &&
+        item.availability === 'active',
+    )
+    .map((item) => item.id);
+
+  assert.deepEqual(futureActive, []);
 });

@@ -141,7 +141,7 @@ export function TerritoryAppShell({
             <NavigationIcon name="search" />
             <span className={styles.searchText}>
               <strong>Buscar no Achegue-se</strong>
-              <small>Mapa, bairros e serviços</small>
+              <small>Mapa, bairros e Classificados</small>
             </span>
             <span className={styles.searchArrow} aria-hidden="true">
               →
