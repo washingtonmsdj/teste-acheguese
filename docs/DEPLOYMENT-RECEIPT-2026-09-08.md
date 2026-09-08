@@ -82,6 +82,20 @@ Deployment Protection/SSO continua ativo. Ainda **não** marcar como PASS:
 
 Isso não é evidência de falha do Achegue-se. É um gate ainda não executado com sessão persistente.
 
+## 6A. Revalidação do gate — 2026-09-08
+
+- Supabase security advisors: **0 lints**;
+- Complexo + quatro bairros: `data_preparation`, `activated_at=null`;
+- Vercel candidate `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`: READY;
+- build: `required=yes supabase=configured`; compile/TypeScript/static generation PASS;
+- runtime errors observados: **0**;
+- tentativa com share-link oficial continua retornando SSO 302 porque o cliente não mantém a sessão;
+- tentativa direta ao endpoint `vercel.com/sso-api` não é suportada pelo conector;
+- navegador web desta sessão não aceita o preview privado como URL navegável;
+- conector Supabase não expõe edição oficial de Auth redirect URLs.
+
+Conclusão: manter Deployment Protection, RLS e CSP intactos. O próximo gate exige uma sessão Vercel autenticada persistente ou ferramenta equivalente com cookie jar real.
+
 ## 7. Próxima ação
 
 1. preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;

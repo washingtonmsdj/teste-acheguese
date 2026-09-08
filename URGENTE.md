@@ -1223,6 +1223,11 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- release reconciliation `2026-09-08`: candidate canônico confirmado como `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` / source runtime `af74240985c43cabd0588328ae51d19d5c921ec5`; build `required=yes supabase=configured`, Vercel READY e runtime errors = 0;
+- security/rollout revalidados: Supabase security advisors = 0 lints; Complexo + quatro bairros permanecem `data_preparation`, todos com `activated_at=null`; nenhuma mutation de schema/RLS/rollout;
+- Deployment Protection blocker reconfirmado sem workaround: share-link oficial, fetch autenticado Vercel e navegador web desta sessão não preservam/aceitam a sessão SSO para smoke sequencial; não criar novo preview nem desativar proteção por causa disso;
+- Auth callback segue pendente porque o conector Supabase disponível não expõe gestão oficial da allow-list de redirect URLs; não usar SQL/wildcard como paliativo;
+- issue #2 sincronizada com `af742409` + `dpl_Arim`; próxima ação continua sessão Vercel persistente → smoke/visual → callback exata → E2E → fechar FASE 4;
 - release geography `64b6dcbe`: nome curto/completo do grupo, quantidade de bairros e fallback de cidade passaram a vir de `territoryReleaseScope`; contrato impede hardcode geográfico nas superfícies centrais;
 - copy MVP `44be6dbf` + `d3ea333b` + `e2db8d50`: Busca removeu promessa de funcionalidade futura, Novo anúncio removeu linguagem de ambiente/configuração e o contrato de copy passou a proteger esse fallback;
 - media fallback `17c157ca`: falha temporária de URL assinada no detalhe usa `NavigationIcon` + copy de produto;
