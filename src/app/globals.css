@@ -587,7 +587,12 @@ footer .brand small { color: #b9ded4; }
   .menuSection:first-child { grid-row: auto; }
 }
 
-.formShell { padding: 50px 0 100px; background: linear-gradient(180deg, #f7fbfa 0, #fff 340px); }
+.formShell {
+  padding: 38px 0 108px;
+  background:
+    radial-gradient(circle at 92% 4%, rgba(98,230,182,.10), transparent 22%),
+    linear-gradient(180deg, #f7fbfa 0, #fff 340px);
+}
 .formLayout { display: grid; gap: 28px; }
 .formIntro h1 {
   font-size: clamp(2rem, 9vw, 3.8rem);
@@ -633,8 +638,25 @@ footer .brand small { color: #b9ded4; }
 }
 
 @media (min-width: 980px) {
-  .formLayout { grid-template-columns: .85fr 1.15fr; align-items: start; gap: 70px; }
-  .formIntro { position: sticky; top: 120px; }
+  .compactInternalHero {
+    padding: 42px 0 44px;
+  }
+
+  .formShell {
+    padding-top: 52px;
+    padding-bottom: 72px;
+  }
+
+  .formLayout {
+    grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+    align-items: start;
+    gap: 48px;
+  }
+
+  .formIntro {
+    position: sticky;
+    top: 98px;
+  }
 }
 
 
@@ -772,7 +794,29 @@ footer .brand small { color: #b9ded4; }
 .authSuccess { background: #edf9f3; color: var(--brand-dark); border: 1px solid #cdeade; }
 .authFooter { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
-.compactInternalHero { min-height: 0; padding: 54px 0; }
+.compactInternalHero {
+  min-height: 0;
+  padding: 38px 0 40px;
+  border-bottom: 1px solid #e5eeeb;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(98,230,182,.15), transparent 26%),
+    linear-gradient(145deg, #f7fbf9, #ffffff);
+}
+
+.compactInternalHero h1 {
+  max-width: 720px;
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 8vw, 3rem);
+}
+
+.compactInternalHero p:not(.eyebrow) {
+  max-width: 640px;
+  margin-bottom: 0;
+}
+
+.compactInternalHero .primaryButton {
+  margin-top: 20px;
+}
 .successNotice {
   margin-bottom: 20px;
   padding: 15px 17px;
@@ -1851,5 +1895,69 @@ footer .brand small { color: #b9ded4; }
 @media (prefers-reduced-motion: reduce) {
   .classifiedRailLinks a {
     transition: none;
+  }
+}
+
+
+@media (max-width: 979px) {
+  .compactInternalHero + .section {
+    padding-bottom: 112px;
+  }
+
+  .adminHero ~ .section:last-child {
+    padding-bottom: 112px;
+  }
+
+  .classifiedResultsHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .classifiedResultsHeader > span {
+    align-self: flex-start;
+  }
+
+  .ownerClassifiedActions .linkButton,
+  .favoriteRemoveButton {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .classifiedHeroGrid {
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  .classifiedPitch {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .classifiedPitch strong {
+    font-size: 1.5rem;
+  }
+
+  .classifiedCategoryGrid {
+    gap: 9px;
+  }
+
+  .classifiedCategoryGrid a {
+    min-height: 102px;
+    padding: 15px;
+    border-radius: 17px;
+  }
+
+  .classifiedForm {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .formShell {
+    padding-top: 32px;
+  }
+
+  .formIntro h1 {
+    font-size: clamp(2rem, 10vw, 2.8rem);
   }
 }
