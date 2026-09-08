@@ -5,8 +5,7 @@ import { createClassifiedDraftAction } from '@/app/classificados/novo/actions';
 import { classifiedCategories } from '@/modules/classifieds/domain/categories';
 import { getSupabasePublicConfig } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { SiteHeader } from '@/shared/layout/site-header';
-import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,8 +29,11 @@ export default async function NewClassifiedPage({
 
   if (!configured) {
     return (
-      <main>
-        <SiteHeader />
+      <TerritoryAppShell
+        activeId="classifieds"
+        territoryName="Salvador"
+      >
+        <main>
         <section className="formShell">
           <div className="container narrow">
             <p className="eyebrow">Novo classificado</p>
@@ -45,8 +47,8 @@ export default async function NewClassifiedPage({
             </Link>
           </div>
         </section>
-        <MobileTabbar />
-      </main>
+        </main>
+      </TerritoryAppShell>
     );
   }
 
@@ -67,8 +69,11 @@ export default async function NewClassifiedPage({
   if (error) throw error;
 
   return (
-    <main>
-      <SiteHeader />
+    <TerritoryAppShell
+      activeId="classifieds"
+      territoryName="Salvador"
+    >
+      <main>
 
       <section className="formShell">
         <div className="container formLayout">
@@ -190,7 +195,7 @@ export default async function NewClassifiedPage({
         </div>
       </section>
 
-      <MobileTabbar />
-    </main>
+      </main>
+    </TerritoryAppShell>
   );
 }
