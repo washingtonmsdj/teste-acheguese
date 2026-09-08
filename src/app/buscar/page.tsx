@@ -116,11 +116,11 @@ export default function SearchPage() {
             <NavigationIcon name="search" />
           </span>
           <div>
-            <strong>Uma busca única virá quando houver conteúdo suficiente.</strong>
+            <strong>Cada busca usa o conteúdo certo.</strong>
             <p>
-              Hoje cada superfície pesquisa somente o que
-              realmente existe, sem misturar dados públicos
-              com conteúdo comercial.
+              O mapa mantém informação pública separada dos
+              anúncios, para você entender sempre o que está
+              consultando.
             </p>
           </div>
         </section>
