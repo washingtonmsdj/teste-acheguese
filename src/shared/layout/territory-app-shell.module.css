@@ -281,7 +281,7 @@
   .searchText strong {
     overflow: hidden;
     color: #334456;
-    font-size: .7rem;
+    font-size: .76rem;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -289,7 +289,7 @@
   .searchText small {
     overflow: hidden;
     color: #89948f;
-    font-size: .56rem;
+    font-size: .59rem;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -325,9 +325,11 @@
     height: 100svh;
     display: block;
     overflow-y: auto;
-    padding: 18px 16px 28px;
+    padding: 90px 16px 28px;
     border-left: 1px solid #dfe9e5;
-    background: #f7faf9;
+    background:
+      linear-gradient(180deg, #f7faf9 0%, #f1f7f4 100%);
+    scrollbar-gutter: stable;
   }
 
   .hasRail .desktopTopbar {

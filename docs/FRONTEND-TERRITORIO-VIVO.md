@@ -48,7 +48,8 @@ Breakpoints atuais:
 - abaixo de 980 px: header + bottom navigation;
 - 980 px+: sidebar + conteúdo;
 - 1280 px+ quando há contexto: sidebar + conteúdo + rail;
-- 1600 px+: Home pode usar composição hero + mapa lado a lado sem comprimir a coluna principal.
+- 1360 px+: Home usa composição hero + mapa lado a lado quando há largura útil suficiente mesmo com rail;
+- 1600 px+: a composição ganha mais respiro e quatro colunas nas grades de bairro/utilidade.
 
 ## Registry e módulos futuros
 
@@ -109,8 +110,9 @@ O Mapa usa o mesmo App Shell em variante imersiva e preserva viewport query, clu
 - busca visível;
 - sidebar;
 - conteúdo principal separado do contexto;
-- rail lateral real;
+- rail lateral real, alinhado visualmente à toolbar;
 - mapa protagonista;
+- bloco de dados públicos em contraste escuro para quebrar a sequência de superfícies claras;
 - troca de território;
 - bottom navigation mobile;
 - sistema verde-mangue com superfícies naturais e acentos quentes/coral;
