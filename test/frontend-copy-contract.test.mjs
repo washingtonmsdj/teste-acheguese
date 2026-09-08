@@ -9,6 +9,8 @@ const publicSurfacePaths = [
   '../src/app/menu/page.tsx',
   '../src/app/buscar/page.tsx',
   '../src/app/classificados/page.tsx',
+  '../src/app/mapa/page.tsx',
+  '../src/app/entrar/page.tsx',
 ];
 
 const forbiddenPhrases = [
@@ -24,6 +26,9 @@ const forbiddenPhrases = [
   'mvp territorial',
   'estrutura do mvp',
   'fundação do mvp',
+  'configuração pública',
+  'neste ambiente',
+  'demonstração',
 ];
 
 test('superfícies principais não expõem linguagem interna de implementação', () => {

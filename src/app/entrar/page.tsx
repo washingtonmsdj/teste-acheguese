@@ -26,7 +26,7 @@ type SignInPageProps = {
 };
 
 const errorMessages: Record<string, string> = {
-  indisponivel: 'A autenticação ainda não está disponível neste ambiente.',
+  indisponivel: 'O acesso à conta está temporariamente indisponível. Tente novamente em instantes.',
   dados_invalidos: 'Informe um e-mail válido e uma senha com pelo menos 8 caracteres.',
   credenciais_invalidas: 'E-mail ou senha inválidos.',
   cadastro_falhou: 'Não foi possível criar a conta. Revise os dados e tente novamente.',

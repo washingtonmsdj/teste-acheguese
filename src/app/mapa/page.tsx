@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { territoryReleaseScope } from '@/config/territory-release-scope';
 import {
   parseMapUrlState,
@@ -55,11 +56,27 @@ function MapUnavailable({
     >
       <main>
         <section className={styles.unavailable}>
-        <div className="container">
-          <p className="eyebrow">Mapa territorial</p>
-          <h1>Mapa temporariamente indisponível</h1>
-          <p>{message}</p>
-        </div>
+          <div className="container">
+            <div className={styles.unavailableCard}>
+              <p className="eyebrow">Mapa territorial</p>
+              <h1>Mapa temporariamente indisponível</h1>
+              <p>{message}</p>
+              <div className={styles.unavailableActions}>
+                <Link
+                  className="primaryButton linkButton"
+                  href="/mapa"
+                >
+                  Tentar novamente
+                </Link>
+                <Link
+                  className="ghostButton linkButton"
+                  href="/"
+                >
+                  Voltar ao território
+                </Link>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </TerritoryAppShell>
@@ -73,7 +90,7 @@ export default async function MapaPage({
 
   if (!supabase) {
     return (
-      <MapUnavailable message="A configuração pública de dados ainda não está disponível neste ambiente." />
+      <MapUnavailable message="O mapa não está disponível agora. Você ainda pode consultar o território e tentar novamente em instantes." />
     );
   }
 
@@ -116,7 +133,7 @@ export default async function MapaPage({
 
   if (!initialData) {
     return (
-      <MapUnavailable message="Não foi possível carregar os dados territoriais agora. Nenhum dado de demonstração foi usado como substituto." />
+      <MapUnavailable message="Não conseguimos carregar o mapa agora. Tente novamente em instantes ou volte ao território." />
     );
   }
 

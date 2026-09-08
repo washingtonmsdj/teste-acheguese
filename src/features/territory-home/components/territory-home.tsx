@@ -615,9 +615,8 @@ export function TerritoryHomeUnavailable() {
                 4 bairros · dados públicos · mapa
               </strong>
               <p>
-                Censo 2022, Educação e Saúde SUS fazem parte
-                da base territorial, sempre com origem
-                registrada e sem números de demonstração.
+                Censo 2022, Educação e Saúde SUS com origem
+                registrada e fontes públicas identificadas.
               </p>
             </aside>
           </div>
