@@ -1,4 +1,5 @@
 import { AccountContextRail } from '@/shared/layout/account-context-rail';
+import { territoryReleaseScope } from '@/config/territory-release-scope';
 import { TerritoryAppShell } from '@/shared/layout/territory-app-shell';
 import styles from './account-surface-loading.module.css';
 
@@ -18,7 +19,7 @@ export function AccountSurfaceLoading({
   return (
     <TerritoryAppShell
       activeId="classifieds"
-      territoryName="Salvador"
+      territoryName={territoryReleaseScope.city.name}
       contextRail={<AccountContextRail active={active} />}
     >
       <main
