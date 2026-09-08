@@ -390,3 +390,17 @@ Checkpoint técnico: `e735797b8f64947de13855cf8cf8c285e16435fa`.
 - smoke exige 68.357 pessoas, 30.642 domicílios, 20 locais, 14 Educação e 6 SUS antes de aprovar a Home.
 
 Candidate visual: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`.
+
+
+## Development e tablet
+
+Checkpoint: `efbc0af47721215719b2f3a4440b579ee55a81df`.
+
+- `npm run dev` e `npm run env:check` exigem Supabase public config completa;
+- Home mostra orientação de configuração apenas em development;
+- produção mantém fallback público sem linguagem interna;
+- header mobile respeita safe-area;
+- entre 640–979px o App Shell mostra o território atual no header;
+- em telefone estreito o contexto extra permanece oculto para preservar densidade.
+
+Candidate visual: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`.

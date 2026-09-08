@@ -90,18 +90,18 @@ Preparação confirmada em 2026-09-07:
 
 Candidate visual canônico:
 
-- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
-- URL: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
+- URL: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
 - state: **READY**;
-- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
-- quality: `34217026909` PASS;
-- source bundle: `34217026860` PASS;
+- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
+- quality: `34223933038` PASS;
+- source bundle: `34223933044` PASS;
 - build Vercel: `required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
 - runtime errors: **0**;
-- Home real: HTTP 200 em uma sessão do preview;
-- escopo territorial compartilhado em `src/config/territory-release-scope.ts`;
-- fallback público sem linguagem interna de MVP;
+- dev config agora é fail-closed antes do Next;
+- fallback de configuração é development-only;
+- contexto territorial de tablet atualizado;
 - Deployment Protection/SSO permanece habilitada.
 
 Os previews anteriores são históricos e não substituem esse candidate.

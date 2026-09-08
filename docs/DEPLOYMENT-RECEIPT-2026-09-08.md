@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
-- URL protegida: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
+- URL protegida: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
-- quality: `34217026909` PASS;
+- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
+- quality: `34223933038` PASS;
 - vercel-source-bundle: `34214797952` PASS.
 
 Este candidate contém a Home product-first, Auth/conta/moderação já endurecidos, formulários estruturados, resumos pessoais e conversa refinada.
@@ -136,17 +136,16 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 
 ## 7. Frontend contido
 
-O candidate contém o frontend técnico `e735797b`:
+O candidate contém o frontend técnico `efbc0af4`:
 
-- Home product-first com dados oficiais;
-- mini-mapa reutiliza fatos/places já carregados, sem segunda RPC;
-- fallback público não mostra copy interna de MVP nem números fictícios;
-- `src/config/territory-release-scope.ts` centraliza Salvador, Complexo e quatro bairros;
-- Home fallback, loader, rollout visibility e health consomem a mesma autoridade territorial;
-- Classificados público está orientado a tarefa;
-- Auth, conta, mensagens, formulários, moderação e detalhe público preservados;
-- runtime errors observados = 0;
-- Home chegou ao app com HTTP 200 em uma sessão do preview.
+- App Shell Território Vivo preservado;
+- dev config fail-closed antes de `next dev`;
+- fallback local acionável apenas em development;
+- warning estruturado substitui falso erro de aplicação para sessão dev já aberta;
+- header mobile respeita safe-area;
+- tablet 640–979px mostra contexto territorial compacto;
+- telefone mantém header compacto e bottom navigation existente;
+- runtime errors observados = 0.
 
 ## 8. Previews anteriores
 

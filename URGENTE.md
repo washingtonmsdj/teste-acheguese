@@ -1171,24 +1171,23 @@ Interromper e corrigir antes de avançar se ocorrer:
 
 # 20. Próxima ação canônica
 
-A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O source técnico avançou após o último candidate por hardening de development config; portanto o candidate listado abaixo é histórico até um novo deployment source-aligned ser gerado.
+A fundação territorial, Map Core e frontend Território Vivo estão fechados em source/CI para o escopo atual. O candidate abaixo representa o último HEAD técnico de runtime.
 
 ## Candidate source-aligned atual
 
-- source/runtime: `e735797b8f64947de13855cf8cf8c285e16435fa`;
-- deployment: `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5`;
-- preview protegido: `https://teste-acheguese-7ks0frtai-jogo-brasils-projects.vercel.app`;
+- source/runtime: `efbc0af47721215719b2f3a4440b579ee55a81df`;
+- deployment: `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE`;
+- preview protegido: `https://teste-acheguese-44fm31y1f-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
 - compile/TypeScript/static generation: PASS;
-- quality: `34217026909` PASS;
-- source bundle: `34217026860` PASS;
+- quality: `34223933038` PASS;
+- source bundle: `34223933044` PASS;
 - runtime errors observados: **0**;
-- uma leitura real da Home chegou ao aplicativo com **HTTP 200**;
-- Home usa dados oficiais e reutiliza o mesmo payload para o mini-mapa, sem segunda RPC;
-- fallback público é user-facing e fail-closed, sem números fictícios;
-- escopo territorial do release possui uma autoridade compartilhada, sem lista duplicada no componente;
-- Classificados, Auth, conta, moderação, formulários, mensagens e detalhe público permanecem alinhados ao Território Vivo.
+- `npm run dev` e `npm run env:check` agora exigem configuração pública completa antes do Next iniciar;
+- fallback da Home orienta configuração local somente em development;
+- tablet 640–979px mantém contexto territorial no header; telefone 390px preserva header compacto;
+- produção não expõe instruções internas de ambiente.
 
 O candidate usa somente as três variáveis públicas necessárias em configuração efêmera de deployment. Nenhum secret/service-role foi versionado ou enviado ao cliente.
 
@@ -1206,7 +1205,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ## Próxima ação
 
-> **Preservar `dpl_5C6SdRtv7GBzfa7TcUpGXtitvaZ5` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_GvDoEnHDbvE24tgb4G9dxybfjgDE` → abrir em sessão Vercel autenticada persistente → executar smoke completo + revisão visual desktop/mobile → adicionar somente a callback Auth exata → executar E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1217,7 +1216,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 
 ### HEAD técnico de referência
 
-`58100eeb7cc1b9e14d87eda2bae7361c16376e34`
+`efbc0af47721215719b2f3a4440b579ee55a81df`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1229,6 +1228,7 @@ Não remover Deployment Protection, RLS, CSP ou outros guards para contornar ess
 - dev public config `6329bb61`: `npm run dev` agora falha antes do Next quando a configuração pública obrigatória do Supabase está ausente; `territory.home.config_unavailable` deixa de ser tratado como erro de aplicação em development e vira warning estruturado para sessões já abertas; CI continua podendo buildar sem env e Vercel permanece fail-closed; quality `34223146308` + bundle `34223146374` = PASS;
 - local config fallback `76eb2c60`: fallback da Home mostra orientação somente em development quando a conexão pública não está configurada; produção não expõe instrução interna;
 - env check `58100eeb`: `npm run env:check` e `npm run dev` agora compartilham o mesmo contrato fail-closed de configuração pública; quality `34223558040` + bundle `34223558196` = PASS;
+- tablet context `efbc0af4`: App Shell ganhou safe-area no header mobile e contexto territorial entre 640–979px sem aumentar o header de telefone; quality `34223933038` + bundle `34223933044` = PASS;
 
 - Home território-first continua alimentada somente por fatos/lugares oficiais;
 - Data Cache da Home está em **60 segundos**, alinhado à visibilidade de rollout/SEO;
