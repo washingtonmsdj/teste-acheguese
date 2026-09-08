@@ -80,7 +80,7 @@ export default async function MapaPage({
   const initialState = parseMapUrlState(
     await searchParams,
     {
-      bounds: territoryReleaseScope.map.bounds,
+      bounds: { ...territoryReleaseScope.map.bounds },
       zoom: territoryReleaseScope.map.zoom,
       categories: [...territoryReleaseScope.map.categories],
     },
