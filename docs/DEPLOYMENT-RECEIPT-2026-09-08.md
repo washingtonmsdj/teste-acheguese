@@ -8,15 +8,15 @@ Projeto Vercel: `teste-acheguese`
 
 ## 1. Candidate canônico atual
 
-- deployment: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`;
-- URL protegida: `https://teste-acheguese-n23hjhszi-jogo-brasils-projects.vercel.app`;
+- deployment: `dpl_GCiz4EZbhHPJXikS9J5tZVxqhX5y`;
+- URL protegida: `https://teste-acheguese-7spinhi6v-jogo-brasils-projects.vercel.app`;
 - target: preview;
 - state: **READY**;
 - region: `iad1`;
 - Next.js: `16.3.4`;
 - Node: `24.x`;
-- source/runtime: `c61abe9b110c5584933149a4987a55cf17433c7c`;
-- quality: `34205750701` PASS;
+- source/runtime: `d148ef3eeeea3d52249443726ac1646de0737088`;
+- quality: `34206902501` PASS;
 - vercel-source-bundle: `34195671848` PASS.
 
 Este é o candidate canônico que contém o frontend técnico atual, incluindo account rail, detalhe público refinado e moderação alinhada.
@@ -134,6 +134,15 @@ Isso não é evidência de falha do Achegue-se. É um gate não executado por li
 - testes de regressão cobrem recursão, session-aware gateway e POST de logout.
 
 ## 7. Frontend contido
+
+Home product-first no source `d148ef3e`:
+
+- mapa vira composição lado a lado a partir de 1180px;
+- rollout deixa de ocupar o hero;
+- copy e CTAs ficam orientados a tarefa;
+- seletor Complexo/bairros permanece canônico;
+- dados oficiais, fontes e deep links do mapa são preservados;
+- Classificados aparece como utilidade local, sem assumir o eixo do produto.
 
 Escopo MVP explícito no source `abc52b42`:
 

@@ -48,7 +48,7 @@ Breakpoints atuais:
 - abaixo de 980 px: header + bottom navigation;
 - 980 px+: sidebar + conteúdo;
 - 1280 px+ quando há contexto: sidebar + conteúdo + rail;
-- 1360 px+: Home usa composição hero + mapa lado a lado quando há largura útil suficiente mesmo com rail;
+- 1180 px+: Home usa composição hero + mapa lado a lado; 1360 px+ apenas ganha mais respiro;
 - 1600 px+: a composição ganha mais respiro e quatro colunas nas grades de bairro/utilidade.
 
 ## Registry e módulos futuros
@@ -308,3 +308,24 @@ Checkpoint: `c61abe9b110c5584933149a4987a55cf17433c7c`.
 - logout aparece no rail desktop e no gateway móvel de Meus anúncios.
 
 Candidate visual: `dpl_HGdxUuqsnUvbAiyhV7WcKTqJ6rr2`.
+
+
+## Home product-first
+
+Checkpoint: `d148ef3eeeea3d52249443726ac1646de0737088`.
+
+A Home foi refinada para se comportar como produto MVP, não como landing explicativa:
+
+- `Território Vivo` substitui linguagem institucional no hero;
+- mapa vira protagonista já em 1180px+;
+- CTA principal é `Explorar mapa`; secundário leva direto aos bairros;
+- badge de rollout saiu do hero e permanece somente em contexto secundário;
+- seletor `Complexo + 4 bairros` ficou mais compacto;
+- resumo do hero usa locais, Educação e Saúde SUS sem texto longo;
+- seção de dados passa a `O território, em números.`;
+- utilidades usam `O que você precisa agora?`; 
+- Classificados usa linguagem de utilidade local: `Compre e venda perto de você.`;
+- nenhum dado fake, nova API, schema ou rollout foi introduzido;
+- teste `territory-home-product-contract.test.mjs` protege a composição.
+
+Candidate visual: `dpl_GCiz4EZbhHPJXikS9J5tZVxqhX5y`.
