@@ -124,3 +124,10 @@ test('configuração pública é congelada no bundle de build', () => {
     /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/,
   );
 });
+
+
+test('fallback pode orientar configuração local sem vazar em produção', () => {
+  assert.match(home, /process\.env\.NODE_ENV === 'development'/);
+  assert.match(home, /Ambiente local sem conexão pública configurada\./);
+  assert.match(home, /reinicie o processo do Next/);
+});

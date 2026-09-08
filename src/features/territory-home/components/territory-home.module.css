@@ -1173,3 +1173,25 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+
+.developmentNotice {
+  max-width: 620px;
+  display: grid;
+  gap: 5px;
+  margin-top: 20px;
+  padding: 13px 14px;
+  border: 1px dashed #d7b36e;
+  border-radius: 14px;
+  background: #fff9ed;
+  color: #694d17;
+}
+
+.developmentNotice strong {
+  font-size: .72rem;
+}
+
+.developmentNotice span {
+  font-size: .66rem;
+  line-height: 1.5;
+}

@@ -550,6 +550,9 @@ export function TerritoryHome({
 }
 
 export function TerritoryHomeUnavailable() {
+  const developmentConfigNotice =
+    process.env.NODE_ENV === 'development';
+
   return (
     <TerritoryAppShell
       activeId="territory"
@@ -581,6 +584,15 @@ export function TerritoryHomeUnavailable() {
                 oficiais voltam a aparecer assim que a leitura
                 das fontes públicas estiver disponível.
               </p>
+              {developmentConfigNotice && (
+                <aside className={styles.developmentNotice}>
+                  <strong>Ambiente local sem conexão pública configurada.</strong>
+                  <span>
+                    Preencha a publishable key em .env.local e reinicie o processo do Next.
+                  </span>
+                </aside>
+              )}
+
               <div className={styles.heroActions}>
                 <Link
                   className="primaryButton linkButton"
