@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { signInAction, signUpAction } from '@/app/entrar/actions';
+import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 import { Brand } from '@/shared/ui/brand';
 
 export const metadata: Metadata = {
@@ -39,105 +40,169 @@ export default async function SignInPage({
 
   return (
     <main className="authPage">
-      <section className="authCard authCardWide">
-        <Brand />
-
-        <div>
-          <p className="eyebrow">Sua conta</p>
-          <h1>Entre ou crie sua conta.</h1>
-          <p>
-            A leitura continua pública. A conta é necessária apenas para ações pessoais,
-            como publicar e gerenciar Classificados.
-          </p>
-        </div>
-
-        {params.erro && (
-          <div className="authFeedback authError" role="alert">
-            {errorMessages[params.erro] ?? 'Não foi possível concluir a solicitação.'}
+      <div className="authShell">
+        <aside className="authStory">
+          <div className="authStoryTop">
+            <Brand />
+            <Link className="authBackLink" href="/">
+              ← Voltar ao território
+            </Link>
           </div>
-        )}
 
-        {params.mensagem === 'confirme_email' && (
-          <div className="authFeedback authSuccess" role="status">
-            Conta criada. Confira seu e-mail para confirmar o acesso.
+          <div className="authStoryCopy">
+            <p className="eyebrow">Conta Achegue-se</p>
+            <h1>
+              O território é público. <em>Sua conta cuida do que é seu.</em>
+            </h1>
+            <p>
+              Você não precisa entrar para consultar mapa e
+              dados públicos. A conta habilita somente ações
+              pessoais e privadas.
+            </p>
           </div>
-        )}
 
-        <div className="authForms">
-          <form className="authForm" action={signInAction}>
-            <h2>Já tenho conta</h2>
-            <input type="hidden" name="next" value={next} />
+          <div className="authBenefits" aria-label="Recursos da conta">
+            <article>
+              <span>
+                <NavigationIcon name="tag" />
+              </span>
+              <div>
+                <strong>Publicar e gerenciar</strong>
+                <small>Crie e acompanhe seus anúncios.</small>
+              </div>
+            </article>
+            <article>
+              <span>
+                <NavigationIcon name="favorite" />
+              </span>
+              <div>
+                <strong>Salvar</strong>
+                <small>Guarde anúncios nos seus Favoritos.</small>
+              </div>
+            </article>
+            <article>
+              <span>
+                <NavigationIcon name="messages" />
+              </span>
+              <div>
+                <strong>Conversar</strong>
+                <small>Acesse suas mensagens privadas.</small>
+              </div>
+            </article>
+          </div>
 
-            <label>
-              E-mail
-              <input
-                type="email"
-                name="email"
-                autoComplete="email"
-                required
-                placeholder="voce@exemplo.com"
-              />
-            </label>
+          <div className="authStoryFooter">
+            <span>Complexo do Nordeste de Amaralina</span>
+            <small>Salvador · BA</small>
+          </div>
+        </aside>
 
-            <label>
-              Senha
-              <input
-                type="password"
-                name="password"
-                minLength={8}
-                autoComplete="current-password"
-                required
-                placeholder="Sua senha"
-              />
-            </label>
+        <section className="authPanel">
+          <div className="authPanelHeader">
+            <p className="eyebrow">Acesso</p>
+            <h2>Entre ou crie sua conta.</h2>
+            <p>
+              Use seu e-mail. A leitura pública permanece
+              disponível mesmo sem cadastro.
+            </p>
+          </div>
 
-            <button className="primaryButton" type="submit">
-              Entrar
-            </button>
-          </form>
+          {params.erro && (
+            <div className="authFeedback authError" role="alert">
+              {errorMessages[params.erro] ?? 'Não foi possível concluir a solicitação.'}
+            </div>
+          )}
 
-          <form className="authForm authFormSecondary" action={signUpAction}>
-            <h2>Criar conta</h2>
-            <input type="hidden" name="next" value={next} />
+          {params.mensagem === 'confirme_email' && (
+            <div className="authFeedback authSuccess" role="status">
+              Conta criada. Confira seu e-mail para confirmar o acesso.
+            </div>
+          )}
 
-            <label>
-              E-mail
-              <input
-                type="email"
-                name="email"
-                autoComplete="email"
-                required
-                placeholder="voce@exemplo.com"
-              />
-            </label>
+          <div className="authForms">
+            <form className="authForm" action={signInAction}>
+              <h3>Já tenho conta</h3>
+              <input type="hidden" name="next" value={next} />
 
-            <label>
-              Crie uma senha
-              <input
-                type="password"
-                name="password"
-                minLength={8}
-                autoComplete="new-password"
-                required
-                placeholder="Mínimo de 8 caracteres"
-              />
-            </label>
+              <label>
+                E-mail
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  placeholder="voce@exemplo.com"
+                />
+              </label>
 
-            <button className="ghostButton" type="submit">
-              Criar minha conta
-            </button>
-          </form>
-        </div>
+              <label>
+                Senha
+                <input
+                  type="password"
+                  name="password"
+                  minLength={8}
+                  autoComplete="current-password"
+                  required
+                  placeholder="Sua senha"
+                />
+              </label>
 
-        <div className="authFooter">
-          <Link className="textLink" href="/classificados">
-            Continuar sem conta
-          </Link>
-          <Link className="textLink" href="/">
-            Voltar para a Home
-          </Link>
-        </div>
-      </section>
+              <button className="primaryButton" type="submit">
+                Entrar
+              </button>
+            </form>
+
+            <form className="authForm authFormSecondary" action={signUpAction}>
+              <h3>Criar conta</h3>
+              <input type="hidden" name="next" value={next} />
+
+              <label>
+                E-mail
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  placeholder="voce@exemplo.com"
+                />
+              </label>
+
+              <label>
+                Crie uma senha
+                <input
+                  type="password"
+                  name="password"
+                  minLength={8}
+                  autoComplete="new-password"
+                  required
+                  placeholder="Mínimo de 8 caracteres"
+                />
+              </label>
+
+              <button className="ghostButton" type="submit">
+                Criar minha conta
+              </button>
+            </form>
+          </div>
+
+          <div className="authPrivacyNote">
+            <strong>Leitura pública por padrão.</strong>
+            <span>
+              Entrar não altera o território que você está
+              consultando e não torna seu endereço público.
+            </span>
+          </div>
+
+          <div className="authFooter">
+            <Link className="textLink" href="/classificados">
+              Continuar sem conta
+            </Link>
+            <Link className="textLink" href="/">
+              Ir para o território
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
