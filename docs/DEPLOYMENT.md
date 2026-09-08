@@ -105,17 +105,21 @@ Preparação confirmada em 2026-09-07:
 
 **Não gravar a publishable key em Git nem em documentação.** Ela é pública por natureza, mas deve continuar sendo injetada como configuração de deployment. Nunca usar service-role, secret key ou credencial privada nesse bundle.
 
-## Bloqueio externo atual
+## Candidate atual
 
-A conta Vercel Hobby atingiu o limite de 100 deployments via API no período diário.
+O reset da cota ocorreu e o primeiro candidate foi criado:
 
-Reset informado pela API:
+- deployment: `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
+- URL: `https://teste-acheguese-gi4o7hjpa-jogo-brasils-projects.vercel.app`;
+- state: **READY**;
+- source usado: `e1c71391f8220354de582d9cbe4fe8fc1e4e7846`;
+- health: PASS;
+- runtime errors: 0;
+- receipt: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
 
-**2026-09-08 03:23:07 America/Bahia**
+O preview está protegido por Vercel Deployment Protection/SSO. A proteção intercepta o smoke/visual automático antes da aplicação; isso é o blocker atual de inspeção, não um erro do app.
 
-Até o reset, a Vercel retorna `402 payment_required` para novos API deployments.
-
-O source mais recente já está empacotado; não é necessário alterar arquitetura ou recriar projeto quando a cota voltar.
+A `main` já avançou para `0a2848e2...` após esse candidate, portanto ele não representa o HEAD final vivo.
 
 ## Próximo deployment
 

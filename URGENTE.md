@@ -1177,7 +1177,7 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 ### HEAD técnico de referência
 
-`d28dcc9556f90324123c676e2d05de5c3db87b31`
+`0a2848e23cc9898db4a6177908fb8f8ef91a5a75`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1297,16 +1297,30 @@ A fundação territorial, o Map Core e o MVP da Home estão fechados em source/C
 
 - receipt consolidado de pré-deploy registrado em `docs/PREDEPLOY-RECEIPT-2026-09-07.md`; usar esse arquivo como checkpoint curto junto do `URGENTE.md` em novas conversas;
 
-### Blocker de release
+### Deployment candidate 1 — 2026-09-08
 
-- o único deployment Vercel continua sendo o técnico antigo `dpl_4hgED9grfQNbT6DLCrZEUaCqqnWv`;
-- ele ainda usa source `68deb8a4...`, sem Map Core/Home territorial e sem as três envs públicas do `acheguese-v2`;
-- a cota Hobby segue com reset informado para **2026-09-08 03:23:07 America/Bahia**;
-- até esse reset, não criar tentativas extras nem workaround arquitetural.
+- primeiro candidate pós-reset criado: `dpl_4j5FXenU3Yanae8np3cE1JjGS16R`;
+- URL protegida: `https://teste-acheguese-gi4o7hjpa-jogo-brasils-projects.vercel.app`;
+- source usado no candidate: `e1c71391f8220354de582d9cbe4fe8fc1e4e7846`;
+- frontend técnico contido: `a74679aac8b2e6d52ad853044ef6e2e4ac873644`;
+- deployment: **READY**;
+- build comprovou `public_env=PASS`, Supabase configurado, compile/TypeScript/static generation PASS;
+- `/api/health`: HTTP 200 com database/territory/classifieds = ok;
+- security headers do candidate: PASS;
+- runtime errors observados: **0**;
+- receipt detalhado: `docs/DEPLOYMENT-RECEIPT-2026-09-08.md`.
+
+### Blocker de release atual
+
+- Deployment Protection/SSO intercepta as demais rotas do preview antes do app;
+- o shareable-link oficial exige cookie pós-redirect, mas os clientes automáticos disponíveis não preservam essa sessão;
+- portanto smoke completo e revisão visual 1440×900 / 390×844 **ainda não estão aprovados**;
+- não desativar proteção nem promover apenas para contornar a limitação da ferramenta;
+- a `main` avançou após o candidate para `0a2848e2...`, adicionando fail-closed obrigatório de env pública em builds Vercel; quality/bundle = PASS; candidate 1 não contém esse commit posterior.
 
 ### Próxima ação
 
-**Após o reset: confirmar novamente HEAD/SOURCE_SHA/security advisors → criar um único deployment candidato com as 3 envs públicas → executar `territory-release-smoke` → revisão visual desktop+mobile → runtime logs → corrigir eventuais blockers → fechar FASE 4.**
+**Preservar candidate 1 → obter sessão SSO válida para inspeção protegida (ou inspeção manual do owner) → executar smoke/visual completo → configurar callback Auth exato → E2E Classificados/Auth → só então criar novo candidate se houver correção/HEAD adicional ou promover.**
 
 ### Não repetir
 
