@@ -17,3 +17,17 @@ test('estados vazios e trust badges usam o sistema de ícones', () => {
   assert.match(empty, /NavigationIcon name="search"/);
   assert.match(classifieds, /NavigationIcon name="check"/);
 });
+
+
+test('mídia indisponível no detalhe usa fallback visual canônico', () => {
+  const detail = read(
+    '../src/app/classificados/anuncio/[slug]/page.tsx',
+  );
+
+  assert.equal(
+    detail.includes('<div className="mediaPlaceholder">Imagem</div>'),
+    false,
+  );
+  assert.match(detail, /NavigationIcon name="tag"/);
+  assert.match(detail, /Foto indisponível/);
+});

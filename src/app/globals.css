@@ -3674,3 +3674,32 @@ footer .brand small { color: #b9ded4; }
     animation: none;
   }
 }
+
+
+.mediaPlaceholder {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(98,230,182,.14), transparent 28%),
+    #eef5f2;
+  color: #60716b;
+  text-align: center;
+}
+
+.mediaPlaceholder svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mediaPlaceholder span {
+  font-size: .68rem;
+  font-weight: 800;
+}

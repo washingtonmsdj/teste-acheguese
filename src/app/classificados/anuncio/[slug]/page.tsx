@@ -220,7 +220,10 @@ export default async function ClassifiedDetailPage({
                     }
                   />
                 ) : (
-                  <div className="mediaPlaceholder">Imagem</div>
+                  <div className="mediaPlaceholder">
+                    <NavigationIcon name="tag" />
+                    <span>Foto indisponível</span>
+                  </div>
                 )}
               </article>
             ))}
