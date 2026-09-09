@@ -3,12 +3,9 @@ import { territoryReleaseScope } from '@/config/territory-release-scope';
 import Link from 'next/link';
 import { Brand } from '@/shared/ui/brand';
 import { MobileTabbar } from '@/shared/layout/mobile-tabbar';
+import { TerritorySidebarNav } from '@/shared/layout/territory-sidebar-nav';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
-import {
-  activeTerritoryNavigationBySection,
-  type TerritoryNavigationId,
-  type TerritoryNavigationSection,
-} from '@/shared/navigation/territory-navigation';
+import type { TerritoryNavigationId } from '@/shared/navigation/territory-navigation';
 import styles from './territory-app-shell.module.css';
 
 type TerritoryAppShellProps = {
@@ -28,15 +25,6 @@ export function TerritoryAppShell({
   contextRail,
   immersive = false,
 }: TerritoryAppShellProps) {
-  const navigationGroups: Array<{
-    id: TerritoryNavigationSection;
-    label: string;
-  }> = [
-    { id: 'territory', label: 'Território' },
-    { id: 'local-life', label: 'Agora no bairro' },
-    { id: 'services', label: 'Serviços' },
-  ];
-
   return (
     <div
       className={[
@@ -64,45 +52,7 @@ export function TerritoryAppShell({
           </small>
         </Link>
 
-        <nav
-          className={styles.sidebarNav}
-          aria-label="Navegação territorial"
-        >
-          {navigationGroups.map((group) => {
-            const items = activeTerritoryNavigationBySection(
-              group.id,
-            );
-
-            if (!items.length) return null;
-
-            return (
-              <div className={styles.navGroup} key={group.id}>
-                <span className={styles.navGroupLabel}>
-                  {group.label}
-                </span>
-                <div className={styles.navGroupItems}>
-                  {items.map((item) => {
-                    const active = item.id === activeId;
-
-                    return (
-                      <Link
-                        href={item.href}
-                        key={item.id}
-                        className={
-                          active ? styles.navActive : undefined
-                        }
-                        aria-current={active ? 'page' : undefined}
-                      >
-                        <NavigationIcon name={item.icon} />
-                        <span>{item.label}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </nav>
+        <TerritorySidebarNav fallbackActiveId={activeId} />
 
         <div className={styles.sidebarUtility}>
           <Link href="/buscar">
