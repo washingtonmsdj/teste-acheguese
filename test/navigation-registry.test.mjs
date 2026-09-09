@@ -4,6 +4,7 @@ import {
   activeTerritoryNavigation,
   activeMobileNavigation,
   activeTerritoryNavigationBySection,
+  isTerritoryNavigationHrefActive,
   mvpTerritoryNavigation,
   territoryNavigationRegistry,
 } from '../src/shared/navigation/territory-navigation.ts';
@@ -27,7 +28,6 @@ test('registry prepara módulos futuros sem expô-los antes da fase', () => {
   ]);
 });
 
-
 test('registry distribui navegação ativa por zona sem duplicar autoridade', () => {
   assert.deepEqual(
     activeTerritoryNavigationBySection('territory').map(
@@ -49,7 +49,6 @@ test('registry distribui navegação ativa por zona sem duplicar autoridade', ()
   );
 });
 
-
 test('bottom navigation também deriva do registry único', () => {
   assert.deepEqual(
     activeMobileNavigation().map((item) => item.id),
@@ -63,7 +62,6 @@ test('bottom navigation também deriva do registry único', () => {
   assert.equal(community?.mobilePrimary, true);
   assert.equal(community?.availability, 'planned');
 });
-
 
 test('escopo explícito do MVP não inclui módulos futuros', () => {
   assert.deepEqual(
@@ -94,4 +92,38 @@ test('um módulo futuro não aparece só por ficar active', () => {
     .map((item) => item.id);
 
   assert.deepEqual(futureActive, []);
+});
+
+test('matcher de navegação respeita raiz, subrotas e fronteiras de segmento', () => {
+  assert.equal(
+    isTerritoryNavigationHrefActive('/', '/'),
+    true,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive('/mapa', '/mapa'),
+    true,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive('/mapa/alguma-rota', '/mapa'),
+    true,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive(
+      '/classificados/anuncio/exemplo',
+      '/classificados',
+    ),
+    true,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive('/mapa2', '/mapa'),
+    false,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive('/buscar', '/'),
+    false,
+  );
+  assert.equal(
+    isTerritoryNavigationHrefActive(null, '/mapa'),
+    false,
+  );
 });
