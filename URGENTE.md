@@ -1004,7 +1004,7 @@ Branch:
 
 HEAD técnico validado antes desta atualização documental:
 
-`280ae396d69e60b3ab932c87798ac730ffdf23b2`
+`339f32ec3c833e3cef626eaaa490d7446cb410bb`
 
 ## Supabase
 
@@ -1024,19 +1024,21 @@ Projeto isolado:
 - project id: `prj_MUONHjTGLsctNJZ7J1BWB8xzMidj`;
 - alias técnico: `teste-acheguese.vercel.app`.
 
-O deployment de produção atualmente publicado é anterior ao Map Core v1. Em 2026-09-07, o alias público ainda retornava 404 em `/mapa`.
+O alias público de produção continua fora do gate desta fase e não deve ser promovido antes da validação final.
 
-Um novo deployment contendo o HEAD atual continua necessário para a revisão visual final e para provar a Surface territorial em produção.
+O preview source-aligned atual é:
+
+- source/runtime: `339f32ec3c833e3cef626eaaa490d7446cb410bb`;
+- deployment: `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy`;
+- URL protegida: `https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app`;
+- Vercel: **READY**;
+- runtime errors pós-deploy: **0**.
 
 ### Blocker operacional conhecido
 
-A conta Vercel Hobby atingiu a cota diária de API deployments.
+Deployment Protection/SSO permanece habilitado e o cliente automatizado disponível não preserva a sessão/cookie necessária ao smoke sequencial e à revisão visual.
 
-Reset informado anteriormente:
-
-**2026-09-08 03:23:07 America/Bahia**
-
-Não alterar arquitetura por causa desse blocker temporário.
+Não alterar arquitetura, RLS, CSP ou Deployment Protection por causa desse blocker de ferramenta.
 
 ---
 
@@ -1175,21 +1177,21 @@ A fundação territorial, o Map Core e o frontend **Território Vivo** permanece
 
 ## Candidate source-aligned atual
 
-- source/runtime: `af74240985c43cabd0588328ae51d19d5c921ec5`;
-- deployment: `dpl_ArimT6VmREHKg4cw4jMB91hLBge8`;
-- preview protegido: `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app`;
+- source/runtime: `339f32ec3c833e3cef626eaaa490d7446cb410bb`;
+- deployment: `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy`;
+- preview protegido: `https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app`;
 - Vercel: **READY**;
 - build: `public_env=PASS mode=production required=yes supabase=configured`;
-- compile/TypeScript/static generation: PASS;
-- quality: `34265916188` PASS;
-- source bundle: `34265916232` PASS;
-- runtime errors observados: **0**;
-- `/classificados` chegou ao aplicativo com HTTP 200 e cache MISS em sessão anterior do preview;
-- categorias usam SVGs somente na UI, descrições curtas e composição mobile otimizada;
-- estado vazio preserva query/categoria e orienta limpar/ampliar filtros sem inventar conteúdo;
-- `AccountSurfaceLoading` é a única autoridade de loading da área pessoal;
-- a duplicação acidental `AccountAreaLoading` foi removida antes do candidate;
-- módulos `future` continuam fora do MVP e invisíveis por `releaseScope`.
+- compile/TypeScript/static generation: **PASS (12/12)**;
+- quality: `34314538619` PASS;
+- source bundle: `34314538512` PASS;
+- `deploy/vercel-bundle/SOURCE_SHA`: exatamente o source/runtime acima;
+- Supabase security advisors: **0 lints**;
+- runtime errors observados pós-deploy: **0**;
+- sidebar desktop e bottom navigation mobile agora resolvem estado ativo pelo `pathname` real usando matcher canônico;
+- matcher cobre raiz, subrotas e fronteira de segmento sem falso positivo como `/mapa2`;
+- módulos `future` continuam fora do MVP e invisíveis por `releaseScope`;
+- receipt: `docs/DEPLOYMENT-RECEIPT-2026-09-09.md`.
 
 ## Gate ainda pendente
 
@@ -1203,7 +1205,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ## Próxima ação
 
-> **Preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → adicionar somente `https://teste-acheguese-a9khog5x3-jogo-brasils-projects.vercel.app/auth/callback` → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → abrir em sessão Vercel autenticada persistente → smoke completo + revisão visual desktop/mobile → adicionar somente `https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app/auth/callback` → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1214,7 +1216,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 
 ### HEAD técnico de referência
 
-`af74240985c43cabd0588328ae51d19d5c921ec5`
+`339f32ec3c833e3cef626eaaa490d7446cb410bb`
 
 > Este SHA identifica o último commit com mudança de source/runtime. Commits posteriores somente de documentação/governança podem existir na `main`; para release, sempre validar o HEAD real e `deploy/vercel-bundle/SOURCE_SHA` imediatamente antes do deployment.
 
@@ -1223,6 +1225,13 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
+- release reconciliation `2026-09-09`: source/runtime `339f32ec3c833e3cef626eaaa490d7446cb410bb` confirmado, quality `34314538619` PASS, source bundle `34314538512` PASS e `deploy/vercel-bundle/SOURCE_SHA` exato;
+- candidate `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` READY com `.env.production` efêmero não versionado contendo somente as três variáveis públicas previstas no runbook; prebuild `public_env=PASS`, compile PASS, TypeScript PASS, static generation 12/12 PASS e runtime errors = 0;
+- navegação ativa consolidada no source atual: sidebar desktop e bottom navigation mobile usam `pathname` + matcher canônico; teste cobre raiz, subrotas, fronteira de segmento e rejeita `/mapa2` como ativo de `/mapa`;
+- Supabase security advisors revalidados em 2026-09-09: 0 lints; nenhuma mutation de schema/RLS/rollout;
+- share-link do novo candidate ainda retorna SSO 302 sem cookie jar persistente; manter Deployment Protection e não confundir limitação da ferramenta com falha do aplicativo;
+- tentativas de passar `env/buildEnv` diretamente pelo conector de deployment não chegaram ao processo de build e foram corretamente bloqueadas pelo preflight; não repetir essa via, usar o protocolo efêmero documentado até existir suporte oficial de env no conector;
+- receipt atual: `docs/DEPLOYMENT-RECEIPT-2026-09-09.md`;
 - release reconciliation `2026-09-08`: candidate canônico confirmado como `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` / source runtime `af74240985c43cabd0588328ae51d19d5c921ec5`; build `required=yes supabase=configured`, Vercel READY e runtime errors = 0;
 - security/rollout revalidados: Supabase security advisors = 0 lints; Complexo + quatro bairros permanecem `data_preparation`, todos com `activated_at=null`; nenhuma mutation de schema/RLS/rollout;
 - Deployment Protection blocker reconfirmado sem workaround: share-link oficial, fetch autenticado Vercel e navegador web desta sessão não preservam/aceitam a sessão SSO para smoke sequencial; não criar novo preview nem desativar proteção por causa disso;
@@ -1403,7 +1412,7 @@ Previews anteriores permanecem somente como evidência histórica e **não** apr
 
 ### Próxima ação
 
-**Preservar `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` → abrir com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → abrir com sessão Vercel persistente → smoke completo → visual desktop/mobile → callback Auth exata deste candidate → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 
