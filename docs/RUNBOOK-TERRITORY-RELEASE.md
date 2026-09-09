@@ -119,7 +119,7 @@ Configuração única no projeto Vercel `teste-acheguese`:
 6. Applies to environments: **Preview**;
 7. manter a audience padrão gerenciada pelo formulário da Vercel.
 
-Não criar `VERCEL_AUTOMATION_BYPASS_SECRET` para este fluxo. O GitHub Actions emite um token OIDC curto por execução e o smoke o envia somente no header `x-vercel-trusted-oidc-idp-token`.
+Não criar segredo estático de bypass para este fluxo. O GitHub Actions emite um token OIDC curto por execução e o smoke o envia somente no header `x-vercel-trusted-oidc-idp-token`.
 
 Workflow canônico:
 

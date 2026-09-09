@@ -178,7 +178,7 @@ test('workflow de smoke protegido é manual e fail-closed', () => {
   );
   assert.doesNotMatch(
     workflow,
-    /VERCEL_AUTOMATION_BYPASS_SECRET|x-vercel-protection-bypass/,
+    /secrets\./,
   );
   assert.match(workflow, /persist-credentials:\s*false/);
   assert.doesNotMatch(
