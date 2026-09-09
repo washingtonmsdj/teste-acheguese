@@ -131,7 +131,7 @@ test('limita credencial OIDC de QA ao projeto Vercel canônico', () => {
 test('OIDC preserva headers existentes e não existe sem token', () => {
   const headers = buildTrustedOidcHeaders(
     { Origin: 'https://teste-acheguese.vercel.app' },
-    '  secret-value  ',
+    '  oidc-token  ',
   );
 
   assert.equal(
@@ -139,8 +139,8 @@ test('OIDC preserva headers existentes e não existe sem token', () => {
     'https://teste-acheguese.vercel.app',
   );
   assert.equal(
-    headers.get('x-vercel-protection-bypass'),
-    'secret-value',
+    headers.get('x-vercel-trusted-oidc-idp-token'),
+    'oidc-token',
   );
   const publicHeaders =
     buildTrustedOidcHeaders(undefined, '');
