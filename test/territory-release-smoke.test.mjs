@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
+  assertAutomationBypassTarget,
+  buildProtectionBypassHeaders,
   htmlHasNoindex,
   isRedirectToRoot,
   normalizeBaseUrl,
@@ -93,4 +96,86 @@ test('smoke de release continua separado de segredos/config privada', () => {
   );
 
   assert.equal(source.protocol, 'file:');
+});
+
+
+test('limita Protection Bypass ao projeto Vercel canônico', () => {
+  assert.equal(
+    assertAutomationBypassTarget(
+      'https://teste-acheguese-abc123-jogo-brasils-projects.vercel.app/mapa',
+    ),
+    'https://teste-acheguese-abc123-jogo-brasils-projects.vercel.app',
+  );
+  assert.equal(
+    assertAutomationBypassTarget(
+      'https://teste-acheguese.vercel.app',
+    ),
+    'https://teste-acheguese.vercel.app',
+  );
+  assert.throws(
+    () =>
+      assertAutomationBypassTarget(
+        'https://preview.example',
+      ),
+    /projeto Vercel canônico/,
+  );
+  assert.throws(
+    () =>
+      assertAutomationBypassTarget(
+        'http://teste-acheguese-abc123-jogo-brasils-projects.vercel.app',
+      ),
+    /projeto Vercel canônico/,
+  );
+});
+
+test('bypass preserva headers existentes e não existe sem segredo', () => {
+  const headers = buildProtectionBypassHeaders(
+    { Origin: 'https://teste-acheguese.vercel.app' },
+    '  secret-value  ',
+  );
+
+  assert.equal(
+    headers.get('origin'),
+    'https://teste-acheguese.vercel.app',
+  );
+  assert.equal(
+    headers.get('x-vercel-protection-bypass'),
+    'secret-value',
+  );
+  assert.equal(
+    headers.get('x-vercel-set-bypass-cookie'),
+    'true',
+  );
+
+  const publicHeaders =
+    buildProtectionBypassHeaders(undefined, '');
+  assert.equal(
+    publicHeaders.has('x-vercel-protection-bypass'),
+    false,
+  );
+});
+
+test('workflow de smoke protegido é manual e fail-closed', () => {
+  const workflow = readFileSync(
+    new URL(
+      '../.github/workflows/protected-release-smoke.yml',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(
+    workflow,
+    /VERCEL_AUTOMATION_BYPASS_SECRET:.*secrets\.VERCEL_AUTOMATION_BYPASS_SECRET/,
+  );
+  assert.match(
+    workflow,
+    /REQUIRE_VERCEL_PROTECTION_BYPASS:\s*'1'/,
+  );
+  assert.match(workflow, /persist-credentials:\s*false/);
+  assert.doesNotMatch(
+    workflow,
+    /pull_request_target|repository_dispatch|workflow_run:/,
+  );
 });

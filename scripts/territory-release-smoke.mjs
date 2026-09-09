@@ -1,4 +1,6 @@
 import {
+  assertAutomationBypassTarget,
+  buildProtectionBypassHeaders,
   htmlHasNoindex,
   isRedirectToRoot,
   normalizeBaseUrl,
@@ -9,6 +11,10 @@ import {
 const BASE_URL = normalizeBaseUrl(process.env.BASE_URL);
 const EXPECT_PUBLIC =
   process.env.EXPECT_TERRITORY_PUBLIC === '1';
+const PROTECTION_BYPASS_SECRET =
+  process.env.VERCEL_AUTOMATION_BYPASS_SECRET?.trim() ?? '';
+const REQUIRE_PROTECTION_BYPASS =
+  process.env.REQUIRE_VERCEL_PROTECTION_BYPASS === '1';
 
 const COMPLEXO_BOUNDS = {
   west: -38.4873837606422,
@@ -31,8 +37,19 @@ function assert(condition, message) {
 }
 
 async function request(path, init = {}) {
+  const {
+    headers: initHeaders,
+    redirect = 'manual',
+    ...requestInit
+  } = init;
+
   return fetch(new URL(path, `${BASE_URL}/`), {
-    ...init,
+    ...requestInit,
+    headers: buildProtectionBypassHeaders(
+      initHeaders,
+      PROTECTION_BYPASS_SECRET,
+    ),
+    redirect,
     signal: AbortSignal.timeout(15_000),
   });
 }
@@ -103,6 +120,19 @@ function assertSecurityHeaders(response) {
 }
 
 async function run() {
+  if (
+    REQUIRE_PROTECTION_BYPASS &&
+    !PROTECTION_BYPASS_SECRET
+  ) {
+    throw new Error(
+      'VERCEL_AUTOMATION_BYPASS_SECRET obrigatório para QA protegido',
+    );
+  }
+
+  if (PROTECTION_BYPASS_SECRET) {
+    assertAutomationBypassTarget(BASE_URL);
+  }
+
   const healthResponse = await request('/api/health');
   const health = await healthResponse.json();
 

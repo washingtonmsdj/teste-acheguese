@@ -1,0 +1,57 @@
+name: protected-release-smoke
+run-name: protected smoke ${{ inputs.base_url }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Exact protected Vercel candidate URL
+        required: true
+        type: string
+      expect_territory_public:
+        description: Expected territory rollout visibility
+        required: true
+        default: '0'
+        type: choice
+        options:
+          - '0'
+          - '1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: protected-release-smoke-${{ inputs.base_url }}
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      BASE_URL: ${{ inputs.base_url }}
+      EXPECT_TERRITORY_PUBLIC: ${{ inputs.expect_territory_public }}
+      REQUIRE_VERCEL_PROTECTION_BYPASS: '1'
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Node 24 LTS
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Require automation bypass secret
+        shell: bash
+        run: |
+          if [ -z "${VERCEL_AUTOMATION_BYPASS_SECRET:-}" ]; then
+            echo "::error::Missing repository secret VERCEL_AUTOMATION_BYPASS_SECRET"
+            exit 1
+          fi
+
+      - name: Run protected release smoke
+        run: node scripts/territory-release-smoke.mjs

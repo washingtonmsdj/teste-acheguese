@@ -16,6 +16,46 @@ export function normalizeBaseUrl(value) {
   return url.toString().replace(/\/$/, '');
 }
 
+const CANONICAL_VERCEL_HOSTS = new Set([
+  'teste-acheguese.vercel.app',
+  'teste-acheguese-jogo-brasils-projects.vercel.app',
+]);
+
+const CANONICAL_VERCEL_PREVIEW_HOST =
+  /^teste-acheguese-[a-z0-9]+-jogo-brasils-projects\.vercel\.app$/;
+
+export function assertAutomationBypassTarget(baseUrl) {
+  const normalized = normalizeBaseUrl(baseUrl);
+  const url = new URL(normalized);
+  const allowedHost =
+    CANONICAL_VERCEL_HOSTS.has(url.hostname) ||
+    CANONICAL_VERCEL_PREVIEW_HOST.test(url.hostname);
+
+  if (url.protocol !== 'https:' || !allowedHost) {
+    throw new Error(
+      'Protection Bypass só pode ser enviado ao projeto Vercel canônico',
+    );
+  }
+
+  return normalized;
+}
+
+export function buildProtectionBypassHeaders(
+  headersInit,
+  secret,
+) {
+  const headers = new Headers(headersInit);
+  const value =
+    typeof secret === 'string' ? secret.trim() : '';
+
+  if (value) {
+    headers.set('x-vercel-protection-bypass', value);
+    headers.set('x-vercel-set-bypass-cookie', 'true');
+  }
+
+  return headers;
+}
+
 function readAttribute(tag, name) {
   const match = tag.match(
     new RegExp(

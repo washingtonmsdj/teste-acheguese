@@ -1233,6 +1233,7 @@ Ainda não marcar como PASS:
 - Supabase security advisors revalidados em 2026-09-09: 0 lints; nenhuma mutation de schema/RLS/rollout;
 - share-link do novo candidate ainda retorna SSO 302 sem cookie jar persistente; manter Deployment Protection e não confundir limitação da ferramenta com falha do aplicativo;
 - caminho estrutural definido em 2026-09-09: usar `VERCEL_AUTOMATION_BYPASS_SECRET` via `x-vercel-protection-bypass` para smoke/Playwright; nunca versionar o segredo nem desativar Deployment Protection; o conector atual não oferece gestão desse segredo;
+- tooling canônico preparado: `.github/workflows/protected-release-smoke.yml` executa o smoke protegido somente por `workflow_dispatch`, com `contents: read`, secret externo e validação de host; falta apenas configurar o bypass no Vercel/GitHub para executar o gate.
 - tentativas de passar `env/buildEnv` diretamente pelo conector de deployment não chegaram ao processo de build e foram corretamente bloqueadas pelo preflight; não repetir essa via, usar o protocolo efêmero documentado até existir suporte oficial de env no conector;
 - receipt atual: `docs/DEPLOYMENT-RECEIPT-2026-09-09.md`;
 - release reconciliation `2026-09-08`: candidate canônico confirmado como `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` / source runtime `af74240985c43cabd0588328ae51d19d5c921ec5`; build `required=yes supabase=configured`, Vercel READY e runtime errors = 0;

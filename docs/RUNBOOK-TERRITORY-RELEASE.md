@@ -105,6 +105,32 @@ node scripts/territory-release-smoke.mjs
 
 Enquanto o rollout estiver em `data_preparation`, usar `EXPECT_TERRITORY_PUBLIC=0`. Quando o grupo for promovido no futuro, o mesmo smoke aceita `1`.
 
+### 5.0 Preview protegido — caminho canônico de automação
+
+Para candidate protegido por Vercel Authentication/Deployment Protection, **não usar share-link como mecanismo de CI**. Gerar o **Protection Bypass for Automation** no projeto Vercel e armazenar o mesmo valor como secret do repositório GitHub com o nome:
+
+`VERCEL_AUTOMATION_BYPASS_SECRET`
+
+O segredo:
+
+- nunca entra em `.env`, source, log, issue ou artifact;
+- é enviado somente via header `x-vercel-protection-bypass`;
+- só pode ser usado contra host HTTPS do projeto Vercel canônico;
+- não substitui nem desativa Deployment Protection.
+
+Workflow canônico:
+
+`.github/workflows/protected-release-smoke.yml`
+
+Execução manual:
+
+1. Actions → **protected-release-smoke** → Run workflow;
+2. informar a URL exata do candidate em `base_url`;
+3. manter `expect_territory_public=0` enquanto o rollout estiver em `data_preparation`;
+4. exigir PASS completo antes da revisão visual.
+
+O workflow é `workflow_dispatch` apenas, `contents: read`, checkout sem credencial persistente e falha fechado se o secret não existir. O smoke preserva headers próprios (incluindo `Origin`) ao anexar o bypass.
+
 O smoke automatiza:
 
 - health + headers;
