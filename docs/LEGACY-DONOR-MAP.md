@@ -1,18 +1,26 @@
-# Legacy Donor Map — Achegue-se original → plataforma v2
+# Convergence Map — Achegue-se principal ↔ laboratório v2
 
 > **Autoridade de sequência:** `/URGENTE.md`  
-> **Origem de referência:** `washingtonmsdj/acheguese`  
-> **Destino canônico:** `washingtonmsdj/teste-acheguese`
+> **Produto principal:** `washingtonmsdj/acheguese`  
+> **Laboratório territorial/release:** `washingtonmsdj/teste-acheguese`
 
 ## 1. Decisão
 
-O repositório v2 permanece a base canônica do produto.
+A política donor-only foi encerrada por decisão explícita do usuário em 2026-09-09.
 
-O repositório original não deve voltar a ser a linha principal de desenvolvimento. Ele passa a funcionar como **donor/reference** para conceitos, contratos, testes e implementações que possam ser auditados e adaptados à arquitetura territory-first.
+Os dois repositórios continuam ativos:
 
-Não criar um terceiro repositório para substituir os dois.
+- `teste-acheguese` prova rapidamente Territory/Data/Map/Home, UX e gates de release em uma base pequena;
+- `acheguese` é o produto principal consolidado e continua evoluindo, removendo legado e preservando módulos reais já existentes.
 
-Quando a v2 tiver FASE 4 release-validada e estiver pronta para assumir a identidade final do produto, a estratégia de nomes/repos deve ser tratada como operação de release separada.
+A convergência é **seletiva e bidirecional**:
+
+- o principal pode absorver padrões provados no teste (ex.: registry único de navegação, rollout fail-closed, estados vazios honestos, provenance de release);
+- o teste pode estudar contratos maduros do principal quando sua fase exigir (ex.: Community, Messaging, Moderation/Trust, Business);
+- nenhum dos dois recebe cópia em massa do outro;
+- cada repositório mantém seus próprios owners, migrations e runtime.
+
+Não criar terceiro repositório e não fazer rename/consolidação física durante gate de release ativo.
 
 ## 2. Motivo
 
@@ -224,25 +232,29 @@ Não migrar automaticamente:
 - Edge Functions que existam apenas para contornar arquitetura antiga;
 - compatibilidade apenas para preservar caminhos obsoletos.
 
-## 9. Política para o repositório original
+## 9. Política para o produto principal
 
-Até decisão explícita de consolidação:
+O produto principal continua ativo.
 
-- não apagar o original;
-- não tratá-lo como SSOT do produto v2;
-- não desenvolver novas features lá para depois “copiar”;
-- usar como donor somente quando uma fase da v2 pedir a capacidade;
-- registrar em cada migração o source path/commit de origem quando código ou contrato for materialmente reaproveitado.
+Regras:
 
-## 10. Estratégia futura de identidade do repositório
+- não apagá-lo nem congelá-lo por causa da v2;
+- continuar saneando owners, bridges, segurança, dados e módulos no próprio principal;
+- não criar feature no principal **com a finalidade de depois copiá-la** para a v2;
+- qualquer reaproveitamento entre bases deve ser seletivo e motivado por necessidade real;
+- registrar source path/commit quando código ou contrato for materialmente reaproveitado;
+- não transportar migrations ou credenciais entre ambientes.
 
-Depois da FASE 4 release-validada e antes de lançamento público, avaliar:
+## 10. Estratégia futura de convergência
 
-1. congelar/taguear o original como legado;
-2. preservar histórico e referências;
-3. mover a identidade pública/canônica para a v2;
-4. opcionalmente renomear o original para `acheguese-legacy`;
-5. opcionalmente renomear a v2 para `acheguese`;
-6. revalidar Vercel, Supabase Auth redirects, docs e integrações após qualquer rename.
+Não há decisão atual de aposentar o principal.
 
-Essa operação não deve ocorrer enquanto a v2 ainda não passou o primeiro deployment territorial real.
+Após a FASE 4 da v2 estar release-validada, avaliar apenas com evidência:
+
+1. quais capacidades devem continuar em cada base;
+2. quais padrões podem convergir;
+3. se existe ganho real em consolidação física;
+4. custo de histórico, deploys, Supabase, Auth e integrações;
+5. plano de migração sem perder módulos maduros do principal.
+
+Até lá, os dois repositórios permanecem explícitos e ativos.

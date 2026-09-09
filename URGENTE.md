@@ -884,75 +884,73 @@ Esta estrutura deve ser adotada progressivamente.
 
 ---
 
-# 12. O que reaproveitar do Achegue-se antigo
+# 12. Convergência com o Achegue-se principal
 
-### Decisão canônica
+### Decisão canônica atualizada em 2026-09-09
 
-**Continuar a v2 como base principal. Não voltar o desenvolvimento do produto para o repositório original e não criar um terceiro repositório.**
+Os dois repositórios continuam ativos, com papéis diferentes:
 
-Repositórios:
+- **laboratório / linha de prova territorial e release:** `washingtonmsdj/teste-acheguese`;
+- **produto principal consolidado:** `washingtonmsdj/acheguese`.
 
-- **canônico / linha ativa:** `washingtonmsdj/teste-acheguese`;
-- **legado donor/reference:** `washingtonmsdj/acheguese`.
+Não criar um terceiro repositório.
 
-O original passa a ser **donor/reference**. O mapa detalhado de reaproveitamento fica em `docs/LEGACY-DONOR-MAP.md`.
+O principal **não é mais tratado como donor-only**. Ele continua evoluindo, inclusive com limpeza de legado, consolidação de SSOTs e incorporação seletiva de padrões maduros provados aqui.
+
+O mapa detalhado continua em `docs/LEGACY-DONOR-MAP.md` por compatibilidade de path, mas seu conteúdo passa a representar **convergência bidirecional controlada**, não abandono do principal.
+
+### Regra de autoridade
+
+Cada capacidade deve ter uma autoridade clara **dentro de cada repositório**.
+
+Não existe sincronização cega nem dual-write da mesma implementação.
+
+Exemplos:
+
+- Territory/Map/Auth/Classificados v2 continuam canônicos dentro de `teste-acheguese`;
+- Community/Business/Gastronomia/Educação e demais domínios maduros continuam sendo desenvolvidos e saneados no principal;
+- padrões de UX, release, segurança ou arquitetura podem ser absorvidos entre os repositórios quando compatíveis;
+- código Next.js da v2 não deve ser copiado mecanicamente para o app Vite/React principal;
+- código Vite do principal não deve ser transplantado em massa para a v2.
 
 ### Instrução obrigatória para futuras IAs/agentes
 
-Ao iniciar uma nova conversa ou sessão:
+1. ler o `URGENTE.md` deste repositório antes de mudar a v2;
+2. ao trabalhar no principal, ler `docs/README.md` + `docs/08-roadmap/EXECUCAO_MAIN_ONLY.md` daquele repositório;
+3. não manter duas autoridades internas para a mesma capability;
+4. ao transferir um padrão entre repositórios, identificar owner, contratos e testes antes;
+5. migrar seletivamente comportamento/invariante, não árvores inteiras;
+6. registrar provenance quando código, schema ou teste for materialmente reaproveitado;
+7. preservar rollout, Auth, Territory, Map e RLS de cada repositório;
+8. nunca importar migrations em massa entre bancos;
+9. não usar um repositório para “corrigir depois” o outro automaticamente;
+10. consolidação/rename físico continua sendo uma operação separada de release.
 
-1. tratar `washingtonmsdj/teste-acheguese` como a única base de implementação ativa;
-2. trabalhar na `main` da v2, salvo instrução explícita posterior em contrário;
-3. **não** retomar novas features no repositório original;
-4. **não** fazer dual-write ou manter duas implementações vivas do mesmo domínio;
-5. **não** criar um terceiro repositório para “recomeçar melhor”;
-6. consultar o original somente quando a fase atual pedir uma capacidade já existente;
-7. ao reaproveitar algo do original, migrar seletivamente contrato/regra/teste/dado validado, adaptando ao Core v2;
-8. registrar provenance/origem quando código, migration, teste ou dado materialmente vier do original;
-9. preservar as autoridades já canônicas da v2 — especialmente Territory, Map, Auth, rollout, provenance e Classificados;
-10. qualquer consolidação/rename de repositórios só pode ser considerada **depois da FASE 4 release-validada em deployment real**.
+### O que já está acontecendo no principal
 
-### Regra de STOP para esta decisão
+A partir de 2026-09-09 o principal está sendo saneado em paralelo:
 
-Interromper a execução se uma proposta implicar:
+- autoridade documental da raiz sendo reduzida para ponteiro de compatibilidade;
+- registry dos cinco modos do Território Vivo sendo unificado;
+- namespaces/bridges legados continuam sendo removidos por owner/SSOT;
+- módulos existentes permanecem ativos e não são apagados apenas porque ainda não existem na v2.
 
-- voltar a desenvolver o produto principal no original;
+### Regra de STOP
+
+Interromper qualquer proposta que implique:
+
 - copiar módulos inteiros sem auditoria;
 - importar migrations antigas em massa;
-- reintroduzir geografia, Auth, mapa, moderação ou SSOT paralelo;
-- renomear/consolidar repositórios antes do gate de release da FASE 4.
-
-Nesses casos, preservar a v2 e seguir a estratégia donor/reference.
-
-O repositório antigo pode ser usado como referência técnica, principalmente para:
-
-- Territory Domain;
-- TerritoryGroup;
-- boundaries dos quatro bairros;
-- conceitos geospatial;
-- mapa personalizado;
-- Map Core/provider abstraction;
-- readiness;
-- data quality;
-- seeds/fontes públicas úteis.
+- recriar geografia, Auth, mapa, moderação ou navegação paralela;
+- reintroduzir namespaces aposentados;
+- usar conteúdo fictício para preencher UI;
+- renomear/consolidar repositórios durante um gate de release ativo.
 
 ### Regra
 
-**Reaproveitar conceitos, contratos, testes e dados validados; não copiar o legado inteiro.**
+**Convergir padrões e contratos maduros; preservar owners; eliminar duplicação e legado em cada base.**
 
-O original já contém capacidades maduras de Community, Messaging, Notifications, Moderation/Trust, Search, Media, Business, Gastronomia, Mobilidade e Billing. Elas devem ser estudadas somente quando a fase correspondente da v2 chegar, preservando Territory/Auth/Map e demais autoridades já canônicas da v2.
-
-Antes de importar qualquer código/dado:
-
-1. revisar;
-2. confirmar fonte;
-3. confirmar licença;
-4. confirmar atualidade;
-5. adaptar ao novo Core;
-6. criar migration/ingestion canônica;
-7. testar.
-
----
+--- 
 
 # 13. Regras de honestidade do produto
 
