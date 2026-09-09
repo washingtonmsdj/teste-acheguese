@@ -1185,7 +1185,7 @@ A fundação territorial, o Map Core e o frontend **Território Vivo** permanece
 - compile/TypeScript/static generation: **PASS (12/12)**;
 - quality: `34314538619` PASS;
 - source bundle: `34314538512` PASS;
-- `deploy/vercel-bundle/SOURCE_SHA`: exatamente o source/runtime acima;
+- `deploy/vercel-bundle/SOURCE_SHA` no momento do deployment: exatamente o source/runtime acima; commits documentais posteriores podem avançar o transport branch sem alterar este runtime;
 - Supabase security advisors: **0 lints**;
 - runtime errors observados pós-deploy: **0**;
 - sidebar desktop e bottom navigation mobile agora resolvem estado ativo pelo `pathname` real usando matcher canônico;
@@ -1225,7 +1225,7 @@ Deployment Protection/SSO continua impedindo uma sessão automatizada persistent
 **FASE 0 concluída · FASE 1 concluída · FASE 2 baseline MVP concluída · FASE 3 source/CI + security hardening concluídos · FASE 4 MVP source/CI + performance/SEO/runtime/observability hardening concluídos · validação visual/runtime em deployment pendente.**
 
 ### Concluído recentemente
-- release reconciliation `2026-09-09`: source/runtime `339f32ec3c833e3cef626eaaa490d7446cb410bb` confirmado, quality `34314538619` PASS, source bundle `34314538512` PASS e `deploy/vercel-bundle/SOURCE_SHA` exato;
+- release reconciliation `2026-09-09`: source/runtime `339f32ec3c833e3cef626eaaa490d7446cb410bb` confirmado, quality `34314538619` PASS, source bundle `34314538512` PASS e `deploy/vercel-bundle/SOURCE_SHA` exato no momento do deployment; commits documentais posteriores não mudam o runtime deste candidate;
 - candidate `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` READY com `.env.production` efêmero não versionado contendo somente as três variáveis públicas previstas no runbook; prebuild `public_env=PASS`, compile PASS, TypeScript PASS, static generation 12/12 PASS e runtime errors = 0;
 - navegação ativa consolidada no source atual: sidebar desktop e bottom navigation mobile usam `pathname` + matcher canônico; teste cobre raiz, subrotas, fronteira de segmento e rejeita `/mapa2` como ativo de `/mapa`;
 - Supabase security advisors revalidados em 2026-09-09: 0 lints; nenhuma mutation de schema/RLS/rollout;
