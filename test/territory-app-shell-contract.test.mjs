@@ -81,9 +81,22 @@ test('App Shell mantém sidebar, toolbar e rail como zonas independentes', () =>
   assert.match(shell, /styles\.sidebar/);
   assert.match(shell, /styles\.desktopTopbar/);
   assert.match(shell, /styles\.contextRail/);
-  assert.match(shell, /activeTerritoryNavigation/);
+  assert.match(shell, /TerritorySidebarNav/);
 });
 
+test('sidebar deriva estado ativo da rota como a navegação mobile', () => {
+  const sidebar = read(
+    '../src/shared/layout/territory-sidebar-nav.tsx',
+  );
+  const mobile = read(
+    '../src/shared/layout/mobile-tabbar.tsx',
+  );
+
+  assert.match(sidebar, /usePathname/);
+  assert.match(mobile, /usePathname/);
+  assert.match(sidebar, /pathname\.startsWith/);
+  assert.match(sidebar, /fallbackActiveId/);
+});
 
 function collectPageFiles(directoryUrl) {
   const entries = readdirSync(directoryUrl, {
@@ -140,7 +153,6 @@ test('nenhuma página pode recriar navegação paralela ao App Shell', () => {
     'SiteHeader legado deve permanecer removido',
   );
 });
-
 
 test('App Shell preserva contexto territorial no tablet sem duplicar header', () => {
   const shell = read(
