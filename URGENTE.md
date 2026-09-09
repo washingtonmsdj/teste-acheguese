@@ -1195,7 +1195,7 @@ A fundação territorial, o Map Core e o frontend **Território Vivo** permanece
 
 ## Gate ainda pendente
 
-Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. O share-link oficial foi reproduzido novamente no candidate atual e retorna fluxo SSO 302 no cliente automatizado disponível. A solução estrutural para automação é o **Vercel Protection Bypass for Automation**, usando `VERCEL_AUTOMATION_BYPASS_SECRET` / header `x-vercel-protection-bypass`, sem desativar a proteção. O conector Vercel desta sessão não expõe gestão/leitura desse segredo, portanto não gerar workaround em source ou commit.
+Deployment Protection/SSO continua impedindo uma sessão automatizada persistente para todas as rotas. O share-link oficial foi reproduzido novamente no candidate atual e retorna fluxo SSO 302 no cliente automatizado disponível. A solução estrutural adotada é **Vercel Trusted Sources + GitHub Actions OIDC**, com token curto no header `x-vercel-trusted-oidc-idp-token`, sem desativar proteção nem armazenar segredo estático. Falta somente autorizar o repositório/branch como External Service no projeto Vercel.
 
 Ainda não marcar como PASS:
 
@@ -1207,7 +1207,7 @@ Ainda não marcar como PASS:
 
 ## Próxima ação
 
-> **Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → habilitar/usar Vercel Protection Bypass for Automation fora do source → executar smoke + Playwright com header de bypass → revisão visual desktop/mobile → adicionar somente `https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app/auth/callback` → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
+> **Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → autorizar GitHub Actions como Vercel Trusted Source para Preview → executar smoke + Playwright com header de bypass → revisão visual desktop/mobile → adicionar somente `https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app/auth/callback` → E2E Auth/Classificados → corrigir somente defeitos observados → fechar FASE 4.**
 
 ### Regra de avanço
 
@@ -1232,8 +1232,8 @@ Ainda não marcar como PASS:
 - navegação ativa consolidada no source atual: sidebar desktop e bottom navigation mobile usam `pathname` + matcher canônico; teste cobre raiz, subrotas, fronteira de segmento e rejeita `/mapa2` como ativo de `/mapa`;
 - Supabase security advisors revalidados em 2026-09-09: 0 lints; nenhuma mutation de schema/RLS/rollout;
 - share-link do novo candidate ainda retorna SSO 302 sem cookie jar persistente; manter Deployment Protection e não confundir limitação da ferramenta com falha do aplicativo;
-- caminho estrutural definido em 2026-09-09: usar `VERCEL_AUTOMATION_BYPASS_SECRET` via `x-vercel-protection-bypass` para smoke/Playwright; nunca versionar o segredo nem desativar Deployment Protection; o conector atual não oferece gestão desse segredo;
-- tooling canônico preparado: `.github/workflows/protected-release-smoke.yml` executa o smoke protegido somente por `workflow_dispatch`, com `contents: read`, secret externo e validação de host; falta apenas configurar o bypass no Vercel/GitHub para executar o gate.
+- caminho estrutural atualizado em 2026-09-09: usar **Vercel Trusted Sources + GitHub Actions OIDC** (`x-vercel-trusted-oidc-idp-token`) para smoke/Playwright; recurso disponível em todos os planos e recomendado pela Vercel; nenhum segredo estático deve ser criado/versionado;
+- tooling canônico preparado: `.github/workflows/protected-release-smoke.yml` executa o smoke protegido somente por `workflow_dispatch`, exige `main`, usa `contents: read` + `id-token: write`, emite OIDC curto via GitHub e valida o host; falta apenas autorizar `washingtonmsdj/teste-acheguese` branch `main` como Trusted Source para Preview no projeto Vercel.
 - tentativas de passar `env/buildEnv` diretamente pelo conector de deployment não chegaram ao processo de build e foram corretamente bloqueadas pelo preflight; não repetir essa via, usar o protocolo efêmero documentado até existir suporte oficial de env no conector;
 - receipt atual: `docs/DEPLOYMENT-RECEIPT-2026-09-09.md`;
 - release reconciliation `2026-09-08`: candidate canônico confirmado como `dpl_ArimT6VmREHKg4cw4jMB91hLBge8` / source runtime `af74240985c43cabd0588328ae51d19d5c921ec5`; build `required=yes supabase=configured`, Vercel READY e runtime errors = 0;
@@ -1416,7 +1416,7 @@ Previews anteriores permanecem somente como evidência histórica e **não** apr
 
 ### Próxima ação
 
-**Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → usar Protection Bypass for Automation fora do source → smoke + Playwright → visual desktop/mobile → callback Auth exata deste candidate → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
+**Preservar `dpl_5d2ZrM9YtEL4ZvA9BBVkmBEK14Gy` → usar Trusted Sources/OIDC → smoke + Playwright → visual desktop/mobile → callback Auth exata deste candidate → E2E Auth/Classificados → corrigir somente defeitos comprovados → fechar FASE 4.**
 
 ### Não repetir
 

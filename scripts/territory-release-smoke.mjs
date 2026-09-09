@@ -1,6 +1,6 @@
 import {
-  assertAutomationBypassTarget,
-  buildProtectionBypassHeaders,
+  assertProtectedQaTarget,
+  buildTrustedOidcHeaders,
   htmlHasNoindex,
   isRedirectToRoot,
   normalizeBaseUrl,
@@ -11,10 +11,10 @@ import {
 const BASE_URL = normalizeBaseUrl(process.env.BASE_URL);
 const EXPECT_PUBLIC =
   process.env.EXPECT_TERRITORY_PUBLIC === '1';
-const PROTECTION_BYPASS_SECRET =
-  process.env.VERCEL_AUTOMATION_BYPASS_SECRET?.trim() ?? '';
-const REQUIRE_PROTECTION_BYPASS =
-  process.env.REQUIRE_VERCEL_PROTECTION_BYPASS === '1';
+const TRUSTED_OIDC_TOKEN =
+  process.env.VERCEL_TRUSTED_OIDC_TOKEN?.trim() ?? '';
+const REQUIRE_TRUSTED_OIDC =
+  process.env.REQUIRE_VERCEL_TRUSTED_OIDC === '1';
 
 const COMPLEXO_BOUNDS = {
   west: -38.4873837606422,
@@ -45,9 +45,9 @@ async function request(path, init = {}) {
 
   return fetch(new URL(path, `${BASE_URL}/`), {
     ...requestInit,
-    headers: buildProtectionBypassHeaders(
+    headers: buildTrustedOidcHeaders(
       initHeaders,
-      PROTECTION_BYPASS_SECRET,
+      TRUSTED_OIDC_TOKEN,
     ),
     redirect,
     signal: AbortSignal.timeout(15_000),
@@ -120,17 +120,14 @@ function assertSecurityHeaders(response) {
 }
 
 async function run() {
-  if (
-    REQUIRE_PROTECTION_BYPASS &&
-    !PROTECTION_BYPASS_SECRET
-  ) {
+  if (REQUIRE_TRUSTED_OIDC && !TRUSTED_OIDC_TOKEN) {
     throw new Error(
-      'VERCEL_AUTOMATION_BYPASS_SECRET obrigatório para QA protegido',
+      'VERCEL_TRUSTED_OIDC_TOKEN obrigatório para QA protegido',
     );
   }
 
-  if (PROTECTION_BYPASS_SECRET) {
-    assertAutomationBypassTarget(BASE_URL);
+  if (TRUSTED_OIDC_TOKEN) {
+    assertProtectedQaTarget(BASE_URL);
   }
 
   const healthResponse = await request('/api/health');

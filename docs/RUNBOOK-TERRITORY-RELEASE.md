@@ -107,29 +107,42 @@ Enquanto o rollout estiver em `data_preparation`, usar `EXPECT_TERRITORY_PUBLIC=
 
 ### 5.0 Preview protegido — caminho canônico de automação
 
-Para candidate protegido por Vercel Authentication/Deployment Protection, **não usar share-link como mecanismo de CI**. Gerar o **Protection Bypass for Automation** no projeto Vercel e armazenar o mesmo valor como secret do repositório GitHub com o nome:
+Para candidate protegido por Vercel Authentication/Deployment Protection, usar **Trusted Sources com OIDC**. A Vercel disponibiliza Trusted Sources em todos os planos e recomenda tokens OIDC curtos no lugar de um segredo estático de bypass.
 
-`VERCEL_AUTOMATION_BYPASS_SECRET`
+Configuração única no projeto Vercel `teste-acheguese`:
 
-O segredo:
+1. Settings → Deployment Protection;
+2. Trusted Sources → External Services → Add → GitHub Actions;
+3. conta: `washingtonmsdj`;
+4. repository: `teste-acheguese`;
+5. branch: `main`;
+6. Applies to environments: **Preview**;
+7. manter a audience padrão gerenciada pelo formulário da Vercel.
 
-- nunca entra em `.env`, source, log, issue ou artifact;
-- é enviado somente via header `x-vercel-protection-bypass`;
-- só pode ser usado contra host HTTPS do projeto Vercel canônico;
-- não substitui nem desativa Deployment Protection.
+Não criar `VERCEL_AUTOMATION_BYPASS_SECRET` para este fluxo. O GitHub Actions emite um token OIDC curto por execução e o smoke o envia somente no header `x-vercel-trusted-oidc-idp-token`.
 
 Workflow canônico:
 
 `.github/workflows/protected-release-smoke.yml`
 
+O workflow:
+
+- é somente `workflow_dispatch`;
+- exige `main`;
+- usa `contents: read` + `id-token: write`;
+- checkout sem credencial persistente;
+- chama `core.getIDToken()` sem audience customizada;
+- mascara o token antes de expô-lo ao step seguinte;
+- não mantém segredo estático no GitHub;
+- o smoke valida que a credencial só pode ser enviada para host HTTPS do projeto Vercel canônico.
+
 Execução manual:
 
 1. Actions → **protected-release-smoke** → Run workflow;
-2. informar a URL exata do candidate em `base_url`;
-3. manter `expect_territory_public=0` enquanto o rollout estiver em `data_preparation`;
-4. exigir PASS completo antes da revisão visual.
-
-O workflow é `workflow_dispatch` apenas, `contents: read`, checkout sem credencial persistente e falha fechado se o secret não existir. O smoke preserva headers próprios (incluindo `Origin`) ao anexar o bypass.
+2. branch: `main`;
+3. `base_url=https://teste-acheguese-qqq4dlckw-jogo-brasils-projects.vercel.app`;
+4. `expect_territory_public=0`;
+5. exigir PASS completo antes da revisão visual.
 
 O smoke automatiza:
 

@@ -24,7 +24,7 @@ const CANONICAL_VERCEL_HOSTS = new Set([
 const CANONICAL_VERCEL_PREVIEW_HOST =
   /^teste-acheguese-[a-z0-9]+-jogo-brasils-projects\.vercel\.app$/;
 
-export function assertAutomationBypassTarget(baseUrl) {
+export function assertProtectedQaTarget(baseUrl) {
   const normalized = normalizeBaseUrl(baseUrl);
   const url = new URL(normalized);
   const allowedHost =
@@ -33,24 +33,23 @@ export function assertAutomationBypassTarget(baseUrl) {
 
   if (url.protocol !== 'https:' || !allowedHost) {
     throw new Error(
-      'Protection Bypass só pode ser enviado ao projeto Vercel canônico',
+      'Credencial de QA protegido só pode ser enviada ao projeto Vercel canônico',
     );
   }
 
   return normalized;
 }
 
-export function buildProtectionBypassHeaders(
+export function buildTrustedOidcHeaders(
   headersInit,
-  secret,
+  token,
 ) {
   const headers = new Headers(headersInit);
   const value =
-    typeof secret === 'string' ? secret.trim() : '';
+    typeof token === 'string' ? token.trim() : '';
 
   if (value) {
-    headers.set('x-vercel-protection-bypass', value);
-    headers.set('x-vercel-set-bypass-cookie', 'true');
+    headers.set('x-vercel-trusted-oidc-idp-token', value);
   }
 
   return headers;
