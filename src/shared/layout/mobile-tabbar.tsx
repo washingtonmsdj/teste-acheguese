@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
-import { activeMobileNavigation } from '@/shared/navigation/territory-navigation';
+import {
+  activeMobileNavigation,
+  isTerritoryNavigationHrefActive,
+} from '@/shared/navigation/territory-navigation';
 
 export function MobileTabbar() {
   const pathname = usePathname();
@@ -12,11 +15,10 @@ export function MobileTabbar() {
   return (
     <nav className="mobileTabbar" aria-label="Navegação mobile">
       {items.map((item) => {
-        const active =
-          item.href === '/'
-            ? pathname === '/'
-            : pathname === item.href ||
-              pathname.startsWith(`${item.href}/`);
+        const active = isTerritoryNavigationHrefActive(
+          pathname,
+          item.href,
+        );
 
         return (
           <Link

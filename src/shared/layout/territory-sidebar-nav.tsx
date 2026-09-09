@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { NavigationIcon } from '@/shared/navigation/navigation-icon';
 import {
   activeTerritoryNavigationBySection,
+  isTerritoryNavigationHrefActive,
   type TerritoryNavigationId,
   type TerritoryNavigationSection,
 } from '@/shared/navigation/territory-navigation';
@@ -22,19 +23,6 @@ const navigationGroups: Array<{
   { id: 'local-life', label: 'Agora no bairro' },
   { id: 'services', label: 'Serviços' },
 ];
-
-function isNavigationItemActive(
-  pathname: string | null,
-  href: string,
-  id: TerritoryNavigationId,
-  fallbackActiveId: TerritoryNavigationId,
-) {
-  if (!pathname) return id === fallbackActiveId;
-
-  return href === '/'
-    ? pathname === '/'
-    : pathname === href || pathname.startsWith(`${href}/`);
-}
 
 export function TerritorySidebarNav({
   fallbackActiveId,
@@ -60,12 +48,12 @@ export function TerritorySidebarNav({
             </span>
             <div className={styles.navGroupItems}>
               {items.map((item) => {
-                const active = isNavigationItemActive(
-                  pathname,
-                  item.href,
-                  item.id,
-                  fallbackActiveId,
-                );
+                const active = pathname
+                  ? isTerritoryNavigationHrefActive(
+                      pathname,
+                      item.href,
+                    )
+                  : item.id === fallbackActiveId;
 
                 return (
                   <Link

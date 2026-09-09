@@ -157,9 +157,19 @@ export function activeTerritoryNavigationBySection(
   );
 }
 
-
 export function activeMobileNavigation() {
   return activeTerritoryNavigation().filter(
     (item) => item.mobilePrimary,
   );
+}
+
+export function isTerritoryNavigationHrefActive(
+  pathname: string | null,
+  href: string,
+) {
+  if (!pathname) return false;
+
+  return href === '/'
+    ? pathname === '/'
+    : pathname === href || pathname.startsWith(`${href}/`);
 }

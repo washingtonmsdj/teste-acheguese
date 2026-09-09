@@ -84,7 +84,10 @@ test('App Shell mantém sidebar, toolbar e rail como zonas independentes', () =>
   assert.match(shell, /TerritorySidebarNav/);
 });
 
-test('sidebar deriva estado ativo da rota como a navegação mobile', () => {
+test('desktop e mobile compartilham a mesma regra de rota ativa', () => {
+  const registry = read(
+    '../src/shared/navigation/territory-navigation.ts',
+  );
   const sidebar = read(
     '../src/shared/layout/territory-sidebar-nav.tsx',
   );
@@ -92,9 +95,11 @@ test('sidebar deriva estado ativo da rota como a navegação mobile', () => {
     '../src/shared/layout/mobile-tabbar.tsx',
   );
 
+  assert.match(registry, /isTerritoryNavigationHrefActive/);
+  assert.match(sidebar, /isTerritoryNavigationHrefActive/);
+  assert.match(mobile, /isTerritoryNavigationHrefActive/);
   assert.match(sidebar, /usePathname/);
   assert.match(mobile, /usePathname/);
-  assert.match(sidebar, /pathname\.startsWith/);
   assert.match(sidebar, /fallbackActiveId/);
 });
 
